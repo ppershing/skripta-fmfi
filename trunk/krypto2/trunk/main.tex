@@ -1,0 +1,64 @@
+
+%% Template by Michal Forisek
+
+
+\documentclass[a4paper]{report}
+\usepackage{slovak}
+\usepackage[utf8]{inputenc}
+\usepackage{a4wide}
+\usepackage{tabularx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{epsfig}
+\usepackage{color}
+\usepackage{mathrsfs}
+\usepackage{verbatim}
+\usepackage{hyperref}
+
+\input{utility/makra.tex}
+
+\begin{document}
+
+\thispagestyle{empty}
+\begin{minipage}{0.25\textwidth}
+\includegraphics[width=0.9\textwidth]{img/komlogo-new}
+\end{minipage}
+\begin{minipage}{0.69\textwidth}
+\begin{center}
+\sc Katedra Informatiky \\
+Fakulta Matematiky, Fyziky a Informatiky \\
+Univerzita Komenského, Bratislava
+\end{center}
+\end{minipage}
+
+\vfill
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+\hrule
+\bigskip\bigskip
+\centerline{\LARGE\sc Krypto II}
+\smallskip
+\centerline{(spísané poznámky, draft)}
+\bigskip
+\bigskip
+\centerline{\large\sc Vladimír Boža, Peter Perešíni}
+\bigskip\bigskip
+\hrule
+\end{minipage}
+\end{center}
+\vfill
+{~}
+\hfill verzia zo dňa {\bf\today} 
+\eject % EOP i
+
+\section*{Úvod}
+
+Tieto poznámky obsahujú študijné materiály k predmetu 
+\emph{Kryptológia II}
+na Fakulte matematiky, fyziky a informatiky UK.
+
+\tableofcontents
+
+\input{0uvod/00uvod.tex}
+
+\end{document}
