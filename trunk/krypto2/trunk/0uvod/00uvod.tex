@@ -12,7 +12,7 @@
 \item $H(t)$ - spracovanie textu $t$ pomocou hashovacej funkcie $H$
 \end{itemize}
 
-\section{0. prednáška}
+\section{0. prednáška (Ako (ne)šifrovať disky}
 
 V decembri 2009 bola nájdená bezpečnostná chyba v niektorých šifrovaných USB diskoch
 (Kingston DataTraveler BlackBox, SanDisk Cruzer Enterprise FIPS Edition a
@@ -26,6 +26,12 @@ ktorý vyzerá nasledovne:
 $D_K(X)=C$, kde $C$ je pevne známa konštanta (u všetkých výrobcov dokonca rovnaká). Ak áno, tak sa disk odomkne a dáta sa sprístupnia.
 Ak nie, tak sa požiadavka zamietne. Dešifrovanie ostatných dát nezávisí od hesla.
 \end{itemize}
+
+\begin{figure}[htp]
+    \includegraphics[scale=0.75]{img/0/extern_drive_encryption}
+\label{fig:extern_drive_encryption}
+\caption{Šifrovanie externého disku}
+\end{figure}
 
 Útok na tento systém je vcelku jednoduchý. Stačí v pamäti prepísať výsledok dešifrovacej transformácie. 
 
