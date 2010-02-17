@@ -14,20 +14,18 @@ quietps: *.tex Makefile img/*
 	cslatex -interaction=batchmode main
 	dvips main.dvi
 
-release: 
-	# ~/bin/foja-release
-	scp -q main.pdf misof@foja:public_html/foja-skripta-snapshot.pdf
-
 dvi: main.dvi
 
 ps: main.ps
 
-main.pdf: *.tex Makefile img/*
-	rm -f *.toc
-	pdfcslatex main
-	# bibtex main
-	pdfcslatex main
-	pdfcslatex main
+main.pdf: main.ps
+	ps2pdf main.ps
+	# this is commented due to problem with pdfcslatex on windows
+	#rm -f *.toc
+	#pdfcslatex main
+	## bibtex main
+	#pdfcslatex main
+	#pdfcslatex main
 
 pdf: main.pdf
 
