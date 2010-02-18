@@ -37,7 +37,7 @@ clean:
 	rm -f *.{log,aux}
 
 dist-clean:
-	rm -f *.{log,aux,dvi,ps,pdf,toc,bbl,blg,slo,srs}
+	rm -f *.{log,aux,dvi,ps,pdf,toc,bbl,blg,slo,srs,out}
 
 backup: 
 	tar --create --force-local -zf zaloha/knizka-`date +%Y-%m-%d-%H\:%M`.tar.gz `ls -p| egrep -v /$ ` images/* code/*
