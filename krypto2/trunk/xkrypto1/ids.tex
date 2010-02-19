@@ -6,7 +6,7 @@ neobmedzeného provera $P$ a výpočtovo obmedzeného overovateľa $V$.
 Cieľom provera je akýmsi spôsobom presvedčiť overovateľa o znalosti
 nejakého faktu.
 Formálne,
-interaktívnym dokazovacím systémom nazveme dvojicu
+interaktívnym dokazovacím systémom (IDS) nazveme dvojicu
 $\langle P,V \rangle$, kde $P$ je pravdepodobnostný TS s neobmedzenou výpočtovou silou,
 $V$ je pravdepodobnostný TS pracujúci v polynomiálnom čase.
 Oba stroje zdieľajú spoločný vstup $x$, môžu počas svojho výpočtu
@@ -39,13 +39,14 @@ presvedčí overovateľa na zlom vstupe len s nízkou pravdepodobnosťou.
     dané dva grafy nie sú izomorfné. Môžeme použiť nasledovný protokol
     pri dôkaze: Uvažujme $k$ kôl, v každom z nich prebehne nasledujúca
     komunikácia:
+    %% FIXME: preco 'P \send V' je vizualne dlhsie ako 'V \send P'?
     \begin{itemize}
         \item $V$ si zvolí $i \inr \{0,1\}$, permutáciu
          $\pi \inr perm(|G_0|)$
-        \item $P \send V: H = \pi(G_i)$.
-        \item $V \send P: i'$ reprezentujúce graf $G$, s ktorým je $H$
-        izomorfný. ($V$ je neobedzene výpočtovo silný)
-        \item prover zamietne ak $i \not = i'$.
+        \item $V \send P: H = \pi(G_i)$.
+        \item $P \send V: i'$ reprezentujúce graf $G$, s ktorým je $H$
+        izomorfný ($V$ je neobedzene výpočtovo silný).
+        \item $V$ zamietne vstup ak $i \not = i'$.
     \end{itemize}
     Po $k$ úspešných kolách $V$ akceptuje.
 
