@@ -1,0 +1,88 @@
+\section{Oblivious transfer}
+
+Ďalším základným primitívom, na ktorom vieme budovat kryptografické
+prvky je takzvaný oblivious transfer. Ide o akýsi prenos údajov,
+pričom sender sa nedozvie, či boli údaje prenesené, prípadne ktoré
+údaje boli prenesené.
+
+\begin{definicia}{(1-2 OT)}
+    1-2 oblivious transferom nazveme komunikáciu podľa nasledujúcej
+    schémy:
+    \begin{itemize}
+        \item $A \send B: m_0, m_1$, kde $m_0$ a $m_1$ sú 2 rôzne
+        správy, ktoré chce $A$ poslať.
+        \item $B$ si vyberie niektorú zo správ, ktorú chce prijať a
+        toto prijatie mu bude umožnené.
+        \item $A$ sa nedozvie, ktorú správu $B$ prijal.
+        \item $B$ nemá možnosť prijať obe správy naraz.        
+    \end{itemize}
+\end{definicia}
+
+\begin{definicia}{(50\% OT)}
+    50\% oblivious transferom nazveme komunikáciu podľa nasledujúcej
+    schémy:
+    \begin{itemize}
+        \item $A \send B: m$, kde $m$ je správa.
+        \item $B$ s spravdepodobnosťou 50\% správu prijme, inak sa o
+        nej nedozvie nič.
+        \item $A$ sa nedozvie, či $B$ správu prijal
+    \end{itemize}
+\end{definicia}
+
+\begin{priklad}{Realizácia 50\% OT}
+    Nech $A$ chce poslať správu účastníkovi $B$ s 50\%-nou
+    pravdepodobnosťou úspechu. Na začiatku si $A$ zvolí inštanciu RSA
+    s $n=pq$, kde $p,q$ sú veľké prvočísla. Bude nasledovať
+    komunikácia
+ \begin{itemize}
+    \compactlist
+    \item $A \send B: n,e,E(m)$ 
+    \item $B$ si zvolí $x \inr Z_n$
+    \item $B \send A: x^2$
+    \item $A$ s pomocou faktorizácie vyberie nejakú odmocninu $z \in
+    \{x,-x,y,-y\}$.
+    \item $A \send B: z$.
+    $B$ vie faktorizovať $n$ (a dešifrovať správu) s
+    pravdepodobnosťou 50\% (ak $z \not = \pm x$, tak jednoducho
+    spočíta pomocou $\nsd(z-x, n)$).
+ \end{itemize} 
+\end{priklad}
+
+\begin{priklad}{Realizácia 1-2 OT}
+ 1-2 OT budeme realizovať za pomoci diskrétneho logaritmu.
+ Účastník $A$ si zvolí grupu $G$, $n=|G|$ a generátor $g\in G$.
+ \begin{itemize}
+    \compactlist
+    \item $A \send B: c \inr G$.
+    \item $B$ si zvolí $b\in\{0,1\}$ - číslo správy, ktorú chce
+    prijať.
+    \item $B$ si zvolí $x \inr G$ a vypočíta hodnoty $y_b = g^x$,
+    $y_{1-b} = c/ y_b$. Platí $y_0 y_1 = c$ a tiež existuje (pretože
+    $g$ je generátor) hodnota $x': g^{x'} = y_{1-b}$. Teda, $A$ nevie
+    odlíšiť jednotlivé hodnoty.
+    \item $B \send A: y_0$.
+    \item $A$ zvolí $k_0,k_1 \inr G$ a vytvorí šifrované správy 
+    $E_0 = \langle g^{k_0}, y_0^{k_0} \xor m_0 \rangle$,
+    $E_1 = \langle g^{k_1}, y_1^{k_1} \xor m_1 \rangle$.
+    \item $A \send B: E_0, E_1$.
+    \item $B$ dešifruje $m_b$ ako $(g^{k_b})^x \xor (y_b ^ {k_b} \xor
+    m_b)$.
+    Pokiaľ $B$ nevie riešiť DH problém, druhú správu nedostane.
+ \end{itemize}
+\end{priklad}
+
+\subsection{Konverzie}
+
+\begin{lema}
+    50\% OT sa dá simulovať pomocou 1-2 OT.
+\end{lema}
+\begin{dokaz}
+    Postup je jednoduchý. Nech $A$ chce poslať správu $m \ne 0$.
+    Nech $c \inr \{0,1\}$ a nech $m_c = m, m_{1-c} = 0$. $A$ pošle
+    správy $m_0, m_1$ pomocou 1-2 OT a $B$ prijme správy s
+    pravdepodobnosťou 50\%, inak prijme 0 a vie, že sa prenos
+    nepodaril.
+\end{dokaz}
+
+\todo{1-2 OT pomocou 50}
+\todo{BC pomocou 50 OT}
