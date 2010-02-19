@@ -1,0 +1,107 @@
+\section{1. prednáška Absolútne bezpečná šifra}
+
+Tento krát sa ideme zaoberať nepodmienenou bezpečnosťou. Uvažujme 
+výpočtovo neobmedzene silného útočníka a cypher text only attack (COA).
+Požadujeme aby útočník zo znalosti šifrového textu nezískal nič nové.
+
+Označme množinu otvorených textov ako $P$, kľúčov ako $K$, šifrových textov ako $C$
+(uvažujeme iba množinu reálne možných šifrových textov). Každému $x \in P$ vieme priradiť
+pravdepodobnosť výskytu $p(x)$, pravdepodobnosť
+výskytu konkrétneho kľúča $k \in K$ označíme ako $p(k)$. Predpokladáme, že
+konkrétny kľúc používame iba raz a že jeho voľba nezávisí od otvoreného textu.
+Takisto pravdepodobnosť výskytu šifrového textu $c \in C$ označíme $p(c)$. Táto pravdepodobnosť
+bude vždy väčšia ako nula (keďže uvažujeme len šifrové texty, ktoré môžu vzniknúť zašifrovaním).
+
+\begin{definicia}
+Šifrovací systém $(E,D)$ je absolútne bezpečný ak:
+$$\forall x \in P \forall y \in C\colon p(x | y) = p(x)$$
+\end{definicia}
+\begin{komentar}
+Táto definícia vlastne hovorí o tom, že znalosť šifrového textu útočníkovi nepovie nič
+nové, keďže distribúciu pravdepodobnosti otvorených textov pozná.
+\end{komentar}
+
+Niekoľko zaujímavých vlastností:
+Vzhľadom na to, že dešifrovanie musí byť uskutočniteľné musí platiť $|C| \geq |P|$.
+Ďalej určite platí $|K| \geq |P|$, ináč by sme pri znalosti šifrového textu mohli 
+vyskúšať dešifrovanie všetkými kľúčmi a niektoré otvorené texty by sme mohli vylúčiť
+($p(x|c) = 0$). Zaujímavá je situácia keď $|P| = |C| = |K|$, tú popisuje nasledujúca veta:
+
+\begin{veta}{(Shanon)}
+Nech $(E,D)$ je šifrovací system, kde $|P|=|C|=|K|$. Potom tento šifrovací systém je
+absolútne bezpečný práve vtedy, keď:
+\begin{enumerate}
+\item $\forall k \in K\colon p(k) = \frac{1}{|K|}$
+\item $\forall x \in P \forall y \in C \exists! k \in K\colon E_k(x) = y$
+\end{enumerate}
+\end{veta}
+
+\begin{dokaz}
+($\Rightarrow$) Nech systém $(E,D)$ je absolútne bezpečný. Ak by pre $x \in P, y \in C$ neexistoval
+kľúč $k \in K$ taký, že $E_k(x) = y$, útočník zo znalosti $y$ vie vylúčiť otvorený text $x$,
+čo odporuje tomu, že $(E,D)$ je absolútne bezpečný. 
+Keďže $|C|=|K|$, tak tento kľúč môže byť maximálne jeden (keby ich bolo viac, tak by $\exists z \in C$ taký, že
+$x$ nevieme zašifrovať na $z$). 
+
+Keďže $P$ je konečná, môžeme otvorené texty očíslovať, teda $P = \{ x_1, x_2, \dots, x_n\}$. 
+Teraz fixujme $c \in C$. Pre každý otvorený text musí platiť:
+$$p(x_i) = p(x_i | c) = \frac{p(c | x_i) p(x_i)}{p(c)}$$
+$$p(c) = p(c | x_i) = p(k_i)$$
+
+Kde $k_i \in K\colon E_{k_i}(x_i)=c$. Z toho vyplýva, že všetky kľúče majú rovnakú pravdepodobnosť a keďže
+súčet výskytu ich pravdepodobnosti je $1$, tak $\forall k \in K\colon p(k) = \frac{1}{|K|}$.
+
+($\Leftarrow$) Spočítame $p(x|c)$ a ukážeme, že definícia platí. Vieme, že:
+$$p(x|c) = \frac{p(c|x)p(x)}{p(c)}$$
+
+$p(c|x) = p(k)$, kde $E_k(x)=c$, teda $p(c|x) = \frac{1}{|K|}$. Ešte treba určiť $p(c)$.
+$$p(c) = \displaystyle\sum_{k \in K} p(k)p(D_k(c)) = \frac{1}{|K|} \displaystyle\sum_{x \in P} p(x) = \frac{1}{|K|}$$
+
+(Pri dešifrovaní všetkými možnými kľúčmi dostaneme všetky možné otvorené texty (a každý práve raz). A súčet pravdepodobností
+výskytu všetkých otvorených textov je 1).
+
+Takže dostávame:
+$$p(x|c) = \frac{p(c|x)p(x)}{p(c)} = \frac{\frac{1}{|K|} p(x)}{\frac{1}{|K|}} = p(x)$$
+
+A teda $(E,D)$ je absolútne bezpečný, čím je náš dôkaz hotový.
+
+\end{dokaz}
+
+\begin{priklad}
+Vernamova šifra je príklad absolútne bezpečného šifrovacieho systému.
+\end{priklad}
+
+Iným uhlom pohľadu na absolútne bezpečnú šifru je nerozlíšiteľnosť 2 otvorených textov. 
+Teda útočník dostane dva otvorené texty a jeden šifrový text a má určiť, z ktorého otvoreného
+textu šifrový text vznikol. Tu nesmie uspieť.
+
+\begin{veta}
+Šifrovací systém $(E,D)$ je absolútne bezpečný práve vtedy, keď:
+$$\forall p_1 \in P \forall p_2 \in P \forall c \in C\colon p(c|p_1)=p(c|p_2)$$
+\end{veta}
+
+\begin{dokaz}
+($\Rightarrow$) Vieme, že $p(c|p_1) = \frac{p(p_1|c) p(c)}{p(p_1)}$ Keďže $(E,D)$ je absolútne
+bezpečný, tak $p(p_1|c) = p(p_1)$, čiže $p(c|p_1) = p(c)$. To isté dostaneme aj pre $p_2$.
+
+($\Leftarrow$) $p(c|x)$ je rovnaká pre všetky $x \in P$, čiže je konštantná. Nech $p(c|x) = t$.
+Ešte dopočítame:
+$$p(c) = \displaystyle\sum_{k \in K} p(k) p(c|D_k(c)) = t \displaystyle\sum_{k \in K} p(k) = t$$
+Potom $p(x|c) = p(x)$, čo sme chceli dokázať.
+\end{dokaz}
+
+Takto môžeme podať trochu inú definíciu absolútne bezpečnej šifry.
+
+\begin{definicia}
+Uvažujme kryptoanalytickú hru s nasledovným priebehom:
+\begin{enumerate}
+\item Útočník (A) pošle druhej strane B dva otvorené texty $p_1, p_2$.
+\item B si zvolí náhodne $b \in \{0,1\}$, náhodný $k \in K$ a pošle A: $c = E_k(p_b)$
+\item A sa snaží zistiť z ktorého otvoreného textu $c$ vznikol. Svoj úsudok pošle ako $b'$.
+\item Ak $b' = b$, tak A uspel. V opačnom prípade neuspel.
+\end{enumerate}
+Pokiaľ je $(E,D)$ absolútne bezpečný, tak pravdepodobnosť úspechu A je $\frac{1}{2}$.
+\end{definicia}
+
+Dá sa ukázať, že tieto dve definície sú ekvivalentné.
+\todo{dokaz}
