@@ -11,6 +11,7 @@ výskytu konkrétneho kľúča $k \in K$ označíme ako $p(k)$. Predpokladáme, 
 konkrétny kľúc používame iba raz a že jeho voľba nezávisí od otvoreného textu.
 Takisto pravdepodobnosť výskytu šifrového textu $c \in C$ označíme $p(c)$. Táto pravdepodobnosť
 bude vždy väčšia ako nula (keďže uvažujeme len šifrové texty, ktoré môžu vzniknúť zašifrovaním).
+Všetky tieto množiny považujeme za konečné.
 
 \begin{definicia}
 Šifrovací systém $(E,D)$ je absolútne bezpečný ak:
@@ -22,14 +23,14 @@ nové, keďže distribúciu pravdepodobnosti otvorených textov pozná.
 \end{komentar}
 
 Niekoľko zaujímavých vlastností:
-Vzhľadom na to, že dešifrovanie musí byť uskutočniteľné musí platiť $|C| \geq |P|$.
+Vzhľadom na to, že dešifrovanie musí byť uskutočniteľné, musí platiť $|C| \geq |P|$.
 Ďalej určite platí $|K| \geq |P|$, ináč by sme pri znalosti šifrového textu mohli 
 vyskúšať dešifrovanie všetkými kľúčmi a niektoré otvorené texty by sme mohli vylúčiť
 ($p(x|c) = 0$). Zaujímavá je situácia keď $|P| = |C| = |K|$, tú popisuje nasledujúca veta:
 
 \begin{veta}{(Shanon)}
-Nech $(E,D)$ je šifrovací system, kde $|P|=|C|=|K|$. Potom tento šifrovací systém je
-absolútne bezpečný práve vtedy, keď:
+Nech $(E,D)$ je šifrovací systém, kde $|P|=|C|=|K|$. Potom tento šifrovací systém je
+absolútne bezpečný práve vtedy, keď sú splnené nasledujúce vlastnosti:
 \begin{enumerate}
 \item $\forall k \in K\colon p(k) = \frac{1}{|K|}$
 \item $\forall x \in P \forall y \in C \exists! k \in K\colon E_k(x) = y$
@@ -39,7 +40,7 @@ absolútne bezpečný práve vtedy, keď:
 \begin{dokaz}
 ($\Rightarrow$) Nech systém $(E,D)$ je absolútne bezpečný. Ak by pre $x \in P, y \in C$ neexistoval
 kľúč $k \in K$ taký, že $E_k(x) = y$, útočník zo znalosti $y$ vie vylúčiť otvorený text $x$,
-čo odporuje tomu, že $(E,D)$ je absolútne bezpečný. 
+čo odporuje tomu, že systém $(E,D)$ je absolútne bezpečný. 
 Keďže $|C|=|K|$, tak tento kľúč môže byť maximálne jeden (keby ich bolo viac, tak by $\exists z \in C$ taký, že
 $x$ nevieme zašifrovať na $z$). 
 
@@ -77,7 +78,7 @@ textu šifrový text vznikol. Tu nesmie uspieť.
 
 \begin{veta}
 Šifrovací systém $(E,D)$ je absolútne bezpečný práve vtedy, keď:
-$$\forall p_1 \in P \forall p_2 \in P \forall c \in C\colon p(c|p_1)=p(c|p_2)$$
+$$\forall x_1 \in P \forall x_2 \in P \forall c \in C\colon p(c|x_1)=p(c|x_2)$$
 \end{veta}
 
 \begin{dokaz}
@@ -96,7 +97,7 @@ Takto môžeme podať trochu inú definíciu absolútne bezpečnej šifry.
 Uvažujme kryptoanalytickú hru s nasledovným priebehom:
 \begin{enumerate}
 \item Útočník (A) pošle druhej strane B dva otvorené texty $p_1, p_2$.
-\item B si zvolí náhodne $b \in \{0,1\}$, náhodný $k \in K$ a pošle A: $c = E_k(p_b)$
+\item B si zvolí náhodne $b \inr \{0,1\}$, náhodný $k \in K$ a pošle A: $c = E_k(p_b)$
 \item A sa snaží zistiť z ktorého otvoreného textu $c$ vznikol. Svoj úsudok pošle ako $b'$.
 \item Ak $b' = b$, tak A uspel. V opačnom prípade neuspel.
 \end{enumerate}
