@@ -1,4 +1,8 @@
-default: pdf
+default: fast
+
+.PHONY: fast
+fast:
+	cslatex main
 
 main.dvi: */*.tex *.tex Makefile img/*
 	cslatex main
