@@ -1,7 +1,52 @@
-\section{Bezpecny vypocet viacerych ucastnikov}
+\section{Bezpečný výpočet viacerých účastníkov}
 
-\todo{porovnavanie veku}
-\todo{\url{http://www.derkeiler.com/Newsgroups/sci.crypt/2006-10/msg00665.html}}
+Uvažujme nasledujúci problém ``starých dám''. Dve dámy sa stretnú a
+by chceli zistiť, ktorá z nich je staršia.\footnote{V skutočnosti
+sa každá chce ubezpečiť, že tá druhá je staršia :-)}
+Neboli by to však dámy v svojom veku, kebyže o sebe nechcú nič prezradiť.
+Presnejšie povedané - nechcú prezradiť nič iné iba informáciu, ktorá z
+nich je staršia. Navyše budeme predpokladať, že dámy budú
+spolupracovať a jedna druhú nepodrazí.
+Teraz navrhneme protokol, ktorý túto ich dilemu vyrieši.
+
+Uvažujme, že vek môže nadobúdať len jednu z konečne veľa diskrétnych
+hodnôť (napríklad $v_A,v_B \in V = \{1,\dots,100\}$).
+Ďalej uvažujme inštanciu asymetrického šifrovacieho systému s
+veľkosťou šifrovacieho kľúča $N$. 
+Budeme požadovať, aby účastník $A$ vedel (efektívne) iba šifrovať.
+
+\begin{itemize}
+    \compactlist
+    \item $A$ zvolí $x$ -- náhodné $N$-bitové číslo.
+        Pomocou tohoto čísla budeme ``maskovať''  $v_A$.
+    \item $A \send B: c = E(x) - v_A $ (pošleme maskované $v_A$).
+    \item $B$ vygeneruje čísla $y_1, \dots, y_{100}$ tak aby
+            $y_i = D(c + i)$ ($y_{v_A} =x$, ostatné hodnoty
+            sú nepredikovateľné).
+    \item $B$ si teraz vygeneruje náhodné $N/2$ bitové prvočíslo $p$ a
+    vypočíta $z_1,\dots,z_{100}$, $z_i = y_i \mod p$.
+    Ak by náhodou existovali indexy $i,j: |z_i - z_j| < 2$, tak si
+    zvolí iné prvočíslo.
+    \item $B \send A:p$ a 100 čísel $t_1, \dots, t_{100}$ ---
+        $z_1, z_2, \dots, z_{v_B}, \,
+         z_{v_B+1}+1, z_{v_B+2}+1, \dots z_{100}+1$.
+    \item $A$ sa teraz pozrie na pravdivosť $(x \mod p = t_{v_A})$. Ak
+    tvrdenie platí, tak $v_B \ge v_A$.
+    \item $A \send B:$ výsledok porovnania
+\end{itemize}
+Je jasné, že $B$ nemá šancu sa dozvedieť nič o hodnote $v_A$ počas
+výpočtu, pretože $A$ si mohol zvoliť $x$ pre ľubovoľnú hodnotu
+$v_A$ ako $x=D(c + v_A)$ s rovnakou pravdepodobnosťou.\footnote{V
+skutočnosti musí kryptografický systém spĺňať nejaké poźiadavky
+navyše, aby to platilo, čitateľ si môže premyslieť aké}.
+Otázne teda je, či $A$ sa môže dozvedieť niečo o $v_B$.
+Na to by ale potreboval vedieť dešifrovať hodnoty $y_i$, čo sme
+zamietli v predpokladoch.
+\begin{poznamka}
+    Samozrejme, náš dôkaz ``správnosti'' by ostražitého čitateľa nemal
+    presvedčiť úplne. V takomto prípade je odporúčané nazrieť do
+    \cite{yao}.
+\end{poznamka}
 
 \todo{bezpecny vypocet funkcie}
 
