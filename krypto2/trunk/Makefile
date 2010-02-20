@@ -6,6 +6,7 @@ fast:
 
 main.dvi: */*.tex *.tex Makefile img/*
 	cslatex main
+	bibtex main
 	cslatex main
 	cslatex main
 
@@ -41,7 +42,7 @@ clean:
 	rm -f *.{log,aux}
 
 dist-clean:
-	rm -f *.{log,aux,dvi,ps,pdf,toc,bbl,blg,slo,srs,out}
+	rm -f *.{log,aux,dvi,ps,pdf,toc,bbl,blg,slo,srs,out,bak,lot,lof}
 
 backup: 
 	tar --create --force-local -zf zaloha/knizka-`date +%Y-%m-%d-%H\:%M`.tar.gz `ls -p| egrep -v /$ ` images/* code/*
