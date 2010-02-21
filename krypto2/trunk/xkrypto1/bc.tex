@@ -1,6 +1,40 @@
 \section{Bit commitment}
 
-\todo{definicia, realizacia, bezpecnost}
+Bit commitment schéma je protokol pre dvoch účastníkov, kde sa najprv účastník
+zaviaže k nejakému bitu a následne po istom čase ho odhalí.
+Formálne to môžeme definovať takto:
+
+\begin{definicia}
+Majme dve množiny $X,Y$ a funkciu $f\colon \{0,1\} \times X \to Y$, ktorú vieme
+\clqq ľahko\crqq počítať. Od $f$ požadujeme navyše ešte tieto vlastnosti:
+\begin{itemize}
+\item Zo znalosti $f(b,x)$ je ťažké určiť $b$ - vlastnosť utajenia.
+\item Je ťažké nájsť $x, y$ také, že $x \neq y$ a $f(0,x) = f(1,y)$ - vlastnosť záväznosti.
+\end{itemize}
+Potom bit commitment protokol vyzerá nasledovne:
+\begin{enumerate}
+\item $A$ zvolí $b \in \{0,1\}$ ku ktorému sa chce zaviazať a $x \inr X$
+\item $A \to B$: $y = f(b,x)$ - záväzok
+\item $A \to B$: $x$ - odhalenie, môže prísť po istom čase
+\item $B$ overí, či $y = f(0,x)$ alebo $y = f(1,x)$
+\end{enumerate}
+\end{definicia}
+
+Tento protokol môžeme realizovať viacerými spôsobmi. 
+
+\noindent{\bf{Bit commitment pomocou RSA}}
+
+Majme nejakú inštanciu RSA systému, teda trojicu $(n,e,d)$, kde účastník $b$ nepozná súkromný kľúč.
+Bit commitment realizujeme nasledovne:
+\begin{enumerate}
+\item Záväzok: $A$ si zvolí $x \inr \mathbb{Z}_n^*$ a pošle $B$: $y = x^e \pmod n$, v tomto prípade je $b$ najmenej signifikatný bit z $x$
+\item Odhalenie: $A$ pošle $x$. $B$ overí, či $x^e \pmod n = y$
+\end{enumerate}
+
+Vlastnosť utajenia je dodržaná, keďže možnosť zistiť $b$ je ekvivalentná rozbitiu RSA schémy.
+Vlastnosť záväznosti je tiež dodržaná, keďže k jednému $y$ existuje iba jedno $x$. V tomto prípade ide o nepodmienenú bezpečnosť.
+
+\todo{realizacia cez diskretny logaritmus}
 \todo{IDS pre ham cycle pomocou BC}
 
 
