@@ -42,3 +42,28 @@ vykonštruovaného.
 \todo{zvysok, blackbox simulator}
 \todo{ZK pre izomorfizmus}
 \todo{preco neizomorfixmus (ako je prezentovany) nie je ZK}
+\begin{poznamka}
+    Na tomto mieste by sme upozornili čitateľa na fakt, že nami
+    prezentovaný algoritmus v predchádzajúcej sekcii na neizomorfizmus grafov
+    nie je bezznalostný.
+    
+    Prečo? Uvažujme falošného verifikátora $V'$,
+    ktorý má graf $G$ a vie, že je izomorfný buď s $G_0$ alebo s
+    $G_1$. V tomto prípade môže využiť provera $P$ ako orákulum na
+    problém izomorfizmu grafov - jednoducho mu pošle $G$, čo je
+    validná správa a vráti sa mu index.
+
+    No dobre. A ako súvisí to, že $V'$ vie niečo zistiť s definíciou
+    bezznalosti, t.j. s existenciou simulátora? Jednoducho tak, že
+    každý polynomiálny simulátor by musel vedieť simulovať komunikáciu
+    $P$ s $V'$. Toto ale nemôže vedieť, pretože by sme vedeli v
+    polynomiálnom čase riešiť izomorfizmus grafov, čo za predpokladu
+    $P\neq NP$ nevieme. Preto dôkaz nie je bezznalostný z definície.
+    Záverom teda môžeme usudzovať, že existencia polynomiálneho
+    simulátora je naozaj ekvivalentná našej intuícii, čo to znamená
+    "bezznalostný".
+
+    Pre záujemcov o bezznalostný algoritmus pre neizomorfizmus grafov
+    odporúčame prečítať \cite{nig}, kde je uvedené rozšírenie našeho
+    postupu tak, aby $P$ nič neprezradil.
+\end{poznamka}
