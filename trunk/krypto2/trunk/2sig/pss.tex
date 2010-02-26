@@ -1,0 +1,17 @@
+\subsection{PSS - Probabilistic signature scheme}
+
+PSS je dokázateľne bezpečná (za istých predpokladov) schéma na
+digitálne podpisy. Navrhli ju páni Mihir Bellare a Philip Rogaway
+v \cite{pss}. Celá schéma je vlastne akýmsi znáhodnením hashovania - k
+správe sa pridá náhodný reťazec dĺžky \todo{} a hash sa počíta až
+potom. Samozrejme, pri overovaní hashu treba nejakým spôsobom
+vyriešiť, aby sme sa dozvedeli použitý náhodný reťazec. Ako sa ukáže
+neskôr, toto nie je až taký veľký problém ak použijeme ďalšiu
+hashovaciu funkciu.
+
+PSS má oproti doteraz spomínaným schémam jednu veľkú výhodu - pri
+dôkaze jej bezpečnosti sa ukáže "tesná" hranica. T.j., možnosť
+prelomiť PSS s pravdepodobnosťou $\eps$ priamo umožňuje lámanie RSA s
+rovnakou pravdepodobnosťou.
+
+\todo{dopisat}
