@@ -3,15 +3,74 @@
 PSS je dokázateľne bezpečná (za istých predpokladov) schéma na
 digitálne podpisy. Navrhli ju páni Mihir Bellare a Philip Rogaway
 v \cite{pss}. Celá schéma je vlastne akýmsi znáhodnením hashovania - k
-správe sa pridá náhodný reťazec dĺžky \todo{} a hash sa počíta až
+správe sa pridá náhodný reťazec dĺžky $k_0$ a hash sa počíta až
 potom. Samozrejme, pri overovaní hashu treba nejakým spôsobom
 vyriešiť, aby sme sa dozvedeli použitý náhodný reťazec. Ako sa ukáže
 neskôr, toto nie je až taký veľký problém ak použijeme ďalšiu
 hashovaciu funkciu.
 
 PSS má oproti doteraz spomínaným schémam jednu veľkú výhodu - pri
-dôkaze jej bezpečnosti sa ukáže "tesná" hranica. T.j., možnosť
+dôkaze jej bezpečnosti sa ukáže ``tesná'' hranica. T.j., možnosť
 prelomiť PSS s pravdepodobnosťou $\eps$ priamo umožňuje lámanie RSA s
 rovnakou pravdepodobnosťou.
 
-\todo{dopisat}
+
+\subsubsection{RSA-PSS}
+
+Podpisová schéma $PSS[k_0,k_1]=(GenPSS,SignPSS,VerifyPSS)$ je
+parametrizovaná dvoma hodnotami $k_0, k_1$.
+Generovanie kľúča $k$ je presne rovnaké ako v $GenRSA-FDH$.
+
+Pri podpisovaní bude náš algoritmus používať 2 hashovacie funkcie.
+Prvú si označíme $h$ a nazveme ju kompresor, pretože 
+$h:\{0,1\}^* \rightarrow \{0,1\}^{k_1}$.
+Druhá funkcia bude $g$ (nazvaná aj generátor), pričom
+$g:\{0,1\}^{k_1} \rightarrow \{0,1\}^{k-k_1-1}$.
+
+Ešte si označíme $g_1$, resp. $g_2$ ako funkciu, ktorá vracia
+prvých $k_0$ (resp. zvyšných $k-k_0-k_1-1$) bitov funkcie $g$.
+
+Na obrázku \todo{} je schematicky naznačený postup podpisovania
+podľa pseudokódu \ref{proc:signpss}
+
+% {{{ proc SignPSS
+\begin{procedure}
+    \caption{SignPSS($m$)}
+    \label{proc:signpss}
+    $r \inr \{0,1\}^{k_0}$\;
+    $w \assign h(M \concat r)$\;
+    $r^* \assign g_1(w) \xor r$\;
+    $y \assign 0 \concat w \concat r^* \concat g_2(w)$\;
+    \Return $y^d \bmod N$\;
+\end{procedure}
+%% }}}
+
+Môžeme si všimnúť, že náhodný reťazec $r$ sme neuviedli v
+``otvorenom'' tvare, ale zviazali sme ho funkciou $g_1$. Intuitívne,
+toto nám umožní zaručiť jeho integritu a zároveň máme možnosť ho
+zrekonštruovať.
+
+Overovanie podpisu je popísané v pseudokóde \ref{proc:verifypss}
+
+%%% {{{ proc VerifyPSS
+\begin{procedure}
+    \caption{VerifyPSS($m$,$x$)}
+    \label{proc:verifypss}
+    $y \assign x^e \bmod N$\;
+    rozdeľ $y$ na $b \concat w \concat r^* \concat \gamma$\;
+    $r \assign r^* \xor g_1(w)$\;
+    \eIf{$(b \ne 0) \vee (g_2(w) \ne \gamma) 
+            \vee (h(m \concat r) \ne w)$}
+    {% then
+        \Return fail\;
+    }{% else
+        \Return accept\;
+    }
+\end{procedure}
+%%% }}}
+
+\todo{nejake omacky okolo funkcnosti a preco je  to zhruba tak
+spravene}
+
+\subsubsection{Dôkaz bezpečnosti}
+\todo{dokaz bezpecnosti - tesna redukcia}

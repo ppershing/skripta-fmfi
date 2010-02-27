@@ -1,4 +1,4 @@
-%% vim: set fdm=marker:
+% vim: set fdm=marker:
 %% Original by Michal Forisek
 
 %% zakladne definicie
@@ -8,7 +8,10 @@
 \def\verify#1{\todo{verify: #1}}
 
 \def\xor{\oplus}
-\def\inr{\in_{R}}
+\def\concat{\|}
+%\def\inr{\in_{R}}
+\def\inr{\overset{\$}{\leftarrow}}
+\def\assign{\leftarrow}
 \def\send{\rightarrow}
 \def\isomorph{\cong}
 \def\nsd{NSD}
@@ -112,48 +115,6 @@
 %{\endtabularx
 %\vskip\baselineskip
 %}
-
-%%%%%%%%%%% PROSTREDIE PRE PISANIE KODU
-
-\newcounter{program}[chapter]
-\renewcommand \theprogram
-   {\ifnum \c@chapter>\z@ \thechapter.\fi \@arabic\c@program}
-\def\fps@program{tbp}
-\def\ftype@program{1}
-\def\ext@program{lop}
-\def\fnum@program{Program~\theprogram}
-
-\newenvironment{program}{\@float{program}}{\end@float}
-
-\newcounter{schema}[chapter]
-\renewcommand \theschema
-   {\ifnum \c@chapter>\z@ \thechapter.\fi \@arabic\c@schema}
-\def\fps@schema{tbs}
-\def\ftype@schema{1}
-\def\ext@schema{los}
-\def\fnum@schema{Schéma~\theschema}
-
-\newenvironment{schema}{\@float{schema}}{\end@float}
-
-\newlength{\myboxwidth}
-\myboxwidth=\textwidth \advance\myboxwidth -13pt
-
-\long\def\mybox#1{\noindent%
-\fcolorbox{black}{lgray}%
-%  {\parbox{\myboxwidth}{ \vbox { % \vskip -0.74cm 
-  {\parbox{\myboxwidth}{ \begin{center}\begin{minipage}{0.95\myboxwidth} #1 % \vskip -0.74cm 
-\end{minipage}\end{center}} }}
-
-\def\VlozKod#1#2{
-
-\begin{program}[!bhtp]
-\noindent%
-\fcolorbox{black}{lgray}%
-  {\parbox{\myboxwidth}{ \vbox { \InputC{code/#1} \vskip -0.74cm }} }
-\caption{#2}
-\end{program}
-
-}
 
 %%%%%%%%%%% PROSTREDIE PRE MOJE ITEMIZE 
 
