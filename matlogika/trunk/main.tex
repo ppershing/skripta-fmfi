@@ -1,0 +1,77 @@
+
+%% Template by Michal Forisek
+
+
+\documentclass[a4paper]{report}
+\usepackage{slovak}
+\usepackage[utf8]{inputenc}
+\usepackage{a4wide}
+\usepackage{tabularx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{epsfig}
+\usepackage{color}
+\usepackage{mathrsfs}
+\usepackage{verbatim}
+\usepackage{hyperref}
+
+\input{utility/makra.tex}
+
+\begin{document}
+
+\thispagestyle{empty}
+\begin{minipage}{0.25\textwidth}
+\includegraphics[width=0.9\textwidth]{img/komlogo-new}
+\end{minipage}
+\begin{minipage}{0.69\textwidth}
+\begin{center}
+\sc Katedra Informatiky \\
+Fakulta Matematiky, Fyziky a Informatiky \\
+Univerzita Komenského, Bratislava
+\end{center}
+\end{minipage}
+
+\vfill
+\begin{center}
+\begin{minipage}{0.8\textwidth}
+\hrule
+\bigskip\bigskip
+\centerline{\LARGE\sc Matematická Logika}
+\smallskip
+\centerline{(spísané poznámky, draft)}
+\bigskip
+\bigskip
+\centerline{\large\sc Milan Plžík, \todo{} , Peter Perešíni}
+\bigskip\bigskip
+\hrule
+\end{minipage}
+\end{center}
+\vfill
+{~}
+\hfill verzia zo dňa {\bf\today} 
+\eject % EOP i
+
+\section*{Úvod}
+
+Tieto poznámky obsahujú študijné materiály
+k predmetu \emph{Matematická logika}
+na Fakulte matematiky, fyziky a informatiky UK.
+
+Základ poznámok bol spísaný podľa prednášky doc. Eduarda Tomana v roku 2009.
+Poznámky ale nie sú oficiálny študijný materiál, preto autori neručia
+žiadnym spôsobom za ich aktuálnosť či vhodnosť. Navyše, obsah prednášky sa
+počas rôznych rokov môže meniť a preto je silne odporúčané dopísať si
+prípadné rozdiely medzi poznámkami a prednáškou.
+
+Aby sme umožnoli jednoduchšie spravovanie a udržali poznámky dlhšie
+aktuálne, rozhodli sme sa verejne publikovať zdrojové kódy na stránke
+\url{http://code.google.com/p/matlogika}. Ak máte akékoľvek pripomienky,
+návrhy, opravy, môžete nám ich prostredníctvom tejto stránky oznámiť.
+
+Za autorov, PPershing.
+
+\tableofcontents
+
+\input{all.tex}
+
+\end{document}
