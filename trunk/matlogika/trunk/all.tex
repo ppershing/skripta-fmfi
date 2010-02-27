@@ -1,0 +1,2814 @@
+\chapter{Dokončenie úvodu do matematickej logiky}
+
+\todo{prenexne, skolemov tvar}
+
+\chapter{Matematická logika}
+
+\section{Pravdivosť a dokázateľnosť}
+\subsection{Veta o úplnosti}
+
+\paragraph{Definícia:} Nech $L$ je jazyk prvého rádu a $A$ je formula jazyka
+$L$. Hovoríme, že formula $A$ je \emph{logicky platná}, označujeme $\models A$,
+ak je splnená v ľubovoľnej realizácii jazyka $L$.
+$$
+\begin{array}{lll}
+m & \models & A[e] \\
+  & \models & A \\
+ ~ & \models & A \\
+\end{array}
+$$
+
+\paragraph{Definícia:} Nech $L$ je jazyk, prvého rádu a $T$ je množina formúl
+jazyka $L$. Hovoríme, že $T$ je teória 1. rádu predikátovej logiky s jazykom
+$L$ (množina formúl $T$ je množina axióm teórie).
+
+\paragraph{Definícia:} Nech $T$ je teória v jazyku $L$, $m$ je realizácia jazyka
+$L$. Hovoríme, že $m$ je modelom teórie $T$, ak pre každú formulu $A$ patriacu
+$T$ platí $\models A$.
+\par Hovoríme, že formula $A$ je sémantickým dôsledkom (vetou teórie) množiny formúl $T$,
+označujeme $T \models A$, ak $A$ je splnená v každom modeli teórie $T$.
+
+\paragraph{Príklad:}
+$\varphi, x, y, z, <$
+\begin{enumerate}
+	\item $(x,y) \in \varphi  \implies (y,x) \notin  \varphi$
+	\item $(x,y) \in \varphi \land (y,z) \in \varphi \implies (x,z) \in \varphi$
+	\item $x \neq y \implies (x,y) \in \varphi \lor (y,x) \in \varphi$
+\end{enumerate}
+
+je modelom pre teóriu ostrého usporiadania.
+Ďalšie príklady: neostré usporiadanie: antisymetrickosť, tranzitívnosť,
+reflexívnosť, trichotomockosť.
+
+
+\paragraph{Príklad:} Teória grúp.
+
+\begin{enumerate}
+	\item $((x+y)+z) = (x+(y+z))$
+	\item $(x+0) = (0+x) = x$
+	\item $x, -x, x+(-x) = 0 = (-x)+x$
+\end{enumerate}
+
+
+\paragraph{Príklad:} Elementárna aritmetika.
+$$+, \cdot, 0, S(x) = x+1, N^+ $$
+\begin{enumerate}
+	\item $\neg S(x) = 0$
+	\item $S(x) = S(y) \implies x=y$
+	\item $x+0 = x$
+	\item $x+S(y) = S(x+y)$
+	\item $x \cdot 0 = 0$
+	\item $x\cdot S(y) = ((x\cdot y) + x)$
+\end{enumerate}
+
+Pätica v zátvorkách je \emph{štandardný model} elementárnej aritmetiky:
+$$<N^+, +, \cdot, S, 0>$$
+
+\par
+Pojem platnej formuly je prirodzené zovšobecnenie pojmu \emph{logicky platnej
+formuly}.
+
+Ďalším cieľom je stotožniť dokázateľné formuly s tautológiami.
+
+\paragraph{Veta (o korektnosti):} Ak $T$ je teória v jazyku $L$ a ak formula $A$
+je taká, že $T \vdash A$, potom $T \models A$.
+\paragraph{Dôkaz:} Nech $A_1, A_2, \ldots A_n$ je odvodenie (dókaz) formuly $A$
+z predpokladov $T$ (v teórii $T$). $A_1, A_2, \ldots A_n(A)$.
+\par $m$ nech je ľubovoľný model teórie $T$. Ukážeme (indukciou podľa dĺžky
+dôkazu), že platí $m \models A_i$ pri predpoklade, že pre $A_j, j < i$ platí
+$m \models A_j$.i
+
+Do dôkazu sa $A_i$ môže dostať niekoľkými spôsobmi:
+\begin{enumerate}
+	\item $A_i \in T$, m -- model $T$, potom $m \models A_i$
+	\item $A_i$ sa dostane do dôkazu ako schéma axiom predikátovej logiky:
+	\begin{enumerate}
+		\item $A_i$ je axioma výrokovej logiky -- je poskladaná z
+		atomických formúl a logických spojok $\neg$ a $\implies$. Potom
+		$A_i$ je tautológia výrokovej logiky (ak formula je tautoĺógia,
+		jej pravdivostná hodnota nezávisi od ohodnotenia premenných, a
+		$m \models A_i$, teda $m \models A_i[e]$).
+		
+		\item $A_i$ je axioma špecifikácie, teda je tvaru $A_i: (\forall
+		x) B \implies B_x[t]$, $t$ je substitúcia za $x$ do $B$. $m
+		\models A_i$.
+		\par
+		Zaujíma nás prípad, kedy $(\forall x) B$ je pravdivý. To
+		znamená, že pre ľubovoľné ohodnotenie platí $B[e(x/m)]$, teda
+		$e(x)=m$. Tvrdenie zo zimného semestra: $$m \models A_{x_1,
+		\ldots x_n}[t_1, \ldots t_n][e] \Leftrightarrow m \models
+		A[e(x_1/m_1, \ldots x_n/m_n)]$$ a $$t_i[e] = m_i.$$ 
+
+		Ak položím tvrdenie $B_x[t][e]$, zmení sa to na $B[e(x/m)]$ a
+		táto formula je pravdivá v $m \models B[e(x/m)]$.
+
+		\item $A_i: (\forall x) (B \implies C) \implies (B \implies
+		(\forall x) C)$ a $x$ nie je voľná v $B$. Mali by sme dokázať,
+		že platí $m \models A_i$. Formula  $m \models (B \implies
+		C)[e(x/m)]$ platí, pozeráme sa na $(B \implies C)$. To je
+		ekvivalentné s $\neg B \lor C$. Dôležitý je tiež predpoklad, že
+		$x$ nie je voľná v $B$, a teda nezávisí od ohodnotenia viazanej
+		premennej. Keď je ľavá časť axiomy pravdivá, musí byť aj pravá
+		(TODO: spresniť!) $m \models A_i$.
+	\end{enumerate}
+	\item $A_i$ je niektorá axioma rovnosti:
+	\begin{enumerate}
+		\item $A_i: x=x$, potom $m\models x=x$, $A_i[e]$ a $m=m$.
+		\item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
+		f(x_1, \ldots, x_n) = f(y_1, \ldots, y_n).$. Zaujíma nás prípad,
+		keď  $e(x_i/m_i)$ a $e(y_i/m_i)$. Získavame potom zobrazenie na
+		$f_m(m_1, \ldots m_n)$ a rovnosť platí.
+		\item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
+		P(x_1, \ldots, x_n) = P(y_1, \ldots, y_n).$. Zaujíma nás opäť
+		prípad, keď $x_i$ aj $y_i$ reprezentujeme rovnakým indivíduom:
+		$e(x_i/m_i)$ a $e(y_i/m_i)$.  $P_m(m_1, \ldots, m_n)$, $(m_1,
+		\ldots m_n) \in P$ -- buď je v relácii, alebo nie je.
+	\end{enumerate}
+	\item Odvodzovacie pravidlá, $A_i: A_{j_1}, A_{j_2}$, pričom $j_1 < i$ a
+	$j_2 < i$.
+	\begin{enumerate}
+		\item $A_{j_2}. A_{j_1} \implies A_j$, $A_{j_1}$ a $m \models
+		A_{j_1}$, $m \models A_{j_2}$, potom $m \models A_i$.
+		\item $A_i: \forall A_j$, potom $m \models A_j[e(x/m)]$ a $m
+		\models A_j$.
+	\end{enumerate}
+
+\end{enumerate}
+
+\paragraph{Pokračovanie vety o korektnosti:}
+
+\paragraph{Príklad:} Uvažujme elementárnu aritmetiku, ktorá má svoj štandardný
+model. Uvažujme formulu $x=0$ v $N$. 
+
+$$
+\begin{array}{l}
+	e(x) = m \neq 0 \\
+	A: x=0 \\
+	m \notmodels A[e] \\
+\end{array}
+$$
+
+$$
+\begin{array}{l}
+	A: \neg x=0 \\
+	e(x)=0 \\
+	m \notmodels A[e] \\
+\end{array}
+$$
+
+Formula ani jej negácia nie sú dokázateľné v elementárnej aritmetike.
+
+
+\paragraph{Poznámka:} Vetu o dedukcii v predikátovej logike nemožno vysloviť pre
+ľubovoľnú formulu.
+
+$$ 
+\begin{array}{ll}
+	A: & \neg x=0 \\
+	A: & \neg y=0 \\
+\end{array}
+$$
+
+$$
+	\neg x=0 \vdash \neg y=0
+$$
+
+Môžem podľa vety o dedukcii napísať, že $ \vdash \neg x=0 \implies y=0$?
+
+$$
+\begin{array}{l}
+	A \implies B \\
+	e:	\\
+	e(x)=0	\\
+	e(x)= m \neq 0	\\
+	m \notmodels (A \implies B)[e]	\\
+\end{array}
+$$
+
+\paragraph{Dôsledok:} Ak teória $T$ v jazyku $L$ má model $m$, potom $T$ je
+bezposporná.
+\paragraph{Dôkaz:} Nech $m$ je model $T$ a $A$ je ľubovoľná uzavretá formula
+jazyka $L$. Potom práve jedna z formúl $A$, $\neg A$ je pravdivá v modeli $m$.
+Tá, ktorá nie je pravdivá, nie je ani dokázateľná (podľa vety o korektnosti).
+
+\paragraph{}
+\par Tento výsledok hovorí, ze ak máme vyšetriť bezospornosť nejakej teórie,
+treba nájsť jej model. Keď si zoberieme predikátovú logiku:
+
+\par Každá realizácia jazyka predikátovej logiky je modelom (neskôr nám bude
+stačiť zobrať model, ktorý má jedno jediné indivíduum).  
+
+\par
+Syntaktický prístup ku dôkazu bezospornosti: Teóriu, ktorej bezospornosť chceme
+dokázať, transformuje pomocou istých pravidiel do teórie, o ktorej vieme, že je
+bezsosporná  (my budeme predikátovú logiku transformovať do výrokovej logiky).
+
+\par $L$ -- jazyk prvého rádu, $c$ -- konštanta taká, že $c \notin L$. $L'$
+vznikne z $L$ pridaním $c$. Ľubovoľný term nahradíme konštantou $c$, z formuly
+vynechávame všetky kvantifikátory, vynechávame premenné bezprostredne spojené s
+kvantifikátorom.
+
+\par Každej formuli $A$ na jazyku $L$ priradíme formulu $A^*$ na jazyku $L'$:
+\begin{enumerate}
+	\item ak A je tvaru $A: P(t_1, \cdots t_n)$, tak $A^*: P(c, c, \cdots,c)$.
+	\item $A: B \square C$, potom $A^*: B^* \square C^*$.
+	\item $A: \neg B$, potom $A^*: \neg B^*$
+	\item $A: (Qx) B$, potom $A^*: B^*$.
+\end{enumerate}
+
+Ak $L$ je jazyk bez rovnosti a $\vdash^L A$, potom $A^*$ je tautológia. Ak $L$
+je jazyk s rovnosťou a $\vdash^L A$, potom $A^*$ je tautologický dôsledok $c=c$.
+
+\par Tvrdíme, že pre žiadnu formulu $A$ nie je $\vdash A$ aj $\vdash \neg A$. Ak
+by to platilo, dostali by sme sa do sporu, že vo výrokovej logike je $\vdash
+A^*$ aj $\vdash \neg A^*$.
+
+
+\section{Veta o úplnosti}
+\paragraph{Veta (G\"odel, 1):} Nech $T$ je teória v jazyku $L$ a ak $A$ je
+ľubovoľná formula jazyka $L$, potom $T \vdash A \iff T \models A$.
+
+\paragraph{Veta (G\"odel, 2)} Teória $T$ je bezosporná práve vtedy, ked $T$ má
+model.
+
+\paragraph {Veta (o korektnosti):}
+	$$T \vdash A \implies T \models A$$.
+
+\paragraph{Príklady vety o korektnosti:}
+Ak teória $T$ má model, tak je bezosporná.
+
+\paragraph{Dôkaz:}
+$\mbox{Veta 2} \implies \mbox{Veta 1}$. Veta o dedukcii mala nasledovný
+dôsledok:
+\par Ak máme teóriu $T$, $A$ je jej formula a $A'$ je uzáver formuly $A$, tak $T
+\vdash A \iff T \union \{ \neg A' \} \mbox{ je sporná teória}$, podľa vety 2 $T
+\union \{ \neg A' \}$ nemá model.
+
+\par Toto znamená, že v každom modeli teórie $T$ je pravdivý uzáver $A'$. $T
+\models A' \Rightarrow T \models A$. Z platnosti vety 2 vyplýva veta 1.
+
+\par Budeme sa snažiť zostrojiť model pre teóriu, ktorá je bezosporná. Majme
+bezospornú teóriu v jazyku $L$. Potrebujeme relácie, zobrazenia a $M$ --
+univerzum. K dispozícii máme len syntaktické prostriedky teórie. Do úvahy
+prichádzajú iba termy bez premenných -- majú jednoznačnú realizáciu (sami sebe
+budú realizáciou).
+
+$$A[e] \iff T \vdash A $$.
+
+Možné problémy pri konštrukcii modelu:
+\begin{enumerate}
+	\item Jazyk $L$ neobsahuje žiadne konštanty (a teda žiadne termy bez
+		premenných).
+	\item Ak jazyk $L$ bude jazyk s rovnosťou, môže sa stať, že v teórii $T$
+		bude $T \vdash t=s$, ale $t$ a $s$ sú rôzne termy bez
+		premenných.
+	\item Nech $m$ je ľubovoľná realizácia jazyka $L$ a $A$ je uzavretá
+		formula jazyka $L$. Potom práve jedna z formúl $A$, $\neg A$ je
+		pravdivá, ale žiadna z nich nemusí byť dokázateľná v $T$.
+	\item Môže sa stať, že formula $(\exists x)B$ je dokázateľná v teórii
+		$T$, ale pre žiaden term $t$ bez premenných formula $B_x[t]$ nie
+		je dokázateľná v $T$. To znamená, že nie je ani pravdivá a podľa
+		Tarského definície pravdepodobnosti $(\exists)B$ je term $T$.
+\end{enumerate}
+
+Ako odstránime tieto nedostatky:
+Odstránenie bodu 2 je jednoduché --  faktorizáciou. Body 1 a 4 riešime
+rozšírením o konštanty. Tretí bod sa rieši tzv. rošírením teórie (Henkinovským).
+Budú to tzv.  konzervatívne teórie (na pôvodnom jazyku nezískame žiadne nové
+teorémy).
+
+\paragraph{Definícia:} Hovoríme, že teória $T$ s jazykom $L$ je \emph{úplná}, ak
+je bezosporná teória a pre ľubovoľnú uzavretú formulu $A$ na jazyku $L$ buď $A$,
+buď $\neg A$ je dokázateľná v $T$.
+
+\par Označím $T_h(m)$ všetky pravdivé uzavreté formuly, tak $T_h$ je úplná
+(nemusíme brať otvorené formuly -- napr. $x=0$ v aritmetike nemusí byť pravdivé,
+lebo závisí od ohodnotenia $x$).
+
+\paragraph{Definícia:} Hovoríme, že teória $T$ s jazykom $L$ je \emph{Henkinova}, ak
+pre ľubovoľnú uzavretú formulu $(\exists x)B$ jazyka $L$ platí $$ T \vdash
+(\exists x)B \implies B_x[c]$$ pre nejaké $c$ -- konštantu.
+
+\paragraph{Lema:} Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
+\paragraph{Dôkaz:} Nech $L$ je jazyk teórie $T$, $\tau$ je množina všetkých
+termov jazyka $L$ bez premenných. Na množine $\tau$ definujem reláciu
+ekvivalencie nasledovne:
+$$
+	t_1, t_2 \in \tau
+	t_1 \equiv t_2 \iff T \vdash t_1 = t_2
+$$
+Rovnosť je reflexívna, symetrická, tranzitívna, teda týmto spôsobom definovaná
+relácia je relácia ekvivalencie a rozdeľuje nám množinu $\tau$ na triedy
+ekvivalencie:
+
+$$
+	[t] = \{ s \in \tau, t \equiv s\}
+$$
+
+Univerzum budú tvoriť termy bez premenných.
+
+\paragraph{Lema:} Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
+\paragraph{Dôkaz:} $M$ bude mnomžina všetkých termov bez premenných. Na tejto
+množine definujeme reláciu $\equiv$ tak, že 
+$$ t_1 \equiv t_2,~t_1, t_1 \in \tau,~T \vdash t_1=t_2 $$
+$$[t]=\{ s\in \tau, s \equiv t \} $$
+
+Nech $f$ je $n$-árny funkčný symbol. $[t_1], [t_2], \ldots, [t_n] \in M$, pričom
+platí $f_m([t_1], \ldots, [t_n]) = [f(t_1, \ldots t_n)]$. $P$ je $n$-árny
+predikátový symbol rôzny od $=$. $([t_1], \ldots [t_n]) \in P_m \iff T \vdash
+P(t_1, \ldots, t_n)$.
+
+\paragraph{Poznámka:} Doteraz sme pracovali s $[\ldots]$. Výsledok sa nezmení,
+ak zoberiem $s_1 \in [t_1], \ldots s_n \in [t_n]$. Nezávisí to od reprezentanta
+danej triedy.
+\par
+$$ s_1, \ldots s_n $$
+$$ s_i \in [t_i], i = 1, \ldots n $$
+$$ [t_1], \ldots, [t_n]) \in P_m \iff T \vdash P(s_1, \dots s_n) $$
+
+\par
+$$
+\begin{array}{rll}
+x_1, x_2, &\ldots,& x_n \mbox{-- premenné}.	\\
+e(x_i) &=& t_i, i=1,\ldots,N	\\
+t[e] &=& [t_{x_1,\ldots,x_n}][t_1,\ldots, t_n]	\\
+t[e] &=& [t] \\
+\end{array}
+$$
+
+$A$ -- ľubovoľná uzavretá formula z $L$, potom $m \models A \iff T \vdash A$.
+$P(t_1, t_2, \ldots t_n)$ -- atomická formula,  uzavretá, $t_1. \ldots t_n$ sú
+termy bez premenných.
+
+$m \models A \iff ([t_1], \ldots, [t_n]) \in P_m \iff T \vdash P(t_1,\ldots
+t_n)$ pre ľubovoľné ohodnitenie.
+
+\par $A: t_1 = t_2$. $m \models t_1 = t_2 \iff [t_1] = [t_2] \iff T \vdash t_1 =
+t_2$.
+
+\par $A: \neg B$. Indukčný predpoklad: pre $B$ bolo tvrdenie dokázané ($m\models
+B \iff T \vdash B)$. Formula $A$ je pravdivá v $m$ práve vtedy, keď formula $B$
+nie je pravdivá $B$ nie je pravdivá, $T \nvdash B, T \vdash \neg B$.
+
+\par $A. B \implies C$, pričom $B$ a $Cc$ sú dokázané podľa indukčného
+predpokladu. Ak platí $m \models B \implies C$, potom $m \models \neg B \lor m
+\models C$. $T \vdash \neg B \lor T \vdash C$.
+
+$$ T \vdash B \implies C $$
+$$ \vdash C \implies (B \implies C)$$
+Opačná implikácia:
+$$T\vdash B\implies C\Rightarrow m \models B \implies C$$
+
+Teória $T$ je úplná teória a $B \implies C$ je uzavretá. Pre každú uzavretú
+formulu platí, jedna z možností $T \vdash \neg B$ (potom $m \models \neg B$)
+alebo $T \vdash B$, a z toho vyplýva, že $T \vdash C$, a teda $m \models C$.
+Tvrdenie je teda dokázané.
+
+$$m \models A \iff T \vdash A$$
+\par Predpokladajme, že formula $A$ je v tvare $A: (\forall x) B$. Pre každú
+inštanciu formuly $B$ tvrdenie platí, $\vdash (\forall x) B \implies B_x[t]$
+(axióma špecifikácie). Potom aj $T \vdash B_x[t]$ (lebo teória je Henkinova). $m
+\models B[e(x/t)]$.
+
+\par Ak je pravdivá negácia, potom $T \vdash \neg A$, čo znamená, že $(\exists
+x) \neg B$. $T \vdash (\exists x) \neg B \implies B_x[c]$, a to znamená, že $T
+\vdash \neg B_x[c]$.
+
+\par Nech $A$ je ľubovoľná formula z teórie $T$. Pre ňu platí, že $T \vdash A$
+(predpoklad). Potrebujem dokázať, že $T \vdash A \iff m \models A$. Zoberiem si
+$A'$ -- uzáver formuly $A$. Na $A'$ sa vzťahuje tvrdenie, ktoré sme už dokázali,
+a teda $m \models A' \iff T \vdash A'$. Podľa vety o uzávere:
+$m \models A \iff  m\models A' T \vdash A' \iff T \vdash A$
+
+\par Pre ľubovoľnú teóriu, ktorá je idealizovaná (Henkinova a úplná), viem
+zostrojiť model.
+
+\section{Veta o kompaktnosti}
+
+Budeme definovať rozšírenia (ktorá ani nepomôžu, ani neuškodia :-). (Henkinova
+veta, Lindenbaumova veta)
+
+\paragraph{Definícia:} Jazyk $L'$ je \emph{rozšírením jazyka} $L$, ak každý
+špeciálny symbol jazyka $L$ (prípadne aj symbol $=$) je v jazyku $L'$ obsiahnutý
+s rovnakým významom a s rovnakou árnosťou.
+
+\paragraph{Príklad:} $L'$ s rovnosťou a špeciálnymi symbolmi $<$ a $0$. Jazyk
+$L$ má symboly $<$ a $=$. Jazyk $L'$ je rozšírením jazyka $L$
+
+\paragraph{Definícia:} Majme teóriu $T'$ s jazykom $L'$. Hovoríme, že je
+rozšírením teórie $T$ s jazykom $L$, ak platí, že $L'$ je rozšírením jazyka $L$
+a každá formula $A$ na jazyku $L$, $T \vdash A, T' \vdash A$.
+\paragraph{Veta (Henkinova):}
+
+$$ \vdash (\exists x) \neg B \implies \neg B_x[c] $$
+$$ T \vdash  \neg B_x[c] $$
+$$ m \models  (\forall x) B \iff T (\forall c) B $$
+
+\par Relačná štruktúra $<M, P_m, t_m>$ -- model pre množinu formúl $T$. Vezmeme
+ľubovoľnú formulu $A \in T$ a platí $m \models A$, potom $T$ je modelom.
+
+\par $T \vdash A$. $A'$ -- uzáver A. $$ m \models A' \iff T \vdash A'$$. Ak v
+modeli $m$ je splnená formula $A'$, potom musí byť splnená aj $A$. Štruktúra,
+ktorú sme uvažovali, je modelom pre našu teóriu.
+
+\paragraph{Záver:} Pre idealizovanú teóriu viem vytvoriť model.
+
+\par Ďalšou úlohou je rozšíriť bezospornú teóriu do úplnej a Henkinovskej.
+
+\paragraph{Príklad (čo je to model):} Teória grúp -- je to teória s rovnosťou a
+používa špeciálny symbol $+$ a existuje v ňom neutrálny prvok. Axiomy:
+
+$$\forall x,y,z (x+y)+z = x+(y+z)$$
+$$(x+0) = (0+x) = x$$
+$$(x+(-x)) = ((-x)+x) = 0$$.
+
+\par Ak si vezmeme relačnú štruktúru $m=<N^+,0,+>$, táto realizuje jazyk teórie
+grúp, ale nie je modelom (nie všetky axiomy nie sú splnené). Pokiaľ ale vezmeme
+$m=<Z,0,+>$, táto množina tvorí model teórie grúp.  
+
+\par Máme daný jazyk $L$, jazyk $L'$, ktorý je rozšírením $L$ (obsahuje každý
+symbol z $L$ s rovnakou hodnotou a árnosťou). Vezmime jazyk $L= \{0, 1, +,
+\cdot \}$. Ak nad týmto jazykom budeme pridávať axiómy, môžeme získať teórie ako
+teória okruhov, teória oborov integrity, teória telies, \ldots . Zistíme, že
+teória telies je rozšírenie teórie oborov integrity a tie sú rozšírením teórie
+okruhov. 
+
+\par Ak máme teóriu $T$, $T'$ je rozšírenie $T$ a je bezosporná. Potom teória
+$T$ je taktiež bezosporná. Ak by sme pripustili, že teória $T$ je sporná, potom
+by sa našla taká formula, že $T \vdash A$ aj $T \vdash \neg A$, z čoho vyplýva
+$T' \vdash A$ aj $T' \vdash \neg A$.
+
+\paragraph{Definícia:} Majme teóriu $T$ a teóriu $T'$. Hovoríme, že $T'$ je
+\emph{konzervatívne rozšírenie} teórie $T$, ak $T'$ je rozšírenie $T$ a pre
+každú formulu $A$ na jazyku $L$, pre ktorú platí, že v $T'$ je dokázateľná tá
+formula implikuje, že v $T$ je taktiež dokázateľná.
+
+\paragraph{Tvrdenie:} $T$, $T'$ je konzervatívne rozšírenie $T$, potom $T$ je
+bezosporná vtedy a len vtedy, keď $T'$ je bezosporná. Vyplýva to z toho, že ak
+zoberieme konzervatívne rozšírenie, pre ľubovoľnú formulu pôvodného jazyka
+platí, že:
+$$ T' \vdash_L A \Rightarrow T \vdash A$$.
+
+\paragraph{Veta (Henkinova):} K ľubovoľnej teórii $T$ môžeme zostrojiť Henkinovu
+teóriu $T_H$, ktorá je konzervatívnym rozšírením teórie $T$.
+
+\paragraph{Dôkaz:} Teóriu $T$ rozšírime a priradíme k nej teóriu $T_H$ tak, že
+jednak rozšírime jazyk teórie a jednak pridáme axiómy. Nech teória $T$ má jazyk
+$L$. Budeme tvoriť jazyk rozšírený jazyk $L_H$ (budeme pridávať konštanty):
+
+\textbf{<skontroluj, malé písmená>}
+
+\par Vezmime si formulu $A$ napísanú v jazyku $L$, ktorá má jedinú premennú $x$
+priradíme jej premenné $c_A$ a $c_{\neg A}$ a nasledovné axiomy: 
+
+$
+\begin{array}{lll}
+\mbox{(*)} & (\exists x) A \implies A_x[c_A] & (H1) \\
+\mbox{(**)} & A_x{c_{\neg A}} \implies (\forall x) A & (H2) \\
+\end{array}
+$
+
+Stačila by nám aj jedna konštanta:
+$$B: \neg A$$
+$$ (*) (\exists x) \neg A \implies \neg A_x[c_{\neg A}]$$
+$$\neg \neg A_x[c_{\neg A}] \implies (\forall x) \neg \neg A$$
+$$A_x[c_{\neg A}] \implies (\forall x) A$$
+
+Alebo:
+$$B: \neg A$$
+$$\neg A_x[c_{??} \implies (\forall x) \neg A$$
+$$(\exists x) A \implies A_x[c_A]$$
+\textbf{</skontroluj, malé písmená>}
+
+\par $C_1$ bude množina všetkých $c_A$ a $c_{\neg A}$. Týmito konštantami
+rozšírime jazyk. Induktívne pokračujeme ďalej a podobne vytvárame množinu $C_2$
+(zoberieme ľubovoľnú formulu $A$ nad rozšíreným jazykom, ktorá mala jedinú voľnú
+premennú $x$ a obsahovala aspoň jednu konštantu prvého rádu).
+Pridané konštanty budeme nazývať konštanty druhého rádu. Pokračujeme až po
+$C_n$.
+
+\par Vezmeme formuly, ktoré majú jedinú voľnú premennú $x$ a obsahujú nejakú
+pridávanú konštantu rádu $n$.
+
+\par
+$$C_1 \union C_2 \union \ldots C_n \union C_{n+1} = L(C)$$. 
+Teóriu $T_H$ bude tvoriť jazyk $L(C)$ a pridáme všetky axiomy, ktoré sme pridali
+a tie, ktoré tam už boli. Je ihneď zrejmé, že $T_H$ je rozšírenie teórie $T$.
+Potrebujeme ukázať, že $T_H$ konzervatívne rozšírenie teórie $T$.
+
+$T_H$ -- konzervatívne rozšírenie, teda keď zoberiem formulu $A$ na jazyku $L$,
+musí platiť:
+$$ T_H \vdash A \implies T \vdash A$$
+
+Nech platí, že v $T_H$ je dokázateľná teória, $B_1, B_2, \ldots B_n$ -- všetky
+axiomy z $H$ a môžem predpokladať, že všetky sú jednoduché. Platí, že:
+$$ T, B_1, \ldots B_n \vdash A $$. Môžeme použiť vetu o dedukcii:
+
+$$ T \vdash B_1 \implies B_2 \implies \ldots B_n \implies A $$.
+
+Môžeme ich poprehadzovať tak, že $B_1$ obsahuje koštantu maximálneho rádu. Nech
+$B_1$ je tvaru $(\exists x) D \implies D_x[c_D]$, pričom $C_D$ nie je je použitá
+v $B_2, \ldots, B_n$. Použijeme vetu o konštantách a dostávame, že $T \vdash
+((\exists x) D \implies D_x[c_D] ) \implies (B_2 \implies \ldots \implies B_n
+\implies A)$.
+
+\par Ak $T \vdash A \implies B$, potom $T\vdash (\exists x) A \implies B$.
+$$ T\vdash (\exists w) ((\exists x)D \implies D_x[w]) \implies (B_2 \implies
+\ldots \implies B_n \implies A)$$
+
+Použili sme pravidlo zavedenia existenčného kvantifikátora. Ďalej použijeme
+prenexnú operáciu $(Qx) (A\implies B) \iff (A\implies (Qx)B)$ a $x$ nie je voľná
+v $A$. V $T$ je dokázateľné:
+$$T \vdash ((\exists x) D \implies (\exists w)D_x[w]) \implies B_2 \implies \ldots \implies B_n \implies A$$
+
+Použijeme vetu o variantoch a dostávame:
+$$ T \vdash ( \exists x ) D \implies (\exists w) D_x[w] $$
+$$ T \vdash B_2 \implies B-3 \implies \ldots \implies B_n \implies A $$
+$$ T \vdash A$$
+
+Ukázali sme, že $T_H$ s jazykom $L(C)$ je konzervatívne rozšírenie jazyka $L$.
+
+\paragraph{Veta (Lindenbaum):} Ak $T$ je teória s jazykom $L$ a $T$ je
+bezosporná, potom existuje úplné rozšírenie $T'$ s jazykom $L$.
+
+Ak teória $T$ bude bezosporná, potom aj $T_H$ bude bezosporná.
+
+\paragraph{Dôkaz:} Nech $\mathcal{S}$ je množina všetkých uzavretých formúl jazyka $L$.
+Ďalej definujeme $\mathcal{B} \{ S \mid S \subseteq \mathcal{S}, T \union S
+\mbox{je bezosporná}\}$. $\mathcal{B}$ je čiastočne usporiadaná na $\subseteq$.
+Množina $\mathcal{B}$ má konečnú vlastnosť -- keď zoberiem ľubovoľnú podmnožinu
+$S \subseteq \mathcal{S}$, bude platiť $$ S \in \mathcal{B} \iff S' \in
+\mathcal{B}, S' \mbox{ je konečná}$$
+
+
+\section{Prednáška 10.3.2009}
+
+\par\textbf{Zapísal:} P. Struhár
+
+\par Dostali sme sa do toho  kroku, že máme bezospornú teóriu, ktorú je treba zúplniť.
+To sme urobili \emph{Lindenbaumovou vetou\footnote{bolo už na predchádzajúcej prednáške}}.
+
+\paragraph{Veta (Lindenbaum):} Ak $T$ je teória s jazykom $L$ a $T$ je
+bezosporná, potom existuje úplné rozšírenie $T'$ s jazykom $L$.
+
+Ak teória $T$ bude bezosporná, potom aj $T_H$ bude bezosporná.
+
+\paragraph{Dôkaz:} Nech $\mathcal{S}$ je množina všetkých uzavretých formúl jazyka $L$.
+Ďalej definujeme $\mathcal{B} \{ S \mid S \subseteq \mathcal{S}, T \union S
+\mbox{ je bezosporná}\}$. $\mathcal{B}$ je čiastočne usporiadaná na $\subseteq$.
+Množina $\mathcal{B}$ má konečnú vlastnosť -- keď zoberiem ľubovoľnú podmnožinu
+$S \subseteq \mathcal{S}$, bude platiť $$ S \in \mathcal{B} \iff S' \in
+\mathcal{B}, S' \mbox{ je konečná}, S' \subseteq S$$
+
+ Potrebujeme ukázať, že $\mathcal{S} \subseteq \mathcal{B}\times\mathcal{B}$ je čiastočné usporiadanie, čiže je
+
+\begin{itemize}
+\item reflexívna
+\item antisymetrická
+\item tranzitívna.
+\end{itemize}
+
+Reflexívnosť:
+$$ \forall S \in \mathcal{B}: (S,S) \in \mathcal{S}$$
+
+Antisymetrickosť:
+$$ (S',S") \in \mathcal{S} \land (S",S') \in \mathcal{S} \implies S' = S"$$
+$$ t.j. S' \subseteq S" \land S" \subseteq S' \implies S' = S"$$
+
+Tranzitívnosť dokážeme analogicky.
+
+$\mathcal{B}$ je čiastočne usporiadaná inklúziou.
+$$\emptyset \in \mathcal{B}, \mbox{ lebo } T \union \emptyset = T$$
+Ak by $\emptyset$ nebola v $\mathcal{B}$, potom by $T$ bola sporná.
+
+Množina $\mathcal{B}$ má konečnú vlastnosť:
+ $$S \in \mathcal{S}, S \in \mathcal{B} \iff \forall \textrm{konečná }S' \subseteq S, T \union S' \textrm{ je bezosporná, teda }S' \in \mathcal{B}.$$
+
+$\Rightarrow:$
+
+$$ S \in \mathcal{B} \implies T \union S  \mbox{ je bezosporná}$$
+$$ S' \subseteq S, S' \mbox{ je konečná}, T \union S' \mbox{ je bezosporná}\implies S' \in \mathcal{B}$$
+
+$\Leftarrow:$Obrátene: Predpokladajme, že $S'$ je ľubovoľná konečná podmnožina $S$, $T \union S'$ je bezosporná, $S' \in \mathcal{B} \implies S \in \mathcal{B}$.
+
+Tvrdenie dokážeme sporom. Predpokladajme, že $S$ nepatrí do $B$. Potom $T \union S$ je sporná, čiže pre ľubovoľnú dokázateľnú formulu A, $\vdash \neg(A \implies A)$.
+
+Nech $A_1, A_2, \cdots A_n$ je dôkaz (odvodenie) $\neg(A \implies A)$. Nech $B_1, B_2, \cdots B_m$ sú tie, ktoré sa v tom dôkaze vyskytujú a patria do $S$. Tvrdíme, že $m>=1$. Prečo? Inak by bola $T$ sporná.
+
+$S'=\{B_1 ... B_m\}$ je konečná a nenachádza sa v množine $\mathcal{B} \implies$ SPOR (Jedine, kde mohol vzniknúť, je pri predpoklade $S \notin \mathcal{B} )\footnote{poznámky Lukáša H.}$
+
+\subsection{Princíp maximality}
+
+\paragraph{Definícia princípu maximality.}
+
+Každá neprázdna neprázdna podmnožina $\mathcal{P}(\mathcal{S})$ s konečnou vlastnosťou má maximálny prvok vzhľadom na inklúziu.
+
+Nech $S_0$ ja maximálny prvok množiny $\mathcal{B}$ vzhľadom na inklúziu. Položme rozšírenie $T'$ (ktoré hľadáme)  $T' = T \union S_0$. Nech $A$ je ľubovoľná uzavretá, potom v $T'$ buď platí
+$T' \vdash A $ alebo $T' \vdash \neg A$.
+
+Nech $T'$ nie je úplná teória. Čiže ani jedno z predošlých nie je dokázateľné. Čiže $\neg A$ sa nenachádza ani v $T$ ani $S_0$. 
+
+Uvažujme, že $T' \union \{\neg A\}$ je bezosporná teória. To je spor s tým, že $S_0$ je maximálny prvok z $\mathcal{B}$ vzhľadom na inklúziu. Pozn.: Odvoláme sa na predtým dokázaný dôsledok: máme $A$, $A'$ je uzáver. Potom $T \vdash A \iff T \union \{\neg A'\}$ je sporná teória.
+
+Dosiahli sme zúplnenie teórie. Máme $T$, získali sme $T'$, ktorá je bezosporná a je úplným rozšírením.
+
+Keď máme $T$, $L$, vieme to rozšíriť na $T_H$ s jazykom $L(C)$. Keď máme $T$ bezospornú, $T(H)$ s jazykom $L(C)$ je tiež bezosporná. Dokážem vytvoriť Hankinovskú úplnú $T_H'$, $L(C)$ a pre ňu model $m$.
+
+$T, L$ - bezosp.
+
+$T', L'$ - úplná hakinovská
+
+$T', L' - m'$
+
+$T'$ je bezosp. rozšírenie $T$, potom $T \vdash A \iff T' \vdash A$ Potom platí, že keď zooberiem ľub. $A \in T$, potom  $m' \vdash A$. Pre ľubov. rozšírenie $T$, $T'$ $A\in T, T' \vdash A \implies m' \models A, m, v T$.
+
+\paragraph{Definícia.}
+
+$T,L$, $T',L'$, $L'$ je rozš. $L$. Nech $m'$ je realizácia jaz. $L'$, redukovaním štruktúry $m'$ na jaz. $L$ získame realiz. $T$ v jaz. $L$.
+
+$m$: univerzum $m$ bude to isté univerzum ako univerzum $m'$.
+
+$m$ obsahuje iba také relácie a zobrazenia, ktoré realizujú špecálne symboly jazyka $L$ v realizácii $m'$. Tzn. ak $f$ je ľub. n-ány funkčný symbol $L$, $f_m'$ je zobrazenie, ktoré realizuje $f$ v $m'$, potom zostáva realizáciou $f$ v $m$.
+
+Podobne s predikátom $P$.
+
+$m$ vzniklo redukciou $m'$ na jazyk $L$. $(m: m' \triangle L)$
+\footnote{na prednáške bolo miesto $\triangle$ použíté niečo ako $\land$, ale jedna nožička bola dlhšia ako druhá}.
+$m'$ je expanzia realizácie $m$
+
+\paragraph{Poznámka.}
+$m$ je redukcia $m'$ na jazyk $L$ ($m'\triangle L$), $A$,$L$. Chceme ukázať $m \models A \iff m' \models A$. Všimnime si, že univerzum, t.j. aj ohodnotenia a symboly, sú tie isté. Preto, ak $m' \models A$, potom aj $m \models A$ a obrátene. Teraz dokážeme, že každá bezosporná teória má model.
+
+\paragraph{Veta.}
+Nech $T'$ je rozšírenie teórie $T, L$. Ak $m$ je model $T'$ a $m:m'\triangle L$, tak $m$ je model $T$.
+
+\paragraph{Dôkaz} To, čo sme tu už porozprávali. $m'$ je model $T$',
+$A \in T$, $A$ je axioma $T$, $m' \models A \iff M \models A$.
+
+Nasledujú dve vety o kompaktnosti a ich dôsledky. Dávajú nám konečnú charakterizáciu splniteľnosti.
+
+\paragraph{Veta} \emph{O kompaktnosti.}
+ $T$ je množina formúl jaz. $L$, $A$ je formula $L$, $T \models A \iff T' \models A, T' \subseteq T, T$ je konečná.
+
+\paragraph{Dôkaz}
+
+
+G\"odel: $T \models A \iff T \vdash A$
+
+$A_1, A_2 ... A_n(A)$ je konečná postupnosť formúl - konečne veľa axiom z $T$.
+
+$T' = \{B_1, B_2 ... B_m\}$, $B_i$ - axiomy v $T$ nachádzajúce sa v dôkaze $A$
+
+Môžeme napísať $T' \vdash A \iff T' \models A$.
+
+\paragraph{}
+Na základe vety o kompaktnosti ukážeme, že teóriu telies charakteristiky 0 nedokážeme v teórii prvého rádu napísať charakterizovať pomocou konečného počtu axiom. Komut. grupa. distr. zákony ma krát a plus ... rád prvku - konečný, najmenší takýto prvok ... teleso konečnej charakteristiky. A tak ďalej.
+
+
+\section{Prednáška 12.3.2009}
+
+\par \textbf{Zapísal:} P. Struhár
+
+\par
+
+\paragraph{Veta o kompaktnosti} bola minule.
+
+\paragraph{}
+Nech $A$ je splnená vo všetkých telesách charakteristiky 0.
+ $$ T' \models A \iff T'' \subseteq T', T''\mbox{ konečná} $$
+ $$ T \models A $$
+$T''$ obsahuje len konečne veľa axiom $\neg P_p$. Nech m je najväčší index
+axiomy, ktorá patrí to $T''$. Potom formula $A$ je splnená aj vo všetkých telesách dostatočne
+veľkej konečnej charakteristiky ($>m$). Ak teda formula je teorémou telies
+charakteristiky $0$, tak platí aj vo všetkých telesách dostatočne veľkej charakteristiky.
+$$ T' \models A_i \implies T' \models A_1 \land A_2 \land \cdots \land A_n $$
+Logikou prvého rádu nemôžem konečným počtom axiom charakterizovať teóriu telies.
+V logike prvého rádu kvantifikujem len individuá.
+
+\paragraph{Veta}
+Každá konečná množina formúl, ktorá je splnená vo všetkých telesách charakteristiky 0,
+je splnená aj vo všetkých telesách dostatočne veľkej konečnej charakteristiky.
+
+\paragraph{Poznámka}
+Ak zavedieme ďalší druh premenných, prirodzené čísla, nekonečne veľa axiom
+typu $\neg P_p$, nekonečne veľa axiom môžme nahradiť jednou formulou:
+$$ (\forall p)(p\times 1\not=0)$$
+Toto v literatúre terminologicky nazývajú \emph{slabá logika druhého rádu}. V nej
+vieme konečne axiomatizovať teóriu telies charakteristiky 0.
+\emph{Veta o kompaktnosti neplatí v slabej logike druhého rádu.}
+
+Mali sme Godelovu vetu v dvoch tvaroch:
+$$ T \models A \iff T \vdash A$$
+Druhý tvar: Teória je bezosporná, keď má model. Z druhého tvaru môžeme sformulovať a dokázať
+\emph{vetu o kompaktnosti}.
+
+\paragraph{Veta o kompaktnosti}
+Nech $T$ je množina formúl jazyka $L$. Model teórie $T$ existuje $\iff$ každá konečná podmnožina
+$T' \subseteq T$, má model.
+
+\paragraph{Dôkaz}
+Vieme, že $T$ má model $\iff$ je bezosporná. Viď aj Lindenbaum -- konečná vlastnosť.
+Každá $T'$ je bezosporná a teda má model.
+
+Pomocou vety o kompaktnosti tohto tvaru dokážeme zaručiť, že pre Peanovu aritmetiku
+existujú aj neštandardné modely. Najprv si však ukážeme Robinsonovu aritmetiku.
+
+\begin{enumerate}
+\item $\neg S(x) = 0$
+\item $S(x) = S(y) \implies x=y$
+\item $x+0 = x$
+\item $x+S(y) = S(x+y)$
+\item $x\cdot 0 = 0$
+\item $x\cdot S(y)= (xy)+x$
+Ak pridáme axiomu
+\item $A_x[0] \implies ((\forall x)(A \implies A_x[S(x)]) \implies (\forall x)A)$,
+\end{enumerate}
+dostaneme Peanovu, pričom mám model $n = \langle N^+,0,D,+,-\rangle$
+
+Ukážeme, že Peanova aritmetika má aj neštandardné modely. Zavedieme označenie:
+
+$L$, definujeme $\bar{n}$ - numerály:
+\begin{itemize}
+\item $\bar{0} = 0$
+\item $\overline{n+1} = S(\bar{n}) = S(S \cdots (S(0) \cdots ))$
+\end{itemize}
+
+K $L$ zostrojíme $L_c$ (do $L$ pridáme konstantu $c$).
+$$\mbox{teória }P_c,\mbox{ jazyk }L_c$$
+$$C_n: c \not= \bar{n}$$
+$$\mbox{zoberieme }T \subseteq P_c, P_c \mbox{ obsahuje len konečne veľa numerálov.}$$
+
+Vidíme, že každá konečná podmnožina má model, ktorý vznikne expanziou štandardného modelu $n$.
+Konštantu c realizujeme indivíduom, ktoré nepatrí do $t$ (čoho?).
+Čiže každá $T$ má model a na základe vety o kompaktnosti aj $P_c$ má model. Teraz, keď si všimneme,
+že model $P_c$ bude rôzny od štandardného modelu a nebude ani izomorfný, pretože tam máme konštantu $c$.
+Každá konečná podmnožina bude mať model. To je zabezpečené, že vznikne expanziou $n$
+a bude obsahovať konštantu, ktorá sa predtým nevyskytovala.
+$m\triangle L = n$ vznikne redukciou L. Dostaneme $n'$, ktorý bude obshovať konštantu c,
+čím bude neštandardný a nebude izomorfný. Vieme, že existuje, ale nevieme ho skonštruovať.
+
+\subsection{Metóda rezolvent}
+
+Budeme pracovať s formulami, ktoré budú v prefixovom tvare a v konjuktívnej normálnej
+forme. Keď uvažujeme výrokovú logiku, interpretujeme formulu $A$ funkciou $\bar{v}$
+a zobrazením $v$. Formulu sme nazvali tautológiou, ak $\bar{v}(A)\cdots$, ak pre každú
+interpretáciu dostaneme pravdu - $2^n$ interpretácii. V predikátovej logike ešte horšie úplným preberaním.
+
+Zopakujme si, čo už vieme. V predikátovej logike -- funkčné a predikátové symboly. Univerzum budem označovať $D$.
+M bude matica -- jadro konj. norm. formy (?).
+
+Keď sme mali n-árny funkčný symbol $f: D^n \rightarrow D$. N-árny predikátový symbol
+$P: D^n \rightarrow \{0,1\}$.
+
+Rozlišovali sme voľné a viazaná premenné. Keď nemajú formuly voľné premenné, neviem
+určiť pravdivostnú hodnotu, iba ak tam dosadím konštantu (?).
+
+Ku každej formule A viem zostrojiť takú, ktorá je v prefixovom (prenexnom) tvare -
+prefix + jadro: $(Q_1 x_+)\cdots(Q_n x_n)M$.
+
+Prenexné opperácie:
+$$(Qx)A(x) \vee B \equiv (Qx)(A(x) \vee B) \mbox{ - $x$ nie je voľné v $B$} $$
+$$ (Qx)A(x) \land B \equiv (Qx)(A(x) \land B) \mbox{ - $x$ nie je voľné v $B$} $$
+$$ \neg (\forall x) A(x) \equiv (\exists x) \neg A(x) $$
+$$ \neg (\exists x) A(x) \equiv (\forall x) \neg A(x) $$
+$$ (\forall x) A(x) \land (\forall X) B(x) \equiv (\forall x) (A(x) \land B(x)) $$
+$$ (\forall x) A(x) \vee (\forall x) B(x) \equiv (\forall x) (A(x) \vee B(x)) $$
+Platí toto?:
+$$(\forall x) A(x) \vee (\forall X) B \equiv (\forall x) (A(x) \vee B(x))$$
+Môže platiť pravá strana a ľavá nie, keď $A(a)=1, A(b)=0, B(a)=0, B(B)=1$.
+Podobne neplatí
+$$(\exists x) A(x) \land (\exists X) B(x) \equiv (\exists x) (A(x) \land B(x))$$
+
+Vezmem si $(\forall x)B(x) a (\forall z) B(z)$:
+$$(\forall x) B(x) \equiv (\forall z) B(z) $$
+$$\cdots$$
+$$ (Q_1 x)A(x) \vee (Q_2 x)B(x) \equiv (Q_1 x)(Q_2 z)(A(x) \vee B(z)) $$
+$$ (Q_3 x)A(x) \land (Q_4 x)B(x) \equiv (Q_3 x)(Q_4 z)(A(x) \land B(z)) $$
+proste opakovanie z minulého semestra.
+
+\subsection{Algoritmus na zostrojenie prenexného tvaru}
+\paragraph{Krok 1} Odstránenie implikácií a ekvivalencií:
+$$ 
+	A \iff B \equiv (A \implies B) \land (B \implies B) \\
+	A \implies B \equiv \neg A \lor B
+$$
+
+\paragraph{Krok 2} Odstránenie dvojitej negácie a presun negácie k formule.
+$$
+\begin{array}{lll}
+	\neg (\neg A) &\equiv& A \\
+	\neg (A \lor B) &\equiv& (\neg A \land \neg B) \\
+	\neg (A \land B) &\equiv& (\neg A \lor \neg B) \\
+	\neg (\forall x) A(x) &\equiv& (\exists x) \neg A(x) \\
+	\neg (\exists x) A(x) &\equiv& (\forall x) \neg A(x)
+\end{array}{lll}
+$$
+
+\paragraph{Krok 3} Premenovanie viazaných premenných, ak je to potrebné.
+\paragraph{Krok 4} Použijeme zákony:
+$$
+\begin{array}{lll}
+	(Q x) A(x) \lor B &\equiv& (Q x)(A(x) \lor B) \\
+	(Q x)A(x) \land B &\equiv& (Q x)(A(x) \land B) \\
+	(\forall x) A(x) \land (\forall x)B(x) &\equiv& (\forall x)(A(x) \land
+	B(x))\\
+	(\exists x)A(x) \lor (\exists x)B(x) &\equiv& (\exists x) (A(x)\lor B(x))
+	\\
+	(Q_1 x) A(x) \lor (Q_2 x)B(x) &\equiv& (Q_1 x)(Q_2 z) (A(x)\lor B(z))
+	\mbox{z nie je v A(x)}. \\
+	(Q_3 x) A(x) \land (Q_4 x)(B(X) &\equiv& (Q_3 x)(Q_4 z)(A(x) \land (B(z))
+	\\
+\end{array}
+$$
+
+\paragraph{Príklad} $$
+\begin{array}{l}
+(\forall x)(\forall y) \left( (\exists z)(P(x,z) \land
+P(y,z)\right) \implies (\exists u) Q(x,y,u)) \equiv \\
+(\forall x)(\forall
+y)\left(\neg (\exists z)(P(x,z)\land P(y,z))\lor(\exists u)Q(x,y,u)\right)
+\equiv \\
+(\forall x)(\forall y)\left((\forall z)(\neg P(x,z)\lor \neg
+P(y,z)\right)\lor(\exists u)Q(x,y,u)) \equiv \\
+(\forall x)(\forall y)(\forall z)(\exists u)(\neg P(x,z) \lor \neg
+P(y,z) \lor Q(x,y,u)) \\
+\end{array}
+$$
+
+\section{Herbrandova veta}
+\par Leibniz (1646 -- 1716), Peáno (1900), Hilbertova škola (1920), Herbrand
+(1930). Fundamentálny výsledok, ktorý dal odpoveď na otázku, či existuje
+všeobecná procedúra, ktorá vie zistiť, či je daná formula tautológia, dali
+Church a Turing (1936, nezávisle od seba) -- ukázali, že v predikátovej logike
+nie je problém rozhodnuteľnosti riešiteľný.
+\par Herbrandova metóda je založená na procedúre vyvrátenia. Ide o nájdenie
+interpretácie, pri ktorej daná formula nie je splnená. Ak formula nie je
+tautológia, v konečnom počte krokov sa procedúra zastaví, pokiaľ ale nie je,
+procedúra pokračuje vo výpočte.
+
+\par Gilmore (1960), Davis a Putnem (1960) -- navrhovali procedúry, ktoré by
+boli schopné overovať tautologickosť formúl; fungovali ale iba pre jednoduchšie
+formuly.
+
+\par V rokoch 1965 -- 1968 Robinson zaviedol pojem \emph{resolventa} (v podstate
+iným spôsobom zapísane pravidlo \emph{modus ponens}.
+
+\section{Skolemovské štandardné formuly}
+Procedúry založené na Herbrandovej myšlienke vyvrátenia (nájdenie interpretácie,
+ktorá vyvracia danú formulu). Davis a Putnam pracovali s formulou v prefixovom
+normálnom tvare a vychádzali z nasledujúcich hľadísk:
+\begin{enumerate}
+	\item Každá formula môže byť vyjadrená v prefixovom normálnom tvare.
+	\item Pretože matica (jadro) neobsahuje kvantifikátory, môže byť
+	vyjadrená v konjunktívnej normálnej forme.
+	\item Zachovajúc nesplniteľnosť formúly môžeme z nej eliminovať
+	existenčné kvantifikátory pomocou skolemovských funkcií (keď máme
+	premennú vyjadrenú v prefixovom normálnom tvare a eliminujeme z nej
+	existenčný kvantifikátor, dostaneme formulu, ktorá je nesplniteľná
+	vtedy, keď je nesplniteľná pôvodná formula -- nesplniteľnosť
+	transformovanej formuly sa robí ľahšie).
+\end{enumerate}
+
+Transformácia formuly. Majme formulu $A: (Q_1 x_1) (Q_2 x_2) \ldots (Q_n x_n)
+M$, $M$ -- konjunktívny normálny tvar. $Q_r$ je existenčný kvantifikátor v
+prefixe $(Q_1 x_1) \ldots (Q_n x_n)$, $1 \leq r \leq n$ vľavo od $Q_r$ nestojí
+žiaden veľký kvantifikátor.
+$A': Q_r$, $M$, za $x_r$ dosadíme $c$ ktorá v $M$.
+$Q_{s_1}, Q_{s_2}, \ldots Q_{S_m}$ (zoznam všeob. kvantifikátorov) vľavo od
+$Q_r$,  $1 \leq s_1 \leq s_2, \ldots \leq s_m < r$.
+
+Za premennú $x_r$ dosadíme do $M$ term $f(x_{s_1}, \ldots, x_{s_m})$. Tieto
+funkcie voláme Skolemove funkcie a $c$ voláme Skolemove konštanty.
+
+\paragraph{Príklad.} Nájdite štandardnú formu pre formuly:
+$$ (\exists x) (\forall y) (\forall z) (\exists u) (\forall v) (\exists w)
+P(x,y,z,u,v,w)$$.
+Premennú $x$ budeme nahrádzať konštantou $c$ (ktorá nie je v predikáte),
+premennú $u$ nahradíme $f(y,z)$ a premennú $w$ nahradíme funkciou $g(y,z,v)$ .
+
+$$ (\forall y)(\forall z)(\forall w) P(x,y,z,f(y,z),v,g(y,z,v)) $$
+
+\paragraph{Príklad:} Nájdite štandardnú formulu: $$ (\forall x)(\exists y)
+(\exists z) \left((\neg P(x,y) \land Q(x,z))\lor R(x,y,z)\right) $$.
+
+$$ (\forall x) (\exists y) (\exists z)(\neg P(x,y) \lor R(x,y,z)) \land
+(Q(x,z)\lor R(x,y,z))$$
+
+$$ (\forall x) (\neg P(x,f(x)) \lor R(x,f(x),g(x)) \land Q(x,g(x))\lor
+R(x,f(x),g(x)))$$
+
+\paragraph{Definícia:} \emph{Literál} -- premenná, alebo jej negácia. 
+\paragraph{Definícia:} \emph{Klauzula} -- disjunkcia literálov. \emph{Jednotková
+klauzula} (tiež jednoliterálna klauzula) obsahuje jeden literál. 
+
+\paragraph{Definícia:} \emph{Prázdna klauzula} neobsahuje žiaden literál
+(označujeme ju $\square$). Prázdna klauzula je nesplniteľná.  
+
+\par (niečo na tabuli)
+$\{\neg P(x,y), R(x,y,z) \}$ \\
+$P \lor Q$, $\{P, Q\}$
+
+$y: f(x)$
+$z: g(x)$
+
+\paragraph{Veta:} Nech $\mathcal{S}$ je množina klauzúl, ktoré tvoria štandardnú
+formu formuly $A$. Potom $A$ nie je splniteľná práve vtedy, keď $\mathcal{S}$
+nie je splniteľná.
+
+\paragraph{Dôkaz:} $A: (Q_1 x_1) \ldots (Q_m x_n) M[x_1, \ldots x_n]$. $Q_r$ je
+existenčný kvantifikátor, potom z $A$ dostávame formulu $A_1$ v tvare $$A_1:
+(\forall x_1) \ldots (\forall x_{r-1}) (Q_{r+1} x_{r+1})  \ldots (Q_n x_n)
+M[x_1, \ldots x_{r-1}, f(x_1, \ldots, x_{r-1}), x_{r+1}, x_n]$$. $A$ -- nie je
+splniteľná práve vtedy, keď $A_1$ nie je splniteľná.
+
+\par Ak $A$ nie je splniteľná, potom ani $A_1$ nie je splniteľná. Nech $A_1$ je
+splniteľná. Potom existuje taká interpretácia $I$, že $I$ vyhovuje $A_1$ ($A_1$
+je pravdivé v $I$). To znamená, že pre všetky $x_1 , \ldots x_{r-1}$ existuje
+také $x_r$, ktoré je rovné $f(x_1, \ldots, x_{r-1})$. Tá istá interpretácia teda
+vyhovuje aj pôvodnej formule $A$.
+
+\par Obrátené tvrdenie. Predpokladajme, že $A_1$ nie je splniteľná a teda
+formula $A$ nie je splniteľná. Nech, že $A$ je splniteľná. Potom pre každé $x_1,
+\ldots x_{r-1}$ existuje také $x_r$, že platí $M[x_1, \ldots x_{r-1}, x_r,
+\ldots]$. Rozšírme $I$ na $I'$ tak, že $f(x_1, \ldots x_{r-1}) = X_R$. Ak $A_1$
+nie je splniteľná, tak ani $A_2$ nie je splniteľná. Pôvodnú formulu označíme
+$A_0$, a $A: A_0, \ldots A_m$, pričom platí $A_0 \iff A_1 \iff \cdots \iff A_m$.
+$A_m: A'$
+$A_0 \iff A'$
+
+
+\par Toto platí iba vtedy, ak formula nie je splniteľná. Majme formulu $A$, $A:
+(\exists x) P(x)$, a $S: P(a)$. Vezmime interpretáciu: $D = \{1, 2 \}$, pričom
+$a: 1$. Hodnoty pre $P$. $P(1)$ -- nepravda, $P(2)$ -- pravda.
+
+(opakovanie z minula) 
+
+\paragraph{Poznámka} Majme formulu $A: A_1 \land A_2 \land \ldots \land A_n$.
+Pre každé $A_1$ si vytvoríme štandardnú formulu $S_1, S_2, \ldots S_m$ Potom
+štandardná forma pre $A$ je $S_1 \union S_2 \union \ldots \union S_m$ (kde $S_i$
+je množina klauzúl). Formula $A$ nie je splniteľná práve vtedy, keď nie je
+splniteľná táto množina klauzúl.
+
+\paragraph{Príklad} Uvedieme príklad, ktorý sa pokúsime zapísať pomocou množiny
+klauzúl -- príklad z teórie grúp. 
+
+\par Uvažujme grupu a na nej operáciu $\circ$. Platia nasledovné axiomy:
+\begin{itemize}
+\item $A1: x, y \in G, x \circ y \in G$ -- vlastnosť uzavretosti.
+\item $A2: x, y, z \in G, (x \circ y) \circ z = x \circ (y \circ z)$ -- asociatívnosť
+operácie.
+\item $A3: x \in G, x \circ e = e \circ x = x$ -- existencia neutrálneho prvku.
+\item $A4: x \in G, \exists x^{-1} \in G, x \circ x^{-1} = e = x^{-1} \circ x$ --
+existencia inverzného prvku.
+\end{itemize}
+Chceme ukázať, že ak pre všetky $x \in G$ platí $x \circ x \in G$, potom grupa
+je komutatívna. Prvou časťou úlohy je formalizovanie zadania:
+
+$$ P(x,y,z), x \circ y = z, i(x) = x^{-1}$$
+Potom axioma $A1$ vyzerá nasledovne:
+$$(A'1) (\forall x) (\forall y) (\exists z) P(x,y,z)$$
+
+
+$$ 
+\begin{array}{l}
+A'2:(\forall x) (\forall y) (\forall z) (\forall u) (\forall v) (\forall w) (P(x,y,u) \land  P(y,z,v)
+\land P(u, z, w) \implies  
+P(x,v,w)) \\ \land (\forall x) (\forall y)(\forall z)
+(\forall u)(\forall v) (\forall w)
+P(x,y,u) \land P(y,z,v) \land P(x,v,w) \implies P(u,z,w)
+\end{array}
+$$
+
+
+$$A'3: (\forall x) P(x,e,x) \land (\forall x) P(e,x,x)$$
+$$A'4: (\forall x) P(x,i(x),e) \land (\forall x) P(i(x),x,e)$$
+
+Záver vety:
+$$B: x \circ x, x \in G, u \
+\circ v = v \circ u; u,v \in G$$
+$$B': (\forall x) P(x,x,e) \implies  (\forall u) (\forall v) (P(u,v,w) \implies
+P(v,u,w))$$.
+
+Teraz potrebujeme ukázať, že $A_1' \land A_2' \land A_3' \land  A_4' \implies
+B'$. Vytvoríme negáciu výroku a ukážeme, že nie je splniteľná:
+$$F: \neg (A_1' \land A_2' \land A_3' \land A_4') \lor B'$$
+$$\neg F:A_1' \land A_2' \land A_3' \land A_4' \land \neg B'$$.
+
+Ideme vytvárať množinu klauzúl. Máme axiomy $A_1'$, $A_2'$, $A_3'$, potom
+množiny sú:
+$$ S_1': \{ P(x,y,f(x,y)) \} $$
+$$ S_2': \{ \neg P(x,y,u) \lor \neg P(y,z,v) \lor \neg P(u,z,w) \lor P(x,v,w),
+\neg P(x,y,u), \lor \neg P(y,z,v) \lor \neg P(x,v,q) \lor P(u,z,w)\}$$
+$$S_3': \{ P(x,e,x), P(e,x,x) \}$$
+$$S_4': \{ P(x,i(x),e),P(i(x),x,e) \}$$
+
+
+TOTO NIEKTO SKONTROLUJTE:
+$$ \neg B': \neg ((\forall x) P(x,x,e) \implies (\forall u) (\forall v)(\forall
+w)(P(u,v,w) \implies P(v,u,w)))$$.
+$$ \neg ( \neg (\forall x) (P(x,x,e) \lor (\forall u) (\forall v) (\forall w)
+(\neg P(u,v,w)) \lor P(v,u,w))) \iff (\forall x) (P(x,x,e) \land \neg (\forall
+u)(\forall v) (\forall w) (\neg P(u,v,qň \lor (P(v,u,w) \iff (forall z) P(x,x,e)
+\land (\exists u) (\exists v) (\exists w) (P(u,v,w)\land \neg (P(v,u,w)$$
+
+$$T: \{P(x,x,e), P(a,b,c), P(b,a,c) \} $$
+
+Máme dokázať, že množina klauzúl nie je splniteľná, a teda pre každú oblasť a
+interpretáciu je nesplniteľná -- bolo by treba vyšetriť všetky oblasti. Nám ale
+bude stačiť vyšetrovať na \emph{Herbrandovskom univerze}.
+
+\section{Herbrandovské univerzum}
+\paragraph{Definícia} \emph{Herbrandovské univerzum množiny klauzúl} $H_0$ je
+množina konštánt, ktoré sa vyskytujú v $S$. Ak $S$ neobsahuje žiadnu
+konštantu, tak kladieme $H_0=\{ a \}$, kde $a$ je nejaká konštanta. Ďalej
+definujeme pre $i=1,2,\ldots$ $H_{i+1}$ ako zjednotenie $H_{i}$ a množiny
+všetkých termovtvaru $f^{(n)}(f_1,\ldots, f_n)$, kde $f^{(n)} \in S$ a $f_1,
+\ldots, f_n \in H_1$. $H_i$ nazývame \emph{herbrandovské univerzum $i$-tej
+úrovne}. $H=\union_{i=0}{\infty} H_i$.
+
+\paragraph{Príklad} $S= \{ P(x), \neg P(x) \lor \neg P(f(x))\}$. 
+
+$$
+\begin{array}{lll}
+H_0& = &\{ a \} \\
+H_1& = &\{ a, f(a) \} \\
+H_2& = &\{ a, f(a), f(f(a)) \} \\
+\vdots & \vdots & \vdots \\
+H &=& H_\infty = \{ a, f(a), f(f(a), f(f(f(a))), \ldots \}.
+\end{array}
+$$
+
+\paragraph{Príklad} $S=\{P(x) \lor R(x), R(z), T(y) \lor \neg W(y) \}$ --
+množina neobsahuje žiadnu konštantu, a preto kladieme $H_0 = \{ a \}$. $\{ a \}
+=  H = H_0 = H_1$.
+
+\paragraph{Príklad} Uvažujme množinu klauzúl $S=\{P(f(x),a g(y), b)\}$. Potom
+$$
+\begin{array}{lll}
+H_0 &=& \{ a, b\} \\
+H_1 &=& \{ a, b, f(a), g(a), f(b), g(b) \} \\
+H_2 &=&  \{ a, b, f(a), g(a), f(b), g(b), f(f(a)), f(g(a)), f(f(b)), f(g(b)),
+g(f(a)), g(f(b), g(g(a)), g(g(b)) \} \\
+\end{array}
+$$
+
+\paragraph{Definícia} Nech $S$ je množina formúl. Potom množina atómov
+tvaru $p^{(n)}(t_1, \ldots, t_n)$ pre všetky $n$-árne predikáty, ktorá sa
+vyskytujú v $S$ a všetky termy $t_i$ z Herbrandovského univerza
+nazývame \emph{Herbrandovskou  bázou} $S$. (všimnite si, že atómy sú
+takého tvaru, že sa v nich nevyskytuje žiadna premenná).
+
+Ľubovoľný výraz, ktorý neobsahuje premenné, sa nazýva \emph{základný výraz}
+(základný term, základný atóm, základná klauzula, základný literál, ...).
+
+\paragraph{Definícia} \emph{Základná inštancia} klauzuly C z množiny klauzúl
+$S$ je klauzula, ktorú dostaneme zámenou premenných prvkami z
+Herbrandovského univerza.
+
+\paragraph{Príklad} Majme $S = \{P(x), Q(f(x)) \lor R(y) \}$, a nech
+$C: P(x)$. $H = \{ a, f(a), f(f(a)). f(f(f(a))), \ldots \}$. Základné inštancie
+pre $C: P(a), P(f(a)), P(f(f(a))), \ldots$.
+
+\paragraph{Definícia} $S$ je množina klauzúl, $H$ je herbrandovské
+univerzum pre množinu klauzúl $S$, $I$ je interpretácia v množine
+klauzúl $S$ nad $H$. Hovoríme, že interpretácia $I$ je \emph{herbrandovská
+interpretácia}, ak platí: 
+
+\begin{enumerate}
+	\item interpretácia $I$ zobrazuje všetky konštanty na samé seba (t.j.
+	konštante $a \in S$ priradí tú istú konštantu $a \in H$.
+	\item $f^{(n)}$ je $n$-árny funkčný symbol a $h_1, \ldots h_n$ sú prvky
+	herbrandovského univerza $H$. V $I$ označujeme ako $f^{(n)}$ funkciu,
+	ktorá zobrazuje $(h_1, \ldots h_n)$ z $H_*$ do $H$. $$f^{(n)}(h_1,
+	\ldots, h_n)$$
+\end{enumerate}
+
+\paragraph{Poznámka} Poznamenávame, že nekladieme žiadne ohraničenia na initerpretáciu predikátov.
+
+Uvažujme množinu $A = \{ A_1, A_2, \ldots A_n, \ldots \}$. Nech je to
+herbrandovská báza pre množinu klauzúl $S$. Herbrandovskú interpretáciu určíme
+tak, že  $I$ zadáme ako $I=\{ m_1, m_2, \ldots, m_n, \ldots \}$. 
+
+\par $m_j$ bude buď $A_j$ (ak $A_j$ je pravdivé) alebo $\neg A_j$ (ak $A_j$ je
+nepravdivé).
+
+\paragraph{Príklad} $S=\{ P(x) \lor Q(x), R(f(y)) \}$. Herbrandovské univerzum
+vyzerá: $H=\{a, f(a), f(f(a)), \ldots \}$. V $S$ sa vyskytujú predikáty $P$,
+$Q$, $R$ --  všetky sú unárne. Herbrandovská báza je potom $A: \{ P(x), Q(x),
+ P(f(x)), Q(f(x)), R(f(x)) \}$
+ 
+$I_1: \{ P(x), Q(x), P(f(x)), Q(f(x)), R(f(x)) \}$
+
+Čo znamená toto? :
+$  \{ \neg P(a), \neg Q(a), \neg P(f(a)), \neg Q(f(a)), \neg R(f(a)), \ldots \}$
+
+
+Ďalšou úlohou bude k ľubovoľnej interpretácii nad ľubovoľným univerzom
+priradiť Herbrandovskú interpretáciu a zaviesť príslušné tvrdenia a definície.
+
+\paragraph{Príklad} $S=\{ P(x) \lor Q(x). R(f(y)) \}$.  Jedna z možných
+Herbrandovských interpretácií je nasledovná:
+$$ I^* = \{ \neg P(x), \neg Q(a), \neg R(a), \neg P(f(a)), \neg Q(f(a)), \neg
+R(f(a)), \ldots \}$$
+$$ I_2^* = \{ P(a), Q(a), \neg R(a), P(f(a)), Q(f(a)), \neg R(f(a)), \ldots \}$$
+
+\paragraph{Príklad} Majme množinu $S = \{ P(x), Q(y, f(y,a)) \}$. Oblasť
+interpretácie $D = \{1,2\}$.
+
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+a & f(1,1) & f(1,2) & f(2,1) & f(2,2) \\
+\hline
+2 & 1 & 2 & 2 & 1 \\
+\hline
+\end{tabular}
+
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+P(1) & P(2) & Q(1,1) & Q(1,2) & Q(2,1) & Q(2,2) \\
+\hline
+T & F & F & T & F & T \\
+\hline
+\end{tabular}
+
+$I^*$, H-im ??
+Herbrandovská báza: $$A=\{ P(a), Q(a,a), P(f(a,a)), Q(a,f(a,a)), Q(f(a,a), a,
+\ldots \}$$.
+
+Hodnoty pre príslušné predikáty určíme pomocou zadaných tabuliek:
+$$
+\begin{array}{lll}
+P(a) &=& P(2) \mbox{neplatí} \\
+Q(a,a) &=& Q(2,2) \mbox{platí} \\
+P(f(a,a)) &=& P(f(2,2)) = P(1) \mbox{platí} \\
+Q(f(a,a),a) &=& Q(f(2,2),2) = Q(1,2) \mbox{platí} \\
+Q(a,f(a,a)) &=& Q(1,f(2,2)) = Q(2,1) \mbox{platí} \\
+Q(f(a,a),f(a,a)) &=& Q(f(2,2), f(2,2)) = Q(1,1) \mbox{neplatí} \\
+\end{array}
+$$
+
+$$I^* = \{ \neg P(a), Q(a,a), P(f(a,a)), \neg Q(a,f(a,a)), Q(f(a,a),a), \ldots
+\}$$
+
+\par
+Ďalšia vec, čo sa môže stať -- majme množinu klauzúl, ktorá neobsahuje
+konštantu: $S=\{P(x), Q(y,f(y)) \}$. Máme danú interpretáciu $I$ s oblasťou
+$D=\{1,2\}$, oblasti priradím dve interpretácie $I_1^*$ a $I_2^*$, pričom v
+prvej bude $a$ interpretované ako $1$ a v druhej ako $2$.
+
+\paragraph{Definícia} Majme interpretáciu $I$, množinu klauzúl $S$ na oblasti
+interpretácií $D$. $I^*$ je H-interpretácia priradená ku $I$, vytvorená
+nasledovne: Nech $h_1, h_2, \ldots h_n$ patria do Herbrandovského univerza $H$,
+$I(h_1) \mapsto d_i \in , i=1 \ldots n$. $P^{(n)}$ patrí do množiny klauzúl $S$.
+Ak $P^{(n)}(d_1, \ldots d_n)$ je splnený a pravdivý v $I$, potom
+$P^{(n)}(h_1,\ldots,h_n)$ je splnený a pravdivý v $I^*$.
+
+\paragraph{Lema} Majme interpretáciu $I$ na oblasti $D$. Nech táto interpretácia
+vyhovuje množine klauzúl $S$. Potom ľubovoľná H-interpretácia $I^*$, ktorá je
+priradená (zodpovedá) $I$ taktiež vyhovuje množine klauzúl $S$.
+
+\paragraph{Dôkaz} Majme množinu klauzúl $S=\{C_1, C_2, \ldots , C_n\}$. Nech
+klauzula (disjunkcia literálov) $C_i = L_{i_1} \lor L_{i_2} \lor \ldots \lor
+L_{i_{r_i}}$, $i=1,\ldots,n$. Ľubovoľný literál $L_{i_j}$ je tvaru $P^{(n)}(d_1,
+\ldots, d_n)$. Množina klauzúl $C_1 \land C_2 \land \ldots \land C_n$ je
+pravdivá práve vtedy, keď je pravdivá každá klauzula.
+$$I(h_i) = d_i$$
+$$L^*_{i_j}: P^{(n)}(h_1, \ldots, h_n)$$
+
+\paragraph{Veta} Množina klauzúl $S$ nie je splniteľná práve vtedy, keď $S$ je
+nepravdivá pri všetkých H-interpretáciách $S$. 
+
+\paragraph{Dôkaz} Jedna implikácia (zľava doprava) je očividná:
+
+\subparagraph{Zľava doprava} Nech $S$ nie je splniteľná, potom je nepravdivá pre ľubovoľnú interpretáciu
+na ľubovoľnej oblasti, a teda aj pre ľubovoľnú H-interpretáciu na H-univerze.
+
+\subparagraph{Obrátená implikácia} Nech množina klauzúl $S$ je nepravdivá pre
+ľubovoľnú H-interpretáciu množiny klauzúl $S$. Pre spor predpokladajme, že
+existuje interpretácia $I$ s oblasťou $D$ pre množinu klauzúl $S$, ktorá
+vyhovuje $S$. Uvažujme $I^*$, ktorá je priradená (zodpovedá) interpretácii pre
+množinu klauzúl $S$. Podľa lemy, ktorú sme dokázali, ak vyhovuje $I$, vyhovuje
+aj $I^*$, čo je spor. $\Box$
+
+\paragraph{Poznámka}
+\begin{enumerate}
+	\item Základná inštancia $C'$ (neobsahuje premenné), $C$ je splniteľná v interpretácii $I$
+	práve vtedy, keď existuje základný literál $L'$:
+	$$ L' \in C'$$
+	$$ C' \cap I \neq \emptyset, L' \in I = \{m_1, m_2, \ldots \} $$
+
+	\item Klauzula $C$ je splnená v interpretácii $I$ $\iff$ každá jej
+	základná inštancia $C$ je splnená v $I$.
+
+	\item Klauzula $C$ je odmietnutá (vyvrátená) v $I$ $\iff$ keď existuje
+	aspoň jedna taká základná inštancia $C'$, ktorá je odmietnutá v $I$
+	(vyvrátená).
+
+	\item Množina klauzúl $S$ nie je splniteľná v $I$, ak existuje aspoň
+	jedna základná inštancia $C'$ klauzuly $C$, ktorá nie je splniteľná v
+	$I$. $$C \in S$$
+\end{enumerate}
+
+
+\paragraph{Príklad} Uvažujme klauzulu $C=\neg P(x) \lor Q(f(x))$ a
+interpretáciu:
+$$
+\begin{array}{lll}
+I_1 &=& \{ \neg P(a), \neg Q(a), \neg P(f(a)), \neg Q(f(a)), \neg P(f(f(a))),
+\neg Q(f(f(a))), \ldots \} \\
+I_2 &=& \{ P(a), Q(a), P(f(a)), Q(f(a)), P(f(f(a))), Q(f(f(a))), \ldots \} \\
+I_3 &=& \{ P(a), \neg Q(a), P(f(a)), \neg Q(f(a)), P(f(f(a))), \neg Q(f(f(a))),
+\ldots \} \\
+\end{array}
+$$
+
+\paragraph{Príklad} Uvažujme množinu klauzúl $S=\{P(x), \neg P(x)\}$ a
+interpretácie:
+$$
+\begin{array}{lll}
+I_1 &=& \{ P(x) \} \\
+I_2 &=& \{ \neg P(x) \} \\
+\end{array}
+$$
+
+Množina nie je splnená ani jednou interpretáciou.
+
+\section{Sémantické stromy}
+Splniteľnosť množiny a konštrukcia sémantického stromu budú pre nás ekvivalentné
+pojmy :).
+
+\paragraph{Definícia} $A$ je nejaký atóm (elementárna formula), potom $A$ a
+$\neg A$ nazývame \emph{kontrárna dvojica}.
+
+\par  Ak klauzula obsahuje kontrárnu dvojicu, potom je tautológia.
+
+\paragraph{Definícia} Nech $S$ je množina klauzúl, $A$ je Herbrandovské báza pre
+množinu $S$. Pod \emph{sémantickým stromom} pre množinu klauzúl $S$ je dole
+rastúci strom, pričom každej hrane jej pripísaná množina atómov alebo negácií
+atómov (teda vlastne množina literálov) z Herbrandovskej bázy, pričom platí:
+\begin{enumerate}
+	\item Z každého vrchola stromu vychádza konečný počet hrán (označujeme
+	ich $l_1, l_2, \ldots l_n$. Nech $Q_i$ je konjunkcia všetkých literálov
+	pripísaných hrane $l_i$, $i=1,2,\ldots,n$, potom $Q_1 \lor Q_2 \lor
+	\ldots \lor Q_n$ je tautológia.
+	\item Pre každý vrchol $v$ je $I(v)$ zjednotenie všetkých literálov
+	pripísaných hranám vetvy, ktorá vedie do vrcholu $v$. Potom $I(v)$
+	neobsahuje kontrárne dvojice.
+\end{enumerate}
+
+
+\paragraph{Definícia} Majme $A=\{ A_1, A_2, \ldots A_n \}$ je Herbrandovská báza
+pre množinu $S$. Hovoríme, že sémantický strom prislúchajúci množine klauzúl $S$
+je úplný, ak pre každý vrchol $v$ platí, že pre každé $i$ končiace vo vrchole,
+$I(v)$ obsahuje $A_i$ alebo $\neg A_i$ (ale nie obe naraz). (TODO: check) 
+
+\paragraph{Príklad} $A: \{ P, Q, R \}$, viď obrázok
+\ref{fig-semantic_tree_example}.
+\begin{figure}[h]
+	\caption{Príklad sémantického stromu}
+	\centering\includegraphics{img/xx/2009-03-24.1.mps}
+	\label{fig-semantic_tree_example}
+\end{figure}
+
+
+
+\begin{figure}[h]
+	\centering\includegraphics{img/xx/2009-03-26.1.mps}
+	\caption{Príklad stromu}
+	\label{0326_tree1}
+\end{figure}
+\paragraph{Príklad}
+$S=\{P(x), ... \}$, H-báza je $\{P($ ... TODO
+
+\paragraph{Príklad} $S=\{P(x), Q(f(x)) \}$, herbrandovská báza pre množinu
+klauzúl je $\{ P(a), Q(a), P(f(a)), Q(f(a)), \ldots \}$ -- je nekonečná, teda aj
+prislúchajúci sémantický storm je nekonečný (obr. \ref{0326_tree2}). %pic2
+\begin{figure}[h]
+	\centering\includegraphics{img/xx/2009-03-26.2.mps}
+	\caption{Ďalší sémantický strom}
+	\label{0326_tree2}
+\end{figure}
+
+Nech $v$ je vrchol a $I(v)$ je \todo{}. Jednotlivé vetvy sémantického stromu nám
+preberajú všetky interpretácie sémantickej bázy. Nech $I'(v)$ je množina
+základných inštancií odmietnutá (úsek zamieta množinu klauzúl), potom na tomto
+mieste môžeme strom \emph{odrezať}.
+
+\paragraph{Definícia} Vrchol $v$ sémantického stromu pre množinu klauzúl $S$ sa
+nazýva \emph{odmietajúcim}, ak  $I(v)$ odmieta niektorú základú inštanciu
+klauzuly z množiny $S$, no ľubovoľný predchádzajúci vrchol $v'$ ($v'$ predchádza
+$v$), $I(v')$ neodmieta žiadnu základnú inštanciu klauzúl z $S$.
+
+\paragraph{Definícia}  Hovoríme, že sémantický strom $T$ pre množinu klauzúl $S$
+je \emph{uzavretý}, ak každá vetva $T$ končí odmietajúcim vrcholom.
+
+\paragraph{Definícia} Vrchol $v$ sémantického (TODO alebo uzavretého???) stromu
+$T$ pre  množinu klauzúl $S$ nazývame \emph{akceptujúcim}, ak všetky nasledujúce
+vrcholy vrchola $v$ sú odmietajúce.
+
+\paragraph{Príklad} $S= \{ P, Q \lor R, \neg P \lor \neg Q, \neg R \lor \neg P
+\}$. Herbrandovskú báza množinu $S$ vyzerá nasledovne: $\{P, Q, R\}$ (obr.
+\ref{0326_tree3}, \ref{0326_tree_cut}).
+
+\begin{figure}[h]
+	\centering\includegraphics{img/xx/2009-03-26.3.mps}
+	\caption{A ďalší sémantický strom\ldots}
+	\label{0326_tree3}
+\end{figure}
+%pic3+4
+
+\begin{figure}[h]
+	\centering\includegraphics{img/xx/2009-03-26.4.mps}
+	\caption{Orezaný sémantický strom}
+	\label{0326_tree_cut}
+\end{figure}
+
+
+\paragraph{Príklad} $S=\{ P(x), P(x) \lor Q(f(x)), \neg Q(f(x)) \}$.
+Herbrandovská báza pre množinu klauzúl $S$ vyzerá: $\{ P(a), Q(a), P(f(a)),
+Q(f(a)), \ldots \}$ (obr. \ref{0326_tree_cut2}). %pic5
+
+
+\begin{figure}[h]
+	\centering\includegraphics{img/xx/2009-03-26.5.mps}
+	\caption{Ďalší orezaný sémantický strom}
+	\label{0326_tree_cut2}
+\end{figure}
+
+\paragraph{Poznámka} Dirichletov princíp:
+$$T_1:$$
+$$X, Y -- \mbox{konečné množiny}$$
+$$ |X| < |Y| $$
+$$ f: X \rightarrow Y$$
+$$ \exists y \in Y_1\qquad x_1,x_2 \in X, x_1 \neq x_2 \qquad f(x_1) = f(x_2) =
+y$$
+Sporom. Ak by také $x_1$, $x_2$ neexistovali, potom pre každé $x_1, x_2 \in X$,
+$x_1 \neq x_2$ a $f(x_1) \neq f(x_2)$, potom $f$ je injektívne zobrazenie, z
+čoho vyplýva, že $|X| \leq |Y|$.
+$$T_2: $$
+$$ f: X \rightarrow Y,\qquad X\mbox{-- nekonečná}, Y\mbox{ -- konečná} $$
+$$T_2: \exists y\in Y, \qquad y=\{x|x\in X, f(x)=y\}$$
+
+\paragraph{Dôkaz} Nech $|Y|=n$. Množinu $X$ môžeme napísať ako $X=\Cup_{y\in
+Y}A_y$ takých, že ak $y_1\neq y_2$, potom $A_{y_1} \cap A_{y_2} = \emptyset$.
+
+$$ |X| = \left|\Cup_{y\in Y} A_y \right|$$
+
+Nech $k_0$ je maximálna mohutnosť $|A_y|$, $y\in Y$, množina $X$ ale nemá
+konečnú mohutnosť -- spor.
+\section{Herbrandova veta}
+
+\paragraph{Definícia} Strom chápeme ako usporiadanú dvojicu $(T,\leq)$ -- $T$ a
+relácia, ktorá čiastočne usporadúva $T$:
+\begin{enumerate}
+	\item $T(n)=\{v\in T, v<n\}$ je dobre usporiadaná.
+	\item $T$ má najmenší vrchol (koreň)
+\end{enumerate}
+
+Množina je dobre usporiadaná, ak každá jej neprázdna podmnožina má najmenší
+prvok. $T$ je lineárne usporiadanie -- ľubovoľné dva prvky sú porovnateľné:
+$a \neq b$, $a,b\in T$, pre $\{a, b\}$ musí platiť $a<b$ alebo $a>b$.
+
+\par Ak mám prvky $u$ a $v$, prvok $v$ nasleduje bezprostredne po prvku $u$, ak
+neexistuje $z$ také, že $u < z < v$.
+
+\paragraph{Lema (K\"onig)} (je dôležitá na pochopenie dôkazu Herbrandovej vety)
+Nech každý vrchol stromu s koreňom má konečné vetvenie (t.j. konečný stupeň
+vetvenia) a strom $T$ je nekonečný, tak potom v ňom existuje nekonečne dlhá
+vetva.
+
+\paragraph{Dôkaz} $(T_1,\leq)$, $v \in T$. Označme $A_v = \{ u \in T | v <u
+\}$ -- $A_v$ je množina tých vrcholov, ktoré ležia nad $v$. Majme vrchol $v$ a
+nech $v_1, v_2, \ldots v_n$ sú bezprostrední nasledovníci $v$ (obr.
+\ref{0326_successors}). $A_v = A_{v_1} \cup A_{v_2} \cup \ldots \cup A_{v_n}
+\cup \{v_1, v_2, \ldots, v_n\}$. $A_v$ je nekonečná. Na základe uvedeného
+tvrdenia aspoň jedna z množín $A_{v_i}$ musí byť nekonečná.
+
+\begin{figure}[h]
+	\centering\includegraphics{img/xx/2009-03-26.6.mps}
+	\caption{Nasledovníci $v$}
+	\label{0326_successors}
+\end{figure}
+
+\par Vyberieme si $x_0$ ako koreň (najmenší vrchol stromu $T$). $A_{x_0} =
+T \backslash \{x_0\}$, $A_{x_0}$ je nekonečná. Vezmime postupne prvky $\{x_0,
+x_1, \ldots , x_n, x_\{n+1\}\}$. Ku každému prvku viem vybrať nasledovný prvok a
+počet nasledovníkov je nekonečný. (TODO: lepšia formulácia)
+
+\paragraph{Veta (Herbrandova, variant 1)} Množina klauzúl $S$ nie je splniteľná
+práve vtedy, keď ľubovoľnému úplnému sémantickému stromu pre množinu klauzúl
+$S$ zodpovedá konečný uzavretý sémantický strom, t.j. ľubovoľná vetva úplného
+stromu vedie do odmietajúceho vrchola.
+
+\paragraph{Dôkaz} Predpokladajme, že množina klauzúl $S$ nie je splniteľná, nech
+$T$ je úplný sémantický strom prislúchajúci $S$. $I_V$ je množina všetkých
+literálov pripísaných vetve $V$ stromu $T$. Potom $I_V$ je interpretácia
+množiny klauzúl $S$. Predpokladajme, že $S$ je nesplniteľná (teda nesplniteľná v
+každej interpretácii). To znamená, že existuje nejaká základná inštancia klauzúl
+$C'$ (pre klauzulu $C$), ktorá je v interpretácii $I_V$ odmietnutá. (základná
+inštancia neobsahuje premenná, klauzuly sú konečné objekty). 
+%Je odmietnutá vo vrchole, ktorý je konečne vzdialený od koreňa stromu.
+\par Teraz potrebujeme zabezpečiť, aby strom bol konečný -- to musí, lebo ak by
+existovala nekonečná vetva, bola by to interpretácia, ktorá by neodmietala
+niektorú zo základných inštancií.
+
+\par Obrátená implikácia. Ak množina klauzúl nie je splniteľná, existuje k
+úplnému sémantickému stromu uzavretý konečný sémantický strom. Teraz
+predpokladajme, že k úplnému sémantickému stromu pre množinu klauzúl
+$S$ existuje konečný uzavretý sémantický strom (každá vetva stromu $T$ končí v
+zamietajúcom vrchole), potom interpretácia $I_V$ odmieta každú základnú
+inštanciu.
+
+
+\paragraph{Veta (Herbrandova)}: Množina klauzúl $S$ nie je splniteľná $\iff$ keď
+existuje konečná množina $S'$ základných inštancií klauzúl z $S$, ktorá nie je
+splniteľná. FIXME
+
+\paragraph{Dôkaz:} Predpokladajme, že množina klauzúl $S$ nie je splniteľná,
+existuje $T'$ -- konečný uzavretý strom priradený ku stromu $T$.
+
+\paragraph{Obrátene}: Predpoklajme, že existuije konečná $S'$ množina základných
+inštancií klauzúl $S$ nie je splniteľná, $I'$, $S'$. Potom $S$ nie je
+splniteľná, $I$ pre $S$. 
+
+\par
+Interpretácia $I$ obsahuje $I'$, teda keď $I'$ odmieta $S'$, potom $I$ odmieta
+$S$. Každá klauzula je disjunkcia literálov. Ak existuje množina základných
+inštancií, ktorá nie je splniteľná, potom celá množina nie je splniteľná.
+
+
+\paragraph{Príklad} Majme množinu klauzúl $S=\{P(x), \neg P(f(a))\}$. Vezmime
+množinu $S' = \{ P(f(a)), \neg P(f(a))\}$.
+
+\paragraph{Príklad} Majme množinu klauzúl $S=\{\neg P(x) \lor Q(f(x),x),
+P(g(b)), \neg Q(y,z) \}$. Táto množina nie je splniteľná -- opäť vezmime $$S' =
+\{ \neg P(g(b)) \lor Q(f(g(b)), g(b)), P(g(b)), \neg Q(f(g(b)), g(b)) \}$$.
+
+\paragraph{Príklad} Majme množinu klauzúl $S$:
+$$
+\begin{array}{l}
+	\neg P(x,y,u) \lor \neg P(y,z,v) \lor \neg P(x,v,w) \lor P(u,z,w) \\
+	\neg P(x,y,u) \lor \neg P(z,y,v) \lor \neg P(u,z,w) \lor P(x,v,w) \\
+	P(g(x,y),x,y), P(x,h(x,y),y), P(x,y,f(x,y),\neg P(f(v),x,f(x)) \\
+\end{array}
+$$
+\subparagraph{Návod} Zostrojte konečný sémantický strom.
+
+\par Algoritmické metódy na zisťovanie nesplniteľnosti pracovali iba pre menšie
+množiny klauzúl -- problém bol, že $S$ je množina disjunkcií, pokiaľ tam
+dosadíme prvky z univerza, dostaneme konjunktívnu normálnu formu (prípadne
+transformujeme na disjunktívnu normálnu formu a tú preverujeme). Ak máme $10$
+formúl, potrebujeme preverovať $2^{10}$ konjunkcií -- zložitosť exponenciálne
+rastie.
+
+\paragraph{Príklad}
+$$S=\{P(x), \neg P(a)\}, H_0 = \{a\}$$
+$$S'=P(a) \land \neg P(a) = \square$$
+$S$ nie je splniteľná.
+
+\paragraph{Príklad}
+$$S=\{P(a), \neg P(x) \lor Q(f(x)), \neg Q(f(a)) \}, H_0 = \{a\}$$
+$ S_0'=P(a) \land (\neg P(a)\lor Q(f(a))) \land \neg Q(f(a)) = \\
+P(a)\land \neg P(a) \land \neg Q(f(a)) \lor P(a) \land Q(f(a)) \land \neg Q(f(a)) = 
+\\ \square \lor \square = \square$.
+
+\paragraph{Pravidlá}
+Nech $S$ je množina klauzúl.
+
+\subparagraph{Pravidlo tautológie.} Vynecháme z $S$ všetky tautologické klauzuly.
+Množina $S'$, ktorá nám zostane, nie je splniteľná práve vtedy, keď $S$ nie je
+splniteľná.
+
+\subparagraph{Pravidlo jednoliterálnych klauzúl.} Nech $L$ je nejaký literál.
+Vynechajme z $S$ všetky klauzuly, ktoré obsahujú literál $L$. Nech $S'$ sú
+klauzuly, ktoré nám zostanú po vynechaní. Môžu nastať dva prípady:
+
+\begin{enumerate}
+	\item $S' = \emptyset$, tak potom množina klauzúl $S$ je splniteľná --
+	Stačí zobrať model, ktorý obsahuje $L$.
+	\item $S' \neq \emptyset$. Vezmem si literál $\neg L$ a vynechám z
+	množiny $S'$ všetky klauzuly, ktoré obsahujú $\neg L$, pričom dostanem
+	množinu klauzúl $S''$. Ak sa $S'$ nachádza $\neg L$, po vynechaní
+	namiesto nej zostane $\square$.
+\end{enumerate}
+
+$S$ nie je splniteľná $\iff$ $S''$ nie je splniteľná.
+
+\subparagraph{Pravidlo čistých literálov} Literál $L$ základnej klauzuly z $S$
+budeme nazývať \emph{čistým}, ak literál $\neg L$ sa nevyskytuje v žiadnej
+základnej klauzule $S$. Vezmem si z $S$ literál $L$, ktorý je čistý, a
+vynecháme z $S$ všetky základne klauzuly obsahujúce $L$. $S'$ je množina, ktorá
+nám zostala. $S$ nie je splniteľná $\iff$ $S'$ nie je splniteľná.
+
+\subparagraph{Pravidlo rezu} Ak množinu $S$ vieme vyjadriť v tvare $(A_1 \lor L)
+\land \ldots \land (A_m \lor L) \land (B_1 \lor \neg L) \land \ldots \land (B_n
+\lor \neg L) \land R$, pričom v $A_i$, $B_j$, sa $R$, $L$, $\neg L$, $i=1..m$,
+$j=1..n$ už nevyskytujú.
+
+$$S_1 = A_1 \land A_2 \land \ldots \land A_m \land R$$
+$$S_2 = B_1 \land B_2 \land \ldots \land _n \land R$$
+
+$S$ nie je splniteľná $\iff$ $S_1 \lor S_2$ nie je splniteteľná.
+
+\paragraph{Dôkaz}
+\begin{enumerate}
+	\item Keď $S$ nie je splniteľné, tak ani $S_2$ nie je splniteľné --
+	tautológie sú splnené pre ľubovoľné interpretácie. To, čo zostane,
+	hovorí, či množina je alebo nie je splniteľná.
+	\item Zostáva nám $S'$, ktoré vzniklo vynechaním $L$ z $S$. Ak
+	$S'=\emptyset$, každá klauzula z $S$ obsahuje $L$ (je tvaru $L \lor
+	\square$), stačí nám ohodnotenie, kedy $L$ je pravdivé, čo zabezpečí
+	pravdivosť celého výroku. 
+	\par
+	Keď $S'$ nie je prázdna, vytvoríme $S''$ tak,
+	že vynecháme všetky klauzuly obsahujúce $\neg L$. $S'$ nie je splniteľná
+	práve vtedy, keď $S$ nie je splniteľná. Predpokladajme, že $S''$ nie je
+	splniteľná a $S$ je splniteľná. Model $\mathcal{M}$ musí obsahovať $L$ a
+	$S$ platí na $S''$.
+	TODO
+	V konjunktívnej normálnej forme musia byť platné doplnky $\neg L \lor
+	\square$. Potom $S''$ je splniteľná, čo je spor.
+
+	\par Obrátene, nech $S$ nie je splniteľná. Z toho vyplýva, že $S''$ nie
+	je splniteľná. Nech $S''$ je splniteľná. Potom existuje model
+	$\mathcal{M}''$ pre $S''$. Ak tomuto modelu pridám $L$, potom
+	$\mathcal{M}'' \cup L$ je model pre $S$, čo je spor.
+
+	\item Pravidlo čistých literálov -- Máme čistý literál $L$, všetky
+	klauzuly, ktoré ho obsahujú, vyhodíme z $S$ a dostaneme $S'$. $S$ nie je
+	splniteľná práve vtedy, keď $S'$ nie je splniteľná. Predpokladajme, že
+	$S'$ nie je splniteľná, teda pre žiadnu interpretáciu $I'$ neplatí. $S\
+	\subseteq S$. Musí platiť, že $I' \subseteq I$.
+
+	\par Obrátene -- predpokladajme, že $S$ nie je splniteľná. Potom aj $S'$
+	nie je splniteľná. Predpokladajme, že $S'$ je splniteľná. Potom musí mať
+	model $\mathcal{M}'$, ktorý jej vyhovuje. Keď si vytvorím model
+	$\mathcal{M}=\mathcal{M}'\cup L$, potom $\mathcal{M}$ je modelom v $S$.
+
+	\item Pravidlo rezu. Mám množinu $S$, popísaným spôsobom som zostrojil
+	$S_1$ a $S_2$. Chceme ukázať, že $S$ nie je splniteľná $\iff$ $S_1 \lor
+	S_2$. Predpokladajme, že $S$ je splniteľná. Potom $S_1 \lor S_2$ je
+	splniteľná, teda aspoň jeden člen disjunkcie je splniteľný. Keď pridám
+	modelu $S_1$ negované $B$, dostávam model pre $S$. Taktiež, keď je
+	splnená $S_2$, má nejaký model $\mathcal{M_2}$. Keď k nemu pridám $B$,
+	dostávam model pre $S$.
+
+	\par Obrátene, predpokladajme, že $S_1$ alebo $S_2$ nie je splniteľná. Z
+	toho vyplýva, že $S$ nie je splniteľná. Pre spor predpokladajme, že $S$
+	je splniteľná. Pozrime sa, ako vyzerá $S$ -- všetky konjunktívne členy
+	musia byť splnené a teda buď platí $\neg L$ alebo $L$. Vždy dospievam do
+	sporu.
+\end{enumerate}
+
+\paragraph{Záver} Najvšeobecnejšie je pravidlo rezu, ktoré pokrýva aj všetky
+ostatné prípady.
+
+\paragraph{Príklad} Majmne množinu $S=(P \lor Q \lor \neg R) \land (P \lor \neg
+Q) \land \neg P \land R \land U$. Ukážte, že množina klauzúl nie je splniteľná.
+Použijeme pravidlo 2 s $\neg P$. Dostávam $Q\land\neg R) \land \neg  \land R
+\land U$. Na túto množinu klauzúl použijem pravidlo 2 s $\neg Q$. Dostávam $\neg
+R \land R \land U$, čo je $\square \land U \square$.
+
+
+
+
+\paragraph{Príklad} (7) $S=(P \lor Q) \land \neg Q \land ( \neg P \lor Q \lor \neg
+R)$. Ukážte, že množina klauzúl $S$ je splniteľná.
+\par Pravidlo 2 s $\neg Q$: $(P \lor Q) \land ( \neg P \lor Q \lor \neg R)$ \\
+$P \land (\neg P \lor \neg R)$ \\
+$(P \land \neg P) \lor (P \land \neg R)$ (distributívnosť) \\
+$P \land \neg L, I=\{P,\neg Q, \neg R\}$
+
+\paragraph{Príklad} (8) $S=(P\lor \neg Q) \land (\neg P \lor Q) \land (Q \lor
+\neg R) \land (\neg Q \lor \neg R)$. Zistite, či množina je alebo nie je
+splniteľná.
+\par vytvoríme si mnonžiny podľa pravidla 4: \\
+$$(P\land \neg Q) \land (Q \lor \neg R)  \land (\neg Q \lor \neg R)$$
+$$(\neg P \lor Q) \land (Q \lor \neg R) \land (\neg Q \lor \neg R)$$
+
+\par
+$$S_1 = \neg Q \land (Q \lor \neg R) \land (\neg Q \lor \neg R)$$
+$$S_2 = Q \land (Q \lor \neg R) \land (\neg Q \lor \neg R)$$
+
+($S_1$ a $S_2$ sú množiny rezu)
+Na množiny môžem použiť pravidlo 2 -- s $Q$ a $\neg Q$. Dostávam $\neg R \lor
+R$, čo je splniteľná klauzula.
+
+\paragraph{Príklad} (9) $S=(P \lor Q) \land (P \lor \neg Q) \land (R \lor Q)
+\land (R \lor \neg Q)$. $P$ je čistý literál; použijeme pravidlo 3:
+$S': (R \lor Q) \land (R \lor \neg Q)$. \\
+$\fbox{P,R}$ \\
+
+\section{Metóda rezolvent pre výrokovú logiku}
+
+\paragraph{Definícia} Majme $C_1$ a $C_2$ -- ľubovoľné klauzuly, $L_1$ je
+literál z $C_1$ a je kontrárny literálu $L_2$, ktorý sa vyskytuje v $C_2$. Ak z
+$C_1$ vynecháme $L_1$ a z $C_2$ vynecháme $L_2$. Ak z tých častí, ktoré
+zostávajú, zostrojíme disjunkciu $C_1 \lor C_2$, táto sa nazýva
+\emph{rezolventa} $C_1$ a $C_2$.
+
+\paragraph{Príklad}
+$$
+\begin{array}{ll}
+C_1: P \lor R, & C_2: \neg P \lor Q \\
+P \in C_1 & C_1': R \\
+P \in C_2 & C_2': Q \\
+\end{array}
+$$
+
+\paragraph{Príklad}
+$$C_1: \neg P \lor Q\lor R$$
+$$C_2: \neg Q \lor S$$
+Kontrárna dvojica $\neg Q$, $Q$; rezolventa je teda:
+$$C_1, C_2: \neg P \lor R \lor S$$
+
+\paragraph{Príklad}
+
+$$C_1: \neg P \lor Q$$
+$$C_2: \neg P \lor R$$
+
+\paragraph{Veta} Nech $C_1$ a $C_2$ sú klauzuly, $C$ je rezolventa klauzúl
+$C_1$, $C_2$. Potom $C$ je logickým dôsledkom klauzúl $C_1$ a $C_2$
+$$A_1, A_2, \ldots, A_n, B$$
+$$
+\begin{array}{ll}
+A_1 \land A_2 \land \ldots \land A_n \implies B & \equiv 1	\\
+\vdash A_1 \land A_2 \land \ldots \land A_n \implies B & \\
+A_1 \land A_2 \land \ldots \land A_n \land \neg B & \equiv 0	\\
+\end{array}
+$$
+\paragraph{Dôkaz} $C_1$, $C_2$, $C$
+
+
+$$
+\begin{array}{lll}
+C_1 &= &L \lor C_1' \\
+C_2 &=& \neg L \lor C_2' \\
+C   &=& C_1' \lor C_2'	\\
+\end{array}
+$$
+$C_1$ a $C_2$ sú pravdivé a klauzula $C$ je logickým dôsledkom $C_1$ a $C_2$.
+
+\paragraph{Poznámka} Ak $C_1$, $C_2$ sú jednotkové klauzuly, potom musia tvoriť
+kontrárnu dvojicu $C_1: L$, $C_2: \neg L$ a rezolventou je prázdna klauzula --
+$C: \square$
+
+
+\paragraph{Definícia} Nech $S$ je množina klauzúl.
+\emph{Rezolvenčným odvodením} $C$ z množiny $S$, nazývame konečnú
+postupnosť klauzúl $C_1, C_2, \ldots, C_n (C)$ takú, že pre každé $i=1..n$ platí
+$C_i$ je buď z $S$ alebo $C_i$ je rezolventa niektorých klauzúl $C_j$, $C_k$,
+$j, k < i$.
+
+\par Ak $C$ je prázdna klauzula, takémuto odvodeniu hovoríme \emph{zamietniue
+odvodenia} a množina klauzúl $S$ nie je splniteľná.
+
+\paragraph{Poznámka} Ak mám množinu $S$ a klauzulu $C$, hovoríme, že $C$ môžem
+získať z $S$, ak existuje odvodenie $S, C_1, \ldots C_m (C)$.
+
+\paragraph{Príklad} 
+\begin{enumerate} 
+	\item $ \neg P \lor Q $
+	\item $ \neg Q $
+	\item $ P $
+	\item $ \neg P $
+\end{enumerate}
+Použitím 3 a 4 dostávame prázdnu klauzulu, teda množina klauzúl $S$ nie je
+splniteľná.
+
+\paragraph{Príklad}
+S:
+\begin{enumerate}
+	\item $ P \lor Q $
+	\item $ \neg P \lor Q $
+	\item $ P \lor \neg Q $
+	\item $ \neg P \lor \neg Q $
+	\item $ Q $
+	\item $ P $
+\end{enumerate}
+
+%\begin{verbatim}
+%                     0
+%		    / \
+%		   /   \
+%		  Q  neg Q
+%		 /\       /\
+%		/  \     /  \
+%	       /    \   /    \
+%	      P  neg P P    neg P
+%	      (listy su jednotlive vyroky)
+%\end{verbatim}
+%
+\begin{figure}[h]
+	\centering\includegraphics{img/xx/2009-04-02.1.mps}
+	\caption{Výrazy}
+\end{figure}
+
+$\neg A \lor V, A \lor C \vdash B \lor C$
+$$A \implies B, \neg A \implies C \vdash \neg B \implies C$$
+\begin{enumerate}
+	\item $$\vdash (A \implies B) \implies (\neg B \implies \neg A)$$
+	\item $$ \vdash (\neg B  \implies \neg A) \implies ((\neg A \implies C)
+	\implies (\neg B \implies C))$$
+\end{enumerate}
+$$ A \implies B, \neg C \implies C \vdash \neg V \implies C$$
+$$ A, A\implies B \vdash B$$
+
+$$A \lor \square, \neg A \lor B \vdash$$
+Pravidlo \emph{modus ponens} a pravidlo rezolventy sú ekvivalentné.
+
+\paragraph{Príklad}
+$$C_1: P(x) \lor Q(x)$$
+$$C_2: \neg P(f(x)) \lor R(x)$$
+
+
+
+\section{Substitúcia a unifikácia}
+
+$$
+\begin{array}{ll}
+C_1  = P(x) \lor Q(x),& C_2 = \neg P(f(x)) \lor R(x)\\
+C_1:  x \cdot f(a),&  C_2 \cdot : a\\
+C_1':  P(f(x)) \lor Q(f(a)),& C_2':\neg P(f(a)) \lor R(a)\\
+\end{array}
+$$
+
+Teraz môžeme definovať rezolventu; bude to $Q(f(a)) \lor R(a)$. Mohli by sme
+postupovať aj takto:
+
+$$
+\begin{array}{ll}
+C_1: & x: f(x) \\
+C_1^*: & P(f(x)) \lor Q(f(x)) \\
+C_2: & \neg P(f(x)) \lor R(x)\\
+ & P(f(x))\\
+ & \neg P(f(x)))\\
+C_3: & Q(f(x)) \neg R(x)\\
+\end{array}
+$$
+
+Formulu $C_3$ nazývam rezolventou pre klauzulu $C_1$ a $C_2$. Zmyslom
+substitúcie a unifikácie je umožniť operácie, na ktoré sme boli zvyknutí vo
+výrokovej logike -- tu bude situácia technicky náročnejšia.
+
+\paragraph{Definícia} Pod \emph{substitúciou} rozumieme konečnú množinu tvaru:
+$\{t_1/v_1, \ldots, t_n/v_n\}$, kde každé $v_i$ je premenná a všetky $v_i,
+i=1..n$ sú navzájom rôzne. Každý term $t_i, i=1..n$ je rôzny od $v_i, i=1..n$.
+ak $t_1, \ldots, t_n$ sú základné inštancie (teda termy bez premenných), tak
+substitúciu nazývame \emph{základná substitúcia}. Ak množina je prázdna, tak
+substitúciu budeme označovať $\varepsilon$. Na označovanie substitúcií budeme
+používať grécke písmená.
+
+\paragraph{Príklad} $\{ f(z)/x; y/z\}$, $\{ a/x, g(y)/y, f(g(y))/z\}$.
+
+\paragraph{Definícia} Nech $\theta$ je ľubovoľná substitúcia a $E$ je nejaký
+výraz. Nech $\theta = \{ t_1/v_1, \ldots t_n/v_n\}$. Potom $E\theta$ označuje
+výraz, ktorý vznikne tak, že súčasne vo výraze $E$ nahradíme premennú $v_i$
+termom $t_i, i=1..n$.
+
+\paragraph{Príklad} Majme $\theta=\{a/x, f(b)/y, c/z\}$, $E = P(x, y, z)$. Potom
+$E\theta = P(P(a, f(b), c)$.
+
+\par Ďalšia operácia, ktorú budeme potrebovať, je operácia skladania
+substitúcií.
+
+\paragraph{Definícia} Majme $\theta = \{t_1/x_1, \ldots t_n/x_n\}$ a $\lambda =
+\{ u_1/y_1, \ldots u_m/y_m \}$. Zloženie (kompozícia) substitúcií, označíme
+$\theta \circ \lambda$:
+$$\{t_1 \lambda/x_1, \ldots t_n \lambda/x_n, u_1/y_1m \ldots u_m/y_m \}$$ také,
+že vyradí všetky členy $t_i\lambda/x_i$, pre ktoré platí, že $t_i \lambda = x_1$,
+všetky $u_i/y_1$, pre ktoré $y_i \in \{x_1, x_2, \ldots x_n\}$.
+
+\paragraph{Príklad} 
+$$\theta \{t_1/x_1, t_2/x_2\} = \{ f(y)/x, z/y\}$$
+$$\lambda = \{ u_1/y_1, u_2/y_2, u_3/y_3\} = \{ a/x, b/y, y/z\}$$
+
+$$ \theta \circ \lambda = \{ t_1 \lambda / x_1, t_2\lambda/x_2, u_1/y_1,
+u_2/y_2, u_3/y_3\} = \\ 
+\{ f(b)x, y/y, a/x, b/y, y/z\}$$
+$$ \theta \circ \lambda = \{ f(b)/x, y/z\}$$
+
+\paragraph{Úloha} Dokážte, že skladanie substitúcií je asociatávna operácia.
+Tiež dokážte, že $\varepsilon \circ \theta = \theta \circ \varepsilon$.
+\par Zoberieme $\theta, \lambda, \mu$, potom platí $ \theta \circ(\lambda \circ
+\mu) = (\theta \circ \lambda) \circ \mu$.
+
+\paragraph{Definícia} Substitúciu $\theta$ nazveme \emph{unifikátorom} pre
+množinu výrazov $E_1, E_2, \ldots, E_n$, ak platí $E_1\theta = E_2\theta =
+\cdots = E_n\theta$. Množinu nazveme \emph{unifikovateľnou}, ak pre ňu existuje
+unifikátor.
+
+\paragraph{Príklad} Majme množinu $\{ P(a,y), P(x,f(b)\}$, $\theta = \{a/x,
+f(b)/y\}$ -- unifikátor pre túto množinu. 
+
+\paragraph{Definícia} Majme množinu výrazov $\{ E_1, E_2, \ldots, E_n\}$,
+$\theta$ je ľubovoľný unifikátor pre množinu uvedených výrazov. Unifikátor
+$\sigma$ pre množinu výrazov $\{E_1, E_2, \ldots, E_n\}$ nazveme
+\emph{najvšeobecnejší unifikátor}, ak pre $\theta$ platí $\theta = \sigma \circ
+\lambda$, kde $\lambda$ je vhodná substitúcia.
+
+\par Uvažujme výrazy $P(a)$, $P(x)$ Pozerajme sa na ne ako na konečnú
+postupnosť symbolov -- odlišujú sa akurát v treťom symbole. Toto je prvá
+diferencia. Vo všeobecnosti môže byť týchto výrazov $n$.
+
+\paragraph{Definácia} Nech $W$ je neprázdna množina výrazov. \emph{Diferenčnú
+množinu}
+pre množinu výrazov $W$ dostávame tak, že na prvú pozíciu (zľava) vypíšem všetky
+tie výrazy, ktoré sa líšia. 
+
+\paragraph{Príklad} Majme množinu $W = \{P(x,\underline{f(y,z)},
+P(x,\underline{a}), P(x,\underline{g(h(k(x)))}) \}$
+Diferenčnou množinou bude $D= \{ f(y,z), a, f(h(k(x)))\}$. 
+
+\subsection{Unifikačný algoritmus}
+
+Kroky:
+\begin{enumerate}
+	\item $k=0, W_0 = W, \sigma_0 = \Sigma$
+	\item Ak $W_k$ je jednotková klauzula, algortimus zakončí svoju činnosť
+	$\sigma_k$ je najvšeobecnejší unifikátor. V opačnom prípade nájdeme $D_k$
+	(diferenčnú množinu) pre $W_k$.
+	\item Ak existujú také premenné $v_k$ a $t_k$ v $D_k$, že $v_k$ je
+	premenná, ktorá sa nevyskytuje v $t_k$, tak prejdeme ku kroku 4. V
+	opačnom prípade algoritmus zakončuje svoji činnosť. Množina $W$ nie je
+	unifikovateľná.
+	\item Nech $W_{k+1} = W_k \{t_k/v_k\}$, $\sigma_{k+1} = \sigma_k \circ
+	\{t_k/v_k\}$ ($W_{k+1} = W_k \sigma_{k+1}$)
+
+	\item Vypíšeme hodnoty pre $k+1$ a prejdeme ku kroku 2.
+\end{enumerate}
+
+
+Ak je množina unifikovateľná, vždy existuje najvšeobecnejší unifikátor.
+
+\paragraph{Príklad}
+Nájdite najvšeobecnejší unifikátor pre množinu: $$W=\{ P(a,x,f(g(y))),
+P(z,f(z),f(u)), \}$$
+
+\begin{enumerate}
+	\item $\sigma_0 = \varepsilon, W_0 = W$. Pretože $W_0$ nie je jednotková
+	klauzula, $\sigma_0$ nie je najvšeobecnejší unifikátor.
+	\item Musíme zostrojiť diferenčnú množinu $D_0 = \{a, z\}$. Existuje
+	premenná $v_0 = z$, ktorá nie je obsiahnutá v terme $t$. $t_0 = a$.
+	\item $$\sigma_1 = \sigma_0 \circ \{ t_0/v_0 \} = \epsilon \{a/z\} =
+	\{a/z\}$$ $W_1 = W_0\{ t_0/v_0 \} = \{P(a,x,f(g(y)),
+	P(z,f(z),f(u))\}\{a/z\} =  \\
+	= \{P(a,x,f(g(y))), P(a, f(a), f(u))\}$
+
+	\item $W_1$ nie je jednotková klauzula. Zostrojíme diferenčnú množinu
+	$D_1$ pre $W_1$. $D_1 = \{x_1, f(a)\}$
+
+	\item Z $D_1$ dostávame $v_1 = x$ a $t_1 = f(a)$.
+	\item $$\sigma_2 = \sigma_1 \circ \{ t_1/v_1\}= \{a/z\} \circ \{ f(a)/x\}
+	= \{a/z, f(a)/z \}$$
+	$ W_2 = W_1 \{t_1/v_1\} = \{P(a,x,f(g(y))), P(a,f(a),f(u)\} \{ f(a)/x
+	\} = \\
+	= \{ P(a,f(a), f(g(y))), P(a,f(a), f(u), \}$. $W_2$ opäť nie je
+	jednotková klauzula -- musíme vytvoriť diferenčnú množinu.
+
+	\item $W_2$ nie je jednotková klauzula -- vytvárame diferenčnú množinu
+	$D_2$ pre $W_2$. $D_2 = \{ g(y), u \}$. $v_2 = u$, $t_2 = g(y)$.
+
+	\item $$\sigma_3 = \sigma_2 \circ \{t_2/v_2\} = \{a/z, f(a)/x\} \circ
+	\{g(y)/u\}$$.
+	$W_3 = W_2 \{ t_x/v_2\} = \{ P(a,f(a), f(g(y))), P(a,f(a),
+	f(u))\}\{g(y)/u\} = \\
+	= \{ P(a, f(a), f(g(y))), f(a, f(a), f(g(y)) \}$.
+	$W_3$ je jednotková klauzula.
+	$$ \sigma_3 = \{ a/z, f(a)/x, g(y)/u\}$$. $\sigma_3$ je najvšeobecnejší
+	unifikátor pre množinu klauzúl $W$.
+\end{enumerate}
+
+\paragraph{Príklad}
+
+\paragraph{Príklad} Zistitte, či je unifikovateľná množina $W=\{Q(f(x),g(x)),
+Q(y,y)\}..$
+
+
+	$$y\circ \sigma_0 \varepsilon \qquad \mbox{a} \qquad W_0 = W$$
+$W_0$ nie je jednotková klauzula. Nájdeme diferenčnú množinu $D_0$ pre $W_0$:
+$$D_0 = \{ f(a)/y \}$$
+$$v_0, t_0 = f(a)$$
+
+Nech $\sigma_1 = \sigma_0 \circ \{ t_1/\sigma_0\} = \varepsilon \circ  \{
+f(a)y\}$
+
+$W_1 = W_0 \{ t_0/\sigma_0\} = \{ Q(f(x),g(x)), Q(f(a),f(a))\}$
+
+$W_1$ nie je jednotková klauzula, zostrojujeme $D_1$, diferenčnú množinu
+pre $W_1$.
+
+
+$$D_1 = \{ g(x), f(a)\}$$ nemáme prvok, ktorý by bol premennou. Algoritmus
+ukončí svoju činnosť a $W$ nie je unifikovateľná.
+
+\par Pri zisťovaní unifikovateľnosti vždy vytvárame množiny $W$ tvaru:
+$$W\sigma_0, W\sigma_1, \ldots, W\sigma_k, \ldots$$, pričom v každom kroku sa
+zmenší počet premenných o 1. Po konečnom počte krokov sa musí zastaviť.
+
+
+\paragraph{Veta (unifikačná):} Ak $W$ je konečná neprádzna unifikačná množina
+výrazov, tak unifikačný algoritmus vždy zakončuje svoju činnosť na druhom kroku
+a posledné $\sigma_k$ bude najvšeobecnejší unifikátor.
+
+\paragraph{Dôkaz:} $W$ je unifikovateľná množina, $\Theta$ označuje jej
+ľubovoľný unifikátor. Indukciou ukážeme, že pre každé $k$ existuje taká
+substitácia $\lambda_k$, že $\Theta = \sigma_k \circ \lambda_k$
+
+\subparagraph{Báza indukcie} Nech $k = 0$. Máme ukázať, že $\Theta = \sigma_0
+\circ \lambda_0$. V tomto prípade $\sigma_0 = \varepsilon$ a $\lambda_0 =
+\Theta$.
+
+\subparagraph{Indukčný krok} Indukčný predpoklad: $\Theta = \sigma_k \circ
+\lambda_k$ $(0 \leq k \leq n)$. $W_n = W\sigma_n$. Ak $W_n$ je jednotková
+klauzula, tak algoritmus zakončuje svoju činnosť na druhom kroku a $\sigma_n$ je
+najvšeobecnejší unifikátor pre $W$. 
+\par Nech $W_n$ nie je jednotková množina. Potom hľadám diferenčnú množinu $D_n
+$ pre množinu $W_n$. Keď $D_n$ je diferenčná množina pre $W_n$, tak vo $W_n$
+musí existovať premenná -- označme ju $v_n$. Ďalej nech $t_n$ je ľubovoľný výraz
+z $D_n$ rôzny od $v_n$.
+
+$$\Theta = \sigma_n \circ \lambda_n$$ 
+$\Theta$ je unifikátor. Diferenčnú množinu $D_n$ unifikuje substitúcia
+$\lambda_n$. $v_n \lambda_n = t_n \lambda_n$.
+
+\par Ak by premenná $v_n$ bola obsiahnutá v $t_n$. Predpokladali sme, že $v_n$ a
+$t_n$ sú rôzne a teda $v_n$ sa nemôže vyskytovať v $t_n$.
+
+\par Prejdeme ku kroku 4 -- množine $W\sigma_{n+1}$ (množina $W_{n+1}$). Platí,
+že $\sigma_{n+1} = \sigma-n \circ \{ t_n/v_n \}$. $\Theta = \sigma_{n+1} \circ
+\lambda-{n+1}$.
+
+\par Nech $\lambda_{n+1} = \lambda_n - \{t_n\lambda_n/v_n\}$. 
+
+$$t_n\lambda_{n+1} = t_n (\lambda_n - \{t_n\lambda_n / v_n\}) -  t_n\lambda_n$$
+$$\{ t_n / v_n\} \circ \lambda_{n-1} = \{t_n \lambda_{n+1}\}/v_n \cup
+\lambda_{n+1} = \{t_n\lambda_n /v_n\} \cup \lambda_{n+1} = \{t_n\lambda_n/v_n\}
+\cup \{ \lambda_n - \{ t_n\lambda_n/v_n\} = ??? \{ t_n/v_n \} \circ
+\lambda_{n+1} = \lambda_n$$
+
+$$\Theta = \sigma_n \circ \lambda_n$$.
+
+\section {Metóda rezolvent pre logiku 1. rádu}
+
+\paragraph{Definícia:} Nech $C$ je klauzula; ak dva alebo viac literálov (s
+rovnakým znakom predikátu) Majú najvšeobecnejší unifikátor $\sigma$, tak
+$C\sigma$ sa nazýva \emph{spojením $C$}. Ak $C\sigma$ je jednotková klauzula,
+tak $C\sigma$ nazývame \emph{jednotkovým spojením $C$}.
+
+
+\paragraph{Príklad} Uvažujme klauzulu $C$, ktorá vyzerá nasledovne: $C = \{ P(x)
+\lor P(f(y)) \lor \neg Q(x)\}$. 
+
+\paragraph{Definícia:} Nech $C_1$ a $C_2$ sú klauzuly (nazývame ich
+predpoklady), ktoré nemajú spoločné premenné. Nech $L_1 \in C_1$ a $L_2 \in
+C_2$ sú dva literály . Ak $L_1$ a $\neg L_1$ majú najvšeobecnejší unifikátor
+$\sigma$, tak:
+$$(C_1\sigma - L_1\sigma) \lor (C_2\sigma - L_2\sigma)$$
+
+sa nazýva binárnou rezolventou ..... $C_1$ a $C_2$. Literály $L_1$ a $L_2$ nazývame
+nadbytočné a môžu sa odstrániť.
+
+\paragraph{Príklad} $C_1 = p(x) \lor Q(x), C_2 = \neg P(x) \lor R(x)$, $C_1$,
+$C_2$ -- predpoklady. $C_2 = \neg P(a) \lor R(y)$.
+
+$$L_1 = P(x), L_2 = \neg P(x)$$
+$$\neg L_2 = P(x)$$
+$$L_1, \neg L_2, \sigma = \{a/x\}$$
+
+Binárna rezolventa $C_1$ a $C_2$ $(C_1\sigma - L_1\sigma) \lor (C_2\sigma -
+L_2\sigma) = (\{P(a),Q(a))\} - \{P(a)\}) \lor (\{\neg P(a),R(y)(\}-\{\neg
+P(a)\}) = \{Q(a)\lor R(y)\}$
+
+\paragraph{Definícia} Rezolventou z predpokladov $C_1$ a $C_2$ je jedna z
+nasledujúcich rezolvent:
+\begin{enumerate}
+	\item Binárna rezolventa $C_1$ a$C_2$
+	\item Binárna rezolventa $C_1$ a spojenia $C_2$
+	\item Binárna rezolventa spojenia $C_1$ a $C_2$
+	\item Binárna rezolventa spojenia $C_1$ a spojenia $C_2$
+\end{enumerate}
+
+\paragraph{Príklad} $$C_1 = P(x) \lor P(f(y))\lor Rg(y))$$
+$$ C_2 = \neg P(f(g(a)) \lor Q(b)$$
+Spojenie pre $C_1$ vyzerá ako: $C_1': P(f(y)) \lor R(g(y))$.
+Binárna rezolventa $C_1' a C_2$ bude vyzerať takto: $R(g(g(a))) \lor Q(b)$ --
+rezolventa $C_1$ a $C_2$.
+
+
+\section{Opakovanie}
+	Ak množina klauzúl nie je splniteľná, potom metódou rezolvent z nej vždy
+	môžeme dostať prázdnu klauzulu (a ak sa táto dostane množiny klauzúl,
+	tak formula nie je splniteľná v žiadnej interpretácii). Ak máme nejakú
+	klauzulu $C$, $C\sigma$ sme nazývali spojením klauzuly $C$. Definícia
+	binárnej rezolventy. 
+
+\par  Metódu rezolvent zaviedol roku 1965 Robinson, je efektívnejšia ako obe
+varianty Herbrandovej metódy. 
+
+\par \{ sleep...\}
+
+\paragraph{Úplnosť metódy rezolvent}
+
+\paragraph{Príklad} Majem množinu klauzúl $S$:
+\begin{enumerate}
+	\item $P$
+	\item $\neg P\lor Q$
+	\item $\neg P \lor \neg Q$
+\end{enumerate}
+Tejto množine klauzúl zodpoveda uzavretý sémantický strom.
+Prislúchajúca herbrandovská báza je $\{P, Q\}$ (na tabuľu sa kreslí sémantický
+strom pre $P$ a $Q$, usilovný čitateľ si ho isto domyslí). Každá vetva sa končí
+odmietajúcim vrcholom, žiadna z tých interpretácií, ktoré končia v listoch, nie
+je splniteľná. Tomuto stromu môžeme priradiť uzavretý podstrom (označíme ho
+$T'$,  má odseknuté vetvy na miestach, kde sú podstromy odmietajúce)
+
+
+\begin{verbatim}
+            T
+            /\
+         P /  \ \neg P
+       Q /\ nQ Q/\ nQ 
+\end{verbatim}
+
+\begin{verbatim}
+            T'
+            (1)
+            /\
+      (2)P /  \ \neg P
+   (4) Q /\ nQ x (5)
+       x   x
+\end{verbatim}
+
+\par $\neg P$ -- rezolventa $(4)$, $(5)$, $\neg P \cup S$.  $S\cup \{ \neg P
+\}\cup \{ \square \}$.
+
+\par Vznikli nám teda klauzuly.
+$$(4) \neg P\qquad (2) (3)$$
+$$(5) \Box\qquad (4)(1)$$
+
+\par Strom sa po každej aplikácii pravidla postupne skracuje. 
+
+\paragraph{Lema} Nech $C_1'$ a $C_2'$ sú inštancie $C_1$ resp. $C_2$ (v uvedenom
+poradí). Ak $C'$ je rezolventa $C_1'$ a $C_2'$, tak potom existuje rezolventa
+$C$ klauzúl $C_1$ a $C_2$, že $C'$ je inštancia $C$. 
+
+\paragraph{Dôkaz} Ak je treba, premenujeme premenné $C_1$ a $C_2$. Nech $L_1'$ a
+$L_2'$ sú literály, ktoré môžeme vynechať (sú nadbytočné). ďalej nech platí:
+$$C' = (C_1' \nu - L_1'\nu) \cup ( C_2'\nu - L_2'\nu)$$
+Pričom $\nu$ je najvšeobecnejší unifikátor pre $L_1'$ a $\neg L_2'$. $C_1'$,
+$C_2'$ sú inštancie $C_1$ a $C_2$, a teda existuje substitúcia $\Theta$ taká, že
+platí:
+
+$$ C_1' = C_1 \Theta $$
+$$ C_2' = C_2 \Theta $$
+
+(Pozn.: $C_1$ a $C_2$ nemajú spoločné premenné). $L^1_i, L^2_i, \ldots, L^{r_i}_i,
+i=1,2$ sú literály, ktoré v $C_1$ zodpovedajú $L_i'$, teda $L^1_i \Theta = L^2_i
+\Theta = \cdots = L^{r_i}_i\Theta = L'_i (i=1,2)$. $D_i > 1$ dostaneme
+najvšeobecnejší kvantifikátor $\lambda_i (i=1,2)$ pre $\{ L^1_i, L^2_i, \ldots,
+L^{r_i}_i\}, L_i = L^1_i \lambda_i (i=1,2)$. $\lambda_i$ je najvšeobecnejší
+unifikátor, tak pre vhodnú substitúciu $\xi$ platí:
+$$ L_i' = L^1_i \Theta = L^1_i (lambda_i \circ \xi) = (L^1_i\lambda_i)\xi =
+L_i \xi$$
+
+$$L_i\xi = L_i'$$
+
+$L_i$ .. spojení $C_i\lambda_i$, pre $C_i$, ak $r_i = 1$, ak $r_i = 1$, potom
+$\lambda_i = \Sigma$, $L_i = L_i^1\lambda_i$.
+
+$$ \lambda = \lambda_1 \cup \lambda_2$$
+$$L_i' = \mbox{...} L_i$$
+
+$L'_i, \neg L_2'$ -- unifikovateľné.
+$L-1, \neg L_2$ -- unifikovateľné.
+
+Označme $\sigma$ najvšeobecnejší unifikátor pre $L_1'$ a $\neg L_2'$.
+
+$C= ((C_1\lambda)\sigma = L_1\sigma) \cup
+((C_2\lambda_2)\sigma-L_2\sigma) = ((c_1\lambda)\sigma - (\{L^1_+, L^2_1,
+\ldots, L^{r_i}_1 ...
+= C_1(\lambda\circ \sigma) = \{ L^1_1, \ldots L^{r_1}_1 \} (\lambda\circ\sigma)
+\cup C_2)(\lambda\circ\sigma) - \{L^1_2, \ldots
+L^{r_i}_1\}(\lambda\circ\sigma)$
+
+\par $C$ -- rezolventa $C_1$ a$C_2$, $C'$ je substitúcia $C$:
+$C = (C_1' \nu = L_1' \nu) \cup (C_2'\nu = L_2'\nu) = (C_1\Theta)\nu -
+(\{L^1_1, \ldots L^{r_i}_1\}\Theta)\nu)\cup ((C_2\Theta)\nu - \{L^1_2, L^2_2,
+\ldots, L^{r_i}_2\}\Theta )\nu) = 
+C_1(\Theta\circ\nu) - \{L^1_1, \ldots, L^{r_i}_1\} \Theta\circ\nu) \cup
+(C_2(\Theta\circ\nu) - \{L^1_2, \ldots L^{r_i}_2\} \Theta\circ\nu)
+$
+
+$\lambda \circ \sigma$ jke všeobecnejšia ako $\theta \circ \nu$.
+
+
+\paragraph{Veta (úplnosť metódy rezolvent)} Množina klauzúl $S$ nie je
+splniteľná práve vtedy, keď existuje odvodenie prázdnej klauzuly $\Box$ z $S$.
+
+\paragraph{Dôkaz} Predpokladajme, že z $S$ existuje odvodenie prázdnej klauzuly
+$\square$. $R_1, R_2, \ldots R_n$ sú všetky rezolventy v odvodení (medzi nimi
+niekde bude aj $\square$). Zoberiem $C_1$, $C_2$ -- ľubovoľné klauzuly z $S$ a
+$C_1$ a $C_2$ bude príslúchať nejaká rezolventa. Ak sú klauzuly splniteľné, je
+splniteľná aj rezolventa. To znamená, že $C_1$ a $C_2$ nemôžu byt splniteľné a
+teda nemôže byť množina klauzúl (klauzuly, ktorých rezolventou je prázdna
+klauzula, nebudú splniteľné nikdy). 
+
+\subparagraph{Obrátené tvrdenie} Prepokladajme, že množina klauzúl $S$ nie je
+splniteľná (máme ukázať, že ako rezolventa sa tam ukáže prázdna klauzula). Ak
+predpokladáme, že $S$ nie je splniteľná, potom podľa Herbrandovej vety (1.
+variant), nie je splniteľná práve vtedy, keď je možné jej priradiť konečný
+uzavretý sémantický strom. 
+
+\par Môže as stať, že strom $T$ pozostáva jedine z koreňa -- odmieta jedinú
+klauzulu a v tomto prípade veta platí. Teraz predpokladajme, že je konečný a má
+viac ako 1 vrchol. V tomto prípade, tak má aspoň jeden akceptujúci vrchol. Potom
+$i_v$ je čiastočná interpretácia končiaca v tom vrchole. Ďalej, každý
+nasledovník je odmietajúci. Vrchol je akceptujúci, ak čiastočná interpretácia v
+ňom existuje, a každý nasledujúci vrchol je odmietajúci.
+
+\par Predpokladajme, že by tento strom nema akceptujúci vrchol. Potom každý
+vrchol obsahuje nasledovníka, ktorý nie je odmietajúci. Týmto pádom by sme
+vytvorili nekonečne dlhú vetvu, čo je spor (strom je konečný).
+
+\par Ideme pracovať s akceptujúcim vrhcholom. Nech $v$ je akceptujúci vrchol
+stromu $T$ a $v_1$, $v_2$ sú odmietajúci nasledovníci $v$. $I(v)$ (čiastočná
+interpretácia končiaca vo vrchole $v$) vyzerá nasledovne:
+
+\begin{eqnarray*}
+I(v) &=& \{ m_1, m_2, \ldots, m_n \} \\
+I(v_1) &=& \{ m_1, m_2, \ldots, m_n, m_{n+1} \}  \\
+I(v_2) &=& \{ m_1, m_2, \ldots, m_n, \neg m_{n+1} \} 
+\end{eqnarray*}
+
+$C_1'$ a $C_2'$ sú dve základne inštancie klauzúl $C_1$ a $C_2$ -- $C_1'$ a
+$C_2'$ neplatia v $I(v_1)$ a $I(v_2)$. $C_1'$ a $C_2'$ sa neodmietajú v $I(v)$.
+$C_1'$ musí obsahovať $\neg m_{n+1}$ a $C_2'$ musí obsahovať $m_{n+1}$. $L_1' =
+\neg m_{n+1}$ a $L_2' = m_{n+1}$. AAk vynecháme $L_1'$ a $L_2'$, dostaneme
+rezolventu. $C'$ je rezolventa $C_1$ a $C_2$. $C' = (C_1' - L_1') \cup (C_2' =
+L_2')$. $C'$ -- musí byť nepravdivá v $I(v)$. Podľa predchádzajúcej lemy musí
+existovať rezolventa $C$ taká, že $C'$ je základná inštancia $C$.
+
+\par Vezmime si $T''$ -- uzavretý sémantický strom, $C \cup \{C\}$. ... (niečo
+ďalej?)
+
+
+
+\paragraph{Príklad} Majme množinu formúl $F_1: (\forall x) (C(x) \implies (W(x)
+\land R(x))$, $F_2: (\exists x)(C(x) \land Q(x))$ $G: (\exists x) (Q(x) \land
+R(x))$. Ukážte, že $G$ je logickým dôsledkom $F_1$ a $F_2$.
+
+\paragraph{Riešenie} Pre $F_1$, $F_2$ a $\neg G$ vytvoríme štandardné formy.
+Dostávame nasledujúcich 5 klauzúl:
+\begin{enumerate}
+	\item $(\forall x) (C(x) \implies (W(x) \land R(x)) \iff (\forall
+	x)(\neg C(x) \lor (W(x)\land R(x)) \iff (\forall x) ((\neg C(x) \lor
+	W(x)) \land (\neg C(x) \lor R(x)))$
+	\par (1) $\neg C(x) \lor W(x)$ -- $F_1$
+	\par (2) $\neg C(x) \lor R(x)$ -- $F_1$
+	\par $C(a)$ -- $F_2$
+	\par $Q(a)$ -- $F_2$
+\end{enumerate}
+$$\neg G \iff \neg (\exists x)(Q(x)\land R(x)) \iff (\forall x) (\neg Q(x) \lor
+\neg R(x)) $$. Štandardná formula pre túto formulu je:
+\par (5) $\neg Q(x) \lor \neg R(x)$ -- $G$.
+
+\par Rezolventy: 
+\par (6) $R(a)$ -- rezolventa (2), (3)
+\par (7) $\neg R(a)$ ($\sigma = \{a / x \})$ -- rezolventa (5), (4)
+\par (8) $\square$ -- rezolventa (6), (7)
+
+\par Záver: $G$ je logickýkm dôsledkom $F_1$ a $F_2$
+
+\section{Stratégia vymazávania}
+Na základe vety o úplnosti, majme nejakú množinu klauzúl $S$, postupne si z nej
+vytváram rezolventy. Ak nie je splniteľná, po konečnom počte krokov dostávam
+prázdnu klauzulu.
+
+\paragraph{Príklad} Majme množinu klauzúl $S=\{P\lor Q, \neg P\lor Q, P \lor
+\neg Q, \neg P \lor \neg Q\}$. Metódou rezolvent ukážte, že $S$ nie je
+splniteľná.
+
+\par nejakým spôsobom zostrojujeme postupnosť klauzúl, nakoniec niekde dostanem
+prázdnu klauzulu. 
+$S^0 = S$, $S^n = \{ \mbox{rezolventy} C_1, C_2 | C_1 \in S^0 \cup S^1,
+\ldots \cup S^{n-1} \land C_2 \in S^{n-1}\}, n=1, 2, \ldots$. Takýmto spôsobom
+by sme po $39$ krokoch dostali odpoveď. Niektoré klauzuly sa vyskytnú v
+popísanom prístupe dvakrát. Môžu sa tam vyskytnúť tautológie.
+
+
+\paragraph{Definícia} Klauzula $C$ je podklauzulou klauzuly $D$ (alebo pohlcuje
+$D$) práve vtedy, keď existuje substitúcia $\sigma$ taká, že platí $C\sigma
+\subseteq D$. $D$ nazývame nadklauzulou $C$.
+
+\paragraph{Príklad} $C = P(x)$, $D = P(A) \lor Q(a)$, $\sigma = \{a/x\}$,
+$C\sigma = P(a)$, $C\sigma \subseteq D$.
+
+\paragraph{Poznámka} $D$ je identicky rovná $C$. (??)
+Ak klauzula $D$ je inštancia $C$, tak $D$ je nadklauzula $C$. (??). 
+
+\par
+Možno to sformulovať takto: Majme $(S^0 \cup S^1 \cup \ldots \cup
+S^{n-1}\}$, berieme z nej klauzulu $C_1$ a $C_2$. V prípade, že ako rezolventa
+$C_1$ a $C_2$ nevznikne tautológia a nebude to ani nadklauzula niektorej z tých,
+ktoré sú už vypísané, vypíšem ju. Takto sa zbavujem tautológií a nadklauzúl.
+
+\paragraph{Príklad} $S=S^0$ a :
+\begin{itemize}
+	\item $P\lor Q$
+	\item $\neg P \lor Q$
+	\item $P\lor \neg Q$
+	\item $\neg P \lor \neg Q$
+\end{itemize}
+$$
+S_1:
+\begin{array}{ll}
+(5)& Q (1) (2)\\
+(6)& P (1) (3)\\
+(7)& \neg P (2) (4)\\
+(8)& \square (6) (7)\\
+\end{array}
+$$
+
+$$\theta = \{ a_1 / x_1, a_2 / x_2, \ldots, a_n / x_n \}$$. $x_1, x_2, \ldots
+x_n$ sú premenné, ktoré sa vyskytujú v $D$. $a_1, a_2, \ldots a_n$ sú nové
+konštanty, kotére sa nevyskytujú v $C$, $D$.
+
+$D\Theta$ je základná... .
+
+$$D = L_1 \lor L_2 \lor \ldots \lor L_m$$
+$$D \theta = L_1\Theta \lor L_2 \Theta \lor \ldots \lor L_m \Theta$$
+$$\neg D\Theta = \neg L_1 \Theta \land \neg L_2 \Theta \land \ldots \land \neg
+L_m \Theta$$
+Algoritums preveruje, či klauzula $C$ je podklauzulou $D$.
+
+\paragraph{Algoritmus  pohltenia}
+\begin{enumerate}
+	\item Nech $W = \{ \neg L_1 \Theta, \neg L_2 \Theta, \ldots, \neg L_m
+	\Theta \}$
+
+	\item Kladieme $k=0$ a $\mathcal{U}^0 = \{ C \}$
+	\item Ak $\mathcal{U}^k$ obsahuje $\square$, tak koniec $C$ je pod D. V
+	opačnom prípade kladieme $\mathcal{U}^{k+1} = \{ \mbox{rezolventa} C_1 a
+	C_2 | C_1 \in \mathcal{U}^{k} \land C_2 \in U\}$. 
+	\item Ak $\mathcal{U}^{k+1}$ je $\emptyset$, tak koniec, $C$ nie je
+	podklauzula $D$. V opačnom prípade kladieme $k=k+1$ a prejdeme ku kroku
+
+\end{enumerate}
+
+\paragraph{Poznámka} $\mathcal{U}^k, \mathcal{U}^{k+1}$, klauzuly z
+$\mathcal{U}^{k}$ sú konečné. $\mathcal{U}^0, \mathcal{U}^1, \ldots \square$.
+
+\paragraph{Dôkaz} Predpokladajme, že $C$ je podklauzula $D$. Na základe našej
+definície existuje substitúcia $\sigma$, že $C\sigma \subseteq D$. Teda
+$C(\sigma \circ \Theta) \subseteq D\Theta$. Literály z $C\sigma \circ \Theta$
+môžeme vynechať pomocou jednotkových klauzúl z $W$. ... Algoritmus skončí svoju
+činnosť.
+\par
+Obrátené tvrdenie: predpokladajme, že algoritmus zakončuje prácu na treťom
+kroku. Odmietnutie môžeme znázorniť nasledujúcim obrázkom:
+
+%pic1
+
+$$C_0, N_1 ,\ldots B_r \in W$$
+$$C(\sigma_0 \circ \sigma_1 \circ \sigma \circ \sigma_r) = \{ \neg B_0, \neg
+B_1, \ldots \neg B_r\} \subseteq D\Theta$$
+$$\lambda = \sigma_0 \circ \sigma_1 \circ \sigma_2 \ldots \circ \sigma_r \implies
+C \lambda \subseteq D\Theta$$
+
+$\sigma$, ktorá dostaneme z $\lambda$ tak, že v každom komponente $\lambda$
+nahradíme  konštantu $a_i$ premennou $x_i$, $i=1, 2, 3, \ldots$. $C\sigma
+\subseteq D$. $C$ je pod $D$.
+
+\paragraph{Príklad} $C = \neg P(x) \lor Q(f(x), a)$. $D = \neg P(h(y)) \lor
+Q(f(h(y)),a) \lor P(z)$. Zistite, či klauzula $C$ je podklauzulou $D$.
+
+\par $y$ a $z$ sú premenné v $D$. $\Theta = \{ b/y, c/z\}$. Konštanty $b$, $c$
+nevystupujú v $C$, $I$. najprv vypočítame $D\Theta \neg P(h(b)) \lor
+Q(f(h(b)),a) \lor \neg P(c)$
+
+$$\neg D \Theta = P(h(b)) \land \neg Q(f(h(b)),a) \ lor P(c)$$
+$$W = \{P(h(b)), \neg Q(f(h(b)),a), P(c) \}$$
+$$\mathcal{U}^0 = C = \neg P(x) \lor Q(f(x),a)\}$$
+$\mathcal{U}^0$ neobsahuje $\square$, musíme vytvoriť $\mathcal{U}^1$. Urobíme
+príslušnú substitúciu v množine $\mathcal{U}^0$. Dostávam nasledovné rezolventy:
+$$\mathcal{U}^1 = \{ Q(f(h(b)),a), \neg P(h(b)), Q(f(b),a)\}$$. 
+\par
+$\mathcal{U}^1$
+nie je prádzna a neobsahuje prádznu klauzulu -- musím vytvoriť $\mathcal{U}^2$.
+V tomto sa už vyskytne prádzna klauzula, čo znamená, že $C$ pohlcuje klauzulu
+$D$.
+
+
+\paragraph{Príklad 1} $C=P(x,x)$ a $D=P(f(x),y) \lor P(y,f(x))$. Zistite, či $C$
+je podklauzula $D$.
+
+\paragraph{Riešenie} (1) $x$, $y$ sú premenné v $D$. $a$ a $b$ sú konštanty,
+ktoré sa nevyskytujú $C$, $D$. $\Theta = \{ a/x, b/y\}$. $D\Theta = P(f(a),b), \lor P(b,
+f(a))$.
+
+$$\neg D\Theta = \neg P(f(a),b) \lor \neg O(b,f(a))$$
+$$W = \{ \neg P(f(a),b), \neg P(b,f(a))\}$$
+$$\mathcal{U}^0 = P(x,x)$$
+
+
+\par (2) $\mathcal{U}^0$ neobsahuje $\square$, tak sa môže zistiť
+$\mathcal{U}^1$
+\par (3) $\mathcal{U}^1 = \emptyset$. Záver: $C$ nie je podklauzula $D$.
+
+
+\paragraph{Príklad 2} Majme formuly:
+
+\begin{enumerate}
+	\item $P\implies S$
+	\item $S \implies U$
+	\item $P$
+	\item $U$
+\end{enumerate}
+
+Dokážte, že formula 4 vyplýva z formúl 1, 2 a 3. 
+
+\paragraph{Riešenie} Prepíšeme si formuly do správneho tvaru, aby sme mohli
+použiť pravidlo rezolventy:
+\begin{enumerate}
+	\item $\neg P \lor S$
+	\item $\neg S\lor U$
+	\item $P$
+	\item $U$
+\end{enumerate}
+Snažíme sa nájsť negáciu -- chceme ukázať, že 
+\begin{enumerate}
+	\item $\neg P \lor S$
+	\item $\neg S\lor U$
+	\item $P$
+	\item $\neg U$
+\end{enumerate}
+
+nie je splniteľná. Zoberiem si rezolventu 1 a 3, dostávam $S$ (5). Keď zoberiem 
+2 a 4, dostávam $\neg S$ (6). Zoberiem 5 a 6, dostávam $\square$ (7).
+
+\paragraph{Príklad 3} Predpoklad: Študenti sú občania. Záver: Hlasy študentov sú
+hlasy občanov.
+
+\paragraph{Riešenie} 
+\begin{itemize}
+	\item $S(x)$ označuje \uv{$x$ je študent}.
+	\item $C(x)$ označuje \uv{$x$ je občan}.
+	\item $V(x,y)$ označuje \uv{$x$ je hlas $y$}.
+\end{itemize}
+Predpoklad: $(\forall y) (S(y)\implies C(y))$. Študenti sú občania.
+Záver: $(\forall x) ((\exists y) (S(y) \land V(x,y)) \implies (\exists z)(C(z)
+\implies V(x,z)))$. Hlasy študentov sú hlasy občanov.
+
+Aká bude štandardná forma pre vyjadrenie predpokladu?
+\begin{enumerate}
+	\item $\neg S(y) \lor C(y)$
+		\par $\neg ((\forall x) ((\exists y)(S(y)\land V(x,y)) \implies
+		(\exists x)(C(z) \land V(x,z)))) \iff 
+		\neg ((\forall x)(\forall y)(\neg S(y)\lor \neg V(x,y)) \lor
+		(\exists z)(C(z)\land V(x,z))) \iff 
+		\neg ((\forall x)(\forall y)(\exists x)(\neg S(y) \lor
+		\neg U(x,y)\lor (C(z) \land V(x,z)))) \iff
+		(\exists x)(\exists y)(\forall z) (S(y) \land V(x,y)) \land
+		(\neg C(z) \lor \neg V(x,z))$
+		Teraz potrebujeme Skolemov normálny tvar:
+		$(\forall z)(S(b) \land U(a,b)) \land(\neg C(z) \lor \neg
+		V(a,z)))$
+		\par Pre negáciu záver dostávane nasledujúce klauzuly:
+	\item $S(b)$
+	\item $V(a,b)$
+	\item $\neg C(z) \lor \neg V(a,z)$.
+
+	\item $C(b)$ z (1) a (2) (miesto $y$ dosadíme $b$)
+	\item $\neg V(a,b)$ zo (4) a (5)
+	\item $\square$ z (3)  a (6)
+\end{enumerate}
+
+\par Predpokladajme, že $b$ je študent, $a$ je hlas študenta $b$ a nie je hlas
+žiadneho občana. Pretože $b$ je študent, $b$ je občan. Okrem toho $a$ nemôže byž
+hlas $b$, pretože $b$ je občan a to nie je možné.
+
+\section{Rozširovanie teórie}
+\paragraph{Veta} Nech $A$ je formula teórie $T$ s jazykom $L$, nech všetky voľné
+premenné formuly $A$ sú $x_1, x_2, \ldots x_n$, ďalej nech $L'$ je rozšírenie
+$L$ pridaním nového predikátového symbolu $P$ a nech $T'$ vznikne z $T$ pridaním
+axiomy $P(x_1, \ldots x_n) \iff A$ (označme ju *). 
+\par Potom teória $T'$ s jazykom $L'$ je konzervatívne rozšírenie teórie $T$ s
+jazykom $L$. Ďalej, pre každú formulu $B$ jazyka $L'$ existuje formula $B^*$ z
+jazyka $L$, že platí $T \models  B \iff B^*$. 
+
+\par Najprv budeme konštruovať $B^*$. Dôkaz: Nech $B$ je formula na jazyku $L'$,
+nech $A'$ je variant  formuly $A$ (definujúcej predikát $P$), že žiadna
+premennáz formuly $B$ nie je viazaná vo formule $A'$.
+
+\par Nech $B^*$ vznikne z $B$ tak, že každú podformulu $P(a_1, \ldots a_n)$
+nahradíme podformulou $A'(a_1, \ldots a_n)$ a podľa vety o variantoch nám platí,
+že:
+$$ T' \models P(a_1, \ldots, a_n) \iff A'(a_1, \ldots a_n)$$
+$$ T' \models B \iff B^*$$.
+
+\par Ukážeme, že $T'$ v jazyku $L'$ je konzervatívne rozšírenie teórie $T$ v
+$L$ (teda pre ľubovoľnú formulu na pôvodnom jazyku, ktorá je dokázateľná v
+teórii $L'$, je dokázateľná aj v pôvodnej teórii --  nevzniknú žiadne nové
+teorémy). Nech $C$ je ľubovoľné formula na jazyku $L'$, ďalej nech platí $T'
+\models C$. Nám stačí dokázať, že $T \models C^*$. Ak je potom formula $C$ na
+jazyku $L$, potom $C^*$ je $C$.
+\par Uvažujme $C_1, C_2, \ldots C_n$ je odvodenie formuly $C$ v teórii $T'$. Nám
+stačí ukázať, že $C_i^*$ sú dokázateľné (odvoditeľné) v $T$.
+
+Pri odvodení $C$ sa môže stať nasledovné:
+\begin{enumerate}
+	\item $C_i$ je axioma predikátovej logiky $L$, potom $C_i^*$ je axioma
+	rovnakého druhu
+	\item $C_i$ je axioma z $T$, potom $C_i^*$ je $C_i$ a teda je
+	dokázateľná z $T$.
+	\item Môže sa stať, že $C_i$ je axioma (x) $P(x_1,  \ldots, x_n) \iff
+	A(x_1, \ldots, x_n)$. \par $C_i^*: A_i \iff A_i$, je dokázateľná pomocou
+	vety o variantoch.
+	\item Ak $C_i$ je odvodená z $C_j$ a $C_k$, použijeme pravidlo modus
+	ponens. $C_i^*$ je odvodené z $C_j^*$ a $C_k^*$ tým istým pravidlom.
+	\item $C_i$ je odvodené z $C_k$ pravidlom zovšeobecnenia ($k<i$). Potom
+	$C_i^*$ je odvodené z $C_k^*$ pomocou toho istého pravidla.
+\end{enumerate}
+
+
+
+Ak máme teóriu $T$ a každá jej $A \in T$ je otvorená (každá premenná je voľná),
+hovoríme o otvorenej teórii.
+
+\par Majme danú teóriu $T$ s jazykom $L$. Máme k nej zostrojiť teóriu $T_H$
+(henkinova teória) s jazykom $L(C)$, kde $C$ je zjednotenie konštánt všetkých
+rádov. Dôležité pre nás budú konštanty $c_A, c_{\neg A}$.
+
+\begin{itemize}
+	\item $A_{c_{\neg A}} \implies (\forall x) A$ (*)
+	\item $(\exists ) A \implies A(c_A)$ (**)
+\end{itemize}
+
+$$A \iff \neg \neg A$$
+$$c_{\neg A} \iff \neg A(x)$$
+$$\neg A(c_{\neg\neg A}) \implies (\forall x)\neg A$$
+$$(\exists x) A \implies A(c_{\neg\neg A})$$
+(Použili sme prenexnú operáciu).
+
+\par Ak $c_{\neg A}$ je konštanta z axiomy s (*), tak hovoríme, že prislúcha
+(patrí) formule A. Keď zoberieme formulu $A$.
+
+$$(\forall x) A \implies A(t)$$ -- $t$ je term bez premenných v $L(C)$
+
+$$A_{[c_{\neg A}]} \implies (\forall x) A \mbox{.......} c_{\neg A}$$
+
+$\delta(T)$ množina na jazyku $L(C)$ prislchajúu konštante $C$ má ... axiomy
+identity a ... a formúl z $T$.
+
+
+\paragraph{Lema 1} Nech $A$ je formula na jazyku $L$ a ďalej, nech $A'$ je
+uzavretá inštancia formuly $A$ na jazyku $L(C)$. Ak platí, že formula $A$ je
+dokázateľná v pôvodnej teórii, potom $A'$ je tautologickým dôsledkom konečne
+mnoho formúl z $\delta(T)$
+
+\paragraph{Dôkaz} Nech $A_1, A_2, \ldots, A_n$ je dôkaz formuly $A$ v teórii
+$T$. Indukciou podľa dĺžky dôkazu ukážeme, že ľubovoľná uzavretá formula v
+jazyku $L(C)$ inštancia $A_j'$ formuly $A_j$ je tautologickým dôsledkom konečne
+veľa formúl z $\delta(T)$.
+
+\par Môžu nastať tieto prípady:
+\begin{itemize}
+	\item $A_j$ je axioma výrokovej logiky. Potom $A_j'$ je opäť tautológia.
+	$A$ je tautologickým dôsledkom prázdnej množiny predpokladov.
+	\item $A_j$ je axioma tvaru $(\forall x) B \implies B_x[t]$. Axioma
+	špecifikácie. $A_j: (\forall x) B' \implies B_x'[t]]$ -- leží v
+	$\delta T$. $t'$ je term bez premenných a je v $L(C)$. 
+	\item $A_j$ je axioma $(\forall x) (C \implies D) \implies (C \implies
+	(\forall x) D)$, $x$ nie je voľná v $C$.
+	\par Uvažujme formulu $(\forall x) (C \implies D) \implies (C \implies
+	(\forall x) D_x[c_{\neg D}])$. Táto formula patrí to $\delta(T)$, lebo
+	je to inštancia axiomy špecifikácie.
+	\par $ D_x[c_{\neg D}] \implies (\forall x) D$ -- opäť patrí do
+	$\delta(T)$ (opäť (*))
+	\par Tvrdíme, že formula $A_j$ je tautologický dôsledok horeuvedených 
+	formúl. Budeme uvažovať takúto formulu:
+	t -- $(A_1 \implies (B_1 \implies D_1)) \implies ((D_1 \implies C_1)
+	\implies (A_1 \implies (B_1 \implies C_1)))$ Tvrdíme, že táto formula
+	je teoréma.
+
+	\par Dôkaz formuly: Za predpoklady si zoberiem formuly $A_1, (A_1
+	\implies (B_1 \implies D_1))$, $B_1$, $(D_1 \implies C_1)$. Z týchto
+	predpokladov dokážem odvodiť $C_1$.
+
+	\par $A_1$ bude formula $(\forall x)(C \implies D)$, $B_1: C$, $C_1:
+	(\forall x) D$, $D_1: D_x[c_{\neg D}]$
+
+	\item $A_j$ je axioma z $T$, potom $A_j' \in \delta(T)$.
+	\item $A_j$ je axioma identity alebo axioma rovnosti, potom $A_j'$ patrí
+	do $\delta(T)$.
+
+	\item $A_j$ dostaneme aplikáciou pravidla modu
+	ponens z formúl $A_k$ a $A_l$, pričom $k, l < i$. $A_j'$ dostávame z
+	$A_k'$ a $A_l'$ pomocou pravidla modus ponens.
+	\item $A_j$ je odvodená z $A_k$ pravidlom zovšeobecnenia, pričom
+	predpoklad je $k<j$. Teda $A_j: (\forall x) C$, teda $A_k: C$, x --
+	premenná. Inštancia $A_j': (\forall x) C'$. Uvažujme inštanciu $A_k'$
+	formuly $A_k$ v takomto tvare: $A_k:  C_k'[c_{\neg C'}]$. Podľa
+	indukčného predpokladu je táto formula tautologickým dôsledkom konečne
+	veľa formúl z $\delta (T)$. Uvažujme formulu $$C_x'[c_{\neg C'}]
+	\implies (\forall x) C' \qquad \mbox{(***)}$$
+	$A_j'$ je tautologickým dôsledkom formuly z $\delta(T)$. Dokázali sme
+	formulu $A'$ tak, že sme nepoužili pravidlo zovšeobecnenia.
+\end{itemize} 
+
+\paragraph{Definícia} Hovoríme, že formula $A$ je \emph{kvázitautológia}, ak je
+tautologickým dôsledkom inštancií axiom identity a rovnosti.
+
+\paragraph{Veta (Hilbert-Ackermann)} Otvorená teória $T$ v jazyku $L$ (s
+rovnosťou) je sporná práve vtedy, keď existuje (kvázi-)tautológia, ktorá je
+disjunkciou negácií inštancií axiom z $T$.
+
+\paragraph{Dôkaz} Najprv ľahšia implikácia: Predpokladajme, že sú splnené
+podmienky vety, tak potom $T$ je sporná. Zoberme si nejakú formulu $A$. Berieme
+$\neg A_1 \lor \neg A_2 \lor \ldots \lor \neg A_n$, kde $A_i$ sú inštancie axiom
+z $T$. Pomocou de Morganovho zákona dostaneme $A_1 \land A_2 \land \ldots \land
+A_n$. Ak platí $T \models A_i$, potom $T \models A_1 \land \ldots \land A_m$, a
+teda $T$ je sporná, lebo je z nej dokázateľná ľubovoľná formula $B$, pretože
+$\models A \implies (\neg A \implies B)$ a $T \models B$.
+
+\par Naopak: Predpokladajme, že otvorená teória $T$ je sporná. $x \neq x$, $T
+\models x \neq x$. Z toho vyplýva, že ak si zoberieme ľubovoľnú konštantu $r \in
+C$, tak potom dostávame inštanciu formuly: $r \neq r$. To je uzavretá inštancia
+teorémy vety z $T$, čiže podľa  Lemy 1 eistuje $A_1, A_2, \ldots A_k$  z $\delta
+(T)$ také, že $r \neq r$ je tautologickým dôsledkom $A_1$ až $A_k$, teda z
+predpokladov inštancií je dokázateľné $A_1, A_2, \ldots, A_k \models r \neq r$.
+Platí $A_1 \implies A_2 \implies \ldots \implies A_k \implies r \neq r$ --
+tautológia. $p \implies q \iff \neg p \lor q$. $\neg A_1 \lor \neg A_2 \lor
+\ldots .. \lor \neg A_k \lor \neg (r=r)$ je tautológia. $A_i$ sú inštancie z
+$\delta (T)$. Posledná formula je tautológia, ktorá je disjunkciou negácií
+inštancií z $\delta (T)$.
+
+\paragraph{Definícia} Postupnosť formúl $A_1, A_2, \ldots A_n$ nazveme
+\emph{špeciálnou}, ak $\neg A_1\lor \neg A_2 \lor \ldots \lor \neg A_n$ je
+tautológia. (Vieme) Ak $T$ je sporná teória, potom existuje špeciálna postupnosť
+z $\delta (T)$
+
+
+
+(pokračovanie)
+\paragraph{Definícia} \emph{Stupeň konštanty} $c_{\neg A}$. $(\forall x) A$
+uzavretá formula na jazyku $L(C)$. Hovoríme, že konštanta $c_{\neg A}$ spojená
+axiomou $$A_{c_{\neg A}} \implies (\forall x) A$$ s formulou $(\forall x) A$ je
+stupňa $n$, ak formula $(\forall x) A$ obsahuje $n$ výskytov kvantifikátorov
+$\forall$ alebo $\exists$. 
+
+\par Množina formúl $\delta_n(T)$ vznikne z $\delta(T)$ vynechaním všetkých
+formúl stupňa $>n$ pre konštantu $c_{\neg A} \in C$. Treba si uvedomiť, že
+stupeň konštanty $c_{\neg A}$ je vždy aspoň $1$. $\delta_0(T)$ -- uzavreté
+inštancie, axiomy z množiny $T$ a axiom identity a rovnosti.
+
+\par (Dokázali sme) Ak teória $T$ je sporná, existuje špeciálna postupnosť,
+ktorá patrí do $\delta(T)$. Nech $n$ je najmenšie také $n$, že špeciálna
+postupnosť z $\delta(T)$ je obsiahnutá v $\delta_n(T)$:
+
+$n=0$. Musíme nájsť špeciálnu postupnosť prislúchajúcu do $T$.
+Predpokladáme, že pre $n=0$ máme postupnosť $A_1, A_2, \ldots A_k$ --
+špeciálna a patrí do $\delta_O(T)$. $c_A, c_{\neg A}$ nahradíme pomocou
+premenných $A_1', A_2', \ldots A_k'$ (opäť špeciálna postupnosť). $A_1',
+A_2', \ldots, A_n'$ sú všetky formuly, ktoré patria do $T$. $A_1', A_2',
+\ldots A_k'$ budú inštancie axiom identity a rovnosti. $\neg A_1' \lor
+\neg A_2' \lor \ldots \lor \neg A_n' \leftarrow A_{n+1} \leftarrow
+\ldots \leftarrow A_k'$ -- kvázitautológia (vyplýva z toho, že táto
+postupnosť je špeciálna). $A_1', A_2', \ldots A_n' \in T$.
+
+\paragraph{Lema} Ak $n>0$ a existuje špeciálna postupnosť z $\delta_n(T)$, tak
+potom existuje špeciálna postupnosť aj z $\delta_{n-1}(T)$.
+
+\paragraph{Dôkaz} (pokračovanie dôkazu) Hilbert-Ackermanovej vety.
+$\delta_0(T)$. Vieme vytvoriť postupnosť $B_1, B_2, \ldots, B_q \in T$.
+
+\paragraph{Poznámka} Elementárna aritmetika je otvorená teória s konečným počtom
+axiom. Hilbertova arigmetika, Presburgerova (??) aritmetika (aritmetika so
+symbolmi $0, S, +$. Peanova aritmetika (1931).
+
+\paragraph{Definícia} 
+\begin{enumerate}
+\item
+Hovoríme, že formula $A$ je existenčná, ak $A$ je v
+prenexnom tvare a všetky kvantifikátory v prefixe sú existenčné .
+\item Hovoríme, že formula $A$ je univerzálna, ak $A$ je v prenexnom tvare a
+všetky kvantifikátory sú univerzálne.
+
+\end{enumerate}
+
+\paragraph{Lema 3} Uzavretá existenčná formula $A$ je dokázateľná v predikátovej
+logike (s rovnosťou) práve vtedy, keď istá disjunkcia otvoreného jadra formuly
+$A$ je kvázitautológia.
+
+\paragraph{Dôkaz} $A: (\exists x_1)(\exists x_2) \ldots (\exists x_n)B$
+--formula v prenexnom tvare, $B$ je otvorené jadro. 
+
+\begin{enumerate}
+	\item Formulá $A$ je dokázateľná $\iff$ teória s jedinou špeciálnou
+	axiomou $\neg A$ je sporná.
+	\item Ak použijeme prenexné operácie, dostávame $\models \neg A \iff
+	(\forall x_1)\ldots (\forall x_n) \neg B$. $\neg A \iff (\forall x_1)
+	\ldots  (_n) \neg B$.
+
+	\item Formula $A$ je dokázateľná $\iff$ keď teória $T$ s jedinou
+	špeciálnou axiomou $\neg B$ je sporná. $\neg B$ je otvorená. Keď
+	použijeme Hilbert-Ackermannovu vetu, dostávame $\neg B_1, \neg B_2
+	\ldots, \neg B_m$ -- nad $\neg B$. Platí $\neg \neg B_1 \lor \neg \neg
+	B_2 \lor \ldots \lor \neg \neg B_m$, čo je to isté ako $B_1 \lor B_2
+	\lor \ldots \lor B_m$, čo je to isté, ako Hilbert-Ackermannova veta.
+\end{enumerate}
+
+
+\par Teóriu $T$ rozširujeme do $T_H$ s jazykom $L(C)$ a tú zase do $T_R$ s
+$L(C)$. $A_x[C_{\neg A}] \implies (\forall x) A$ -- toto môžeme aj obrátiť:
+$$(\forall x) A \implies A_x[c_{\neg A}]$$ -- vďaka axiome špecifikácie.
+\par Ak teraz vezmeme formulu $B$ takú, že $A\iff B$, potom platí $B_x[c_{\neg
+B}] \implies (\forall x) B$. 
+$$
+\begin{array}{lll}
+T_H &\models& A_x[c_{\neg A}] \iff B_x[c_{\neg B}] \\
+T_H &\models& A_x [c_{\neg A}] \iff (\forall x) A \\
+T_H &\models& A \iff B \\
+T_H &\models& (\forall x) A \iff (\forall x) B \\
+T_H &\models& B_x[c_{\neg B}] \iff (\forall x) B \\
+\end{array}
+$$
+
+
+$$(\forall x)(A\iff B) \implies c_{\neg A} = c_{\neg B}$$
+
+\paragraph{Lema 4} Pre ľubovoľnú teóriu $T$ je $T_R$ konzervatívne rozšírenie.
+
+\par Majme formulu $A$, ktorá je uzavretá a napísaná v prenexnom tvare.
+Indukciou podľa počtu všeobecných kvantifikátorov budeme formulu transformovať
+do tzv. Herbrandovho variantu. Ak formula $A$ má tvar:
+$$ A: (\exists x_1) \ldots (\exists x_n) (\forall y) B, \qquad n \geq 0$$
+$$ A^*: (\exists x_1) \ldots (\exists x_n) B_y[f(x\ldots x_n)]$$, $A^*$ je $A_H$
+
+$A^{**}, L \cup \{ f,g,h, \ldots \}$.
+
+\paragraph{Veta} (Herbrandova) Uzavretá formula v prenenom tvare je dokázateľnáv
+predikátovej logike (s rovnosťou) práve vtedy, keď istá disjunkcia inštancií
+otvoreného jadra je kvázitautológia.
+
+\paragraph{Dôkaz} $A_H$ -- je existenčná formula. Je dokázateľná práve vtedy,
+keď vezmeme do úvahy lemu 3 a platí formulácia našej vety. $L'$ .... ??? . Stačí
+ukázať, že:
+$$\models_L A \iff \models_{L'} A_H$$.
+Implikácia zľava doprava je ľahšia -- vieme ukázať, že $\models_{L'} A \implies
+\models_{L'} A^*$. Premennú $y$ sme nahradili funkciu $n$ premenných. Všimnime
+si:
+
+$$ \models_{L'} (\forall y) B \implies B_y[f(x_1\ldots x_n)]$$; axioma
+špecifikácie. $(\exists x_1)(\exists x_2), \ldots (\exists x_n)$. Potom platí aj
+$\models A \implies B$, $\models (\exists x) A \implies (\exists x) B$
+
+
+
+\paragraph{Veta} (o zavedení funkčného symbolu) Nech formula $(\exists y) A$ je
+dokázateľná v teórii $T$ s jazykom $L$. Nech $x_1, x_2, \ldots, x_n$ sú všetky
+voľné premenné, ktoré sa vyskytujú vo formuli $(\exists y) A$. Nech $T'$ vznikne
+z $T$ pridaním nového $n$-árneho funkčného symbolu $f$ a pridaním axiomy
+$A_y[f(x_1, \ldots, x_n)]$. Potom $T'$ je konzervatívne rozšírenie teórie $T$.
+
+\paragraph{Dôkaz} Nech $B$ je uzavretá formula teórie $T$ (s jazykom $L$).
+Predpokladáme, že $B$ je teorémou (vetou teórie) $T'$. $T' \models B$. Máme
+ukázať, že aj v $T \models B$. Predpokladajme, že formula $B$ má dôkaz v $T'$ a
+že v tom dôkaze vystupujú $a_1, a_2, \ldots, a_n$ -- špeciálne axiomy teórie
+$T$, prípadne axioma $(*)$. Na základe tohto predpokladu je v predikátovej
+logike dokázateľná nasledovnaá formula.
+
+$$(1) \models (\forall x_1) (\forall x_2) \ldots (\forall _n) a_y [f(x_1 \ldots
+x_n)] \implies B_1 \implies B_2 \implies \ldots \implies B_n \implies B$$
+
+$B_1, \ldots, B_n$ sú ...ny funkcií $A_1, A_2, \ldots, A_n$. 
+
+$$ A_y[f(x_1, \ldots x_n)], A_1, \ldots, A_n \models B$$
+
+Označme si $C$ -- prenexný tvar nasledovnej formuly:
+$$A \implies B_1 \implies \ldots \implies B_n \implies B$$
+Potom:
+
+$$ (2) (\exists x_1) (\exists x_2) \ldots (\exists x_n) C_y[f(x_1, \ldots,
+_n)]$$ je prenexný tvar $(1)$
+
+Uvažujme $D: (\exists x_1) \ldots (\exists x_n) (\forall y) C$. Potom z tohto
+vyplýva $D$ je formula jazyka $L$ a neobsahuje novo zavedený symbol $f$. Ak
+konštruujeme herbrandovský variant tej podformuly ($D_H$) (meníme veľké
+kvantifikátory) a na prvom kroku dostávame $D^*: (\exists x_1) \ldots (\exists
+x_n) C_y [f(x_1, \ldots x_n)]$ -- prenexný tvar $(1)$. Z Herbrandovej vety
+dostávame, že $D^*$ je dokázateľné, z tadiaľ $(D^*)_H$ je dokázateľné a z toho 
+$(4) T \models D$
+
+\par Prenexnými operáciami dostávame  $$(5) (\exists x_1) (\exists x_2) \ldots
+(\exists x_n) (\forall y) (A \implies B_1 \implies \ldots \implies B_n \implies
+B)$$
+
+$$(6) T \models (\forall x_1 ) (\forall x_2) \ldots (\forall x_n) (\exists y)
+A \implies B_1 \implies B_2 \implies \ldots \implies B_n \implies B$$
+
+\par Každý z týchto predpokladov je dokázateľný v $T$, dostávame $T \models B$ a
+teda $T'$ je konzervatívne rozšírenie $B$.
+
+Mám formulu $A$, ktorá je uzavretá, idem priradiť skolemov tvar (skolemov
+variant).
+\begin{enumerate}
+	\item Ak formula $A$ je univerzálna, potom $A_S$ je formula $A$
+	\item Ak $A$ je tvaru $(\forall x_1) \ldots (\forall x_n) (\exists y) B,
+	n\geq 0$, $f$ je funkčný symbol, kladieme $A_S: (\forall x_1) \ldots
+	(\forall x_n) B_y[f(x_1,\ldots, x_n)]$, $(A')C ...$
+\end{enumerate}
+
+(1*) $A' \models A$ a ... $A_S \models A$
+$ \models B_y[f(x_1, \ldots, x_n)] \implies (\exists y) B$ -- duálny tvar
+axiomy špecifikácie. Teraz môžeme sformulovať Skolemovu vetu:
+
+\paragraph{Veta} (Skolemova) V ľubovoľnej teórii $T$ môžeme zostrojiť otvorenú
+teóriu $T'$, ktorá je konzervatívnym rozšírením teórie $T$.
+\paragraph{Dôkaz} Mám teóriu $T$ s jazykom $L$. Zostrojím si teóriu $T_1$ s tým
+istým jazykom a tá teória $T_1$ sú uzávery prenexných tvarov axiom z $T$. Z vety
+o uzávere a vety o prenexnom tvare platí, že $T_1$ je konzervatívne rozšírenie
+$T$ a naopak, $T$ je konzervatívne rozšírenie $T_1$. $T \equiv T_1$.
+
+\par Teória $T_2$ vznikne z teórie $T_1$ tak, že ľubovoľnej formuli $A \in T_1$
+zostrojíme skolemov variant $A_S$. V $T_2$ je konzervatívne rozšírenie $T_1$
+podľa vety o zavedení funkčného symbolu. 
+
+\par Ideme vytvárať teóriu $T_3$ -- vznikne z $T_2$ vynechaním všetkých axiom z
+$T_1$. Podľa $(1^*)$ dostávame, že $T_2 \equiv T_3$.
+
+\par Ďalej vytvárame teóriu $T_4$ -- pozostáva z otvorených jadier $T_3$, teda
+$T_3 \equiv T_4$. Keď to zhrnieme, dostávame: $T \equiv T_1$, $T_2$ je
+konzervatívne rozšírenie $T_1$. $T_2 \equiv T_3 \equiv T_4$, a z toho $T_4$ je
+konzervatívne rozšírenie $T$.
+
+\paragraph{Veta} (o zavedení funkcie pomocou definície) Majme teóriu $T$ s
+jazykom $L$ a nech $x_1, \ldots, x_n, y$ sú navzájom rôzne premenné, ktoré sa
+vyskytujú voľne vo formule $D$. Nech platí:
+\begin{enumerate}
+	\item $T\models  (\exists y) D$
+	\item $T\models D \implies (D_y[y] \implies y = t)$
+\end{enumerate}
+Nech $L'$ vznikne z $L$ pridaním nového $n$-árneho funkčného symbolu $f$ a $T'$
+z $T$ pridaním axiomy $$(3) y=f(x_1, \ldots x_n) \iff D$$ (definícia axiomy). Potom
+$T'$ je konzervatívne rozšírenie $T$ a ku každej formule $A$ na jazyku $L'$
+existuje formula $A^*$ na jazyku $L$ taká, že platí $$(4) T' \models A \iff A^*$$
+
+\paragraph{Dôkaz} Najprv ukážeme, ako ku formuli $A$ priradiť formulu $A^*$, a
+potom ukážeme, že $T'$ je konzervatívne rozšírenie $T$.
+
+\par Zostrojíme $A^*$ z $A$ tak, aby platilo $(4)$. Formulu $A$ máme na jazyku
+$L'$, problematický je symbol $f$ -- vyskytuje sa v atomických podformuliach.
+Nech funkčný symbol $f$ sa vyskytuje vo formuli $A$ a nech je to ten
+najvnútornejší výskyt. Je to nejaký $f(t_1, \ldots t_n)$, pričom $t_1, \ldots,
+t_n$ už neobsahujú $f$. 
+
+$$A: B_z[f(t_1, \ldots, t_b)]$$, a naše $z$ sa nevyskytuje vo formuli $A$, a ani
+v definujúcej formuli $D$. Položme $A^*$  tvare:
+$$(5) (\exists z) D'_{x_1, \ldots, x_n, y}[t_1, \ldots, t_n, z] \land B^*)$$,
+pričom $D'$ je variant $D$, v ktorej nie je viazaná žiadna premenná, ktorá sa
+vyskytuje vo formuli $A$. Z vety o variantoch a definujúcej axiomy $(3)$
+dostávame, že na jazyku $L'$ je dokázané $ (6) \models_{L'} z = f(t_1, \ldots, t_n) \iff D'[t_1,
+\ldots t_n, z]$. Z vety o ekvivalencii dostávame, že platí $$(7) T' \models
+(\exists z) z = f(t_1, \ldots, t_n) \land B^*) \iff f^*$$. Z indukčného
+predpokladu dostávame $$(8) T' \models B \iff B'$$
+
+\par $(1) T' \models (\exists z) (z = f (t_1, \ldots, t_n) \land B) \iff A^*$ z
+vedy o .... ($\models (\exists x) (x=t \land A) \iff A_x[t]$)
+$$T' \models B_z[t_1, \ldots, t_n] \iff A^*$$, na ľavej strane je formula $A:
+B_z[t_1, \ldots t_n]$.
+
+\par Použijeme vetu o zavedení funkčného symbolu. Uvažujme $S$ -- teóriu z
+jazyka $L'$, ktorá vznikne z $T$ pridaním axiomy:
+$$(10) D_y[f(x_1, \ldots, x_n)]$$.
+
+Ukážeme, že $T'$ a $S$ sú ekvivalentné a platí $T' \equiv S$. Potrebujeme
+ukázať, že $(10)$ je teorémou $T'$ a $(3) y=f(x_1, \ldots, x_n) \iff D$ je
+teorémou (vetou) $S$. V $T' \models f(x_1, \ldots x_n) = f(x_1, \ldots, _n)
+\implies D_y[f(x_1, \ldots _n)]$, formula je inštancia axiomy $(3)$. Ak
+použijeme inštanciu na axiomu identity $(3)$ $T' \models D_y[f(_1, \ldots,
+x_n)]$. Potrebujeme ukázať, že $3$ je dokázateľná v $S$. Vyjdeme z tvaru $(11)
+\models_{L'} y = f(x_1, \ldots x_n) \implies (D \iff D_y[f(x_1, \ldots, x_n)])$.
+
+$$(12) \models_{L'} D_y[f'(x_1, \ldots, x_n)] \implies (y = f(x_1, \ldots _n
+\implies D) $$
+
+$$(13) S \models (y = f(x_1, \ldots, x_n) \implies D) \mbox{ z $(10)$}$$
+
+$$(14) \models_{L'} D_y[f(x_1, \ldots, x_n) ] \implies (D \implies y = f(x_1,
+\ldots x_n)] [T \models D \implies [D_y[t] \implies y = t) (2)$$
+
+
+$$S \models D \implies y = f(x_1, \ldots x_n)$$
+
+Skúška:
+\begin{itemize}
+	\item Dokázať $4$ vety
+	\item je daná formula, nájsť prenexný tvar, skolemov tvar, metódou
+	rezolvent ukázať, či platí alebo neplatí, napíšte teóriu s rovnosťou
+	\item 3 alebo 4 definície
+\end{itemize}
+
+
+\end{document}
