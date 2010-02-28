@@ -44,6 +44,187 @@ formulu.
  $\provable A \leftrightarrow A'$.
 \end{veta}
 
+Pri prevádzaní formuly na prenexný tvar budeme využívať nasledujúce
+\emph{prenexné} operácie, každá z nich nahrádza podformulu
+jej ekvivaletom.
+\begin{itemize}
+    \item[a)] $B$ nahraď variantom formuly $B$ (premenovanie viazaných
+    premenných)
+    \item[b)] $\neg(Q x) B$ nahraď $(\overline{Q} x) \neg B$
+    \item[c)] ak $x$ nie je voľná v $B$, tak podformulu $B\implies (Qx)C$
+            nahraď podformulou $(Qx) (B\implies C)$
+    \item[d)] ak $x$ nie je voľná v $C$, tak $((Qx)) B \implies C$
+        nahraď $(Qx) (B \implies C)$
+    \item[e)] ak $x$ nie je voľná v $B$, $\square \in \{\land,\lor\}$.
+     Potom $B \square ((Qx)C)$ resp. $((Qx)B)\square C$ nahraď
+     $(Qx)(B \square C)$
+\end{itemize}
+
+\begin{lema}
+    Prenexnými operáciami dostaneme ekvivalentné formuly
+\end{lema}
+\begin{dokaz}
+  \begin{itemize}
+    \item[a)] Veta o variantoch
+    \item[b)] Platí
+        \begin{eqnarray*}
+            \provable \neg(\forall x) B \leftrightarrow
+                \neg (\forall x) \highlightb{\neg\neg} B \\
+            \provable \highlighta{\neg (\forall x) \neg} \neg B
+                \leftrightarrow \highlightb{(\exists x)} \neg B
+        \end{eqnarray*}
+        a taktiež
+        \begin{eqnarray*}
+            \provable \neg(\exists x) B \leftrightarrow
+                \neg (\exists x) \highlightb{\neg\neg} B \\
+            \provable \highlighta{\neg (\exists x) \neg} \neg B
+                \leftrightarrow \highlightb{(\forall x)} \neg B                
+        \end{eqnarray*}
+        z čoho vieme priamo odvodiť dané tvrdenie.
+    \item[c)] Nech $Q=\forall$.
+        $\provable (\forall x) (B \implies C) \leftrightarrow
+            (B \implies (\forall x) C)$. \fixme{moze byt x volna?}
+        \begin{itemize}
+        \item[$\Rightarrow$]
+            5. Axióma predikátovej logiky
+        \item[$\Leftarrow$]
+            \begin{itemize}
+            \item[1] $\provable (\forall x) C \implies C$ --
+                axióma špecifikácie
+            \item[2] $\provable \highlighta{
+                 \underbrace{(B \implies (\forall x) C)}_X
+                \implies 
+                 (\underbrace{((\forall x) C \implies C)}_Y
+                    \implies \underbrace{(B \implies C)}_Z)}$.
+            \item[*] $\provable X \implies (Y \implies Z)$.
+            \item[*] $\provable (X \implies (Y \implies Z) \implies
+                (Y \implies (X \implies Z))$ -- pravidlo zámeny
+                predpokladov
+            \item[3] $\provable \highlighta{
+                ((B \implies (\forall x) C)
+                \implies 
+                 (((\forall x) C \implies C)
+                    \implies (B \implies C)))
+                }
+                \implies \highlightb{
+                   (((\forall x) C \implies C) \implies
+                    ((B \implies (\forall x) C) \implies (B \implies
+                    C)))}$.
+            \item[4] $\provable
+                  \highlightb{
+                   (((\forall x) C \implies C) \implies
+                    \highlighto{
+                    ((B \implies (\forall x) C) \implies (B \implies
+                    C)))}}$ - MP 2,3
+            \item[5] $\provable \highlighto{
+                (B \implies (\forall x)) \implies (B
+                    \implies C)}$ - MP 1,4
+            \item[6] $\provable (B \implies (\forall x) C) \implies
+            \highlighta{(\forall x)} (B \implies C)$ -- 
+                pravidlo zavedenia veľkého kvantifikátora
+            \end{itemize}
+        \end{itemize}
+     Druhou možnosťou je $Q=\exists$.
+     $\provable (\exists x) (B \implies C) \leftrightarrow 
+        (B \implies (\exists x) C)$, kde $x$ nie je voľná v $B$.
+        \begin{itemize}
+        \item[$\Rightarrow$]
+            \begin{itemize}
+            \item[1] $\provable C \implies (\exists x) C$ --
+                duálna verzia axiómy špecifikácie
+            \item[2] $\provable ((B \implies C) \implies
+                 ((C \implies (\exists c) C) \implies (B \implies
+                 (\exists x) C ))$ -- jednoduchý sylogizmus (JS) \fixme{ujeta zatvorka}
+            \item[3] $\provable
+                \highlighta{
+                (((B \implies C) \implies (( C \implies (\exists x) C)
+                \implies (B \implies (\exists x) C)))}
+                \implies
+                \highlightb{
+                  ((C \implies (\exists x) C) \implies (( B \implies
+                  C) \implies (B \implies (\exists x) C)))}$ -- 
+                  pravidlo zámeny predpokladov
+            \item[4] $\provable \highlightb{
+                  ((C \implies (\exists x) C) \implies 
+                  \highlighto{(( B \implies
+                  C) \implies (B \implies (\exists x) C)))}}$ -- MP 2,3
+            \item[5] $\provable
+                  \highlighto{(( B \implies
+                  C) \implies (B \implies (\exists x) C)))}$ -- MP 1,4
+            \item[6] $\provable \highlighta{(\exists x)}
+                ( B \implies C) \implies (B \implies (\exists x) C))$
+                -- pravidlo zavedenie existenčného kvantifikátora
+            \end{itemize}
+        \item[$\Leftarrow$]
+            \begin{itemize}
+                \item[1] $\provable C \implies (B \implies C)$ -- A1
+
+                \item[2] $\provable (\exists x) C \implies (B \implies
+                C)$ -- pravidlo distribúcie existenčného
+                kvantifikátora
+
+                \item[3] $\provable \neg B \implies (B \implies C)$ -- postova
+                teoréma
+
+                \item[4] $\provable (B \implies C) \implies 
+                    (\exists x)(B \implies C)$ -- 
+                    duálny tvar axiómy špecifikácie
+
+                \item[5] $\provable \highlighta{\neg B \implies 
+                    (\exists x) (B \implies C)}$ -- JS 2,3
+
+                \item[*] $\provable
+                    \highlighta{
+                    (\neg \underbrace{B}_X \implies 
+                        \underbrace{(\exists x) ( B \implies C)}_Z)
+                    }
+                    \implies
+                    \highlightb{
+                    ((\underbrace{(\exists x) C}_Y 
+                        \implies 
+                      \underbrace{(\exists x) (B \implies C)}_Z)
+                    \implies
+                    (\underbrace{B}_X \implies 
+                        \underbrace{(\exists x) C)}_Y
+                      \implies 
+                        \underbrace{(\exists x) (B
+                    \implies C)}_Z))}$ -- dokážeme neskôr
+
+                \item[6] $\provable
+                    \highlightb{
+                    ((( \exists x) C \implies (\exists x) (B \implies C))
+                    \implies
+                    \highlighto{
+                    (B \implies (\exists x) C) \implies (\exists x) (B
+                    \implies C )))}}$ -- MP 5,*
+
+                \item[7] $\provable
+                    \highlighto{
+                    (B \implies (\exists x) C) \implies (\exists x) (B
+                    \implies C )))}$ -- MP 2,6
+            \end{itemize}
+            Ešte treba dokázať formulu *
+            \begin{itemize}
+            \item[a] $\neg X \implies Z, X \implies Y, Y \implies Z, 
+                \highlighta{X}
+                \provable Z$
+            \item[b] $\neg X \implies Z, X \implies Y, Y \implies Z,
+                \highlightb{\neg X}
+                \provable Z$
+            \item[c] $\neg X \implies Z, X \implies Y, Y \implies Z
+                \provable Z$ -- veta o neutrálnej formule ($X,\neg
+                X$).
+            \item[d] $\provable (\neg X \implies Z) \implies (
+                    (X \implies Y) \implies ((Y \implies Z) \implies
+                    X))$ -- veta o dedukcii
+            \end{itemize}
+            \fixme{mame inak preusporiadane ciastkove veci vzhladom na
+            *}
+            \fixme{ponahanat zatvorky vsade}
+        \end{itemize}
+  \end{itemize}
+
+\end{dokaz}
 \todo{dopisat}
 
 \section{Skolemov tvar}
