@@ -10,7 +10,7 @@ beginfig(1);
 size:=40;
 size_ratio:=0.5;
 
-with spacing ((25,25)) matrix.a(10,30);
+with spacing ((18,18)) matrix.a(10,23);
 
 vardef node_ellipse@#(expr l) =
   save pic,fs,fm;
