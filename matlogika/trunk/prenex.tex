@@ -1,0 +1,50 @@
+\chapter{Dokončenie úvodu do matematickej logiky}
+
+\section{Prenexné tvary formúl}
+
+Ako sme mali vo výrokovej logike isté normálne tvary - konjunktívnu a
+disjunktívnu normálnu formu, budeme mať aj v predikátovej logike isté
+špeciálne tvary. Zaujímavé sú najmä prexenxná forma a ešte Skolemov
+normálny tvar, čo je špeciálny prípad prexenej formy.
+V prípade prexenxného tvaru ide o preskupenie kvantifikátorov na
+začiatok formuly - tvar vzniká aplikovaním kvantifikátorov na otvorenú
+formulu.
+
+
+\begin{definicia}
+    Formula $A$ je v prenexnom tvare, ak $A$ je v nasledujúcom tvare:
+     $(Q_1 x_1) (Q_2 x_2) (Q_3 x_3) \dots (Q_n x_n) B$, kde
+     $x_1, \dots , x_n$ sú navzájom rôzne premenné, $Q_i$ sú
+     kvantifikátory $(\forall, \exists)$ a 
+     $B$ je bez kvantifikátorov.
+    Formulu $B$ nazveme otvoreným jadrom formuly $A$, 
+    formulu $(Q_1 x_1) (Q_2 x_2) (Q_3 x_3) \dots (Q_n x_n)$ nazývame
+    prefixom formuly $A$.
+\end{definicia}
+
+\begin{priklad}
+    Formula elementárnej aritmetiky:
+    \begin{equation*}
+        (\forall x) (\forall y) (\exists z) (x+y=z)
+    \end{equation*}
+\end{priklad}
+
+\fixme{Pozn.}
+\begin{itemize}
+ \item $x_1, \dots, x_n$ sú navzájom rôzne pre vylúčenie viacnásobných
+    kvantifikácií.
+ \item ak $n=0$, tak $A$ je otvorená a nemá prefix
+ \item $B$ je najväčšia otvorená podformula formuly $A$.
+\end{itemize}
+
+
+\begin{veta}
+ Nech $A$ je ľubovoľná formula predikátovej logiky. Potom existuje
+ formula $A'$ v prenexnom tvare také, že
+ $\provable A \leftrightarrow A'$.
+\end{veta}
+
+\todo{dopisat}
+
+\section{Skolemov tvar}
+\todo{}
