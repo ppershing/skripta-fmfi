@@ -11,7 +11,14 @@ f(f(s))=f(x_1), \dots x_{i+1} = f(x_{i})$ pre nejaké začiatočné $s$.
 Keďže obor hodnôt je konečný, najviac po $n$ krokoch sa nám nejaké
 číslo zopakuje a dostaneme cyklus. Vo všeobecnosti môžeme postupnosť
 rozdeliť na začiatočný ``chvost'' dĺžky $\lambda$ a cyklus dĺžky
-$\mu$, ako na obrázku \todo{}.
+$\mu$, ako na obrázku \ref{fig:cyclelen}.
+
+\begin{figure}[H]
+    \caption{Chvost a telo cyklu pri náhodnom zobrazení}
+    \label{fig:cyclelen}
+    \centering
+    \includegraphics[scale=0.6]{img/3/cyclelen.1.mps}
+\end{figure}
 
 Základom pre ďalšiu analýzu bude nasledujúce tvrdenie
 \begin{lema}
@@ -61,8 +68,42 @@ Preto môžeme časovú zložitosť algoritmu ohraničiť ako $O(\mu+\lambda)$.
     output $\assign$ prvok cyklu je $x1$\;
 \end{algorithm}
 
-\todo{druha metoda - Brenton}
+Ďalšou metódou je Brentova metóda detekcie cyklov. Má rovnakú
+asymptotickú časovú zložitosť ako Floydova, v praxi však používa menej
+výpočtov funkcie $f$ a preto je zväčša preferovaná.
+Metóda funguje v akýchsi blokoch mocniny dvojky.
+Porovnáva hodnotu $x_{2^i}$ postupne s nasledujúcimi číslami
+$x_{2^i+k}$, až dosiahneme ďalšiu mocninu dvojky, vtedy začneme ďalším
+blokom. Algoritmus skončí v okamihu, keď je dĺžka aktuálneho bloku
+(mocnina dvojky) väčšia ako dĺžka cyklu a už sme do cyklu vošli.
+Preto je čas Brentovej metódy $O(\lambda + \mu)$.
+Graficky je to naznačené na obrázku \ref{fig:brent} a príslušný kód je
+\ref{algo:brent}.
 
+\begin{figure}[H]
+    \label{fig:brent}
+    \caption{Brentova metóda na hľadanie cyklov}
+    \centering
+    \includegraphics{img/3/brent.1.mps}
+\end{figure}
+
+\begin{algorithm}
+    \label{algo:floyd}
+    \caption{Brentov algoritmus}
+    $x1 \assign f(s)$\;
+    $x2 \assign f(f(s))$\;
+    $i \assign 2$\;
+    \While{$x1 \ne x2$}{
+        \If{$i$ je 2. mocnina}{
+            $x1 \assign x2$\;
+        }
+        $x2 \assign f(x2)$\;
+        $i \assign i+1$\;
+    }
+    output $\assign$ prvok cyklu je $x1$\;
+\end{algorithm}
+
+\subsection{Pollardova metóda na faktorizáciu}
 \todo{Pollard}
 \todo{Dixon}
 \todo{Quadratic sieve}
