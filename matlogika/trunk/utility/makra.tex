@@ -13,5 +13,17 @@
 
 \newtheorem{definicia}{Definícia}[section]
 \newtheorem{HLPpriklad}{Príklad}[section]
-\newenvironment{priklad}{\begin{HLPpriklad}\rm}{\end{HLPpriklad}}
+\newenvironment{priklad}[1][]{
+    \ifthenelse{\equal{#1}{}}{
+        \begin{HLPpriklad}
+    }{
+        \begin{HLPpriklad}[#1]
+    }
+    \rm}{\end{HLPpriklad}
+}
 \newtheorem{veta}{Veta}[section]
+\newtheorem{lema}{Lema}[section]
+
+
+\newenvironment{dokaz}{\trivlist
+  \item[\hskip \labelsep{\bfseries Dôkaz:}]}{\endtrivlist}
