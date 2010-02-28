@@ -3,8 +3,15 @@
 \def\fixme#1{[{\color{red} FIXME:} {\bf  #1}]}
 \def\verify#1{\todo{verify: #1}}
 
-\newcommand{\implies}{\rightarrow}
+\renewcommand{\implies}{\rightarrow}
 \newcommand{\notmodels}{\nvDash}
 \newcommand{\union}{\cup}
+\newcommand{\provable}{\vdash}
+\newcommand{\unprovable}{\nvdash}
 
 \def\noheader{\relax}
+
+\newtheorem{definicia}{Definícia}[section]
+\newtheorem{HLPpriklad}{Príklad}[section]
+\newenvironment{priklad}{\begin{HLPpriklad}\rm}{\end{HLPpriklad}}
+\newtheorem{veta}{Veta}[section]

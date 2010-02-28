@@ -1,68 +1,72 @@
-\chapter{Dokončenie úvodu do matematickej logiky}
-
-\todo{prenexne, skolemov tvar}
-
 \chapter{Matematická logika}
 
 \section{Pravdivosť a dokázateľnosť}
 \subsection{Veta o úplnosti}
 
-\paragraph{Definícia:} Nech $L$ je jazyk prvého rádu a $A$ je formula jazyka
-$L$. Hovoríme, že formula $A$ je \emph{logicky platná}, označujeme $\models A$,
-ak je splnená v ľubovoľnej realizácii jazyka $L$.
-$$
-\begin{array}{lll}
-m & \models & A[e] \\
-  & \models & A \\
- ~ & \models & A \\
-\end{array}
-$$
+\begin{definicia}
+    Nech $L$ je jazyk prvého rádu a $A$ je formula jazyka
+    $L$. Hovoríme, že formula $A$ je \emph{logicky platná},
+    označujeme $\models A$,
+    ak je splnená v ľubovoľnej realizácii jazyka $L$.
 
-\paragraph{Definícia:} Nech $L$ je jazyk, prvého rádu a $T$ je množina formúl
-jazyka $L$. Hovoríme, že $T$ je teória 1. rádu predikátovej logiky s jazykom
-$L$ (množina formúl $T$ je množina axióm teórie).
+    \begin{eqnarray*}
+        m & \models & A[e] \\
+        & \models & A \\
+        & \models & A
+    \end{eqnarray*}
+\end{definicia}
 
-\paragraph{Definícia:} Nech $T$ je teória v jazyku $L$, $m$ je realizácia jazyka
-$L$. Hovoríme, že $m$ je modelom teórie $T$, ak pre každú formulu $A$ patriacu
-$T$ platí $\models A$.
-\par Hovoríme, že formula $A$ je sémantickým dôsledkom (vetou teórie) množiny formúl $T$,
-označujeme $T \models A$, ak $A$ je splnená v každom modeli teórie $T$.
+\begin{definicia}
+    Nech $L$ je jazyk, prvého rádu a $T$ je množina formúl
+    jazyka $L$. Hovoríme, že $T$ je teória 1. rádu predikátovej logiky s jazykom
+    $L$ (množina formúl $T$ je množina axióm teórie).
+\end{definicia}
 
-\paragraph{Príklad:}
-$\varphi, x, y, z, <$
-\begin{enumerate}
-	\item $(x,y) \in \varphi  \implies (y,x) \notin  \varphi$
-	\item $(x,y) \in \varphi \land (y,z) \in \varphi \implies (x,z) \in \varphi$
-	\item $x \neq y \implies (x,y) \in \varphi \lor (y,x) \in \varphi$
-\end{enumerate}
+\begin{definicia}
+    Nech $T$ je teória v jazyku $L$, $m$ je realizácia jazyka $L$.
+    Hovoríme, že $m$ je modelom teórie $T$, ak pre každú formulu $A$
+    patriacu $T$ platí $\models A$.  \par Hovoríme, že formula $A$ je
+    sémantickým dôsledkom (vetou teórie) množiny formúl $T$,
+    označujeme $T \models A$, ak $A$ je splnená v každom modeli teórie
+    $T$.
+\end{definicia}
+
+\begin{priklad}{Usporiadania}
+    $\varphi, x, y, z, <$
+    \begin{enumerate}
+        \item $(x,y) \in \varphi  \implies (y,x) \notin  \varphi$
+        \item $(x,y) \in \varphi \land (y,z) \in \varphi \implies (x,z) \in \varphi$
+        \item $x \neq y \implies (x,y) \in \varphi \lor (y,x) \in \varphi$
+    \end{enumerate}
 
 je modelom pre teóriu ostrého usporiadania.
 Ďalšie príklady: neostré usporiadanie: antisymetrickosť, tranzitívnosť,
 reflexívnosť, trichotomockosť.
+\end{priklad}
 
 
-\paragraph{Príklad:} Teória grúp.
+\begin{priklad}{Teória grúp}
+    \begin{enumerate}
+            \item $((x+y)+z) = (x+(y+z))$
+            \item $(x+0) = (0+x) = x$
+            \item $x, -x, x+(-x) = 0 = (-x)+x$
+    \end{enumerate}
+\end{priklad}
 
-\begin{enumerate}
-	\item $((x+y)+z) = (x+(y+z))$
-	\item $(x+0) = (0+x) = x$
-	\item $x, -x, x+(-x) = 0 = (-x)+x$
-\end{enumerate}
-
-
-\paragraph{Príklad:} Elementárna aritmetika.
-$$+, \cdot, 0, S(x) = x+1, N^+ $$
-\begin{enumerate}
+\begin{priklad}{Elementárna aritmetika}
+    $+, \cdot, 0, S(x) = x+1, N^+ $
+    \begin{enumerate}
 	\item $\neg S(x) = 0$
 	\item $S(x) = S(y) \implies x=y$
 	\item $x+0 = x$
 	\item $x+S(y) = S(x+y)$
 	\item $x \cdot 0 = 0$
 	\item $x\cdot S(y) = ((x\cdot y) + x)$
-\end{enumerate}
+    \end{enumerate}
 
-Pätica v zátvorkách je \emph{štandardný model} elementárnej aritmetiky:
-$$<N^+, +, \cdot, S, 0>$$
+    Pätica $<N^+, +, \cdot, S, 0>$ je
+    \emph{štandardný model} elementárnej aritmetiky.
+\end{priklad}
 
 \par
 Pojem platnej formuly je prirodzené zovšobecnenie pojmu \emph{logicky platnej
@@ -71,7 +75,7 @@ formuly}.
 Ďalším cieľom je stotožniť dokázateľné formuly s tautológiami.
 
 \paragraph{Veta (o korektnosti):} Ak $T$ je teória v jazyku $L$ a ak formula $A$
-je taká, že $T \vdash A$, potom $T \models A$.
+je taká, že $T \provable A$, potom $T \models A$.
 \paragraph{Dôkaz:} Nech $A_1, A_2, \ldots A_n$ je odvodenie (dókaz) formuly $A$
 z predpokladov $T$ (v teórii $T$). $A_1, A_2, \ldots A_n(A)$.
 \par $m$ nech je ľubovoľný model teórie $T$. Ukážeme (indukciou podľa dĺžky
@@ -109,7 +113,7 @@ Do dôkazu sa $A_i$ môže dostať niekoľkými spôsobmi:
 		ekvivalentné s $\neg B \lor C$. Dôležitý je tiež predpoklad, že
 		$x$ nie je voľná v $B$, a teda nezávisí od ohodnotenia viazanej
 		premennej. Keď je ľavá časť axiomy pravdivá, musí byť aj pravá
-		(TODO: spresniť!) $m \models A_i$.
+		\todo{spresniť!} $m \models A_i$.
 	\end{enumerate}
 	\item $A_i$ je niektorá axioma rovnosti:
 	\begin{enumerate}
@@ -170,10 +174,10 @@ $$
 $$
 
 $$
-	\neg x=0 \vdash \neg y=0
+	\neg x=0 \provable \neg y=0
 $$
 
-Môžem podľa vety o dedukcii napísať, že $ \vdash \neg x=0 \implies y=0$?
+Môžem podľa vety o dedukcii napísať, že $ \provable \neg x=0 \implies y=0$?
 
 $$
 \begin{array}{l}
@@ -216,23 +220,23 @@ kvantifikátorom.
 	\item $A: (Qx) B$, potom $A^*: B^*$.
 \end{enumerate}
 
-Ak $L$ je jazyk bez rovnosti a $\vdash^L A$, potom $A^*$ je tautológia. Ak $L$
-je jazyk s rovnosťou a $\vdash^L A$, potom $A^*$ je tautologický dôsledok $c=c$.
+Ak $L$ je jazyk bez rovnosti a $\provable^L A$, potom $A^*$ je tautológia. Ak $L$
+je jazyk s rovnosťou a $\provable^L A$, potom $A^*$ je tautologický dôsledok $c=c$.
 
-\par Tvrdíme, že pre žiadnu formulu $A$ nie je $\vdash A$ aj $\vdash \neg A$. Ak
-by to platilo, dostali by sme sa do sporu, že vo výrokovej logike je $\vdash
-A^*$ aj $\vdash \neg A^*$.
+\par Tvrdíme, že pre žiadnu formulu $A$ nie je $\provable A$ aj $\vdash \neg A$. Ak
+by to platilo, dostali by sme sa do sporu, že vo výrokovej logike je $\provable
+A^*$ aj $\provable \neg A^*$.
 
 
 \section{Veta o úplnosti}
 \paragraph{Veta (G\"odel, 1):} Nech $T$ je teória v jazyku $L$ a ak $A$ je
-ľubovoľná formula jazyka $L$, potom $T \vdash A \iff T \models A$.
+ľubovoľná formula jazyka $L$, potom $T \provable A \iff T \models A$.
 
 \paragraph{Veta (G\"odel, 2)} Teória $T$ je bezosporná práve vtedy, ked $T$ má
 model.
 
 \paragraph {Veta (o korektnosti):}
-	$$T \vdash A \implies T \models A$$.
+	$$T \provable A \implies T \models A$$.
 
 \paragraph{Príklady vety o korektnosti:}
 Ak teória $T$ má model, tak je bezosporná.
@@ -241,7 +245,7 @@ Ak teória $T$ má model, tak je bezosporná.
 $\mbox{Veta 2} \implies \mbox{Veta 1}$. Veta o dedukcii mala nasledovný
 dôsledok:
 \par Ak máme teóriu $T$, $A$ je jej formula a $A'$ je uzáver formuly $A$, tak $T
-\vdash A \iff T \union \{ \neg A' \} \mbox{ je sporná teória}$, podľa vety 2 $T
+\provable A \iff T \union \{ \neg A' \} \mbox{ je sporná teória}$, podľa vety 2 $T
 \union \{ \neg A' \}$ nemá model.
 
 \par Toto znamená, že v každom modeli teórie $T$ je pravdivý uzáver $A'$. $T
@@ -253,14 +257,14 @@ univerzum. K dispozícii máme len syntaktické prostriedky teórie. Do úvahy
 prichádzajú iba termy bez premenných -- majú jednoznačnú realizáciu (sami sebe
 budú realizáciou).
 
-$$A[e] \iff T \vdash A $$.
+$$A[e] \iff T \provable A $$.
 
 Možné problémy pri konštrukcii modelu:
 \begin{enumerate}
 	\item Jazyk $L$ neobsahuje žiadne konštanty (a teda žiadne termy bez
 		premenných).
 	\item Ak jazyk $L$ bude jazyk s rovnosťou, môže sa stať, že v teórii $T$
-		bude $T \vdash t=s$, ale $t$ a $s$ sú rôzne termy bez
+		bude $T \provable t=s$, ale $t$ a $s$ sú rôzne termy bez
 		premenných.
 	\item Nech $m$ je ľubovoľná realizácia jazyka $L$ a $A$ je uzavretá
 		formula jazyka $L$. Potom práve jedna z formúl $A$, $\neg A$ je
@@ -286,7 +290,7 @@ buď $\neg A$ je dokázateľná v $T$.
 lebo závisí od ohodnotenia $x$).
 
 \paragraph{Definícia:} Hovoríme, že teória $T$ s jazykom $L$ je \emph{Henkinova}, ak
-pre ľubovoľnú uzavretú formulu $(\exists x)B$ jazyka $L$ platí $$ T \vdash
+pre ľubovoľnú uzavretú formulu $(\exists x)B$ jazyka $L$ platí $$ T \provable
 (\exists x)B \implies B_x[c]$$ pre nejaké $c$ -- konštantu.
 
 \paragraph{Lema:} Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
@@ -295,7 +299,7 @@ termov jazyka $L$ bez premenných. Na množine $\tau$ definujem reláciu
 ekvivalencie nasledovne:
 $$
 	t_1, t_2 \in \tau
-	t_1 \equiv t_2 \iff T \vdash t_1 = t_2
+	t_1 \equiv t_2 \iff T \provable t_1 = t_2
 $$
 Rovnosť je reflexívna, symetrická, tranzitívna, teda týmto spôsobom definovaná
 relácia je relácia ekvivalencie a rozdeľuje nám množinu $\tau$ na triedy
@@ -310,12 +314,12 @@ Univerzum budú tvoriť termy bez premenných.
 \paragraph{Lema:} Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
 \paragraph{Dôkaz:} $M$ bude mnomžina všetkých termov bez premenných. Na tejto
 množine definujeme reláciu $\equiv$ tak, že 
-$$ t_1 \equiv t_2,~t_1, t_1 \in \tau,~T \vdash t_1=t_2 $$
+$$ t_1 \equiv t_2,~t_1, t_1 \in \tau,~T \provable t_1=t_2 $$
 $$[t]=\{ s\in \tau, s \equiv t \} $$
 
 Nech $f$ je $n$-árny funkčný symbol. $[t_1], [t_2], \ldots, [t_n] \in M$, pričom
 platí $f_m([t_1], \ldots, [t_n]) = [f(t_1, \ldots t_n)]$. $P$ je $n$-árny
-predikátový symbol rôzny od $=$. $([t_1], \ldots [t_n]) \in P_m \iff T \vdash
+predikátový symbol rôzny od $=$. $([t_1], \ldots [t_n]) \in P_m \iff T \provable
 P(t_1, \ldots, t_n)$.
 
 \paragraph{Poznámka:} Doteraz sme pracovali s $[\ldots]$. Výsledok sa nezmení,
@@ -324,7 +328,7 @@ danej triedy.
 \par
 $$ s_1, \ldots s_n $$
 $$ s_i \in [t_i], i = 1, \ldots n $$
-$$ [t_1], \ldots, [t_n]) \in P_m \iff T \vdash P(s_1, \dots s_n) $$
+$$ [t_1], \ldots, [t_n]) \in P_m \iff T \provable P(s_1, \dots s_n) $$
 
 \par
 $$
@@ -336,49 +340,49 @@ t[e] &=& [t] \\
 \end{array}
 $$
 
-$A$ -- ľubovoľná uzavretá formula z $L$, potom $m \models A \iff T \vdash A$.
+$A$ -- ľubovoľná uzavretá formula z $L$, potom $m \models A \iff T \provable A$.
 $P(t_1, t_2, \ldots t_n)$ -- atomická formula,  uzavretá, $t_1. \ldots t_n$ sú
 termy bez premenných.
 
-$m \models A \iff ([t_1], \ldots, [t_n]) \in P_m \iff T \vdash P(t_1,\ldots
+$m \models A \iff ([t_1], \ldots, [t_n]) \in P_m \iff T \provable P(t_1,\ldots
 t_n)$ pre ľubovoľné ohodnitenie.
 
-\par $A: t_1 = t_2$. $m \models t_1 = t_2 \iff [t_1] = [t_2] \iff T \vdash t_1 =
+\par $A: t_1 = t_2$. $m \models t_1 = t_2 \iff [t_1] = [t_2] \iff T \provable t_1 =
 t_2$.
 
 \par $A: \neg B$. Indukčný predpoklad: pre $B$ bolo tvrdenie dokázané ($m\models
-B \iff T \vdash B)$. Formula $A$ je pravdivá v $m$ práve vtedy, keď formula $B$
-nie je pravdivá $B$ nie je pravdivá, $T \nvdash B, T \vdash \neg B$.
+B \iff T \provable B)$. Formula $A$ je pravdivá v $m$ práve vtedy, keď formula $B$
+nie je pravdivá $B$ nie je pravdivá, $T \unprovable B, T \vdash \neg B$.
 
 \par $A. B \implies C$, pričom $B$ a $Cc$ sú dokázané podľa indukčného
 predpokladu. Ak platí $m \models B \implies C$, potom $m \models \neg B \lor m
-\models C$. $T \vdash \neg B \lor T \vdash C$.
+\models C$. $T \provable \neg B \lor T \vdash C$.
 
-$$ T \vdash B \implies C $$
-$$ \vdash C \implies (B \implies C)$$
+$$ T \provable B \implies C $$
+$$ \provable C \implies (B \implies C)$$
 Opačná implikácia:
-$$T\vdash B\implies C\Rightarrow m \models B \implies C$$
+$$T\provable B\implies C\Rightarrow m \models B \implies C$$
 
 Teória $T$ je úplná teória a $B \implies C$ je uzavretá. Pre každú uzavretú
-formulu platí, jedna z možností $T \vdash \neg B$ (potom $m \models \neg B$)
-alebo $T \vdash B$, a z toho vyplýva, že $T \vdash C$, a teda $m \models C$.
+formulu platí, jedna z možností $T \provable \neg B$ (potom $m \models \neg B$)
+alebo $T \provable B$, a z toho vyplýva, že $T \vdash C$, a teda $m \models C$.
 Tvrdenie je teda dokázané.
 
-$$m \models A \iff T \vdash A$$
+$$m \models A \iff T \provable A$$
 \par Predpokladajme, že formula $A$ je v tvare $A: (\forall x) B$. Pre každú
-inštanciu formuly $B$ tvrdenie platí, $\vdash (\forall x) B \implies B_x[t]$
-(axióma špecifikácie). Potom aj $T \vdash B_x[t]$ (lebo teória je Henkinova). $m
+inštanciu formuly $B$ tvrdenie platí, $\provable (\forall x) B \implies B_x[t]$
+(axióma špecifikácie). Potom aj $T \provable B_x[t]$ (lebo teória je Henkinova). $m
 \models B[e(x/t)]$.
 
-\par Ak je pravdivá negácia, potom $T \vdash \neg A$, čo znamená, že $(\exists
-x) \neg B$. $T \vdash (\exists x) \neg B \implies B_x[c]$, a to znamená, že $T
-\vdash \neg B_x[c]$.
+\par Ak je pravdivá negácia, potom $T \provable \neg A$, čo znamená, že $(\exists
+x) \neg B$. $T \provable (\exists x) \neg B \implies B_x[c]$, a to znamená, že $T
+\provable \neg B_x[c]$.
 
-\par Nech $A$ je ľubovoľná formula z teórie $T$. Pre ňu platí, že $T \vdash A$
-(predpoklad). Potrebujem dokázať, že $T \vdash A \iff m \models A$. Zoberiem si
+\par Nech $A$ je ľubovoľná formula z teórie $T$. Pre ňu platí, že $T \provable A$
+(predpoklad). Potrebujem dokázať, že $T \provable A \iff m \models A$. Zoberiem si
 $A'$ -- uzáver formuly $A$. Na $A'$ sa vzťahuje tvrdenie, ktoré sme už dokázali,
-a teda $m \models A' \iff T \vdash A'$. Podľa vety o uzávere:
-$m \models A \iff  m\models A' T \vdash A' \iff T \vdash A$
+a teda $m \models A' \iff T \provable A'$. Podľa vety o uzávere:
+$m \models A \iff  m\models A' T \provable A' \iff T \vdash A$
 
 \par Pre ľubovoľnú teóriu, ktorá je idealizovaná (Henkinova a úplná), viem
 zostrojiť model.
@@ -397,17 +401,17 @@ $L$ má symboly $<$ a $=$. Jazyk $L'$ je rozšírením jazyka $L$
 
 \paragraph{Definícia:} Majme teóriu $T'$ s jazykom $L'$. Hovoríme, že je
 rozšírením teórie $T$ s jazykom $L$, ak platí, že $L'$ je rozšírením jazyka $L$
-a každá formula $A$ na jazyku $L$, $T \vdash A, T' \vdash A$.
+a každá formula $A$ na jazyku $L$, $T \provable A, T' \vdash A$.
 \paragraph{Veta (Henkinova):}
 
-$$ \vdash (\exists x) \neg B \implies \neg B_x[c] $$
-$$ T \vdash  \neg B_x[c] $$
+$$ \provable (\exists x) \neg B \implies \neg B_x[c] $$
+$$ T \provable  \neg B_x[c] $$
 $$ m \models  (\forall x) B \iff T (\forall c) B $$
 
 \par Relačná štruktúra $<M, P_m, t_m>$ -- model pre množinu formúl $T$. Vezmeme
 ľubovoľnú formulu $A \in T$ a platí $m \models A$, potom $T$ je modelom.
 
-\par $T \vdash A$. $A'$ -- uzáver A. $$ m \models A' \iff T \vdash A'$$. Ak v
+\par $T \provable A$. $A'$ -- uzáver A. $$ m \models A' \iff T \vdash A'$$. Ak v
 modeli $m$ je splnená formula $A'$, potom musí byť splnená aj $A$. Štruktúra,
 ktorú sme uvažovali, je modelom pre našu teóriu.
 
@@ -435,8 +439,8 @@ okruhov.
 
 \par Ak máme teóriu $T$, $T'$ je rozšírenie $T$ a je bezosporná. Potom teória
 $T$ je taktiež bezosporná. Ak by sme pripustili, že teória $T$ je sporná, potom
-by sa našla taká formula, že $T \vdash A$ aj $T \vdash \neg A$, z čoho vyplýva
-$T' \vdash A$ aj $T' \vdash \neg A$.
+by sa našla taká formula, že $T \provable A$ aj $T \vdash \neg A$, z čoho vyplýva
+$T' \provable A$ aj $T' \vdash \neg A$.
 
 \paragraph{Definícia:} Majme teóriu $T$ a teóriu $T'$. Hovoríme, že $T'$ je
 \emph{konzervatívne rozšírenie} teórie $T$, ak $T'$ je rozšírenie $T$ a pre
@@ -447,7 +451,7 @@ formula implikuje, že v $T$ je taktiež dokázateľná.
 bezosporná vtedy a len vtedy, keď $T'$ je bezosporná. Vyplýva to z toho, že ak
 zoberieme konzervatívne rozšírenie, pre ľubovoľnú formulu pôvodného jazyka
 platí, že:
-$$ T' \vdash_L A \Rightarrow T \vdash A$$.
+$$ T' \provable_L A \Rightarrow T \vdash A$$.
 
 \paragraph{Veta (Henkinova):} K ľubovoľnej teórii $T$ môžeme zostrojiť Henkinovu
 teóriu $T_H$, ktorá je konzervatívnym rozšírením teórie $T$.
@@ -498,33 +502,33 @@ Potrebujeme ukázať, že $T_H$ konzervatívne rozšírenie teórie $T$.
 
 $T_H$ -- konzervatívne rozšírenie, teda keď zoberiem formulu $A$ na jazyku $L$,
 musí platiť:
-$$ T_H \vdash A \implies T \vdash A$$
+$$ T_H \provable A \implies T \vdash A$$
 
 Nech platí, že v $T_H$ je dokázateľná teória, $B_1, B_2, \ldots B_n$ -- všetky
 axiomy z $H$ a môžem predpokladať, že všetky sú jednoduché. Platí, že:
-$$ T, B_1, \ldots B_n \vdash A $$. Môžeme použiť vetu o dedukcii:
+$$ T, B_1, \ldots B_n \provable A $$. Môžeme použiť vetu o dedukcii:
 
-$$ T \vdash B_1 \implies B_2 \implies \ldots B_n \implies A $$.
+$$ T \provable B_1 \implies B_2 \implies \ldots B_n \implies A $$.
 
 Môžeme ich poprehadzovať tak, že $B_1$ obsahuje koštantu maximálneho rádu. Nech
 $B_1$ je tvaru $(\exists x) D \implies D_x[c_D]$, pričom $C_D$ nie je je použitá
-v $B_2, \ldots, B_n$. Použijeme vetu o konštantách a dostávame, že $T \vdash
+v $B_2, \ldots, B_n$. Použijeme vetu o konštantách a dostávame, že $T \provable
 ((\exists x) D \implies D_x[c_D] ) \implies (B_2 \implies \ldots \implies B_n
 \implies A)$.
 
-\par Ak $T \vdash A \implies B$, potom $T\vdash (\exists x) A \implies B$.
-$$ T\vdash (\exists w) ((\exists x)D \implies D_x[w]) \implies (B_2 \implies
+\par Ak $T \provable A \implies B$, potom $T\vdash (\exists x) A \implies B$.
+$$ T\provable (\exists w) ((\exists x)D \implies D_x[w]) \implies (B_2 \implies
 \ldots \implies B_n \implies A)$$
 
 Použili sme pravidlo zavedenia existenčného kvantifikátora. Ďalej použijeme
 prenexnú operáciu $(Qx) (A\implies B) \iff (A\implies (Qx)B)$ a $x$ nie je voľná
 v $A$. V $T$ je dokázateľné:
-$$T \vdash ((\exists x) D \implies (\exists w)D_x[w]) \implies B_2 \implies \ldots \implies B_n \implies A$$
+$$T \provable ((\exists x) D \implies (\exists w)D_x[w]) \implies B_2 \implies \ldots \implies B_n \implies A$$
 
 Použijeme vetu o variantoch a dostávame:
-$$ T \vdash ( \exists x ) D \implies (\exists w) D_x[w] $$
-$$ T \vdash B_2 \implies B-3 \implies \ldots \implies B_n \implies A $$
-$$ T \vdash A$$
+$$ T \provable ( \exists x ) D \implies (\exists w) D_x[w] $$
+$$ T \provable B_2 \implies B-3 \implies \ldots \implies B_n \implies A $$
+$$ T \provable A$$
 
 Ukázali sme, že $T_H$ s jazykom $L(C)$ je konzervatívne rozšírenie jazyka $L$.
 
@@ -591,7 +595,7 @@ $$ S' \subseteq S, S' \mbox{ je konečná}, T \union S' \mbox{ je bezosporná}\i
 
 $\Leftarrow:$Obrátene: Predpokladajme, že $S'$ je ľubovoľná konečná podmnožina $S$, $T \union S'$ je bezosporná, $S' \in \mathcal{B} \implies S \in \mathcal{B}$.
 
-Tvrdenie dokážeme sporom. Predpokladajme, že $S$ nepatrí do $B$. Potom $T \union S$ je sporná, čiže pre ľubovoľnú dokázateľnú formulu A, $\vdash \neg(A \implies A)$.
+Tvrdenie dokážeme sporom. Predpokladajme, že $S$ nepatrí do $B$. Potom $T \union S$ je sporná, čiže pre ľubovoľnú dokázateľnú formulu A, $\provable \neg(A \implies A)$.
 
 Nech $A_1, A_2, \cdots A_n$ je dôkaz (odvodenie) $\neg(A \implies A)$. Nech $B_1, B_2, \cdots B_m$ sú tie, ktoré sa v tom dôkaze vyskytujú a patria do $S$. Tvrdíme, že $m>=1$. Prečo? Inak by bola $T$ sporná.
 
@@ -604,11 +608,11 @@ $S'=\{B_1 ... B_m\}$ je konečná a nenachádza sa v množine $\mathcal{B} \impl
 Každá neprázdna neprázdna podmnožina $\mathcal{P}(\mathcal{S})$ s konečnou vlastnosťou má maximálny prvok vzhľadom na inklúziu.
 
 Nech $S_0$ ja maximálny prvok množiny $\mathcal{B}$ vzhľadom na inklúziu. Položme rozšírenie $T'$ (ktoré hľadáme)  $T' = T \union S_0$. Nech $A$ je ľubovoľná uzavretá, potom v $T'$ buď platí
-$T' \vdash A $ alebo $T' \vdash \neg A$.
+$T' \provable A $ alebo $T' \vdash \neg A$.
 
 Nech $T'$ nie je úplná teória. Čiže ani jedno z predošlých nie je dokázateľné. Čiže $\neg A$ sa nenachádza ani v $T$ ani $S_0$. 
 
-Uvažujme, že $T' \union \{\neg A\}$ je bezosporná teória. To je spor s tým, že $S_0$ je maximálny prvok z $\mathcal{B}$ vzhľadom na inklúziu. Pozn.: Odvoláme sa na predtým dokázaný dôsledok: máme $A$, $A'$ je uzáver. Potom $T \vdash A \iff T \union \{\neg A'\}$ je sporná teória.
+Uvažujme, že $T' \union \{\neg A\}$ je bezosporná teória. To je spor s tým, že $S_0$ je maximálny prvok z $\mathcal{B}$ vzhľadom na inklúziu. Pozn.: Odvoláme sa na predtým dokázaný dôsledok: máme $A$, $A'$ je uzáver. Potom $T \provable A \iff T \union \{\neg A'\}$ je sporná teória.
 
 Dosiahli sme zúplnenie teórie. Máme $T$, získali sme $T'$, ktorá je bezosporná a je úplným rozšírením.
 
@@ -620,7 +624,7 @@ $T', L'$ - úplná hakinovská
 
 $T', L' - m'$
 
-$T'$ je bezosp. rozšírenie $T$, potom $T \vdash A \iff T' \vdash A$ Potom platí, že keď zooberiem ľub. $A \in T$, potom  $m' \vdash A$. Pre ľubov. rozšírenie $T$, $T'$ $A\in T, T' \vdash A \implies m' \models A, m, v T$.
+$T'$ je bezosp. rozšírenie $T$, potom $T \provable A \iff T' \vdash A$ Potom platí, že keď zooberiem ľub. $A \in T$, potom  $m' \vdash A$. Pre ľubov. rozšírenie $T$, $T'$ $A\in T, T' \vdash A \implies m' \models A, m, v T$.
 
 \paragraph{Definícia.}
 
@@ -653,13 +657,13 @@ Nasledujú dve vety o kompaktnosti a ich dôsledky. Dávajú nám konečnú char
 \paragraph{Dôkaz}
 
 
-G\"odel: $T \models A \iff T \vdash A$
+G\"odel: $T \models A \iff T \provable A$
 
 $A_1, A_2 ... A_n(A)$ je konečná postupnosť formúl - konečne veľa axiom z $T$.
 
 $T' = \{B_1, B_2 ... B_m\}$, $B_i$ - axiomy v $T$ nachádzajúce sa v dôkaze $A$
 
-Môžeme napísať $T' \vdash A \iff T' \models A$.
+Môžeme napísať $T' \provable A \iff T' \models A$.
 
 \paragraph{}
 Na základe vety o kompaktnosti ukážeme, že teóriu telies charakteristiky 0 nedokážeme v teórii prvého rádu napísať charakterizovať pomocou konečného počtu axiom. Komut. grupa. distr. zákony ma krát a plus ... rád prvku - konečný, najmenší takýto prvok ... teleso konečnej charakteristiky. A tak ďalej.
@@ -698,7 +702,7 @@ vieme konečne axiomatizovať teóriu telies charakteristiky 0.
 \emph{Veta o kompaktnosti neplatí v slabej logike druhého rádu.}
 
 Mali sme Godelovu vetu v dvoch tvaroch:
-$$ T \models A \iff T \vdash A$$
+$$ T \models A \iff T \provable A$$
 Druhý tvar: Teória je bezosporná, keď má model. Z druhého tvaru môžeme sformulovať a dokázať
 \emph{vetu o kompaktnosti}.
 
@@ -767,14 +771,14 @@ Ku každej formule A viem zostrojiť takú, ktorá je v prefixovom (prenexnom) t
 prefix + jadro: $(Q_1 x_+)\cdots(Q_n x_n)M$.
 
 Prenexné opperácie:
-$$(Qx)A(x) \vee B \equiv (Qx)(A(x) \vee B) \mbox{ - $x$ nie je voľné v $B$} $$
+$$(Qx)A(x) \lor B \equiv (Qx)(A(x) \lor B) \mbox{ - $x$ nie je voľné v $B$} $$
 $$ (Qx)A(x) \land B \equiv (Qx)(A(x) \land B) \mbox{ - $x$ nie je voľné v $B$} $$
 $$ \neg (\forall x) A(x) \equiv (\exists x) \neg A(x) $$
 $$ \neg (\exists x) A(x) \equiv (\forall x) \neg A(x) $$
 $$ (\forall x) A(x) \land (\forall X) B(x) \equiv (\forall x) (A(x) \land B(x)) $$
-$$ (\forall x) A(x) \vee (\forall x) B(x) \equiv (\forall x) (A(x) \vee B(x)) $$
+$$ (\forall x) A(x) \lor (\forall x) B(x) \equiv (\forall x) (A(x) \lor B(x)) $$
 Platí toto?:
-$$(\forall x) A(x) \vee (\forall X) B \equiv (\forall x) (A(x) \vee B(x))$$
+$$(\forall x) A(x) \lor (\forall X) B \equiv (\forall x) (A(x) \lor B(x))$$
 Môže platiť pravá strana a ľavá nie, keď $A(a)=1, A(b)=0, B(a)=0, B(B)=1$.
 Podobne neplatí
 $$(\exists x) A(x) \land (\exists X) B(x) \equiv (\exists x) (A(x) \land B(x))$$
@@ -782,7 +786,7 @@ $$(\exists x) A(x) \land (\exists X) B(x) \equiv (\exists x) (A(x) \land B(x))$$
 Vezmem si $(\forall x)B(x) a (\forall z) B(z)$:
 $$(\forall x) B(x) \equiv (\forall z) B(z) $$
 $$\cdots$$
-$$ (Q_1 x)A(x) \vee (Q_2 x)B(x) \equiv (Q_1 x)(Q_2 z)(A(x) \vee B(z)) $$
+$$ (Q_1 x)A(x) \lor (Q_2 x)B(x) \equiv (Q_1 x)(Q_2 z)(A(x) \lor B(z)) $$
 $$ (Q_3 x)A(x) \land (Q_4 x)B(x) \equiv (Q_3 x)(Q_4 z)(A(x) \land B(z)) $$
 proste opakovanie z minulého semestra.
 
@@ -1260,7 +1264,8 @@ atómov (teda vlastne množina literálov) z Herbrandovskej bázy, pričom plat�
 \paragraph{Definícia} Majme $A=\{ A_1, A_2, \ldots A_n \}$ je Herbrandovská báza
 pre množinu $S$. Hovoríme, že sémantický strom prislúchajúci množine klauzúl $S$
 je úplný, ak pre každý vrchol $v$ platí, že pre každé $i$ končiace vo vrchole,
-$I(v)$ obsahuje $A_i$ alebo $\neg A_i$ (ale nie obe naraz). (TODO: check) 
+$I(v)$ obsahuje $A_i$ alebo $\neg A_i$ (ale nie obe naraz).
+\todo{check}
 
 \paragraph{Príklad} $A: \{ P, Q, R \}$, viď obrázok
 \ref{fig-semantic_tree_example}.
@@ -1278,7 +1283,7 @@ $I(v)$ obsahuje $A_i$ alebo $\neg A_i$ (ale nie obe naraz). (TODO: check)
 	\label{0326_tree1}
 \end{figure}
 \paragraph{Príklad}
-$S=\{P(x), ... \}$, H-báza je $\{P($ ... TODO
+$S=\{P(x), ... \}$, H-báza je $\{P($ ... \todo{}
 
 \paragraph{Príklad} $S=\{P(x), Q(f(x)) \}$, herbrandovská báza pre množinu
 klauzúl je $\{ P(a), Q(a), P(f(a)), Q(f(a)), \ldots \}$ -- je nekonečná, teda aj
@@ -1302,7 +1307,7 @@ $v$), $I(v')$ neodmieta žiadnu základnú inštanciu klauzúl z $S$.
 \paragraph{Definícia}  Hovoríme, že sémantický strom $T$ pre množinu klauzúl $S$
 je \emph{uzavretý}, ak každá vetva $T$ končí odmietajúcim vrcholom.
 
-\paragraph{Definícia} Vrchol $v$ sémantického (TODO alebo uzavretého???) stromu
+\paragraph{Definícia} Vrchol $v$ sémantického \todo{alebo uzavretého???} stromu
 $T$ pre  množinu klauzúl $S$ nazývame \emph{akceptujúcim}, ak všetky nasledujúce
 vrcholy vrchola $v$ sú odmietajúce.
 
@@ -1393,7 +1398,7 @@ tvrdenia aspoň jedna z množín $A_{v_i}$ musí byť nekonečná.
 \par Vyberieme si $x_0$ ako koreň (najmenší vrchol stromu $T$). $A_{x_0} =
 T \backslash \{x_0\}$, $A_{x_0}$ je nekonečná. Vezmime postupne prvky $\{x_0,
 x_1, \ldots , x_n, x_\{n+1\}\}$. Ku každému prvku viem vybrať nasledovný prvok a
-počet nasledovníkov je nekonečný. (TODO: lepšia formulácia)
+počet nasledovníkov je nekonečný. \todo{lepšia formulácia}
 
 \paragraph{Veta (Herbrandova, variant 1)} Množina klauzúl $S$ nie je splniteľná
 práve vtedy, keď ľubovoľnému úplnému sémantickému stromu pre množinu klauzúl
@@ -1422,7 +1427,7 @@ inštanciu.
 
 \paragraph{Veta (Herbrandova)}: Množina klauzúl $S$ nie je splniteľná $\iff$ keď
 existuje konečná množina $S'$ základných inštancií klauzúl z $S$, ktorá nie je
-splniteľná. FIXME
+splniteľná. \fixme{}
 
 \paragraph{Dôkaz:} Predpokladajme, že množina klauzúl $S$ nie je splniteľná,
 existuje $T'$ -- konečný uzavretý strom priradený ku stromu $T$.
@@ -1525,7 +1530,7 @@ $S$ nie je splniteľná $\iff$ $S_1 \lor S_2$ nie je splniteteľná.
 	práve vtedy, keď $S$ nie je splniteľná. Predpokladajme, že $S''$ nie je
 	splniteľná a $S$ je splniteľná. Model $\mathcal{M}$ musí obsahovať $L$ a
 	$S$ platí na $S''$.
-	TODO
+	\todo{???}
 	V konjunktívnej normálnej forme musia byť platné doplnky $\neg L \lor
 	\square$. Potom $S''$ je splniteľná, čo je spor.
 
@@ -1633,7 +1638,7 @@ $$A_1, A_2, \ldots, A_n, B$$
 $$
 \begin{array}{ll}
 A_1 \land A_2 \land \ldots \land A_n \implies B & \equiv 1	\\
-\vdash A_1 \land A_2 \land \ldots \land A_n \implies B & \\
+\provable A_1 \land A_2 \land \ldots \land A_n \implies B & \\
 A_1 \land A_2 \land \ldots \land A_n \land \neg B & \equiv 0	\\
 \end{array}
 $$
@@ -1704,17 +1709,17 @@ S:
 	\caption{Výrazy}
 \end{figure}
 
-$\neg A \lor V, A \lor C \vdash B \lor C$
-$$A \implies B, \neg A \implies C \vdash \neg B \implies C$$
+$\neg A \lor V, A \lor C \provable B \lor C$
+$$A \implies B, \neg A \implies C \provable \neg B \implies C$$
 \begin{enumerate}
-	\item $$\vdash (A \implies B) \implies (\neg B \implies \neg A)$$
-	\item $$ \vdash (\neg B  \implies \neg A) \implies ((\neg A \implies C)
+	\item $$\provable (A \implies B) \implies (\neg B \implies \neg A)$$
+	\item $$ \provable (\neg B  \implies \neg A) \implies ((\neg A \implies C)
 	\implies (\neg B \implies C))$$
 \end{enumerate}
-$$ A \implies B, \neg C \implies C \vdash \neg V \implies C$$
-$$ A, A\implies B \vdash B$$
+$$ A \implies B, \neg C \implies C \provable \neg V \implies C$$
+$$ A, A\implies B \provable B$$
 
-$$A \lor \square, \neg A \lor B \vdash$$
+$$A \lor \square, \neg A \lor B \provable$$
 Pravidlo \emph{modus ponens} a pravidlo rezolventy sú ekvivalentné.
 
 \paragraph{Príklad}
