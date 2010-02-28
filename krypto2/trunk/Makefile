@@ -39,10 +39,11 @@ html: dvi
 	cd html ; latex2html -html_version 4.0 -no_navigation -no_subdir -info 0 main.tex ; cd ..
 
 clean: 
-	rm -f *.{log,aux}
+	-rm -f *.{log,aux}
 
 dist-clean:
-	rm -f *.{log,aux,dvi,ps,pdf,toc,bbl,blg,slo,srs,out,bak,lot,lof}
+	-rm -f *.{log,aux,dvi,ps,pdf,toc,bbl,blg,slo,srs,out,bak,lot,lof}
+	-(cd img; make dist-clean)
 
 backup: 
 	tar --create --force-local -zf zaloha/knizka-`date +%Y-%m-%d-%H\:%M`.tar.gz `ls -p| egrep -v /$ ` images/* code/*
@@ -53,3 +54,6 @@ all: ps pdf
 booklet: main.ps
 	cat main.ps | psbook | psnup -2 >main-booklet.ps
 
+.PHONY: img
+img:
+	(cd img; make all)
