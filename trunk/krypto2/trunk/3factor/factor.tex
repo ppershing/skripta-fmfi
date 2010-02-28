@@ -1,6 +1,68 @@
 \section{Faktorizácia}
 
-\todo{Prerekvizity - nahodne zobrazenie}
+\subsection{Náhodné zobrazenia}
+Ešte predtým, ako sa vrhneme na algoritmy pre faktorizáciu, zhrnieme
+si niekoľko užitočných tvrdení, ktoré budeme neskôr využívať. Jedná sa
+hlavne o vlastnosti náhodného zobrazenia.
+
+Majme náhodné zobrazenie $f:X \rightarrow X$, kde $|X| = n$.
+Budeme uvažovať postupnosť $x_0 = s, x_1=f(s)=f(x_0), x_2 =
+f(f(s))=f(x_1), \dots x_{i+1} = f(x_{i})$ pre nejaké začiatočné $s$.
+Keďže obor hodnôt je konečný, najviac po $n$ krokoch sa nám nejaké
+číslo zopakuje a dostaneme cyklus. Vo všeobecnosti môžeme postupnosť
+rozdeliť na začiatočný ``chvost'' dĺžky $\lambda$ a cyklus dĺžky
+$\mu$, ako na obrázku \todo{}.
+
+Základom pre ďalšiu analýzu bude nasledujúce tvrdenie
+\begin{lema}
+    Nech $f:X\rightarrow X, |X|=n$ je náhodné zobrazenie.
+    Potom $\lim_{n\rightarrow \infty} \frac{E(\lambda)}{\sqrt{\pi n}}
+    = 1$. \fixme{}
+\end{lema}
+\begin{dokaz}
+    \todo{citovat Flajoleta}
+\end{dokaz}
+
+Za pomoci predchádzajúceho tvrdenia môžeme hľadať ``kolízie'' v
+postupnosti v očakávanom čase $\Theta(\sqrt{n})$.
+Jednoduchým riešením je napríklad použiť hashovanie na každý prvok
+postupnosti $x_i$. Praktický problém, ku ktorému ale narážame je
+pamäť, ktorá by musela byť $\Theta(\sqrt{n})$, čo je v dnešnej dobe
+limitujúci faktor. Existujú však aj metódy na hľadanie cyklov,
+ktoré používajú konštantńu pamäť.
+
+\subsubsection{Metódy na hľadanie cyklov}
+
+Začneme Floydovou metódou, ktorá sa niekedy aj označuje metódou dvoch
+bežcov. Pracuje na veľmi jednoduchom princípe - predstavme si, že máme
+2 bežce - ukazovatele na prvky postupnosti. Ak jedným bežcom budeme
+pohybovať rýchlejšie ako druhým a oba tieto ptvky ležia v cykle, po
+istom čase (najneskôr celý prechod cyklu) jeden z ukazovateľov dobehne
+ten prvý. Formálne, metóda porovnáva nasledujúce dvojice prvkov:
+$(x_1,x_2), (x_2,x_4), (x_3,x_6), (x_4,x_8), \dots$.
+Jej funkčnosť dokážeme nasledovne: Predpokladajme, že v aktuálnom
+kroku algoritmu máme prvky $x_i, x_{j=2i}$. Ďalej redpokladajme,
+že oba tieto prvky ležia v cykle, ktorého dĺžka je $\lambda$.
+Ak by platilo $i = j \pmod{\lambda}$, tak nutne platí $x_i = x_j$.
+Uvažujme teda, že rovnosť nenastáva. V tom prípade ale platí $j-i = i \ne
+0 \pmod{\lambda}$ a táto hodnota každým krokom vzrastie o 1. Čiže,
+najneskôr o $\lambda$ krokov bude $j-i = 0 \pmod{\lambda}$.
+Preto môžeme časovú zložitosť algoritmu ohraničiť ako $O(\mu+\lambda)$.
+
+\begin{algorithm}
+    \label{algo:floyd}
+    \caption{Floydov algoritmus na hľadanie cyklov}
+    $x1 \assign f(s)$\;
+    $x2 \assign f(f(s))$\;
+    \While{$x1 \ne x2$}{
+        $x1 \assign f(x1)$\;
+        $x2 \assign f(f(x2))$\;
+    }
+    output $\assign$ prvok cyklu je $x1$\;
+\end{algorithm}
+
+\todo{druha metoda - Brenton}
+
 \todo{Pollard}
 \todo{Dixon}
 \todo{Quadratic sieve}
