@@ -31,7 +31,7 @@
     $T$.
 \end{definicia}
 
-\begin{priklad}{Usporiadania}
+\begin{priklad}[Usporiadania]
     $\varphi, x, y, z, <$
     \begin{enumerate}
         \item $(x,y) \in \varphi  \implies (y,x) \notin  \varphi$
@@ -45,7 +45,7 @@ reflexívnosť, trichotomockosť.
 \end{priklad}
 
 
-\begin{priklad}{Teória grúp}
+\begin{priklad}[Teória grúp]
     \begin{enumerate}
             \item $((x+y)+z) = (x+(y+z))$
             \item $(x+0) = (0+x) = x$
@@ -53,7 +53,8 @@ reflexívnosť, trichotomockosť.
     \end{enumerate}
 \end{priklad}
 
-\begin{priklad}{Elementárna aritmetika}
+\begin{priklad}[Elementárna aritmetika]
+
     $+, \cdot, 0, S(x) = x+1, N^+ $
     \begin{enumerate}
 	\item $\neg S(x) = 0$
@@ -74,93 +75,90 @@ formuly}.
 
 Ďalším cieľom je stotožniť dokázateľné formuly s tautológiami.
 
-\paragraph{Veta (o korektnosti):} Ak $T$ je teória v jazyku $L$ a ak formula $A$
-je taká, že $T \provable A$, potom $T \models A$.
-\paragraph{Dôkaz:} Nech $A_1, A_2, \ldots A_n$ je odvodenie (dókaz) formuly $A$
-z predpokladov $T$ (v teórii $T$). $A_1, A_2, \ldots A_n(A)$.
-\par $m$ nech je ľubovoľný model teórie $T$. Ukážeme (indukciou podľa dĺžky
-dôkazu), že platí $m \models A_i$ pri predpoklade, že pre $A_j, j < i$ platí
-$m \models A_j$.i
+\begin{veta}[o korektnosti]
+    Ak $T$ je teória v jazyku $L$ a ak formula $A$ je taká,
+    že $T \provable A$, potom $T \models A$.
+\end{veta}
 
-Do dôkazu sa $A_i$ môže dostať niekoľkými spôsobmi:
-\begin{enumerate}
+\begin{dokaz}
+    Nech $A_1, A_2, \ldots A_n$ je odvodenie (dókaz) formuly $A$
+    z predpokladov $T$ (v teórii $T$). $A_1, A_2, \ldots A_n(A)$.
+    \par $m$ nech je ľubovoľný model teórie $T$.
+    Ukážeme (indukciou podľa dĺžky dôkazu), že platí $m \models A_i$
+    pri predpoklade, že pre $A_j, j < i$ platí $m \models A_j$.
+
+    Do dôkazu sa $A_i$ môže dostať niekoľkými spôsobmi:
+    \begin{enumerate}
 	\item $A_i \in T$, m -- model $T$, potom $m \models A_i$
 	\item $A_i$ sa dostane do dôkazu ako schéma axiom predikátovej logiky:
 	\begin{enumerate}
-		\item $A_i$ je axioma výrokovej logiky -- je poskladaná z
-		atomických formúl a logických spojok $\neg$ a $\implies$. Potom
-		$A_i$ je tautológia výrokovej logiky (ak formula je tautoĺógia,
-		jej pravdivostná hodnota nezávisi od ohodnotenia premenných, a
-		$m \models A_i$, teda $m \models A_i[e]$).
-		
-		\item $A_i$ je axioma špecifikácie, teda je tvaru $A_i: (\forall
-		x) B \implies B_x[t]$, $t$ je substitúcia za $x$ do $B$. $m
-		\models A_i$.
-		\par
-		Zaujíma nás prípad, kedy $(\forall x) B$ je pravdivý. To
-		znamená, že pre ľubovoľné ohodnotenie platí $B[e(x/m)]$, teda
-		$e(x)=m$. Tvrdenie zo zimného semestra: $$m \models A_{x_1,
-		\ldots x_n}[t_1, \ldots t_n][e] \Leftrightarrow m \models
-		A[e(x_1/m_1, \ldots x_n/m_n)]$$ a $$t_i[e] = m_i.$$ 
+            \item $A_i$ je axioma výrokovej logiky -- je poskladaná z
+            atomických formúl a logických spojok $\neg$ a $\implies$. Potom
+            $A_i$ je tautológia výrokovej logiky (ak formula je tautoĺógia,
+            jej pravdivostná hodnota nezávisi od ohodnotenia premenných, a
+            $m \models A_i$, teda $m \models A_i[e]$).
+            
+            \item $A_i$ je axioma špecifikácie, teda je tvaru $A_i: (\forall
+            x) B \implies B_x[t]$, $t$ je substitúcia za $x$ do $B$. $m
+            \models A_i$.
+            \par
+            Zaujíma nás prípad, kedy $(\forall x) B$ je pravdivý. To
+            znamená, že pre ľubovoľné ohodnotenie platí $B[e(x/m)]$, teda
+            $e(x)=m$. Tvrdenie zo zimného semestra: $$m \models A_{x_1,
+            \ldots x_n}[t_1, \ldots t_n][e] \Leftrightarrow m \models
+            A[e(x_1/m_1, \ldots x_n/m_n)]$$ a $$t_i[e] = m_i.$$ 
 
-		Ak položím tvrdenie $B_x[t][e]$, zmení sa to na $B[e(x/m)]$ a
-		táto formula je pravdivá v $m \models B[e(x/m)]$.
+            Ak položím tvrdenie $B_x[t][e]$, zmení sa to na $B[e(x/m)]$ a
+            táto formula je pravdivá v $m \models B[e(x/m)]$.
 
-		\item $A_i: (\forall x) (B \implies C) \implies (B \implies
-		(\forall x) C)$ a $x$ nie je voľná v $B$. Mali by sme dokázať,
-		že platí $m \models A_i$. Formula  $m \models (B \implies
-		C)[e(x/m)]$ platí, pozeráme sa na $(B \implies C)$. To je
-		ekvivalentné s $\neg B \lor C$. Dôležitý je tiež predpoklad, že
-		$x$ nie je voľná v $B$, a teda nezávisí od ohodnotenia viazanej
-		premennej. Keď je ľavá časť axiomy pravdivá, musí byť aj pravá
-		\todo{spresniť!} $m \models A_i$.
+            \item $A_i: (\forall x) (B \implies C) \implies (B \implies
+            (\forall x) C)$ a $x$ nie je voľná v $B$. Mali by sme dokázať,
+            že platí $m \models A_i$. Formula  $m \models (B \implies
+            C)[e(x/m)]$ platí, pozeráme sa na $(B \implies C)$. To je
+            ekvivalentné s $\neg B \lor C$. Dôležitý je tiež predpoklad, že
+            $x$ nie je voľná v $B$, a teda nezávisí od ohodnotenia viazanej
+            premennej. Keď je ľavá časť axiomy pravdivá, musí byť aj pravá
+            \todo{spresniť!} $m \models A_i$.
 	\end{enumerate}
 	\item $A_i$ je niektorá axioma rovnosti:
 	\begin{enumerate}
-		\item $A_i: x=x$, potom $m\models x=x$, $A_i[e]$ a $m=m$.
-		\item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
-		f(x_1, \ldots, x_n) = f(y_1, \ldots, y_n).$. Zaujíma nás prípad,
-		keď  $e(x_i/m_i)$ a $e(y_i/m_i)$. Získavame potom zobrazenie na
-		$f_m(m_1, \ldots m_n)$ a rovnosť platí.
-		\item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
-		P(x_1, \ldots, x_n) = P(y_1, \ldots, y_n).$. Zaujíma nás opäť
-		prípad, keď $x_i$ aj $y_i$ reprezentujeme rovnakým indivíduom:
-		$e(x_i/m_i)$ a $e(y_i/m_i)$.  $P_m(m_1, \ldots, m_n)$, $(m_1,
-		\ldots m_n) \in P$ -- buď je v relácii, alebo nie je.
+            \item $A_i: x=x$, potom $m\models x=x$, $A_i[e]$ a $m=m$.
+            \item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
+            f(x_1, \ldots, x_n) = f(y_1, \ldots, y_n).$. Zaujíma nás prípad,
+            keď  $e(x_i/m_i)$ a $e(y_i/m_i)$. Získavame potom zobrazenie na
+            $f_m(m_1, \ldots m_n)$ a rovnosť platí.
+            \item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
+            P(x_1, \ldots, x_n) = P(y_1, \ldots, y_n).$. Zaujíma nás opäť
+            prípad, keď $x_i$ aj $y_i$ reprezentujeme rovnakým indivíduom:
+            $e(x_i/m_i)$ a $e(y_i/m_i)$.  $P_m(m_1, \ldots, m_n)$, $(m_1,
+            \ldots m_n) \in P$ -- buď je v relácii, alebo nie je.
 	\end{enumerate}
 	\item Odvodzovacie pravidlá, $A_i: A_{j_1}, A_{j_2}$, pričom $j_1 < i$ a
 	$j_2 < i$.
 	\begin{enumerate}
-		\item $A_{j_2}. A_{j_1} \implies A_j$, $A_{j_1}$ a $m \models
-		A_{j_1}$, $m \models A_{j_2}$, potom $m \models A_i$.
-		\item $A_i: \forall A_j$, potom $m \models A_j[e(x/m)]$ a $m
-		\models A_j$.
+            \item $A_{j_2}. A_{j_1} \implies A_j$, $A_{j_1}$ a $m \models
+            A_{j_1}$, $m \models A_{j_2}$, potom $m \models A_i$.
+            \item $A_i: \forall A_j$, potom $m \models A_j[e(x/m)]$ a $m
+            \models A_j$.
 	\end{enumerate}
 
 \end{enumerate}
 
-\paragraph{Pokračovanie vety o korektnosti:}
+\end{dokaz}
 
-\paragraph{Príklad:} Uvažujme elementárnu aritmetiku, ktorá má svoj štandardný
-model. Uvažujme formulu $x=0$ v $N$. 
+\begin{priklad}
+    Uvažujme elementárnu aritmetiku, ktorá má svoj štandardný
+    model. Uvažujme formulu $x=0$ v $N$. 
 
-$$
-\begin{array}{l}
-	e(x) = m \neq 0 \\
-	A: x=0 \\
-	m \notmodels A[e] \\
-\end{array}
-$$
-
-$$
-\begin{array}{l}
-	A: \neg x=0 \\
-	e(x)=0 \\
-	m \notmodels A[e] \\
-\end{array}
-$$
-
-Formula ani jej negácia nie sú dokázateľné v elementárnej aritmetike.
+    \begin{itemize}
+        \item Nech $e(x) = m \neq 0$. Potom formula $A: x=0$ nie je
+        splnená pre ohodnotenie $e$ a teda $m \notmodels A[e]$.
+        \item Nech $e(c) = 0$. Potom formula $A': \neg x=0$ je je
+        splnená v ohodnotení $e$, t.j. $m \notmodels A'[e]$.
+    \end{itemize}
+    To ale znemaná, že formula $A$ ani jej negácia
+    nie sú dokázateľné v elementárnej aritmetike.
+\end{priklad}
 
 
 \paragraph{Poznámka:} Vetu o dedukcii v predikátovej logike nemožno vysloviť pre
@@ -281,46 +279,60 @@ rozšírením o konštanty. Tretí bod sa rieši tzv. rošírením teórie (Henk
 Budú to tzv.  konzervatívne teórie (na pôvodnom jazyku nezískame žiadne nové
 teorémy).
 
-\paragraph{Definícia:} Hovoríme, že teória $T$ s jazykom $L$ je \emph{úplná}, ak
-je bezosporná teória a pre ľubovoľnú uzavretú formulu $A$ na jazyku $L$ buď $A$,
-buď $\neg A$ je dokázateľná v $T$.
+\begin{definicia}
+    Hovoríme, že teória $T$ s jazykom $L$ je \emph{úplná}, ak je
+    bezosporná teória a pre ľubovoľnú uzavretú formulu $A$ na jazyku
+    $L$ buď $A$, buď $\neg A$ je dokázateľná v $T$.
+\end{definicia}    
 
 \par Označím $T_h(m)$ všetky pravdivé uzavreté formuly, tak $T_h$ je úplná
 (nemusíme brať otvorené formuly -- napr. $x=0$ v aritmetike nemusí byť pravdivé,
 lebo závisí od ohodnotenia $x$).
 
-\paragraph{Definícia:} Hovoríme, že teória $T$ s jazykom $L$ je \emph{Henkinova}, ak
-pre ľubovoľnú uzavretú formulu $(\exists x)B$ jazyka $L$ platí $$ T \provable
-(\exists x)B \implies B_x[c]$$ pre nejaké $c$ -- konštantu.
+\begin{definicia}
+    Hovoríme, že teória $T$ s jazykom $L$ je \emph{Henkinova}, ak pre
+    ľubovoľnú uzavretú formulu $(\exists x)B$ jazyka $L$ platí
+    \begin{equation}
+        T \provable (\exists x)B \implies B_x[c]
+    \end{equation}
+    pre nejaké $c$ -- konštantu.
+\end{definicia}
 
-\paragraph{Lema:} Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
-\paragraph{Dôkaz:} Nech $L$ je jazyk teórie $T$, $\tau$ je množina všetkých
-termov jazyka $L$ bez premenných. Na množine $\tau$ definujem reláciu
-ekvivalencie nasledovne:
-$$
-	t_1, t_2 \in \tau
+\begin{lema}
+    Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
+\end{lema}
+\begin{dokaz}
+    Nech $L$ je jazyk teórie $T$, $\tau$ je množina všetkých
+    termov jazyka $L$ bez premenných. Na množine $\tau$ definujem reláciu
+    ekvivalencie nasledovne:
+    \begin{eqnarray*}
+	t_1, t_2 \in \tau \\
 	t_1 \equiv t_2 \iff T \provable t_1 = t_2
-$$
-Rovnosť je reflexívna, symetrická, tranzitívna, teda týmto spôsobom definovaná
-relácia je relácia ekvivalencie a rozdeľuje nám množinu $\tau$ na triedy
-ekvivalencie:
-
-$$
+    \end{eqnarray*}
+    Rovnosť je reflexívna, symetrická, tranzitívna, teda týmto
+    spôsobom definovaná relácia je relácia ekvivalencie a rozdeľuje
+    nám množinu $\tau$ na triedy ekvivalencie:
+    \begin{equation}
 	[t] = \{ s \in \tau, t \equiv s\}
-$$
+    \end{equation}
+    Univerzum budú tvoriť termy bez premenných.
+\end{dokaz}
 
-Univerzum budú tvoriť termy bez premenných.
+\fixme{nasledujuca lema je ta ista ako predchadzajuca}
+\begin{lema}
+    Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
+\end{lema}    
+\begin{dokaz}
+    $M$ bude mnomžina všetkých termov bez premenných. Na tejto
+    množine definujeme reláciu $\equiv$ tak, že 
+    $$ t_1 \equiv t_2,~t_1, t_1 \in \tau,~T \provable t_1=t_2 $$
+    $$[t]=\{ s\in \tau, s \equiv t \} $$
 
-\paragraph{Lema:} Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
-\paragraph{Dôkaz:} $M$ bude mnomžina všetkých termov bez premenných. Na tejto
-množine definujeme reláciu $\equiv$ tak, že 
-$$ t_1 \equiv t_2,~t_1, t_1 \in \tau,~T \provable t_1=t_2 $$
-$$[t]=\{ s\in \tau, s \equiv t \} $$
-
-Nech $f$ je $n$-árny funkčný symbol. $[t_1], [t_2], \ldots, [t_n] \in M$, pričom
-platí $f_m([t_1], \ldots, [t_n]) = [f(t_1, \ldots t_n)]$. $P$ je $n$-árny
-predikátový symbol rôzny od $=$. $([t_1], \ldots [t_n]) \in P_m \iff T \provable
-P(t_1, \ldots, t_n)$.
+    Nech $f$ je $n$-árny funkčný symbol. $[t_1], [t_2], \ldots, [t_n] \in M$, pričom
+    platí $f_m([t_1], \ldots, [t_n]) = [f(t_1, \ldots t_n)]$. $P$ je $n$-árny
+    predikátový symbol rôzny od $=$. $([t_1], \ldots [t_n]) \in P_m \iff T \provable
+    P(t_1, \ldots, t_n)$.
+\end{dokaz}
 
 \paragraph{Poznámka:} Doteraz sme pracovali s $[\ldots]$. Výsledok sa nezmení,
 ak zoberiem $s_1 \in [t_1], \ldots s_n \in [t_n]$. Nezávisí to od reprezentanta
@@ -331,14 +343,14 @@ $$ s_i \in [t_i], i = 1, \ldots n $$
 $$ [t_1], \ldots, [t_n]) \in P_m \iff T \provable P(s_1, \dots s_n) $$
 
 \par
-$$
-\begin{array}{rll}
-x_1, x_2, &\ldots,& x_n \mbox{-- premenné}.	\\
-e(x_i) &=& t_i, i=1,\ldots,N	\\
-t[e] &=& [t_{x_1,\ldots,x_n}][t_1,\ldots, t_n]	\\
-t[e] &=& [t] \\
-\end{array}
-$$
+
+\fixme{zarovnanie na ...}
+\begin{eqnarray*}
+    x_1, x_2, &\ldots,& x_n \mbox{-- premenné}.	\\
+    e(x_i) &=& t_i, i=1,\ldots,N	\\
+    t[e] &=& [t_{x_1,\ldots,x_n}][t_1,\ldots, t_n]	\\
+    t[e] &=& [t]
+\end{eqnarray*}
 
 $A$ -- ľubovoľná uzavretá formula z $L$, potom $m \models A \iff T \provable A$.
 $P(t_1, t_2, \ldots t_n)$ -- atomická formula,  uzavretá, $t_1. \ldots t_n$ sú
@@ -358,21 +370,28 @@ nie je pravdivá $B$ nie je pravdivá, $T \unprovable B, T \vdash \neg B$.
 predpokladu. Ak platí $m \models B \implies C$, potom $m \models \neg B \lor m
 \models C$. $T \provable \neg B \lor T \vdash C$.
 
-$$ T \provable B \implies C $$
-$$ \provable C \implies (B \implies C)$$
+\begin{eqnarray*}
+    T \provable B \implies C \\
+    \provable C \implies (B \implies C)
+\end{eqnarray*}
+
 Opačná implikácia:
-$$T\provable B\implies C\Rightarrow m \models B \implies C$$
+\begin{equation*}
+    T\provable B\implies C\Rightarrow m \models B \implies C
+\end{equation*}
 
 Teória $T$ je úplná teória a $B \implies C$ je uzavretá. Pre každú uzavretú
 formulu platí, jedna z možností $T \provable \neg B$ (potom $m \models \neg B$)
 alebo $T \provable B$, a z toho vyplýva, že $T \vdash C$, a teda $m \models C$.
 Tvrdenie je teda dokázané.
 
-$$m \models A \iff T \provable A$$
+\begin{equation}
+    m \models A \iff T \provable A
+\end{equation}
+
 \par Predpokladajme, že formula $A$ je v tvare $A: (\forall x) B$. Pre každú
 inštanciu formuly $B$ tvrdenie platí, $\provable (\forall x) B \implies B_x[t]$
-(axióma špecifikácie). Potom aj $T \provable B_x[t]$ (lebo teória je Henkinova). $m
-\models B[e(x/t)]$.
+(axióma špecifikácie). Potom aj $T \provable B_x[t]$ (lebo teória je Henkinova). $m \models B[e(x/t)]$.
 
 \par Ak je pravdivá negácia, potom $T \provable \neg A$, čo znamená, že $(\exists
 x) \neg B$. $T \provable (\exists x) \neg B \implies B_x[c]$, a to znamená, že $T
@@ -392,21 +411,39 @@ zostrojiť model.
 Budeme definovať rozšírenia (ktorá ani nepomôžu, ani neuškodia :-). (Henkinova
 veta, Lindenbaumova veta)
 
-\paragraph{Definícia:} Jazyk $L'$ je \emph{rozšírením jazyka} $L$, ak každý
-špeciálny symbol jazyka $L$ (prípadne aj symbol $=$) je v jazyku $L'$ obsiahnutý
-s rovnakým významom a s rovnakou árnosťou.
+\begin{definicia}
+    Jazyk $L'$ je \emph{rozšírením jazyka} $L$, ak každý
+    špeciálny symbol jazyka $L$ (prípadne aj symbol $=$)
+    je v jazyku $L'$ obsiahnutý s rovnakým významom a s rovnakou árnosťou.
+\end{definicia}
 
-\paragraph{Príklad:} $L'$ s rovnosťou a špeciálnymi symbolmi $<$ a $0$. Jazyk
-$L$ má symboly $<$ a $=$. Jazyk $L'$ je rozšírením jazyka $L$
+\begin{priklad}
+    Nech jazyk $L'$ je jazyk s rovnosťou a špeciálnymi symbolmi $<$ a $0$.
+    Jazyk $L$ má symboly $<$ a $=$. Jazyk $L'$ je rozšírením jazyka $L$.
+\end{priklad}    
 
-\paragraph{Definícia:} Majme teóriu $T'$ s jazykom $L'$. Hovoríme, že je
-rozšírením teórie $T$ s jazykom $L$, ak platí, že $L'$ je rozšírením jazyka $L$
-a každá formula $A$ na jazyku $L$, $T \provable A, T' \vdash A$.
-\paragraph{Veta (Henkinova):}
+\begin{definicia}
+    Majme teóriu $T'$ s jazykom $L'$. Hovoríme, že $T'$ je
+    rozšírením teórie $T$ s jazykom $L$, ak platí,
+    že $L'$ je rozšírením jazyka $L$ a pre každý formulu $A$ jazyku $L$
+    platí $T \provable A, T' \vdash A$. \fixme{je tam namiesto ciarky
+    implikacia ci ekvivanencia}
+\end{definicia}
 
-$$ \provable (\exists x) \neg B \implies \neg B_x[c] $$
-$$ T \provable  \neg B_x[c] $$
-$$ m \models  (\forall x) B \iff T (\forall c) B $$
+
+\begin{veta}[Henkinova]
+
+    \begin{eqnarray*}
+        \provable (\exists x) \neg B \implies \neg B_x[c] \\
+        T \provable  \neg B_x[c] \\
+        m \models  (\forall x) B \iff T (\forall c) B \\
+    \end{eqnarray*}
+    \fixme{Co vlastne hovori tato veta? Co su predpoklady a co
+    vystup?}
+    \fixme{je o chvilu zase ta ista veta?}
+\end{veta}
+\fixme{nema tu byt dokaz?}
+
 
 \par Relačná štruktúra $<M, P_m, t_m>$ -- model pre množinu formúl $T$. Vezmeme
 ľubovoľnú formulu $A \in T$ a platí $m \models A$, potom $T$ je modelom.
@@ -442,25 +479,37 @@ $T$ je taktiež bezosporná. Ak by sme pripustili, že teória $T$ je sporná, p
 by sa našla taká formula, že $T \provable A$ aj $T \vdash \neg A$, z čoho vyplýva
 $T' \provable A$ aj $T' \vdash \neg A$.
 
-\paragraph{Definícia:} Majme teóriu $T$ a teóriu $T'$. Hovoríme, že $T'$ je
-\emph{konzervatívne rozšírenie} teórie $T$, ak $T'$ je rozšírenie $T$ a pre
-každú formulu $A$ na jazyku $L$, pre ktorú platí, že v $T'$ je dokázateľná tá
-formula implikuje, že v $T$ je taktiež dokázateľná.
+\begin{definicia}[Konzervatívne rozšírenie]
+    Majme teóriu $T$ a teóriu $T'$. Hovoríme, že $T'$ je
+    \emph{konzervatívne rozšírenie} teórie $T$,
+    ak $T'$ je rozšírenie $T$ a pre každú formulu $A$ na jazyku $L$,
+    pre ktorú platí $T' \provable A$ implikuje $T \provable A$.
+\end{definicia}    
 
-\paragraph{Tvrdenie:} $T$, $T'$ je konzervatívne rozšírenie $T$, potom $T$ je
-bezosporná vtedy a len vtedy, keď $T'$ je bezosporná. Vyplýva to z toho, že ak
-zoberieme konzervatívne rozšírenie, pre ľubovoľnú formulu pôvodného jazyka
-platí, že:
-$$ T' \provable_L A \Rightarrow T \vdash A$$.
+\begin{lema} 
+    Nech $T'$ je konzervatívne rozšírenie $T$, potom $T$ je
+    bezosporná vtedy a len vtedy, keď $T'$ je bezosporná.
+\end{lema}
+\begin{dokaz}
+    Vyplýva to z toho, že ak zoberieme konzervatívne rozšírenie,
+    pre ľubovoľnú formulu pôvodného jazyka platí, že:
+    \begin{equation*}
+        T' \provable_L A \Rightarrow T \vdash A
+    \end{equation*}
+\end{dokaz}    
 
-\paragraph{Veta (Henkinova):} K ľubovoľnej teórii $T$ môžeme zostrojiť Henkinovu
-teóriu $T_H$, ktorá je konzervatívnym rozšírením teórie $T$.
+\begin{veta}{Henkinova} 
+    K ľubovoľnej teórii $T$ môžeme zostrojiť Henkinovu
+    teóriu $T_H$, ktorá je konzervatívnym rozšírením teórie $T$.
+\end{veta}    
 
-\paragraph{Dôkaz:} Teóriu $T$ rozšírime a priradíme k nej teóriu $T_H$ tak, že
-jednak rozšírime jazyk teórie a jednak pridáme axiómy. Nech teória $T$ má jazyk
-$L$. Budeme tvoriť jazyk rozšírený jazyk $L_H$ (budeme pridávať konštanty):
+\begin{dokaz}
+    Teóriu $T$ rozšírime a priradíme k nej teóriu $T_H$ tak, že
+    jednak rozšírime jazyk teórie a jednak pridáme axiómy.
+    Nech teória $T$ má jazyk $L$.
+    Budeme tvoriť jazyk rozšírený jazyk $L_H$ (budeme pridávať konštanty):
 
-\textbf{<skontroluj, malé písmená>}
+    \fixme{<skontroluj, malé písmená>}
 
 \par Vezmime si formulu $A$ napísanú v jazyku $L$, ktorá má jedinú premennú $x$
 priradíme jej premenné $c_A$ a $c_{\neg A}$ a nasledovné axiomy: 
@@ -531,18 +580,27 @@ $$ T \provable B_2 \implies B-3 \implies \ldots \implies B_n \implies A $$
 $$ T \provable A$$
 
 Ukázali sme, že $T_H$ s jazykom $L(C)$ je konzervatívne rozšírenie jazyka $L$.
+\end{dokaz}
 
-\paragraph{Veta (Lindenbaum):} Ak $T$ je teória s jazykom $L$ a $T$ je
-bezosporná, potom existuje úplné rozšírenie $T'$ s jazykom $L$.
+\begin{veta}[Lindenbaum]
+    Ak $T$ je teória s jazykom $L$ a $T$ je
+    bezosporná, potom existuje úplné rozšírenie $T'$ s jazykom $L$.
 
-Ak teória $T$ bude bezosporná, potom aj $T_H$ bude bezosporná.
-
-\paragraph{Dôkaz:} Nech $\mathcal{S}$ je množina všetkých uzavretých formúl jazyka $L$.
-Ďalej definujeme $\mathcal{B} \{ S \mid S \subseteq \mathcal{S}, T \union S
-\mbox{je bezosporná}\}$. $\mathcal{B}$ je čiastočne usporiadaná na $\subseteq$.
-Množina $\mathcal{B}$ má konečnú vlastnosť -- keď zoberiem ľubovoľnú podmnožinu
-$S \subseteq \mathcal{S}$, bude platiť $$ S \in \mathcal{B} \iff S' \in
-\mathcal{B}, S' \mbox{ je konečná}$$
+    Ak teória $T$ bude bezosporná, potom aj $T_H$ bude bezosporná.
+\end{veta}
+\begin{dokaz}
+    Nech $\mathcal{S}$ je množina všetkých uzavretých formúl jazyka $L$.
+    Ďalej definujeme \fixme{chyba =}
+        $\mathcal{B} \{ S \mid S \subseteq \mathcal{S}, T \union S
+    \mbox{je bezosporná}\}$.
+    $\mathcal{B}$ je čiastočne usporiadaná vzhľadom na $\subseteq$.
+    Množina $\mathcal{B}$ má konečnú vlastnosť -- 
+    keď zoberiem ľubovoľnú podmnožinu $S \subseteq \mathcal{S}$,
+    bude platiť 
+    \begin{equation*}
+        S \in \mathcal{B} \iff S' \in \mathcal{B}, S' \mbox{ je konečná}
+    \end{equation*}
+\end{dokaz} \fixme{je to koniec dokazu?}
 
 
 \section{Prednáška 10.3.2009}
@@ -2807,13 +2865,13 @@ $$(14) \models_{L'} D_y[f(x_1, \ldots, x_n) ] \implies (D \implies y = f(x_1,
 
 $$S \models D \implies y = f(x_1, \ldots x_n)$$
 
-Skúška:
+\chapter{Skúška}
+
 \begin{itemize}
 	\item Dokázať $4$ vety
 	\item je daná formula, nájsť prenexný tvar, skolemov tvar, metódou
 	rezolvent ukázať, či platí alebo neplatí, napíšte teóriu s rovnosťou
 	\item 3 alebo 4 definície
 \end{itemize}
-
 
 \end{document}
