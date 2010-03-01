@@ -222,8 +222,87 @@ jej ekvivaletom.
             *}
             \fixme{ponahanat zatvorky vsade}
         \end{itemize}
-  \end{itemize}
+    \item[d)]
+        \begin{itemize}
+        \item[$Q=\forall$]
+            $\provable (\exists x) (B \implies C) \leftrightarrow
+             ((\forall x) B \implies C)$ ak $x$ nie je voľná v $B$.
+            \begin{itemize}
+            \item[1]
+                $\provable ((\forall x) B \implies C) \leftrightarrow
+                    (\neg C \implies \neg (\forall x) B)$
+            \item[2]
+                $\provable ((\forall x) B \implies C) \leftrightarrow
+                    (\neg C \implies \neg (\forall x) \highlighta{\neg
+                    \neg} B)$
+            \item[3]
+                $\provable ((\forall x) B \implies C) \leftrightarrow
+                    (\neg C \implies \highlightb{(\exists x)} \neg B)$
+            \item[4]
+                $\provable (\exists x) (\neg C \implies \neg B)
+                \leftrightarrow (\neg C \implies (\exists x) \neg B)$
+                 (platí c)
+            \item[5]
+                $\provable (\neg C \implies \neg B) \implies (B \implies
+                C)$
+            \item[6]
+                $\provable (\exists x) (B \implies C) \leftrightarrow
+                    (\neg (\exists x) \neg B \implies \neg \neg C)$
+            \item[7]
+                $\provable (\exists x) (B \implies C) \leftrightarrow
+                    ((\forall x) B \implies C)$
+            \end{itemize}
 
+        \item[$Q=\exists$]
+            $\provable (\exists x) (B \implies C) \leftrightarrow
+             ((\forall x) B \implies C)$ ak $x$ nie je voľná v $B$.
+            \begin{itemize}
+            \item[1]
+                $\provable ((\exists x) B \implies C) \leftrightarrow
+                    (\neg C \implies \neg (\exists x) B)$
+            \item[2]
+                $\provable ((\exists x) B \implies C) \leftrightarrow
+                    (\neg C \implies \neg (\exists x) \neg \neg B)$
+            \item[3]
+                $\provable ((\exists x) B \implies C) \leftrightarrow
+                (\neg C \implies (\forall x) \neg B)$
+            \item[4]
+                $\provable (\forall x) (\neg C \implies \neg B)
+                \leftrightarrow
+                    (\neg C \implies (\forall x) \neg B)$ - (plati c)
+            \item[5]
+                $\provable (\forall x) (B \implies C) \leftrightarrow
+                    (\neg (\forall x) \neg B \implies \neg \neg C)$
+            \item[6]
+                $\provable (\forall x) (B \implies C) \leftrightarrow
+                    ((\exists x) B \implies C)$
+            \end{itemize}
+        \end{itemize}
+        \item[e)]
+            $\provable (Qx) (B\square C) \leftrightarrow (B\square (Qx)C)$,
+            kde $x$ nie je voľná v $B$.
+            Na základe operácii c),d) vieme toto dokázať, pretože platí
+            \begin{align*}
+                \provable (A \lor B) \leftrightarrow (\neg A \implies B) \\
+                \provable (A \land B) \leftrightarrow (A \implies \neg B)
+            \end{align*}
+  \end{itemize}
+\end{dokaz}
+
+\begin{dokaz}[Dôkaz vety \todo{ref}]
+Budeme postupovať matematickou indukciou vzhľadom na zložitosť formuly $A$.
+\begin{itemize}
+    \item $A$ je atomická formula. $A$ je potom v prenexnom tvare.
+    \item $A=\not B$. Na $B$ sa vzťahuje IP, teda vieme zostrojiť
+        $B'$ takú, že platí
+        $\provable B \leftrightarrow B'$.
+        Položíme $A'=\neg B'$ a aplikovaním prenexnej operácie b) dostaneme 
+        $A''$ v správnom tvare.
+    \item $A=B \implies C$. Na $B,C$ platí IP a teda existujú formuly
+        $B',C'$ v prenexnom tvare, pre ktoré platí
+        $\provable B \leftrightarrow B'$, $\provable C \leftrightarrow C'$.
+    \todo{dokoncit}
+\end{itemize}
 \end{dokaz}
 \todo{dopisat}
 
