@@ -1,0 +1,40 @@
+% vim: set fdm=marker:
+%% zakladne definicie
+
+\def\todo#1{[{\color{red} TODO:} {\bf  #1}]}
+\def\fixme#1{[{\color{red} FIXME:} {\bf  #1}]}
+\def\verify#1{\todo{verify: #1}}
+
+
+%%% original
+\newtheorem{definicia}{Definícia}[section]
+\newtheorem{veta}{Veta}[section]
+\newtheorem{lema}{Lema}[section]
+\newtheorem{t_priklad}{Príklad}[section]
+\newtheorem{dosl}{Dôsledok}[section]
+\newtheorem{poznamka}{Poznámka}[section]
+
+\newcommand{\med}{\enspace}
+\newcommand{\mm}{\enspace |\enspace}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\Ra}{\Rightarrow}
+
+\newenvironment{dosledok}{\begin{dosl}\normalfont}{\end{dosl}}
+\newenvironment{dokaz}{\bf Dôkaz:\normalfont}{$\square$}
+\newenvironment{konstrukcia}{\bf Konštrukcia:\normalfont}{$\maltese$}
+\newenvironment{motiv}{\it(:}{\it:)}
+\newenvironment{priklad}{\begin{t_priklad}\normalfont}{\end{t_priklad}}
+
+% S L A V O   B E G I N %
+
+\newcommand{\Lra}{\Longrightarrow}
+\newcommand{\krok}[2]{\underset{#2} {\overset{^{#1}} \Longrightarrow}}
+\newenvironment{oznacenie}{\bf Označenie:\normalfont}{}
+
+% S L A V O   E N D %
+
+% D U S A N   B E G I N %
+% D U S A N   E N D %
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
