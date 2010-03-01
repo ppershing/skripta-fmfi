@@ -1,3 +1,4 @@
+% vim: set fdm=marker: sw=2: sts=2: ts=2:
 \chapter{Dokončenie úvodu do matematickej logiky}
 
 \section{Prenexné tvary formúl}
@@ -29,19 +30,21 @@ formulu.
     \end{equation*}
 \end{priklad}
 
-\fixme{Pozn.}
+\begin{poznamka}
 \begin{itemize}
  \item $x_1, \dots, x_n$ sú navzájom rôzne pre vylúčenie viacnásobných
     kvantifikácií.
  \item ak $n=0$, tak $A$ je otvorená a nemá prefix
  \item $B$ je najväčšia otvorená podformula formuly $A$.
 \end{itemize}
+\end{poznamka}
 
 
 \begin{veta}
  Nech $A$ je ľubovoľná formula predikátovej logiky. Potom existuje
  formula $A'$ v prenexnom tvare také, že
  $\provable A \leftrightarrow A'$.
+ \label{veta:prenex}
 \end{veta}
 
 Pri prevádzaní formuly na prenexný tvar budeme využívať nasledujúce
@@ -59,11 +62,16 @@ jej ekvivaletom.
      Potom $B \square ((Qx)C)$ resp. $((Qx)B)\square C$ nahraď
      $(Qx)(B \square C)$
 \end{itemize}
+\begin{poznamka}
+    Asi stojí za zmienku upozorniť, že v časti c) $x$ nie je voľná v
+    $C$ narozdiel od častí b,d, kde nie je voľna v $B$.
+\end{poznamka}
 
 \begin{lema}
     Prenexnými operáciami dostaneme ekvivalentné formuly
 \end{lema}
 \begin{dokaz}
+  %%% {{{ 
   \begin{itemize}
     \item[a)] Veta o variantoch
     \item[b)] Platí
@@ -132,18 +140,22 @@ jej ekvivaletom.
             \begin{itemize}
             \item[1] $\provable C \implies (\exists x) C$ --
                 duálna verzia axiómy špecifikácie
-            \item[2] $\provable ((B \implies C) \implies
+
+            \item[2] $\provable (B \implies C) \implies
                  ((C \implies (\exists c) C) \implies (B \implies
-                 (\exists x) C ))$ -- jednoduchý sylogizmus (JS) \fixme{ujeta zatvorka}
+                 (\exists x) C ))$ -- jednoduchý sylogizmus (JS)
+                 \todo{checkni sylogizmus, dopis do prerekvizit}
+
             \item[3] $\provable
                 \highlighta{
-                (((B \implies C) \implies (( C \implies (\exists x) C)
+                ((B \implies C) \implies (( C \implies (\exists x) C)
                 \implies (B \implies (\exists x) C)))}
                 \implies
                 \highlightb{
                   ((C \implies (\exists x) C) \implies (( B \implies
                   C) \implies (B \implies (\exists x) C)))}$ -- 
                   pravidlo zámeny predpokladov
+
             \item[4] $\provable \highlightb{
                   ((C \implies (\exists x) C) \implies 
                   \highlighto{(( B \implies
@@ -152,9 +164,10 @@ jej ekvivaletom.
                   \highlighto{(( B \implies
                   C) \implies (B \implies (\exists x) C)))}$ -- MP 1,4
             \item[6] $\provable \highlighta{(\exists x)}
-                ( B \implies C) \implies (B \implies (\exists x) C))$
+                ( B \implies C) \implies (B \implies (\exists x) C)$
                 -- pravidlo zavedenie existenčného kvantifikátora
             \end{itemize}
+            \fixme{skip}
         \item[$\Leftarrow$]
             \begin{itemize}
                 \item[1] $\provable C \implies (B \implies C)$ -- A1
@@ -171,7 +184,7 @@ jej ekvivaletom.
                     duálny tvar axiómy špecifikácie
 
                 \item[5] $\provable \highlighta{\neg B \implies 
-                    (\exists x) (B \implies C)}$ -- JS 2,3
+                    (\exists x) (B \implies C)}$ -- JS 3,4
 
                 \item[*] $\provable
                     \highlighta{
@@ -185,7 +198,7 @@ jej ekvivaletom.
                       \underbrace{(\exists x) (B \implies C)}_Z)
                     \implies
                     (\underbrace{B}_X \implies 
-                        \underbrace{(\exists x) C)}_Y
+                        \underbrace{(\exists x) C}_Y)
                       \implies 
                         \underbrace{(\exists x) (B
                     \implies C)}_Z))}$ -- dokážeme neskôr
@@ -205,28 +218,26 @@ jej ekvivaletom.
             \end{itemize}
             Ešte treba dokázať formulu *
             \begin{itemize}
-            \item[a] $\neg X \implies Z, X \implies Y, Y \implies Z, 
+            \item[a] $\neg X \implies Z, Y \implies Z, X \implies Y,
                 \highlighta{X}
                 \provable Z$
-            \item[b] $\neg X \implies Z, X \implies Y, Y \implies Z,
+            \item[b] $\neg X \implies Z, Y \implies Z, X \implies Y,
                 \highlightb{\neg X}
                 \provable Z$
-            \item[c] $\neg X \implies Z, X \implies Y, Y \implies Z
+            \item[c] $\neg X \implies Z, Y \implies Z, X \implies Y
                 \provable Z$ -- veta o neutrálnej formule ($X,\neg
                 X$).
             \item[d] $\provable (\neg X \implies Z) \implies (
-                    (X \implies Y) \implies ((Y \implies Z) \implies
-                    X))$ -- veta o dedukcii
+                    (Y \implies Z) \implies ((X \implies Y) \implies
+                    Z))$ -- veta o dedukcii
             \end{itemize}
-            \fixme{mame inak preusporiadane ciastkove veci vzhladom na
-            *}
             \fixme{ponahanat zatvorky vsade}
         \end{itemize}
     \item[d)]
         \begin{itemize}
-        \item[$Q=\forall$]
+        \item $Q=\forall:$
             $\provable (\exists x) (B \implies C) \leftrightarrow
-             ((\forall x) B \implies C)$ ak $x$ nie je voľná v $B$.
+             ((\forall x) B \implies C)$ ak $x$ nie je voľná v $C$.
             \begin{itemize}
             \item[1]
                 $\provable ((\forall x) B \implies C) \leftrightarrow
@@ -241,7 +252,8 @@ jej ekvivaletom.
             \item[4]
                 $\provable (\exists x) (\neg C \implies \neg B)
                 \leftrightarrow (\neg C \implies (\exists x) \neg B)$
-                 (platí c)
+                 -- časť c) tohoto dôkazu
+                 \fixme{Nasledujúce 3 formuly spadli z neba?}
             \item[5]
                 $\provable (\neg C \implies \neg B) \implies (B \implies
                 C)$
@@ -253,9 +265,10 @@ jej ekvivaletom.
                     ((\forall x) B \implies C)$
             \end{itemize}
 
-        \item[$Q=\exists$]
+        \item $Q=\exists:$ 
             $\provable (\exists x) (B \implies C) \leftrightarrow
              ((\forall x) B \implies C)$ ak $x$ nie je voľná v $B$.
+             \fixme{overit celu tuto cast}
             \begin{itemize}
             \item[1]
                 $\provable ((\exists x) B \implies C) \leftrightarrow
@@ -287,13 +300,15 @@ jej ekvivaletom.
                 \provable (A \land B) \leftrightarrow (A \implies \neg B)
             \end{align*}
   \end{itemize}
+  %%% }}}
 \end{dokaz}
 
-\begin{dokaz}[Dôkaz vety \todo{ref}]
+\begin{dokaz}[Dôkaz vety \ref{veta:prenex}]
+%%% {{{
 Budeme postupovať matematickou indukciou vzhľadom na zložitosť formuly $A$.
 \begin{itemize}
     \item $A$ je atomická formula. $A$ je potom v prenexnom tvare.
-    \item $A=\not B$. Na $B$ sa vzťahuje IP, teda vieme zostrojiť
+    \item $A=\neg B$. Na $B$ sa vzťahuje IP, teda vieme zostrojiť
         $B'$ takú, že platí
         $\provable B \leftrightarrow B'$.
         Položíme $A'=\neg B'$ a aplikovaním prenexnej operácie b) dostaneme 
@@ -301,9 +316,82 @@ Budeme postupovať matematickou indukciou vzhľadom na zložitosť formuly $A$.
     \item $A=B \implies C$. Na $B,C$ platí IP a teda existujú formuly
         $B',C'$ v prenexnom tvare, pre ktoré platí
         $\provable B \leftrightarrow B'$, $\provable C \leftrightarrow C'$.
-    \todo{dokoncit}
+        Nech $A' = B' \implies C'$. Z vety o \fixme{variantoch?} platí
+        $\provable A \leftrightarrow A'$. Teraz potrebujeme dostať
+        $A'$ do prenexného tvaru.
+        Vezmime variant $C''$ formuly $C'$ taký, že $B',C''$ nemajú
+        žiadnu spoločnú premennú.
+        \begin{equation}
+            \provable A \leftrightarrow (B' \implies C'')
+        \end{equation}
+        Teraz použijeme prenexné operácie c,d a formulu
+        $B' \implies C''$ prevedieme do prenexného tvaru.
+    \item $A=(\forall x)B$. Z indukčného predpokladu vyplýva
+        existencia $B'$, $\provable B \leftrightarrow B'$.
+        Môžu nastať 2 prípady
+        \begin{itemize}
+        \item $x$ nie je viazaná v $B'$. Položme $A' = (\forall x) B'$
+        \item $x$ je viazaná v $B'$. Potom máme $A' = B'$.
+        \end{itemize}
 \end{itemize}
+%%% }}}
 \end{dokaz}
+\begin{poznamka}
+    \fixme{tato poznamka je zla, checknut lenkine poznamky}
+    V predchádzajúcom dôkaze sme ignorovali symboly
+    $\land,\lor,\leftrightarrow$. Ak formula dané symboli obsahuje,
+    jednoducho ju prepíšeme na spojky $\implies, \neg$. (Toto môžeme
+    spraviť vždy, ako sme dokázali v \todo{kde}).
+\end{poznamka}
+
+\begin{priklad}
+    Formula $A: B \leftrightarrow (\forall x) C$.
+    \begin{align}
+   (B \implies (\forall x) C) \land ((\forall x) C \implies B) \\
+   (B \implies (\forall x) C) \land ((\forall y) C_x[y] \implies B) 
+    podla a
+   \\
+   (\forall x)(B \implies C) \land (\exists y) (C_x[y] \implies B) 
+   podla c,d
+   \\
+   (\forall x)(\exists y)((B \implies C) \land (C_x[y] \implies B)
+    \end{align}
+\end{priklad}
+
+\begin{priklad}
+    Formula elementárnej aritmetiky:
+    \begin{align}
+        (\exists x) (x=y) \implies (\exists x)((x=0) \lor
+                    \neg (\exists y)(y<0)) \\
+        (\exists x) (x=y) \implies (\exists u)((u=0) \lor
+                    \neg (\exists v)(v<0)) podla a\\
+        (\exists x) (x=y) \implies (\exists u)((u=0) \lor
+                    (\forall  v) \neg(v<0)) podla b\\
+        (\exists x) (x=y) \implies (\exists u)(\forall v)
+                ((u=0) \lor \neg(v<0)) podla e\\
+        (\forall x)(\exists u)(\forall v) (x=y) \implies 
+                ((u=0) \lor \neg(v<0)) podla c,d\\
+    \end{align}
+\end{priklad}
+
+\begin{definicia}[Skolemov normálny tvar]
+  Uvažujme uzevretú formulu $A$.
+  Ak $A$ má prefix $(\exists x_1)(\exists x_2) \dots (\exists x_k)
+    (\forall x_{k+1}) (\forall x_{k+2}) \dots (\forall x_n)$, potom 
+    hovoríme, že formula $A$ je vyjadrená v Skolemovom normálnom
+    tvare, pričom $0 \le k \le n$.
+\end{definicia}
+\begin{veta}
+    Nech $A$ je formula predikátovej logiky. Potom k nej môžeme
+    zostrojiť formulu $A'$ v Skolemovom normálnom tvare, pričom platí
+    $\provable A \Leftrightarrow \provable A'$.
+\end{veta}
+\begin{poznamka}
+    Všimnime si, že predchádzajúca veta nehovorí nič o existencii
+    formuly $A'$ takej, že $\provable A \leftrightarrow A'$ ako to
+    bolo u prenexného tvaru. Taká formula totiž v prípade Skolemovho
+    normálneho tvaru nemusí existovať.
+\end{poznamka}
 \todo{dopisat}
 
 \section{Skolemov tvar}
