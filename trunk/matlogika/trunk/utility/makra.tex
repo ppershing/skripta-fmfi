@@ -9,11 +9,23 @@
 \newcommand{\provable}{\vdash}
 \newcommand{\unprovable}{\nvdash}
 
+
+\def\dashuline{\bgroup 
+  \ifdim\ULdepth=\maxdimen  % Set depth based on font, if not set already
+   \settodepth\ULdepth{(j}\advance\ULdepth.4pt\fi
+  \markoverwith{\kern.15em
+  \vtop{\kern\ULdepth \hrule width .3em}%
+  \kern.15em}\ULon
+}
+
+
 \newcommand{\highlighta}[1]{{\color{blue}#1}}
 \newcommand{\highlightb}[1]{{\color{BrickRed}#1}}
 \newcommand{\highlighto}[1]{\underline{#1}}
+\newcommand{\highlightp}[1]{\dashuline{#1}}%\dotuline{#1}}
 
 \def\noheader{\relax}
+\def\squareop{\;\square\;}
 
 \newtheorem{definicia}{Definícia}[section]
 \newtheorem{HLPpriklad}{Príklad}[section]
