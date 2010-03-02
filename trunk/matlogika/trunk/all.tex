@@ -3,36 +3,85 @@
 \section{Pravdivosť a dokázateľnosť}
 \subsection{Veta o úplnosti}
 
-\begin{definicia}
+\begin{definicia}{Logická platnosť formuly}
     Nech $L$ je jazyk prvého rádu a $A$ je formula jazyka
     $L$. Hovoríme, že formula $A$ je \emph{logicky platná},
     označujeme $\models A$,
-    ak je splnená v ľubovoľnej realizácii jazyka $L$.
+    ak je splnená v ľubovoľnej realizácii $m$ jazyka $L$.
 
-    \begin{eqnarray*}
+    \begin{align*}
         m & \models & A[e] \\
-        & \models & A \\
+        m & \models & A \\
         & \models & A
-    \end{eqnarray*}
+    \end{align*}
 \end{definicia}
 
-\begin{definicia}
+\begin{poznamka}
+    Formula $A$ je logicky platná, práve vtedy, keď je pravdivá
+    bez ohľadu na realizáciu symbolov jazyka $L$.
+\end{poznamka}
+
+\begin{definicia}{Teória}
     Nech $L$ je jazyk, prvého rádu a $T$ je množina formúl
-    jazyka $L$. Hovoríme, že $T$ je teória 1. rádu predikátovej logiky s jazykom
-    $L$ (množina formúl $T$ je množina axióm teórie).
+    jazyka $L$. Hovoríme, že $T$ je teória 1. rádu predikátovej logiky
+    s jazykom $L$ (t.j. množina formúl $T$ je množina axióm teórie).
 \end{definicia}
 
-\begin{definicia}
+\begin{definicia}{Model teórie}
     Nech $T$ je teória v jazyku $L$, $m$ je realizácia jazyka $L$.
     Hovoríme, že $m$ je modelom teórie $T$, ak pre každú formulu $A$
-    patriacu $T$ platí $\models A$.  \par Hovoríme, že formula $A$ je
-    sémantickým dôsledkom (vetou teórie) množiny formúl $T$,
-    označujeme $T \models A$, ak $A$ je splnená v každom modeli teórie
-    $T$.
+    patriacu $T$ platí $\models A$.
+
+    Hovoríme, že formula $A$ je
+    sémantickým/tautologickým dôsledkom (vetou teórie) množiny formúl $T$,
+    resp. $A$ je $T$-platná, ak $A$ je splnená.
+    v každom modeli teórie $T$.
+    Túto skutočnosť označujeme $T \models A$.
 \end{definicia}
 
+\fixme{nasledujuce veci}
+\begin{priklad}{Teória čiastočného usporiadania}
+    Majme \fixme{predikát <} na množine $N$ - fixme
+    \begin{itemize}
+    \item[1] $(\forall x)(\forall y) ((x < y) \implies \neg (y < x))$ - fixme
+    \item[2] $(\forall x)(\forall y)(\forall z) (((x<y) \land (y<z)) \implies
+        (x<z))$ - fixme
+    \item[3] $(\forall x)(\forall y)( (x\not=y) \implies ((x<y) \lor (y<x)))$ -
+     trichotomičnosť
+    \end{itemize}
+\end{priklad}
+
+\begin{priklad}{Elementárna aritmetika}
+Špeciálne symboly - 0 - konštanta (nulárny funkčný symbol),
+    S - nasledovník (unárny funkčný symbol),
+    +,*
+    S(x) = x+1
+
+Axiómy elementárnej aritmetiky:
+\begin{itemize}
+    \item[1] $\neg S(x) = 0$
+    \item[2] $S(x) = S(y) \implies x=y$
+    \item[3] $x+0 = x$
+    \item[4] $x+s(y) = s(x) + y$
+    \item[5] $x * 0 = 0$
+    \item[6] $x * S(y) = (x*y)+x$
+\end{itemize}
+Realizácia
+\fixme{n caliigraphic}
+$n=<N^+,0,S,+,*>$ - je to realizácia aj model. Nazýva sa aj štandardný
+model. (Hovorí sa jej aj Robinsonova aritmetika)
+Ak pridáme axiómu indukcie, dostaneme Peanovu aritmetiku.
+\end{priklad}
+
+\begin{poznamka}
+    Ak si nebudeme všímať axiómy, ale iba relačnú štruktúru
+    $n=<N^+,0,S,+,.>$. Zoberme namiesto $S$ konštantu $1$.
+    Ciže $n'=<N^+,0,1,+,.>$. N' realizuje jazyk teórie telies.
+    Lenže $n'$ nie je modelom tohoto jazyka. \fixme{preco?}
+\end{poznamka}
+
 \begin{priklad}[Usporiadania]
-    $\varphi, x, y, z, <$
+   \fixme{co je toto?:} $\varphi, x, y, z, <$
     \begin{enumerate}
         \item $(x,y) \in \varphi  \implies (y,x) \notin  \varphi$
         \item $(x,y) \in \varphi \land (y,z) \in \varphi \implies (x,z) \in \varphi$
@@ -53,6 +102,7 @@ reflexívnosť, trichotomockosť.
     \end{enumerate}
 \end{priklad}
 
+\fixme{toto som uz mal}
 \begin{priklad}[Elementárna aritmetika]
 
     $+, \cdot, 0, S(x) = x+1, N^+ $
@@ -81,20 +131,21 @@ formuly}.
 \end{veta}
 
 \begin{dokaz}
-    Nech $A_1, A_2, \ldots A_n$ je odvodenie (dókaz) formuly $A$
-    z predpokladov $T$ (v teórii $T$). $A_1, A_2, \ldots A_n(A)$.
+    Nech $A_1, A_2, \ldots A_n$ je odvodenie (dôkaz) formuly $A$
+    z predpokladov $T$ (v teórii $T$). $A_1, A_2, \ldots A_n(A)$. \fixme{}
     \par $m$ nech je ľubovoľný model teórie $T$.
     Ukážeme (indukciou podľa dĺžky dôkazu), že platí $m \models A_i$
     pri predpoklade, že pre $A_j, j < i$ platí $m \models A_j$.
 
     Do dôkazu sa $A_i$ môže dostať niekoľkými spôsobmi:
     \begin{enumerate}
-	\item $A_i \in T$, m -- model $T$, potom $m \models A_i$
-	\item $A_i$ sa dostane do dôkazu ako schéma axiom predikátovej logiky:
+	\item $A_i \in T$, m -- model $T$, potom $m \models A_i$ a teda
+                $T \models A_i$
+	\item $A_i$ sa dostane do dôkazu ako axióma predikátovej logiky:
 	\begin{enumerate}
             \item $A_i$ je axioma výrokovej logiky -- je poskladaná z
             atomických formúl a logických spojok $\neg$ a $\implies$. Potom
-            $A_i$ je tautológia výrokovej logiky (ak formula je tautoĺógia,
+            $A_i$ je tautológia výrokovej logiky (ak formula je tautológia,
             jej pravdivostná hodnota nezávisi od ohodnotenia premenných, a
             $m \models A_i$, teda $m \models A_i[e]$).
             
@@ -102,8 +153,9 @@ formuly}.
             x) B \implies B_x[t]$, $t$ je substitúcia za $x$ do $B$. $m
             \models A_i$.
             \par
-            Zaujíma nás prípad, kedy $(\forall x) B$ je pravdivý. To
-            znamená, že pre ľubovoľné ohodnotenie platí $B[e(x/m)]$, teda
+            Zaujíma nás prípad, kedy $(\forall x) B$ je pravdivý.\footnote{
+                v opačnom prípade implikácia triviálne platí}
+            To znamená, že pre ľubovoľné o\fixme{individuum m}hodnotenie platí $B[e(x/m)]$, teda
             $e(x)=m$. Tvrdenie zo zimného semestra: $$m \models A_{x_1,
             \ldots x_n}[t_1, \ldots t_n][e] \Leftrightarrow m \models
             A[e(x_1/m_1, \ldots x_n/m_n)]$$ a $$t_i[e] = m_i.$$ 
@@ -125,7 +177,10 @@ formuly}.
             \item $A_i: x=x$, potom $m\models x=x$, $A_i[e]$ a $m=m$.
             \item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
             f(x_1, \ldots, x_n) = f(y_1, \ldots, y_n).$. Zaujíma nás prípad,
-            keď  $e(x_i/m_i)$ a $e(y_i/m_i)$. Získavame potom zobrazenie na
+            keď  $e(x_i) = e(y_i)$, teda
+            $e(x_i/m_i)=e(y_i/m_i)$.\fixme{mi?}
+            \fixme{Dostavame m1=m1 -> m2=m2 ... fm(fm,...)=f()}
+            Získavame potom zobrazenie na
             $f_m(m_1, \ldots m_n)$ a rovnosť platí.
             \item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
             P(x_1, \ldots, x_n) = P(y_1, \ldots, y_n).$. Zaujíma nás opäť
@@ -608,7 +663,7 @@ Ukázali sme, že $T_H$ s jazykom $L(C)$ je konzervatívne rozšírenie jazyka $
 \par\textbf{Zapísal:} P. Struhár
 
 \par Dostali sme sa do toho  kroku, že máme bezospornú teóriu, ktorú je treba zúplniť.
-To sme urobili \emph{Lindenbaumovou vetou\footnote{bolo už na predchádzajúcej prednáške}}.
+To sme urobili \emph{Lindenbaumovou vetou}\footnote{bolo už na predchádzajúcej prednáške}.
 
 \paragraph{Veta (Lindenbaum):} Ak $T$ je teória s jazykom $L$ a $T$ je
 bezosporná, potom existuje úplné rozšírenie $T'$ s jazykom $L$.
