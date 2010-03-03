@@ -166,7 +166,7 @@ jej ekvivaletom.
                 ( B \implies C) \implies (B \implies (\exists x) C)$
                 -- pravidlo zavedenie existenčného kvantifikátora
             \end{itemize}
-            \fixme{skip}
+            \vskip 5mm
         \item[$\Leftarrow$]
             \begin{itemize}
                 \item[1] $\provable C \implies (B \implies C)$ -- A1
@@ -348,40 +348,40 @@ Budeme postupovať matematickou indukciou vzhľadom na zložitosť formuly $A$.
 %%% }}}
 \end{dokaz}
 \begin{poznamka}
-    \fixme{tato poznamka je zla, checknut lenkine poznamky}
-    V predchádzajúcom dôkaze sme ignorovali symboly
-    $\land,\lor,\leftrightarrow$. Ak formula dané symboli obsahuje,
-    jednoducho ju prepíšeme na spojky $\implies, \neg$. (Toto môžeme
-    spraviť vždy, ako sme dokázali v \todo{kde}).
+    Ak $A$ obsahuje spojky 
+    $\land,\lor$, môžeme použiť prenexnú operácie e) alebo nahradiť
+    ekvivaletnou formulou obsahujúcou $\neg,\implies$.
+    Ak sa vo vormule vyskytuje $\leftrightarrow$, nemôžeme priamo
+    použiť operácie e),d) ale prepíšeme $A\leftrightarrow B$ na
+    $(A\implies B) \land (B \implies A)$.
 \end{poznamka}
 
 \begin{priklad}
-    Formula $A: B \leftrightarrow (\forall x) C$.
-    \begin{align}
-   (B \implies (\forall x) C) \land ((\forall x) C \implies B) \\
-   (B \implies (\forall x) C) \land ((\forall y) C_x[y] \implies B) 
-    podla a
-   \\
-   (\forall x)(B \implies C) \land (\exists y) (C_x[y] \implies B) 
-   podla c,d
-   \\
-   (\forall x)(\exists y)((B \implies C) \land (C_x[y] \implies B)
-    \end{align}
+    Formula $A: B \leftrightarrow (\forall x) C$ kde $x$ nie je voľná
+    v $B$ a $y$ sa nevyskytuje v $B,C$.
+    \begin{align*}
+       (B \implies (\forall x) C) \land ((\forall x) C \implies B) &\\
+       (B \implies (\forall x) C) \land ((\forall y) C_x[y] \implies B) 
+       & \mbox{ -- podľa a} \\
+       (\forall x)(B \implies C) \land (\exists y) (C_x[y] \implies B) 
+       & \mbox{ -- podľa c,d} \\
+       (\forall x)(\exists y)((B \implies C) \land (C_x[y] \implies B)
+    \end{align*}
 \end{priklad}
 
 \begin{priklad}
     Formula elementárnej aritmetiky:
-    \begin{align}
+    \begin{align*}
         (\exists x) (x=y) \implies (\exists x)((x=0) \lor
-                    \neg (\exists y)(y<0)) \\
+                    \neg (\exists y)(y<0))& \\
         (\exists x) (x=y) \implies (\exists u)((u=0) \lor
-                    \neg (\exists v)(v<0)) podla a\\
+                    \neg (\exists v)(v<0)) &\mbox{ -- podľa a}\\
         (\exists x) (x=y) \implies (\exists u)((u=0) \lor
-                    (\forall  v) \neg(v<0)) podla b\\
+                    (\forall  v) \neg(v<0)) &\mbox{ -- podľa b}\\
         (\exists x) (x=y) \implies (\exists u)(\forall v)
-                ((u=0) \lor \neg(v<0)) podla e\\
+                ((u=0) \lor \neg(v<0)) &\mbox{ -- podľa e}\\
         (\forall x)(\exists u)(\forall v) (x=y) \implies 
-                ((u=0) \lor \neg(v<0)) podla c,d\\
-    \end{align}
+                ((u=0) \lor \neg(v<0)) &\mbox{ -- podľa c,d}
+    \end{align*}
 \end{priklad}
 
