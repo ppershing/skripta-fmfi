@@ -1,3 +1,5 @@
+\section{Skolemov tvar formuly}
+
 \begin{definicia}[Skolemov normálny tvar]
   Uvažujme uzevretú formulu $A$.
   Ak $A$ má prefix $(\exists x_1)(\exists x_2) \dots (\exists x_k)
@@ -5,18 +7,119 @@
     hovoríme, že formula $A$ je vyjadrená v Skolemovom normálnom
     tvare, pričom $0 \le k \le n$.
 \end{definicia}
+
 \begin{veta}
     Nech $A$ je formula predikátovej logiky. Potom k nej môžeme
     zostrojiť formulu $A'$ v Skolemovom normálnom tvare, pričom platí
     $\provable A \Leftrightarrow \provable A'$.
+    \label{veta:skolem}
 \end{veta}
+
 \begin{poznamka}
     Všimnime si, že predchádzajúca veta nehovorí nič o existencii
     formuly $A'$ takej, že $\provable A \leftrightarrow A'$ ako to
     bolo u prenexného tvaru. Taká formula totiž v prípade Skolemovho
     normálneho tvaru nemusí existovať.
 \end{poznamka}
-\todo{dopisat}
 
-\section{Skolemov tvar}
-\todo{}
+\begin{definicia}{Hodnosť formuly}
+    Uvažujme formulu $A$ vyjadrenú v prenexnom tvare. Potom pod
+    hodnosťou formuly $A$ označíme počet veľkých kvantifikátorov,
+    ktoré v prefixe predchádzajú \emph{posledný} existenčný
+    kvantifikátor (počítame zľava doprava).
+\end{definicia}
+\begin{priklad}
+    \todo{ukazka hodnosti formuly na niecom}
+\end{priklad}
+
+\begin{dokaz}[vety \ref{veta:skolem}]
+    Budeme predpokladať, že $A$ je uzavretá (Podľa vety o uzávere
+    platí $\provable A$ práve vtedy, keď je dokázateľný jej uzáver.
+    Dôkaz bude prebiehať matematickou indukciou vzhľadom na hodnosť
+    $m$ formuly $A$.
+    \begin{itemize}
+        \item $m=0$ - $A$ je v Skolemovom normálnom tvare
+        \item IP: tvrdenie vety platí pre každú
+        formulu\footnote{používame tým pádom komplexnejší variant
+        indukcie}, ktorej hodnosť je $\le m-1$.
+        \begin{equation}
+            A: (\exists x_1) (\exists x_2) ... (\exists x_n) (\forall y)
+            B(x_1,x_2,\dots,x_n,y)
+        \end{equation}
+        kde $b$ \emph{nie je} nutne bezkvantifikátorová.
+        Predpokladajme, že v $B$ sú voľné iba $x_1,x_2,\dots,x_n,y$.
+        Keďže hodnosť $A$ je $m$, tak vo formule $B$ poslednému
+        existenčnému kvantifikátoru predchádza práve $m-1$ všeobecných
+        kvantifikátorov.
+        Nech $P^{n+1}$ je $n+1$-árny predikát, ktorý sa nevyskytuje v
+        $A$ (a teda ani $B$). Uvažujme nasledujúcu formulu
+        \begin{equation}
+            A^*: (\exists x_1) \dots (\exists x_n) \left[
+                (\forall y) (B(x_1,\dots,x_n,y) \implies 
+                    P^{(n+1}(x_1,\dots,x_n,y)) \implies 
+                    (\forall y) P^{(n+1)} (x_1,\dots,x_n,y)
+            \right]
+        \end{equation}
+        Postupne ukážeme, že $\provable A \Leftrightarrow \provable
+        A^*$.
+        \fixme{vo zvysku Toman robi nejaku drsnu magiu, treba to cele
+        pocheckovat na validitu}
+        \begin{itemize}
+        \item[$\Rightarrow$]
+            \begin{itemize}
+            \item[0] $\provable A$
+            \item[1] $\provable (B \implies P^{(n+1)}) \implies
+                            (B \implies P^{(n+1)})$ -- inštancia
+                            $X\implies X$.
+            \item[2] $\provable (X\implies (Y\implies Z)) \implies
+                            (Y\implies (X\implies Z))$ -- veta o zámene
+                            predpokladov
+            \item[3] $\provable
+                (\underbrace{(B \implies P^{(n+1)})}_{X} \implies 
+                        (\underbrace{B}_{Y} \implies
+                        \underbrace{P^{(n+1)}}_{Z})) \implies
+                ( \underbrace{B}_{Y} \implies
+                 (\underbrace{(B \implies P^{(n+1)})}_{X} \implies
+                        \underbrace{P^{(n+1)}}_{Z}))$ -- inštancia 2
+            \item[4] $\provable
+                 B \implies
+                 ((B \implies P^{(n+1)}) \implies
+                        P^{(n+1)}))$ - MP 1,3.
+                        Pozn.: Toman: Ideme to obliecť, zatiaľ je
+                        obnažená.
+            \item[5] $\provable (\forall y) B \implies (\forall y)
+                    (B \implies P^{(n+1)}) \implies
+                    (\forall y) P^{(n+1)}$ -- veta o distribúcii
+                    kvantifikátorov + pravidlo jednoduchého sylogizmu
+                    \fixme{isto?}
+            \item[6] $\provable (\exists x_1) (\exists x_2) \dots 
+                    (\exists x_n) (\forall y) B \implies
+                    (\exists x_1) (\exists x_2) \dots (\exists x_n)
+                    (\forall y) (B \implies P^{(n+1)})$ --
+                    $\provable (\forall x)(A \implies B) \implies
+                     ((\exists x) A \implies (\exists x)B)$
+                   \begin{itemize}
+                    \item $\provable (\forall x)
+                        (A \implies B) \implies
+                        ((\forall x) A \implies (\forall x) B)$
+                    \item $\provable (A \implies B) \leftrightarrow
+                        (\neg B \implies \neg A)$
+                    \item $\provable (\forall x) (\neg B \implies \neg
+                    A) \implies ((\forall x) \neg B \implies
+                      (\forall x) \neg A)$.
+                    \item $\provable (\forall x) (\neg B \implies \neg
+                    A) \implies (\neg (\forall x) \neg A \implies
+                       \neg (\forall x) \neg B)$
+                    \item $\provable (\forall x) (A \implies B)
+                     \implies ( (\exists x) A \implies (\exists x) B)$
+                   \end{itemize}
+                \item[7] $\provable
+                 (\exists x_1) (\exists x_2) \dots (\exists x_n)
+                 (\forall y) (B \implies P^{(n+1)}) \implies 
+                 (\forall y) P^{(n+1)}$.
+            \end{itemize}
+        \item[$\Leftarrow$]
+            \todo{}
+        \end{itemize}
+    \end{itemize}
+\end{dokaz}
