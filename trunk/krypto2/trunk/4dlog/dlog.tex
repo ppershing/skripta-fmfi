@@ -1,0 +1,141 @@
+\section{Algoritmy na výpočet diskrétneho logaritmu}
+Počas celej tejto kapitoly sa budeme pohybovať v cyglickej grupe 
+$G, |G|=n$ generovanej generátorom $g \in G$.
+Našim cieľom bude vypočítať diskrétny logaritmus prvku $y$
+pri základe $g$, t.j. nájsť hodnotu $x$, takú, že $g^x=y$ (počítané
+v grupe $G$).
+
+
+Triviálnym algoritmom je postupné skúšanie možných hodnôt $x$, teda
+$g^0,g^1,\dots,g^{n-1}$.
+Časová zložitosť je v tomto prípade $O(n)$, pamäťová $O(1)$.
+
+\subsection{Shanksov Baby-step/giant-step algoritmus}
+Baby-step/giant step je spôsob, ako preliať čas do pamäte.
+Algoritmus sa skadá z 2 častí - ``veĺkých'' a ``malých'' krokov.
+Veľké kroky sa dajú predpočítať raz, malé kroky treba robiť pre každé
+číslo, z ktorého chceme zistiť diskrétny logaritmus.
+
+Najskôr budeme robiť "veľké kroky".
+Zoberme si $t=\lfloor \sqrt{n} \rfloor$.
+Vypočítajme si postupne hodnoty $g^0,g^t,\dots,g^{\lfloor n/t \rfloor t}$.
+Pre každú hodnotu, ktorú takto vypočítame si zapamätáme (napríklad do
+hashovacej tabuľky) aj jej diskrétny logaritmus, t.j. zapamätáme si hodnoty
+$(k,g^{kt})$ pre $k=0,1,\dots,\lfloor n/t \rfloor t$.
+Táto časť algoritmu trvá $O(t)$, teda $O(\sqrt{n})$, potrebná pamäť je
+tiež $O(t)=O(\sqrt{n})$.
+
+Po tomtp predpočítaní môžeme pokračovať malými krokmi.
+Počítajme postupne hodnoty $y g^0,yg,yg^2,\dots, yg^{t-1}$ a pozeráme sa,
+či niektorá z týchto hodnôt sa nenachádza v zapamätanej tabuľke.
+Grafické znázornenie činnosti celého algoritmu je na nasledujúcom obrázku.
+\todo{pekny obrazok najskor velkych krokov a potom malych}
+
+Zložitosť druhého kroku je maximálne $t$ krát tabuľkový lookup, pretože
+najneskôr o $t$ hodnôt narazíme na nejakú hodnotu, ktorá už v tabuľke bude.
+Dokopy teda po oboch krokoch nájdeme diskrétny logaritmus
+v čase $O(\sqrt{n})$ a pamäti $O(\sqrt{n})$.
+
+Problém pamäťovej zložitosti sa snaží riešiť Pollardov algoritmus.
+
+\subsection{Pollardov $\rho$ algoritmus}
+Podobne ako pri faktorizácii sa budeme snažiť nájsť nejakú funkciu, ktorá
+by sa správala ako čo najlepšie náhodné zobrazenie. Pri takejto funkcii
+potom môžeme očakávať nájdenie cyklu/kolízie v čase $O(\sqrt{n})$.
+
+Zvoľme si $x_0 = g^{a_0} y^{b_0}$ kde $a_0,b_0 \inr Z_{n-1}$.
+$x_0$ bude začiatočný prvok postupnosti. Na ``znáhodnenie'' našej funkcie
+si grupu $G$ rozdelíme na 3 disjunktné množiny:
+\def\union{\fixme{union}}
+$G=S_1 \union S_2 \union  S_3$.
+
+Potom môžeme uvažovať nasledujúcu funkciu $f$:
+\begin{equation*}
+    x_{i+1} = f(x_i) =
+        \begin{cases}
+         y x_i & x_i \in S_1 \\
+         x_i^2 & x_i \in S_2 \\
+         g x_i & x_i \in S_3
+        \end{cases}
+\end{equation*}
+Je dôležité, že vďaka operáciam, ktoré sme zvolili, vieme vypočítať aj
+"rozklad" $x_{i+1}$ nasledovne:
+
+\begin{equation*}
+    (a_{i+1},b_{i+1}) =
+        \begin{cases}
+         (a_i,b_i+1) & x_i \in S_1 \\
+         (2a_i,2b_i) & x_i \in S_2 \\
+         (a_i+1,b_i) & x_i \in S_3 \\
+        \end{cases}
+\end{equation*}
+
+Našim cieľom je teda nejak rozdeliť $G$ na $S_1,S_2,S_3$ tak, aby
+funkcia $f$ čo najviac pripomínala náhodné zobrazenie.
+Pre prvočíselné grupy to môžeme napríklad rozdeliť modulo 3.
+Pre všeobecné grupy môže byť dobrý spôsob zobrať hash vnútornej binárnej
+reprezentácie prvku a tento hash zobrať modulo 3.
+
+Keď už máme funkciu $f$ danú, môžeme použiť niektorý z algoritmov na
+hľadanie cyklov spomínaných v kapitole o faktorizácii.
+
+Ak nájdeme kolíziu, dostávame
+\begin{align*}
+    g^{a_i} y^{b_i} &= g^{a_j} y^{b_j} \\
+    y^{b_i-b_j} &= g^{a_j-a_i} \\
+    x &=(a_j - a_i)(b_i-b_j)^{-1} \pmod n
+\end{align*}
+a teda vieme $x$ vypočítať.
+
+Časová zložitosť algoritmu (ak predpokladáme, 
+že $f$ má charakteristiku náhodného zobrazenia) je
+$O(\sqrt{n})$, pamäťová zložitosť $O(1)$.
+
+\subsection{Pohligov-Hellmanov algoritmus}
+Tento algoritmus funguje vo všeobecnosti, ale veľmi efektívny je hlavne v
+prípade, že $n$ má prvočíselný rozklad s malými prvočíslami.
+$n=p_1^{m_1} \dots p_k^{n_k}$
+\todo{dokoncit algoritmus}
+
+
+Algoritmus na subexponencialnu zlozitost
+
+\subsection{Index calculus}
+Narozdiel od predchádzajúcich algoritmov, tento algoritmus nie je
+všeobecný. Dá sa použiť napríklad $(Z_p^*,\cdot), GF(2^m)$.
+V prípade eliptických kriviek sa nedá použiť.
+
+Uvažujme $G=(Z_p^*,\cdot)$.
+Algoritmus má 2 kroky - predvýpočet a samotný výpočet.
+Predvýpočet sa môže spraviť raz pre jednu grupu.
+
+$a \inr Z_{p-1}$. Majme zvolenú prvočíselnú bázu
+$B=\{p_1,\dots,p_b\}$. Našou snahou je rozložiť
+$g^x$ nad bázou $B$, teda nájsť hodnoty
+$e_1,\dots,e_b$ také, že $g^a \mod p = p_1^{e_1} p_2^{e_2} \dots
+p_b^{e_b}$.
+Našou ambíciou je nazbierať čo najviac takýchto závislostí, optimálne
+$b+1$. Ak totiž zlogaritmujeme dané rovnosti, dostaneme sústavu
+lineárnych rovníc.
+\fixme{makro na dlog}
+$a=e_1 dlog_g p_1 + e_2 dlog_g p_2 + \dots + e_b dlog_g p_b \pmod{p-1}$.
+V tejto sústave sú neznáme $dlog_g p_1, dlog_g p_2, \dots, dlog_g p_b$.
+
+Ak sme úspešne zvládly tento predvýpočet, môžeme skúšať počítať dlog y
+nasledovne.
+Zvolíme si $b\inr Z_{p-1}$ a skúšame, či vieme hodnotu
+$y g^a = p_1 ^ {e_1} \dots p_b ^ {e_b}$. Tým pádom
+$x+a = e_1 d_1 + \dots + e_b d_b$.
+
+Časová zložitosť (veľmi podobná Dixonovmu algoritmu) je
+$O(e^{(1+O(1))\sqrt{\log p \log \log p}})$.
+
+\begin{poznamka}
+    Nad GF tvoria bazu ireducibilne polynomy.
+\end{poznamka}
+\begin{poznamka}
+    Ak G je podgrupa Zp*, |G|=q.
+    Ak mame generator $g\in G$, potom výpočet dlog g v G buď pollard rho
+    metodou.
+    \todo{doplnit}
+\end{poznamka}
