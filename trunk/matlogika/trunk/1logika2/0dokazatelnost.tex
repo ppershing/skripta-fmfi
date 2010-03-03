@@ -1,0 +1,279 @@
+\section{Pravdivosť a dokázateľnosť}
+\subsection{Veta o úplnosti}
+
+\begin{definicia}{Logická platnosť formuly}
+    Nech $L$ je jazyk prvého rádu a $A$ je formula jazyka
+    $L$. Hovoríme, že formula $A$ je \emph{logicky platná},
+    označujeme $\models A$,
+    ak je splnená v ľubovoľnej realizácii $m$ jazyka $L$.
+
+    \begin{align*}
+        m & \models & A[e] \\
+        m & \models & A \\
+        & \models & A
+    \end{align*}
+\end{definicia}
+
+\begin{poznamka}
+    Formula $A$ je logicky platná, práve vtedy, keď je pravdivá
+    bez ohľadu na realizáciu symbolov jazyka $L$.
+\end{poznamka}
+
+\begin{definicia}{Teória}
+    Nech $L$ je jazyk, prvého rádu a $T$ je množina formúl
+    jazyka $L$. Hovoríme, že $T$ je teória 1. rádu predikátovej logiky
+    s jazykom $L$ (t.j. množina formúl $T$ je množina axióm teórie).
+\end{definicia}
+
+\begin{definicia}{Model teórie}
+    Nech $T$ je teória v jazyku $L$, $m$ je realizácia jazyka $L$.
+    Hovoríme, že $m$ je modelom teórie $T$, ak pre každú formulu $A$
+    patriacu $T$ platí $\models A$.
+
+    Hovoríme, že formula $A$ je
+    sémantickým/tautologickým dôsledkom (vetou teórie) množiny formúl $T$,
+    resp. $A$ je $T$-platná, ak $A$ je splnená.
+    v každom modeli teórie $T$.
+    Túto skutočnosť označujeme $T \models A$.
+\end{definicia}
+
+\fixme{nasledujuce veci}
+\begin{priklad}{Teória čiastočného usporiadania}
+    Majme \fixme{predikát <} na množine $N$ - fixme
+    \begin{itemize}
+    \item[1] $(\forall x)(\forall y) ((x < y) \implies \neg (y < x))$ - fixme
+    \item[2] $(\forall x)(\forall y)(\forall z) (((x<y) \land (y<z)) \implies
+        (x<z))$ - fixme
+    \item[3] $(\forall x)(\forall y)( (x\not=y) \implies ((x<y) \lor (y<x)))$ -
+     trichotomičnosť
+    \end{itemize}
+\end{priklad}
+
+\begin{priklad}{Elementárna aritmetika}
+Špeciálne symboly - 0 - konštanta (nulárny funkčný symbol),
+    S - nasledovník (unárny funkčný symbol),
+    +,*
+    S(x) = x+1
+
+Axiómy elementárnej aritmetiky:
+\begin{itemize}
+    \item[1] $\neg S(x) = 0$
+    \item[2] $S(x) = S(y) \implies x=y$
+    \item[3] $x+0 = x$
+    \item[4] $x+s(y) = s(x) + y$
+    \item[5] $x * 0 = 0$
+    \item[6] $x * S(y) = (x*y)+x$
+\end{itemize}
+Realizácia
+\fixme{n caliigraphic}
+$n=<N^+,0,S,+,*>$ - je to realizácia aj model. Nazýva sa aj štandardný
+model. (Hovorí sa jej aj Robinsonova aritmetika)
+Ak pridáme axiómu indukcie, dostaneme Peanovu aritmetiku.
+\end{priklad}
+
+\begin{poznamka}
+    Ak si nebudeme všímať axiómy, ale iba relačnú štruktúru
+    $n=<N^+,0,S,+,.>$. Zoberme namiesto $S$ konštantu $1$.
+    Ciže $n'=<N^+,0,1,+,.>$. N' realizuje jazyk teórie telies.
+    Lenže $n'$ nie je modelom tohoto jazyka. \fixme{preco?}
+\end{poznamka}
+
+\begin{priklad}[Usporiadania]
+   \fixme{co je toto?:} $\varphi, x, y, z, <$
+    \begin{enumerate}
+        \item $(x,y) \in \varphi  \implies (y,x) \notin  \varphi$
+        \item $(x,y) \in \varphi \land (y,z) \in \varphi \implies (x,z) \in \varphi$
+        \item $x \neq y \implies (x,y) \in \varphi \lor (y,x) \in \varphi$
+    \end{enumerate}
+
+je modelom pre teóriu ostrého usporiadania.
+Ďalšie príklady: neostré usporiadanie: antisymetrickosť, tranzitívnosť,
+reflexívnosť, trichotomockosť.
+\end{priklad}
+
+
+\begin{priklad}[Teória grúp]
+    \begin{enumerate}
+            \item $((x+y)+z) = (x+(y+z))$
+            \item $(x+0) = (0+x) = x$
+            \item $x, -x, x+(-x) = 0 = (-x)+x$
+    \end{enumerate}
+\end{priklad}
+
+\fixme{toto som uz mal}
+\begin{priklad}[Elementárna aritmetika]
+
+    $+, \cdot, 0, S(x) = x+1, N^+ $
+    \begin{enumerate}
+	\item $\neg S(x) = 0$
+	\item $S(x) = S(y) \implies x=y$
+	\item $x+0 = x$
+	\item $x+S(y) = S(x+y)$
+	\item $x \cdot 0 = 0$
+	\item $x\cdot S(y) = ((x\cdot y) + x)$
+    \end{enumerate}
+
+    Pätica $<N^+, +, \cdot, S, 0>$ je
+    \emph{štandardný model} elementárnej aritmetiky.
+\end{priklad}
+
+\par
+Pojem platnej formuly je prirodzené zovšobecnenie pojmu \emph{logicky platnej
+formuly}.
+
+Ďalším cieľom je stotožniť dokázateľné formuly s tautológiami.
+
+\begin{veta}[o korektnosti]
+    Ak $T$ je teória v jazyku $L$ a ak formula $A$ je taká,
+    že $T \provable A$, potom $T \models A$.
+\end{veta}
+
+\begin{dokaz}
+    Nech $A_1, A_2, \ldots A_n$ je odvodenie (dôkaz) formuly $A$
+    z predpokladov $T$ (v teórii $T$). $A_1, A_2, \ldots A_n(A)$. \fixme{}
+    \par $m$ nech je ľubovoľný model teórie $T$.
+    Ukážeme (indukciou podľa dĺžky dôkazu), že platí $m \models A_i$
+    pri predpoklade, že pre $A_j, j < i$ platí $m \models A_j$.
+
+    Do dôkazu sa $A_i$ môže dostať niekoľkými spôsobmi:
+    \begin{enumerate}
+	\item $A_i \in T$, m -- model $T$, potom $m \models A_i$ a teda
+                $T \models A_i$
+	\item $A_i$ sa dostane do dôkazu ako axióma predikátovej logiky:
+	\begin{enumerate}
+            \item $A_i$ je axioma výrokovej logiky -- je poskladaná z
+            atomických formúl a logických spojok $\neg$ a $\implies$. Potom
+            $A_i$ je tautológia výrokovej logiky (ak formula je tautológia,
+            jej pravdivostná hodnota nezávisi od ohodnotenia premenných, a
+            $m \models A_i$, teda $m \models A_i[e]$).
+            
+            \item $A_i$ je axioma špecifikácie, teda je tvaru $A_i: (\forall
+            x) B \implies B_x[t]$, $t$ je substitúcia za $x$ do $B$. $m
+            \models A_i$.
+            \par
+            Zaujíma nás prípad, kedy $(\forall x) B$ je pravdivý.\footnote{
+                v opačnom prípade implikácia triviálne platí}
+            To znamená, že pre ľubovoľné o\fixme{individuum m}hodnotenie platí $B[e(x/m)]$, teda
+            $e(x)=m$. Tvrdenie zo zimného semestra: $$m \models A_{x_1,
+            \ldots x_n}[t_1, \ldots t_n][e] \Leftrightarrow m \models
+            A[e(x_1/m_1, \ldots x_n/m_n)]$$ a $$t_i[e] = m_i.$$ 
+
+            Ak položím tvrdenie $B_x[t][e]$, zmení sa to na $B[e(x/m)]$ a
+            táto formula je pravdivá v $m \models B[e(x/m)]$.
+
+            \item $A_i: (\forall x) (B \implies C) \implies (B \implies
+            (\forall x) C)$ a $x$ nie je voľná v $B$. Mali by sme dokázať,
+            že platí $m \models A_i$. Formula  $m \models (B \implies
+            C)[e(x/m)]$ platí, pozeráme sa na $(B \implies C)$. To je
+            ekvivalentné s $\neg B \lor C$. Dôležitý je tiež predpoklad, že
+            $x$ nie je voľná v $B$, a teda nezávisí od ohodnotenia viazanej
+            premennej. Keď je ľavá časť axiomy pravdivá, musí byť aj pravá
+            \todo{spresniť!} $m \models A_i$.
+	\end{enumerate}
+	\item $A_i$ je niektorá axioma rovnosti:
+	\begin{enumerate}
+            \item $A_i: x=x$, potom $m\models x=x$, $A_i[e]$ a $m=m$.
+            \item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
+            f(x_1, \ldots, x_n) = f(y_1, \ldots, y_n).$. Zaujíma nás prípad,
+            keď  $e(x_i) = e(y_i)$, teda
+            $e(x_i/m_i)=e(y_i/m_i)$.\fixme{mi?}
+            \fixme{Dostavame m1=m1 -> m2=m2 ... fm(fm,...)=f()}
+            Získavame potom zobrazenie na
+            $f_m(m_1, \ldots m_n)$ a rovnosť platí.
+            \item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
+            P(x_1, \ldots, x_n) = P(y_1, \ldots, y_n).$. Zaujíma nás opäť
+            prípad, keď $x_i$ aj $y_i$ reprezentujeme rovnakým indivíduom:
+            $e(x_i/m_i)$ a $e(y_i/m_i)$.  $P_m(m_1, \ldots, m_n)$, $(m_1,
+            \ldots m_n) \in P$ -- buď je v relácii, alebo nie je.
+	\end{enumerate}
+	\item Odvodzovacie pravidlá, $A_i: A_{j_1}, A_{j_2}$, pričom $j_1 < i$ a
+	$j_2 < i$.
+	\begin{enumerate}
+            \item $A_{j_2}. A_{j_1} \implies A_j$, $A_{j_1}$ a $m \models
+            A_{j_1}$, $m \models A_{j_2}$, potom $m \models A_i$.
+            \item $A_i: \forall A_j$, potom $m \models A_j[e(x/m)]$ a $m
+            \models A_j$.
+	\end{enumerate}
+
+\end{enumerate}
+
+\end{dokaz}
+
+\begin{priklad}
+    Uvažujme elementárnu aritmetiku, ktorá má svoj štandardný
+    model. Uvažujme formulu $x=0$ v $N$. 
+
+    \begin{itemize}
+        \item Nech $e(x) = m \neq 0$. Potom formula $A: x=0$ nie je
+        splnená pre ohodnotenie $e$ a teda $m \notmodels A[e]$.
+        \item Nech $e(c) = 0$. Potom formula $A': \neg x=0$ je je
+        splnená v ohodnotení $e$, t.j. $m \notmodels A'[e]$.
+    \end{itemize}
+    To ale znemaná, že formula $A$ ani jej negácia
+    nie sú dokázateľné v elementárnej aritmetike.
+\end{priklad}
+
+
+\paragraph{Poznámka:} Vetu o dedukcii v predikátovej logike nemožno vysloviť pre
+ľubovoľnú formulu.
+
+$$ 
+\begin{array}{ll}
+	A: & \neg x=0 \\
+	A: & \neg y=0 \\
+\end{array}
+$$
+
+$$
+	\neg x=0 \provable \neg y=0
+$$
+
+Môžem podľa vety o dedukcii napísať, že $ \provable \neg x=0 \implies y=0$?
+
+$$
+\begin{array}{l}
+	A \implies B \\
+	e:	\\
+	e(x)=0	\\
+	e(x)= m \neq 0	\\
+	m \notmodels (A \implies B)[e]	\\
+\end{array}
+$$
+
+\paragraph{Dôsledok:} Ak teória $T$ v jazyku $L$ má model $m$, potom $T$ je
+bezposporná.
+\paragraph{Dôkaz:} Nech $m$ je model $T$ a $A$ je ľubovoľná uzavretá formula
+jazyka $L$. Potom práve jedna z formúl $A$, $\neg A$ je pravdivá v modeli $m$.
+Tá, ktorá nie je pravdivá, nie je ani dokázateľná (podľa vety o korektnosti).
+
+\paragraph{}
+\par Tento výsledok hovorí, ze ak máme vyšetriť bezospornosť nejakej teórie,
+treba nájsť jej model. Keď si zoberieme predikátovú logiku:
+
+\par Každá realizácia jazyka predikátovej logiky je modelom (neskôr nám bude
+stačiť zobrať model, ktorý má jedno jediné indivíduum).  
+
+\par
+Syntaktický prístup ku dôkazu bezospornosti: Teóriu, ktorej bezospornosť chceme
+dokázať, transformuje pomocou istých pravidiel do teórie, o ktorej vieme, že je
+bezsosporná  (my budeme predikátovú logiku transformovať do výrokovej logiky).
+
+\par $L$ -- jazyk prvého rádu, $c$ -- konštanta taká, že $c \notin L$. $L'$
+vznikne z $L$ pridaním $c$. Ľubovoľný term nahradíme konštantou $c$, z formuly
+vynechávame všetky kvantifikátory, vynechávame premenné bezprostredne spojené s
+kvantifikátorom.
+
+\par Každej formuli $A$ na jazyku $L$ priradíme formulu $A^*$ na jazyku $L'$:
+\begin{enumerate}
+	\item ak A je tvaru $A: P(t_1, \cdots t_n)$, tak $A^*: P(c, c, \cdots,c)$.
+	\item $A: B \square C$, potom $A^*: B^* \square C^*$.
+	\item $A: \neg B$, potom $A^*: \neg B^*$
+	\item $A: (Qx) B$, potom $A^*: B^*$.
+\end{enumerate}
+
+Ak $L$ je jazyk bez rovnosti a $\provable^L A$, potom $A^*$ je tautológia. Ak $L$
+je jazyk s rovnosťou a $\provable^L A$, potom $A^*$ je tautologický dôsledok $c=c$.
+
+\par Tvrdíme, že pre žiadnu formulu $A$ nie je $\provable A$ aj $\vdash \neg A$. Ak
+by to platilo, dostali by sme sa do sporu, že vo výrokovej logike je $\provable
+A^*$ aj $\provable \neg A^*$.

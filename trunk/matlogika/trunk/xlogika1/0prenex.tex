@@ -1,5 +1,4 @@
 % vim: set fdm=marker: sw=2: sts=2: ts=2:
-\chapter{Dokončenie úvodu do matematickej logiky}
 
 \section{Prenexné tvary formúl}
 
@@ -386,25 +385,3 @@ Budeme postupovať matematickou indukciou vzhľadom na zložitosť formuly $A$.
     \end{align}
 \end{priklad}
 
-\begin{definicia}[Skolemov normálny tvar]
-  Uvažujme uzevretú formulu $A$.
-  Ak $A$ má prefix $(\exists x_1)(\exists x_2) \dots (\exists x_k)
-    (\forall x_{k+1}) (\forall x_{k+2}) \dots (\forall x_n)$, potom 
-    hovoríme, že formula $A$ je vyjadrená v Skolemovom normálnom
-    tvare, pričom $0 \le k \le n$.
-\end{definicia}
-\begin{veta}
-    Nech $A$ je formula predikátovej logiky. Potom k nej môžeme
-    zostrojiť formulu $A'$ v Skolemovom normálnom tvare, pričom platí
-    $\provable A \Leftrightarrow \provable A'$.
-\end{veta}
-\begin{poznamka}
-    Všimnime si, že predchádzajúca veta nehovorí nič o existencii
-    formuly $A'$ takej, že $\provable A \leftrightarrow A'$ ako to
-    bolo u prenexného tvaru. Taká formula totiž v prípade Skolemovho
-    normálneho tvaru nemusí existovať.
-\end{poznamka}
-\todo{dopisat}
-
-\section{Skolemov tvar}
-\todo{}
