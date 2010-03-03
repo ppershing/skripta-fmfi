@@ -87,7 +87,7 @@ Ak nájdeme kolíziu, dostávame
 \end{align*}
 a teda vieme $x$ vypočítať.
 
-Časová zložitosť algoritmu (ak predpokladáme, 
+Časová zložitosť algoritmu (ak predpokladáme,
 že $f$ má charakteristiku náhodného zobrazenia) je
 $O(\sqrt{n})$, pamäťová zložitosť $O(1)$.
 
@@ -98,20 +98,22 @@ $n=p_1^{m_1} \dots p_k^{n_k}$
 \todo{dokoncit algoritmus}
 
 
-Algoritmus na subexponencialnu zlozitost
 
 \subsection{Index calculus}
 Narozdiel od predchádzajúcich algoritmov, tento algoritmus nie je
 všeobecný. Dá sa použiť napríklad $(Z_p^*,\cdot), GF(2^m)$.
-V prípade eliptických kriviek sa nedá použiť.
+V prípade eliptických kriviek sa nedá použiť. Tento jeho hendikep
+ale kompenzuje jeho časová zložitosť, ktorá je subexponenciálna.
 
-Uvažujme $G=(Z_p^*,\cdot)$.
-Algoritmus má 2 kroky - predvýpočet a samotný výpočet.
+Uvažujme pre jednoduchosť grupu $G=(Z_p^*,\cdot)$.
+Algoritmus pozostáva z 2 krokov - predvýpočtu a samotného výpočtu.
 Predvýpočet sa môže spraviť raz pre jednu grupu.
 
-$a \inr Z_{p-1}$. Majme zvolenú prvočíselnú bázu
-$B=\{p_1,\dots,p_b\}$. Našou snahou je rozložiť
-$g^x$ nad bázou $B$, teda nájsť hodnoty
+Predvýpočet:
+
+Majme zvolenú prvočíselnú bázu $B=\{p_1,\dots,p_b\}$.
+Položme $a \inr Z_{p-1}$. 
+Našou snahou bude rozložiť $g^a$ nad bázou $B$, teda nájsť hodnoty
 $e_1,\dots,e_b$ také, že $g^a \mod p = p_1^{e_1} p_2^{e_2} \dots
 p_b^{e_b}$.
 Našou ambíciou je nazbierať čo najviac takýchto závislostí, optimálne
@@ -131,10 +133,11 @@ $x+a = e_1 d_1 + \dots + e_b d_b$.
 $O(e^{(1+O(1))\sqrt{\log p \log \log p}})$.
 
 \begin{poznamka}
-    Nad GF tvoria bazu ireducibilne polynomy.
+    Výpočet v prípade, že $G$ je $GF(p^m)$ je veľmi podobný, bázu budú ale
+    tvoriť ireducibilné polynómy.
 \end{poznamka}
 \begin{poznamka}
-    Ak G je podgrupa Zp*, |G|=q.
+    Nech G je podgrupa $Z_p^*$, ktorej veľkost $|G|=q$ je prvočíslo.
     Ak mame generator $g\in G$, potom výpočet dlog g v G buď pollard rho
     metodou.
     \todo{doplnit}
