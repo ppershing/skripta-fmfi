@@ -9,6 +9,14 @@
 \newcommand{\provable}{\vdash}
 \newcommand{\unprovable}{\nvdash}
 
+\def\dotuline{\bgroup 
+  \ifdim\ULdepth=\maxdimen  % Set depth based on font, if not set already
+   \settodepth\ULdepth{(j}\advance\ULdepth.4pt\fi
+  \markoverwith{\begingroup
+  \advance\ULdepth0.08ex
+  \lower\ULdepth\hbox{\kern.15em .\kern.1em}%
+  \endgroup}\ULon
+}
 
 \def\dashuline{\bgroup 
   \ifdim\ULdepth=\maxdimen  % Set depth based on font, if not set already
