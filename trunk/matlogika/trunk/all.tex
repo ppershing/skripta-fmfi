@@ -11,26 +11,22 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
 \begin{veta}{G\"odel, 2}
     Teória $T$ je bezosporná práve vtedy, ked $T$ má model.
 \end{veta}
+
 \begin{poznamka}
     Varianta 1 G\"odelovej vety vyplýva z varianty 2.
+
+    Veta o dedukcii mala nasledovný dôsledok:
+
+    Ak máme teóriu $T$, $A$ je jej formula a $A'$ je uzáver formuly $A$,
+    tak $T \provable A \iff T \union \{ \neg A' \}$ je sporná teória,
+    t.j. podľa vety 2 $T \union \{ \neg A' \}$ nemá model.
+
+    Toto znamená, že v každom modeli teórie $T$ je pravdivý uzáver $A'$.
+    $T \models A' \Rightarrow T \models A$. Z platnosti vety 2 vyplýva veta 1.
 \end{poznamka}
 
-\fixme{co je nasledujuca vec?}
-\paragraph {Veta (o korektnosti):}
-	$$T \provable A \implies T \models A$$.
-
-\paragraph{Príklady vety o korektnosti:}
-Ak teória $T$ má model, tak je bezosporná.
-
+% <<< tunak skoncil.
 \paragraph{Dôkaz:}
-$\mbox{Veta 2} \implies \mbox{Veta 1}$. Veta o dedukcii mala nasledovný
-dôsledok:
-\par Ak máme teóriu $T$, $A$ je jej formula a $A'$ je uzáver formuly $A$, tak $T
-\provable A \iff T \union \{ \neg A' \} \mbox{ je sporná teória}$, podľa vety 2 $T
-\union \{ \neg A' \}$ nemá model.
-
-\par Toto znamená, že v každom modeli teórie $T$ je pravdivý uzáver $A'$. $T
-\models A' \Rightarrow T \models A$. Z platnosti vety 2 vyplýva veta 1.
 
 \par Budeme sa snažiť zostrojiť model pre teóriu, ktorá je bezosporná. Majme
 bezospornú teóriu v jazyku $L$. Potrebujeme relácie, zobrazenia a $M$ --
