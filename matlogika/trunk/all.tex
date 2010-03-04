@@ -1,10 +1,21 @@
 \section{Veta o úplnosti}
-\paragraph{Veta (G\"odel, 1):} Nech $T$ je teória v jazyku $L$ a ak $A$ je
-ľubovoľná formula jazyka $L$, potom $T \provable A \iff T \models A$.
 
-\paragraph{Veta (G\"odel, 2)} Teória $T$ je bezosporná práve vtedy, ked $T$ má
-model.
+G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
 
+\begin{veta}{G\"odel, 1}
+    Nech $T$ je teória v jazyku $L$ a ak $A$ je
+    ľubovoľná formula jazyka $L$, potom $T \provable A \iff T \models A$,
+    čiže je splnená v každom modeli teórie $T$.
+\end{veta}
+
+\begin{veta}{G\"odel, 2}
+    Teória $T$ je bezosporná práve vtedy, ked $T$ má model.
+\end{veta}
+\begin{poznamka}
+    Varianta 1 G\"odelovej vety vyplýva z varianty 2.
+\end{poznamka}
+
+\fixme{co je nasledujuca vec?}
 \paragraph {Veta (o korektnosti):}
 	$$T \provable A \implies T \models A$$.
 
@@ -31,18 +42,18 @@ $$A[e] \iff T \provable A $$.
 
 Možné problémy pri konštrukcii modelu:
 \begin{enumerate}
-	\item Jazyk $L$ neobsahuje žiadne konštanty (a teda žiadne termy bez
-		premenných).
-	\item Ak jazyk $L$ bude jazyk s rovnosťou, môže sa stať, že v teórii $T$
-		bude $T \provable t=s$, ale $t$ a $s$ sú rôzne termy bez
-		premenných.
-	\item Nech $m$ je ľubovoľná realizácia jazyka $L$ a $A$ je uzavretá
-		formula jazyka $L$. Potom práve jedna z formúl $A$, $\neg A$ je
-		pravdivá, ale žiadna z nich nemusí byť dokázateľná v $T$.
-	\item Môže sa stať, že formula $(\exists x)B$ je dokázateľná v teórii
-		$T$, ale pre žiaden term $t$ bez premenných formula $B_x[t]$ nie
-		je dokázateľná v $T$. To znamená, že nie je ani pravdivá a podľa
-		Tarského definície pravdepodobnosti $(\exists)B$ je term $T$.
+    \item Jazyk $L$ neobsahuje žiadne konštanty (a teda žiadne termy bez
+            premenných).
+    \item Ak jazyk $L$ bude jazyk s rovnosťou, môže sa stať, že v teórii $T$
+            bude $T \provable t=s$, ale $t$ a $s$ sú rôzne termy bez
+            premenných.
+    \item Nech $m$ je ľubovoľná realizácia jazyka $L$ a $A$ je uzavretá
+            formula jazyka $L$. Potom práve jedna z formúl $A$, $\neg A$ je
+            pravdivá, ale žiadna z nich nemusí byť dokázateľná v $T$.
+    \item Môže sa stať, že formula $(\exists x)B$ je dokázateľná v teórii
+            $T$, ale pre žiaden term $t$ bez premenných formula $B_x[t]$ nie
+            je dokázateľná v $T$. To znamená, že nie je ani pravdivá a podľa
+            Tarského definície pravdepodobnosti $(\exists)B$ je term $T$.
 \end{enumerate}
 
 Ako odstránime tieto nedostatky:
@@ -51,11 +62,13 @@ rozšírením o konštanty. Tretí bod sa rieši tzv. rošírením teórie (Henk
 Budú to tzv.  konzervatívne teórie (na pôvodnom jazyku nezískame žiadne nové
 teorémy).
 
-\begin{definicia}
+\begin{definicia} % uplna teoria
+%%% {{{
     Hovoríme, že teória $T$ s jazykom $L$ je \emph{úplná}, ak je
     bezosporná teória a pre ľubovoľnú uzavretú formulu $A$ na jazyku
     $L$ buď $A$, buď $\neg A$ je dokázateľná v $T$.
-\end{definicia}    
+%%% }}}
+\end{definicia}
 
 \par Označím $T_h(m)$ všetky pravdivé uzavreté formuly, tak $T_h$ je úplná
 (nemusíme brať otvorené formuly -- napr. $x=0$ v aritmetike nemusí byť pravdivé,
@@ -77,10 +90,10 @@ lebo závisí od ohodnotenia $x$).
     Nech $L$ je jazyk teórie $T$, $\tau$ je množina všetkých
     termov jazyka $L$ bez premenných. Na množine $\tau$ definujem reláciu
     ekvivalencie nasledovne:
-    \begin{eqnarray*}
+    \begin{align*}
 	t_1, t_2 \in \tau \\
 	t_1 \equiv t_2 \iff T \provable t_1 = t_2
-    \end{eqnarray*}
+    \end{align*}
     Rovnosť je reflexívna, symetrická, tranzitívna, teda týmto
     spôsobom definovaná relácia je relácia ekvivalencie a rozdeľuje
     nám množinu $\tau$ na triedy ekvivalencie:
@@ -117,12 +130,12 @@ $$ [t_1], \ldots, [t_n]) \in P_m \iff T \provable P(s_1, \dots s_n) $$
 \par
 
 \fixme{zarovnanie na ...}
-\begin{eqnarray*}
+\begin{align*}
     x_1, x_2, &\ldots,& x_n \mbox{-- premenné}.	\\
     e(x_i) &=& t_i, i=1,\ldots,N	\\
     t[e] &=& [t_{x_1,\ldots,x_n}][t_1,\ldots, t_n]	\\
     t[e] &=& [t]
-\end{eqnarray*}
+\end{align*}
 
 $A$ -- ľubovoľná uzavretá formula z $L$, potom $m \models A \iff T \provable A$.
 $P(t_1, t_2, \ldots t_n)$ -- atomická formula,  uzavretá, $t_1. \ldots t_n$ sú
@@ -142,10 +155,10 @@ nie je pravdivá $B$ nie je pravdivá, $T \unprovable B, T \vdash \neg B$.
 predpokladu. Ak platí $m \models B \implies C$, potom $m \models \neg B \lor m
 \models C$. $T \provable \neg B \lor T \vdash C$.
 
-\begin{eqnarray*}
+\begin{align*}
     T \provable B \implies C \\
     \provable C \implies (B \implies C)
-\end{eqnarray*}
+\end{align*}
 
 Opačná implikácia:
 \begin{equation*}
@@ -205,11 +218,11 @@ veta, Lindenbaumova veta)
 
 \begin{veta}[Henkinova]
 
-    \begin{eqnarray*}
+    \begin{align*}
         \provable (\exists x) \neg B \implies \neg B_x[c] \\
         T \provable  \neg B_x[c] \\
         m \models  (\forall x) B \iff T (\forall c) B \\
-    \end{eqnarray*}
+    \end{align*}
     \fixme{Co vlastne hovori tato veta? Co su predpoklady a co
     vystup?}
     \fixme{je o chvilu zase ta ista veta?}
@@ -1970,11 +1983,11 @@ vytvorili nekonečne dlhú vetvu, čo je spor (strom je konečný).
 stromu $T$ a $v_1$, $v_2$ sú odmietajúci nasledovníci $v$. $I(v)$ (čiastočná
 interpretácia končiaca vo vrchole $v$) vyzerá nasledovne:
 
-\begin{eqnarray*}
-I(v) &=& \{ m_1, m_2, \ldots, m_n \} \\
-I(v_1) &=& \{ m_1, m_2, \ldots, m_n, m_{n+1} \}  \\
-I(v_2) &=& \{ m_1, m_2, \ldots, m_n, \neg m_{n+1} \} 
-\end{eqnarray*}
+\begin{align*}
+    I(v)    &= \{ m_1, m_2, \ldots, m_n \} \\
+    I(v_1)  &= \{ m_1, m_2, \ldots, m_n, m_{n+1} \}  \\
+    I(v_2)  &= \{ m_1, m_2, \ldots, m_n, \neg m_{n+1} \} 
+\end{align*}
 
 $C_1'$ a $C_2'$ sú dve základne inštancie klauzúl $C_1$ a $C_2$ -- $C_1'$ a
 $C_2'$ neplatia v $I(v_1)$ a $I(v_2)$. $C_1'$ a $C_2'$ sa neodmietajú v $I(v)$.
