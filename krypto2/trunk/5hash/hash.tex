@@ -1,0 +1,59 @@
+\section{Bezpečnosť niektorých hašovacích funkcíí}
+
+S hašovacími funkciami sme sa zoznámili v zimnom semestri.
+Pripomeňme, že je to zobrazenie $h: X \to Y$, kde $Y$ je konečná množina.
+Pre jednoduchosť predpokladajme, že $Y = \{0,1\}^n$. 
+
+Dobrá hašovacia funkcia by mala spĺňať nasledovné požiadavky (vychádzajú z toho, že by sa
+mala čo najviac priblížiť náhodnému orákulu). Okrem požiadaviek zo zimného semestra formulujeme niekoľko ďalších:
+\begin{enumerate}
+\item Odolnosť prvého vzoru: K danému $y$ je ťažké nájsť $x$ také, že $h(x) = y$. Očakávaný čas hľadania $x$ je $\Theta(2^n)$.
+\item Odolnosť druhého vzoru: K danému $x$ je ťažké nájsť $z \neq x$ také, že $h(x) = h(z)$. Očakávaný čas hľadania je opäť
+$\Theta(2^n)$.
+\item Odolnosť proti kolíziám: Je ťažké nájsť $x \neq x$ také, že $h(x) = h(z)$. Očakávaný čas hľadania je $\Theta(2^{n/2})$ (narodeninový útok).
+\item $k$-odolnosť prvého vzoru: K danému $y$ je ťažké nájsť navzájom rôzne $x_1, x_2, \dots, x_k$ také, že $h(x_i) = y$. Očakávaný čas hľadania
+je $\Theta(k 2^n)$.
+\item $k$-odolnosť druhého vzoru: K danému $x$ je ťažké nájsť navzájom rôzne a rôzne od $x$ $x_1, x_2, \dots, x_k$ také, že $h(x_i) = h(x)$.
+Očakávaný čas hľadania je $\Theta(k 2^n)$.
+\item $k$-odolnosť proti koliziám: Je ťažké nájsť navzájom rôzne $x_1, x_2, \dots, x_k$ také, že $\forall i, j\colon h(x_i) = h(x_j)$. 
+Dá sa ukázať, že pokiaľ je $k$ zanedbateľné oproti $2^n$, tak očakávaný čas hľadania $k$-kolizie je $\Theta(2^{\frac{n(k-1)}{k}})$.
+\end{enumerate}
+
+\subsection {Iteratívne konštrukcie hašovacích funcíí a ich slabiny}
+
+Rozdeľme text $M$ na bloky $m_1, m_2, \dots, m_l$.
+Položme $h_0 = IV$ a $h_i = f(h_{i-1}, m_i)$ pre $i \geq 1$, kde $f$ je kompresná funkcia, ktorej obor hodnôt je $\{0,1\}^n$.
+Výstupom hašovacej funkcie je hodnota $h_l$.
+
+V roku 2004 \cite{Joux04} bol nájdený nasledovný útok:
+\begin{enumerate}
+\item Položme $h_0 = IV$.
+\item Nájdime $m_1 \neq m_1'$ také, že $f(h_0, m_1) = f(h_0, m_1') = h_1$, toto vieme v čase $O(2^{n/2})$.
+\item Podobne nájdime dvojice $m_2 \neq m_2', \dots, m_k \neq m_k'$ také, že $f(h_{i-1}, m_i) = f(h_{i-1}, m_i') = h_i$.
+\item Toto celé vieme spraviť v čase $O(k 2^{n/2})$. A dostaneme $2^k$ kolidujúcich textov (pre každý z $k$ blokov si môžeme vybrať
+2 rôzne texty). Hash každého z nich bude $h_k$.
+\end{enumerate}
+
+Tento poznatok vieme využiť pri rýchlejšom hľadaní $2^k$-vzoru:
+\begin{enumerate}
+\item Nájdeme $2^k$-kolíziu.
+\item Následne dopočítame posledný blok $m_{k+1}$ tak, aby $f(h_k, m_{k+1}) = y$. Toto vieme v čase $O(2^n)$.
+\end{enumerate}
+
+Celkový čas hľadania bude $O(2^n)$ namiesto očakávaného $\Theta(k 2^n)$. Presne rovnako vieme hľadať aj druhý vzor.
+
+Takisto vieme efektívnejšie zaútočiť na tzv. kasdádovú hašovaciu funkciu. Tú si môžeme predstaviť ako zreťazenie
+dvoch rôznych hašovacích funkcií, teda $H(m) = H_1(m)||H_2(m)$. Pre jednoduchosť predpokladajme, že obor hodnôt $H_1$
+a $H_2$ je $\{0,1\}^n$. Teda dĺžka výstupu $H$ je $2n$ a teda očakávaný čas hľadania kolízie je $\Theta(2^n)$.
+Predpokladajme, že $H_1$ je iteratívna. Potom vieme v čase $O(n 2^n)$ nájsť $2^n$ kolízií. Tieto dosadíme
+na vstup $H_2$ a narodeninový paradox nám zaručí vysokú úspešnosť nájdenia kolízie aj pre $H_2$. Takto sme dostali
+kolíziu pre $H$ v čase $O(n 2^n)$.
+
+\todo{hladanie expandovatelnej spravy}
+
+Následne hľadanie expandovateľnej správy vieme využiť na efektívnejšie hľadanie 2. vzoru ako hrubou silou.
+Majme správu, ktorá je dlhá $k + 2^k - 1$ blokov. Následne zostrojme expandovateľnú správu dĺžky $k$, ktorej hash je $h_k'$.
+Následne skúšajme nájsť  $\tilde{m}$ také, že $f(h_k', \tilde{m})$ sa rovná niektorej z hodnôt $h_{k+1}, \dots h_{k+2^k-1}$. Ak áno 
+(označme takú hodnotu ako $h_x$), tak môžeme bloky $m_1, m_2, \dots, m_x$ nahradiť príslušnou expandovateľnou správou.
+
+\todo{obrana, nostradamus}
