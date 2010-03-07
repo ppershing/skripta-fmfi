@@ -67,7 +67,7 @@ beginfig(2);
 
     arrow.top(0.5, btex $m_k$ etex)(a[1][1],a[1][2])
         a[1][1].c{upright}..a[1][2].c;
-    arrow.bot(0.5, btex $m_k$ etex)(a[1][1],a[1][2])
+    arrow.bot(0.5, btex $m'_k$ etex)(a[1][1],a[1][2])
         a[1][1].c{downright}..a[1][2].c;
 
 
