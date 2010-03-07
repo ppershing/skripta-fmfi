@@ -33,11 +33,11 @@ beginfig(1);
     arrow.bot(0.5, btex $m'_1$ etex)(a[1][0],a[1][1]) a[1][0].c{downright}..a[1][1].c;
 
     arrow.top(0.5, btex $m_2$ etex)(a[1][1],a[1][2]) a[1][1].c{upright}..a[1][2].c;
-    arrow.bot(0.5, btex $m_2$ etex)(a[1][1],a[1][2]) a[1][1].c{downright}..a[1][2].c;
+    arrow.bot(0.5, btex $m'_2$ etex)(a[1][1],a[1][2]) a[1][1].c{downright}..a[1][2].c;
 
 
     arrow.top(0.5, btex $m_3$ etex)(a[1][2],a[1][3]) a[1][2].c{upright}..a[1][3].c;
-    arrow.bot(0.5, btex $m_3$ etex)(a[1][2],a[1][3]) a[1][2].c{downright}..a[1][3].c;
+    arrow.bot(0.5, btex $m'_3$ etex)(a[1][2],a[1][3]) a[1][2].c{downright}..a[1][3].c;
 
 
     arrow_dash.top(0.5, btex etex)(a[1][3],a[1][4]) a[1][3].c{upright}..a[1][4].c;
@@ -48,7 +48,7 @@ beginfig(1);
 
 
     arrow.top(0.5, btex $m_l$ etex)(a[1][5],a[1][6]) a[1][5].c{upright}..a[1][6].c;
-    arrow.bot(0.5, btex $m_l$ etex)(a[1][5],a[1][6]) a[1][5].c{downright}..a[1][6].c;
+    arrow.bot(0.5, btex $m'_l$ etex)(a[1][5],a[1][6]) a[1][5].c{downright}..a[1][6].c;
 
 endfig;
 
