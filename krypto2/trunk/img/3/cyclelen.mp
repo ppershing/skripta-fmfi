@@ -54,23 +54,23 @@ arrow.bot(0.5, btex $f$ etex) (a[5][11], a[5][14]) a[5][11].c -- a[5][14].c;
 
 %spodny cyklus
 node_ellipse.a[7][15](btex $x_{\mu+1}$ etex);
-arrow.bot(0.3, btex $f$ etex) (a[5][14], a[7][15]) a[5][14].c -- a[7][15].c;
+arrow.lft(0.5, btex $f$ etex) (a[5][14], a[7][15]) a[5][14].c -- a[7][15].c;
 
 
 node_ellipse.a[8][17](btex $x_{\mu+2}$ etex);
-arrow.bot(0.5, btex $f$ etex) (a[7][15], a[8][17]) a[7][15].c -- a[8][17].c;
+arrow.lft(1.5, btex $f~$ etex) (a[7][15], a[8][17]) a[7][15].c -- a[8][17].c;
 
 % vrchny cyklus
 node_ellipse.a[3][15](btex $x_{\mu+\lambda-1}$ etex);
 node_ellipse.a[2][17](btex $x_{\mu+\lambda-2}$ etex);
-arrow.bot(0.5, btex $f$ etex) (a[2][17], a[3][15]) a[2][17].c -- a[3][15].c;
-arrow.bot(0.3, btex $f$ etex) (a[3][15], a[5][14]) a[3][15].c -- a[5][14].c;
+arrow.lft(0.0, btex $f~$ etex) (a[2][17], a[3][15]) a[2][17].c -- a[3][15].c;
+arrow.lft(0.5, btex $f$ etex) (a[3][15], a[5][14]) a[3][15].c -- a[5][14].c;
 
 
 node_hidden.a[5][22](btex etex);
 
 
-arrow_dash.bot(0.5, btex $f(f(\dots))$etex) (a[8][17],a[2][17]) a[8][17].c..a[5][22].c..a[2][17].c; 
+arrow_dash.rt(0.5, btex $f(f(\dots))$etex) (a[8][17],a[2][17]) a[8][17].c..a[5][22].c..a[2][17].c; 
 
 endfig;
 end
