@@ -29,14 +29,14 @@ beginfig(1);
     node_hidden.a[1][4](btex $\cdots\cdots$ etex);
 
 
-    arrow.top(0.5, btex $m_1$ etex)(a[1][0],a[1][1]) a[1][0].c{upright}..a[1][1].c;
+    arrow.top(0.5, btex $m^* || m_1$ etex)(a[1][0],a[1][1]) a[1][0].c{upright}..a[1][1].c;
     arrow.bot(0.5, btex $m'_1$ etex)(a[1][0],a[1][1]) a[1][0].c{downright}..a[1][1].c;
 
-    arrow.top(0.5, btex $m_2$ etex)(a[1][1],a[1][2]) a[1][1].c{upright}..a[1][2].c;
+    arrow.top(0.5, btex $m^* || m^* || m_2$ etex)(a[1][1],a[1][2]) a[1][1].c{upright}..a[1][2].c;
     arrow.bot(0.5, btex $m'_2$ etex)(a[1][1],a[1][2]) a[1][1].c{downright}..a[1][2].c;
 
 
-    arrow.top(0.5, btex $m_3$ etex)(a[1][2],a[1][3]) a[1][2].c{upright}..a[1][3].c;
+    arrow.top(0.5, btex $\hskip 1cm m^* || m^* || m^* || m^* || m_3$ etex)(a[1][2],a[1][3]) a[1][2].c{upright}..a[1][3].c;
     arrow.bot(0.5, btex $m'_3$ etex)(a[1][2],a[1][3]) a[1][2].c{downright}..a[1][3].c;
 
 
@@ -47,7 +47,7 @@ beginfig(1);
     arrow_dash.bot(0.5, btex etex)(a[1][4],a[1][5]) a[1][4].c{downright}..a[1][5].c;
 
 
-    arrow.top(0.5, btex $m_k$ etex)(a[1][5],a[1][6]) a[1][5].c{upright}..a[1][6].c;
+    arrow.top(0.5, btex $(m^*)^{2^{k-1}} || m_k$ etex)(a[1][5],a[1][6]) a[1][5].c{upright}..a[1][6].c;
     arrow.bot(0.5, btex $m'_k$ etex)(a[1][5],a[1][6]) a[1][5].c{downright}..a[1][6].c;
 
 endfig;
