@@ -28,8 +28,14 @@ tiež $O(t)=O(\sqrt{n})$.
 Po tomtp predpočítaní môžeme pokračovať malými krokmi.
 Počítajme postupne hodnoty $y g^0,yg,yg^2,\dots, yg^{t-1}$ a pozeráme sa,
 či niektorá z týchto hodnôt sa nenachádza v zapamätanej tabuľke.
-Grafické znázornenie činnosti celého algoritmu je na nasledujúcom obrázku.
-\todo{pekny obrazok najskor velkych krokov a potom malych}
+Grafické znázornenie činnosti celého algoritmu je na obrázku
+\ref{fig:babygiant}.
+\begin{figure}[h]
+    \centering
+    \label{fig:babygiant}
+    \caption{Kroky v baby-step/giant-step algoritme}
+    \includegraphics{img/4/babygiant.1.mps}
+\end{figure}
 
 Zložitosť druhého kroku je maximálne $t$ krát tabuľkový lookup, pretože
 najneskôr o $t$ hodnôt narazíme na nejakú hodnotu, ktorá už v tabuľke bude.
