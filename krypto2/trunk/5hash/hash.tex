@@ -43,7 +43,7 @@ používa väčšina v súčasnosti používaných hašovacích funkcií
 \begin{figure}[h!]
     \label{fig:iter}
     \centering
-    \includegraphics[scale=0.9]{img/5/iter.1.mps}
+    \includegraphics[scale=1.0]{img/5/iter.1.mps}
     \caption{Iteratívna hašovacia funkcia}
 \end{figure}
 
@@ -64,7 +64,7 @@ kolidujúcich textov (pre každý z $k$ blokov si môžeme vybrať
 \begin{figure}[h!]
     \label{fig:joux1}
     \centering
-    \includegraphics[scale=0.9]{img/5/joux.1.mps}
+    \includegraphics[scale=1.0]{img/5/joux.1.mps}
     \caption{Útok na multikolíziu}
 \end{figure}
 
@@ -82,7 +82,7 @@ Ukážeme si rýchlejšie hľadanie $2^k$-vzoru:
 \begin{figure}[h!]
     \label{fig:joux2}
     \centering
-    \includegraphics[scale=0.9]{img/5/joux.2.mps}
+    \includegraphics[scale=1.0]{img/5/joux.2.mps}
     \caption{Využitie multikolízie pri hľadaní multivzoru}
 \end{figure}
 
@@ -117,7 +117,13 @@ $f(h_{i-1}, m_i) = F(h_{i-1}, (m^*)^{2^{i-1}}||m_i') = h_i$
 Dostali sme opäť $2^k$ rôznych kolidujúcich textov, ktoré majú dlžky $k, k+1, \dots, k+2^k-1$ blokov.
 \end{enumerate}
 
-\todo{OBRAZOK}
+\begin{figure}[h!]
+    \centering
+    \includegraphics{img/5/expand.1.mps}
+    \caption{Konštrukcia multikolízie rôznej dĺžky}
+    \label{fig:expand1}
+\end{figure}
+
 
 Pri niektorých hašovacích funkciách, ktoré využívajú
 Davies-Meyerovu konštrukciu vieme expandovateľnú správu hľadať

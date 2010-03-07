@@ -9,7 +9,7 @@ etex
 beginfig(1);
 
 
-size:=20;
+size:=22;
 
 pair downright,upright;
 downright=(1,-1);
