@@ -12,6 +12,7 @@ beginfig(1);
     ydist:=-15;
     ysize:=200;
     xsize:=400;
+    k:=10;
 
     defaultdx:=40;
     defaultdy:=20;
@@ -33,10 +34,10 @@ beginfig(1);
     h[1][2].c - h[0][3].c = (xdist, ydist);
     h[1][2].c - h[0][4].c = (xdist, -ydist);
 
-    circleit.h[0][-1](btex $h_{0,2^k-1}$ etex);
+    circleit.h[0][k-1](btex $h_{0,2^k-1}$ etex);
     circleit.h[0][0](btex $h_{0,2^k}$ etex);
     circleit.h[1][0](btex $h_{1,2^{k-1}}$ etex);
-    h[1][0].c - h[0][-1].c = (xdist, ydist);
+    h[1][0].c - h[0][k-1].c = (xdist, ydist);
     h[1][0].c - h[0][0].c = (xdist, -ydist);
 
     
@@ -49,16 +50,16 @@ beginfig(1);
 
 
     %% koniec
-    circleit.h[-2][1](btex $h_{k-1,1}$ etex);
-    circleit.h[-2][2](btex $h_{k-1,2}$ etex);
-    circleit.h[-1][1](btex $h_{k,1}$ etex);
-    h[-1][1].c - h[-2][1].c = (xdist, ydist);
-    h[-1][1].c - h[-2][2].c = (xdist, -ydist);
+    circleit.h[k-2][1](btex $h_{k-1,1}$ etex);
+    circleit.h[k-2][2](btex $h_{k-1,2}$ etex);
+    circleit.h[k-1][1](btex $h_{k,1}$ etex);
+    h[k-1][1].c - h[k-2][1].c = (xdist, ydist);
+    h[k-1][1].c - h[k-2][2].c = (xdist, -ydist);
 
     %%% setup positions
     h[0][1].c = (0,0);
     h[0][0].c = (0, -ysize);
-    h[-1][1].c = (xsize,-ysize/2);
+    h[k-1][1].c = (xsize,-ysize/2);
 
     myfixsize(h[0][1]);
     myfixsize(h[0][2]);
@@ -71,14 +72,14 @@ beginfig(1);
     myfixsize(h[1][0]);
     myfixsize(h[2][0]);
     myfixsize(h[2][1]);
-    myfixsize(h[-2][1]);
-    myfixsize(h[-2][2]);
-    myfixsize(h[-1][1]);
+    myfixsize(h[k-2][1]);
+    myfixsize(h[k-2][2]);
+    myfixsize(h[k-1][1]);
     drawboxed(h[0][1], h[0][2], h[0][3], h[0][4]);
-    drawboxed(h[0][-1], h[0][0]);
+    drawboxed(h[0][k-1], h[0][0]);
     drawboxed(h[1][1], h[1][2], h[1][0]);
     drawboxed(h[2][1], h[2][0]);
-    drawboxed(h[-1][1], h[-2][1], h[-2][2]);
+    drawboxed(h[k-1][1], h[k-2][1], h[k-2][2]);
 
     def cut(suffix a,b) =
         cutbefore bpath a cutafter bpath b
@@ -97,32 +98,30 @@ beginfig(1);
          h[0][3].c .. h[1][2].c cut(h[0][3], h[1][2]);
      mydrawarrow.bot(btex $m_{0,4}$ etex)
          h[0][4].c .. h[1][2].c cut(h[0][4], h[1][2]);
-         
+        
      mydrawarrow.top(btex $m_{0,2^k-1}$ etex)
-         h[0][-1].c .. h[1][0].c cut(h[0][-1], h[1][0]);
+         h[0][k-1].c .. h[1][0].c cut(h[0][k-1], h[1][0]);
      mydrawarrow.bot(btex $m_{0,2^k}$ etex)
          h[0][0].c .. h[1][0].c cut(h[0][0], h[1][0]);
- 
+
      mydrawarrow.top(btex $m_{1,1}$ etex)
          h[1][1].c .. h[2][1].c cut(h[1][1], h[2][1]);
      mydrawarrow.bot(btex $m_{1,2}$ etex)
          h[1][2].c .. h[2][1].c cut(h[1][2], h[2][1]);
      mydrawarrow.bot(btex $m_{1,2^{k-1}}$ etex)
          h[1][0].c .. h[2][0].c cut(h[1][0], h[2][0]);
- 
-     mydrawarrow.top(btex $m_{k-1,1}$ etex)
-         h[-2][1].c .. h[-1][1].c cut(h[-2][1], h[-1][1]);
-     mydrawarrow.bot(btex $m_{k-1,2}$ etex)
-         h[-2][2].c .. h[-1][1].c cut(h[-2][2], h[-1][1]);
- 
-    label(btex $\vdots$ etex, (h[0][-1].c + h[0][4].c)/2);
-    label("...", (h[-2][1].c) - (xdist/2,ydist/2) );
-    label("...", (h[-2][2].c) - (xdist/2,-ydist/2) );
 
+     mydrawarrow.top(btex $m_{k-1,1}$ etex)
+         h[k-2][1].c .. h[k-1][1].c cut(h[k-2][1], h[k-1][1]);
+     mydrawarrow.bot(btex $m_{k-1,2}$ etex)
+         h[k-2][2].c .. h[k-1][1].c cut(h[k-2][2], h[k-1][1]);
+ 
+    label(btex $\vdots$ etex, (h[0][k-1].c + h[0][4].c)/2);
+    label("...", (h[k-2][1].c) - (xdist/2,ydist/2) );
+    label("...", (h[k-2][2].c) - (xdist/2,-ydist/2) );
     label("...", (h[2][0].c) -(xdist,ydist) );
     label("...", (h[2][0].c) +(xdist/2,-ydist/2) );
     label("...", (h[2][1].c) +(xdist/2,ydist/2) );
-
 
 endfig;
 end
