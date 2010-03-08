@@ -53,7 +53,7 @@ beginfig(1);
 endfig;
 
 beginfig(2);
-    with spacing ((70,50)) matrix.a(2,10);
+    with spacing ((70,50)) matrix.a(10,10);
 
     node_hidden.a[1][0](btex $\cdots$ etex);
     node.a[1][1](btex $h_{k-1}$ etex);
@@ -73,6 +73,33 @@ beginfig(2);
 
     arrow.top(0.5, btex $invert$ etex)(a[1][2],a[1][3])
         a[1][2].c{upright}..a[1][3].c;
+endfig;
+
+
+beginfig(3);
+    randomseed:=1;
+    
+    with spacing ((70,50)) matrix.a(10,10);
+    loopsize:=15;
+    size:=10;
+
+    for i:=1 upto 10:
+        put.a( 80 + 20*i, -100 + uniformdeviate(200));
+        node.a(btex etex);
+        loop.top(0.5, btex etex)(a) 90;
+    endfor;
+
+    size:=15;
+    put.st(0,0);
+    node.st(btex $h_0$ etex);    
+
+    for i:=0 upto 10:
+        pair d;
+        d = (70, (i-5)*20);
+        drawarrow (0,0)..d cutbefore (circlepath scaled 20) 
+            cutafter (circlepath xscaled 100 yscaled 200)
+            dashed evenly;
+    endfor;
 endfig;
 
 end
