@@ -36,7 +36,33 @@ Bezznalostné dokazovacie systémy sú preto také systémy, pri ktorých
 dokazovateľ presvedčí overovateľa o svojej pravde bez toho aby mu
 prezradil čokoľvek iné. Taktiež, ľubovoľný externý pozorovateľ
 komunikácie nemá byť schopný odlíšiť reálny dôkaz od akéhosi
-vykonštruovaného.
+vykonštruovaného. 
+
+\begin{definicia}
+
+Označme:
+\begin{itemize}
+\itemsep -1.2mm
+\item $V^*$ - overovateľ (nečestný)
+\item $S^*$ - simulátor, pravdepodobnostný stroj pracujúci v polynomiálnom čase
+\item $T(V^*, X)$ - množina komuníkácii na vstupe $X$
+\item $F(V^*, X)$ - množina simulovaných komunikácií na vstupe $X$
+\item $p_t$ - pravdepodobnosť, že komunikácia bude $t$
+\item $p_f$ - pravdepodobnosť, že simulátor vygeneruje komunikáciu $f$
+\end{itemize}
+
+Potom interaktívny dokazovací systém pre jazyk L je perfektné bezznalostný,
+ak 
+$$\forall V^* \exists S^* \forall X \in L: T(V^*, X) = F(V^*, X) \land \forall t \in T\colon p_t = p_f$$
+
+Teda ak simulátor vie generovať takú komunikáciu, ktorá má presne rovnaké rozloženie
+pravdepodobnosti ako reálna komunikácia.
+\end{definicia}
+
+\begin{poznamka}
+Pokiaľ sú distribúcie v množinách $T$ a $F$ nerozlíšiteľné
+v polynomiálnom čase hovoríme, že systém je výpočtovo bezznalostný.
+\end{poznamka}
 
 
 \todo{zvysok, blackbox simulator}
