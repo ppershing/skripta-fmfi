@@ -25,7 +25,6 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
     $T \models A' \Rightarrow T \models A$. Z platnosti vety 2 vyplýva veta 1.
 \end{poznamka}
 
-% <<< tunak skoncil.
 \paragraph{Dôkaz:}
 
 \par Budeme sa snažiť zostrojiť model pre teóriu, ktorá je bezosporná. Majme
@@ -42,42 +41,60 @@ Možné problémy pri konštrukcii modelu:
             premenných).
     \item Ak jazyk $L$ bude jazyk s rovnosťou, môže sa stať, že v teórii $T$
             bude $T \provable t=s$, ale $t$ a $s$ sú rôzne termy bez
-            premenných.
+            premenných (rôzne konštanty).
     \item Nech $m$ je ľubovoľná realizácia jazyka $L$ a $A$ je uzavretá
             formula jazyka $L$. Potom práve jedna z formúl $A$, $\neg A$ je
             pravdivá, ale žiadna z nich nemusí byť dokázateľná v $T$.
     \item Môže sa stať, že formula $(\exists x)B$ je dokázateľná v teórii
             $T$, ale pre žiaden term $t$ bez premenných formula $B_x[t]$ nie
-            je dokázateľná v $T$. To znamená, že nie je ani pravdivá a podľa
-            Tarského definície pravdepodobnosti $(\exists)B$ je term $T$.
+            je dokázateľná v $T$. To znamená, že $(\exists x)B$ 
+            podľa Tarského definície pravdivosti $(\exists x)B$ je
+            nepravdivá, čo je spor s vetou o korektnosti.
 \end{enumerate}
 
 Ako odstránime tieto nedostatky:
-Odstránenie bodu 2 je jednoduché --  faktorizáciou. Body 1 a 4 riešime
-rozšírením o konštanty. Tretí bod sa rieši tzv. rošírením teórie (Henkinovským).
+Odstránenie bodu 2 je jednoduché -- riešime vhodnou faktorizáciou, čiže
+zavedieme si množinu $\tau$, čo je množina všetkých termov bez premenných
+a na nej zavedieme reláciu ekvivalencie.
+
+Body 1 a 4 riešime rozšírením o konštanty.
+
+Tretí bod sa rieši tzv. konzervatívnym rošírením teórie (Henkinovským).
 Budú to tzv.  konzervatívne teórie (na pôvodnom jazyku nezískame žiadne nové
-teorémy).
+teorémy ani nestratíme žiadne).
 
 \begin{definicia} % uplna teoria
 %%% {{{
-    Hovoríme, že teória $T$ s jazykom $L$ je \emph{úplná}, ak je
+    Hovoríme, že teória $T$ s jazykom $L$ je \emph{úplná}, ak $T$ je
     bezosporná teória a pre ľubovoľnú uzavretú formulu $A$ na jazyku
-    $L$ buď $A$, buď $\neg A$ je dokázateľná v $T$.
+    $L$ buď $A$ alebo $\neg A$ je dokázateľná v $T$.
 %%% }}}
 \end{definicia}
 
-\par Označím $T_h(m)$ všetky pravdivé uzavreté formuly, tak $T_h$ je úplná
-(nemusíme brať otvorené formuly -- napr. $x=0$ v aritmetike nemusí byť pravdivé,
+\par Nech $T_h(m)$ je množina všetkých pravdivých uzavreté formuly $T$. 
+Potom $T_h$ je úplná (nemusíme brať otvorené formuly 
+-- napr. $x=0$ v aritmetike nemusí byť pravdivé, 
 lebo závisí od ohodnotenia $x$).
 
+\begin{poznamka}
+ V úplnej teórii (a teda špeciálne v $T_h$) nemôže nastať problém 3,
+ ktorý sme spomínali.
+\end{poznamka}
+
 \begin{definicia}
+%%% {{{ Henkinova teoria
     Hovoríme, že teória $T$ s jazykom $L$ je \emph{Henkinova}, ak pre
     ľubovoľnú uzavretú formulu $(\exists x)B$ jazyka $L$ platí
     \begin{equation}
         T \provable (\exists x)B \implies B_x[c]
     \end{equation}
     pre nejaké $c$ -- konštantu.
+%%% }}}
 \end{definicia}
+
+\begin{poznamka}
+    Ak je teória Henkinova, tak sme vyriešili problémy 1,4.
+\end{poznamka}
 
 \begin{lema}
     Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
@@ -86,33 +103,35 @@ lebo závisí od ohodnotenia $x$).
     Nech $L$ je jazyk teórie $T$, $\tau$ je množina všetkých
     termov jazyka $L$ bez premenných. Na množine $\tau$ definujem reláciu
     ekvivalencie nasledovne:
-    \begin{align*}
-	t_1, t_2 \in \tau \\
-	t_1 \equiv t_2 \iff T \provable t_1 = t_2
-    \end{align*}
+    \begin{equation}
+        \forall t_1, t_2 \in \tau :
+            t_1 \equiv t_2 \iff T \provable t_1 = t_2
+    \end{equation}
     Rovnosť je reflexívna, symetrická, tranzitívna, teda týmto
     spôsobom definovaná relácia je relácia ekvivalencie a rozdeľuje
     nám množinu $\tau$ na triedy ekvivalencie:
-    \begin{equation}
-	[t] = \{ s \in \tau, t \equiv s\}
-    \end{equation}
+    \begin{equation*}
+        [t] = \{ s \in \tau: t \equiv s\}
+    \end{equation*}
     Univerzum budú tvoriť termy bez premenných.
-\end{dokaz}
+    Relačná štruktúra $M$ bude mnomžina všetkých termov bez premenných.
+    Nech $f$ je ľubovoľný $n$-árny funkčný symbol a nech
+     $[t_1], [t_2], \ldots, [t_n] \in M$. Definujeme funkciu $f$ v relačnej
+     štruktúre $M$ nasledovne:
+     \begin{equation*}
+      f_m([t_1], \ldots, [t_n]) = [f(t_1, \ldots t_n)]
+     \end{equation*}
+    Ešte treba ukázať, že táto definícia je konzistentná, čize
+    $f_m([t_1], \ldots, [t_n])=f_m([s_1], \ldots, [s_n])$ ak
+    $s_i \equiv t_i$, čiže nezáleží na výbere reprezentantov.
+    Taktiež je dobré si uvedomiť, že
+    $[t_{x_1,\dots,x_n}[t_1,\dots,t_n]]=t[e], e(x_i/t_i)$.
 
-\fixme{nasledujuca lema je ta ista ako predchadzajuca}
-\begin{lema}
-    Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
-\end{lema}    
-\begin{dokaz}
-    $M$ bude mnomžina všetkých termov bez premenných. Na tejto
-    množine definujeme reláciu $\equiv$ tak, že 
-    $$ t_1 \equiv t_2,~t_1, t_1 \in \tau,~T \provable t_1=t_2 $$
-    $$[t]=\{ s\in \tau, s \equiv t \} $$
-
-    Nech $f$ je $n$-árny funkčný symbol. $[t_1], [t_2], \ldots, [t_n] \in M$, pričom
-    platí $f_m([t_1], \ldots, [t_n]) = [f(t_1, \ldots t_n)]$. $P$ je $n$-árny
-    predikátový symbol rôzny od $=$. $([t_1], \ldots [t_n]) \in P_m \iff T \provable
-    P(t_1, \ldots, t_n)$.
+    Podobne, nech $P$ je $n$-árny predikátový symbol rôzny od $=$ ($=$ sme
+    si už zaviedli). V tom prípade definujeme
+    \begin{equation*}
+     ([t_1], \ldots [t_n]) \in P_m \iff T \provable P(t_1, \ldots, t_n)
+    \end{equation*}
 \end{dokaz}
 
 \paragraph{Poznámka:} Doteraz sme pracovali s $[\ldots]$. Výsledok sa nezmení,
@@ -133,12 +152,13 @@ $$ [t_1], \ldots, [t_n]) \in P_m \iff T \provable P(s_1, \dots s_n) $$
     t[e] &=& [t]
 \end{align*}
 
+% \begin{unknown}
 $A$ -- ľubovoľná uzavretá formula z $L$, potom $m \models A \iff T \provable A$.
 $P(t_1, t_2, \ldots t_n)$ -- atomická formula,  uzavretá, $t_1. \ldots t_n$ sú
 termy bez premenných.
 
 $m \models A \iff ([t_1], \ldots, [t_n]) \in P_m \iff T \provable P(t_1,\ldots
-t_n)$ pre ľubovoľné ohodnitenie.
+t_n)$ pre ľubovoľné ohodnotenie.
 
 \par $A: t_1 = t_2$. $m \models t_1 = t_2 \iff [t_1] = [t_2] \iff T \provable t_1 =
 t_2$.
