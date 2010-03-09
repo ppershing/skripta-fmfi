@@ -1,8 +1,7 @@
 % vim: set fdm=marker:
 \section{Pravdivosť a dokázateľnosť}
-\subsection{Veta o úplnosti}
 
-\begin{definicia}{Logická platnosť formuly}
+\begin{definicia}[Logická platnosť formuly]
 %%% {{{
     Nech $L$ je jazyk prvého rádu a $A$ je formula jazyka
     $L$. Hovoríme, že formula $A$ je \emph{logicky platná},
@@ -10,9 +9,9 @@
     ak je splnená v ľubovoľnej realizácii $m$ jazyka $L$.
 
     \begin{align*}
-        m & \models & A[e] \\
-        m & \models & A \\
-        & \models & A
+        \mathcal{M} & \models A[e] \quad \forall \mathcal{M} \\
+        \mathcal{M} & \models A \\
+        & \models A
     \end{align*}
 %%% }}}    
 \end{definicia}
@@ -22,43 +21,49 @@
     bez ohľadu na realizáciu symbolov jazyka $L$.
 \end{poznamka}
 
-\begin{definicia}{Teória}
+\begin{definicia}[Teória]
 %%% {{{
-    Nech $L$ je jazyk, prvého rádu a $T$ je množina formúl
+    Nech $L$ je jazyk prvého rádu a $T$ je množina formúl
     jazyka $L$. Hovoríme, že $T$ je teória 1. rádu predikátovej logiky
     s jazykom $L$ (t.j. množina formúl $T$ je množina axióm teórie).
 %%% }}}
 \end{definicia}
 
-\begin{definicia}{Model teórie}
+\begin{definicia}[Model teórie]
 %%% {{{
-    Nech $T$ je teória v jazyku $L$, $m$ je realizácia jazyka $L$.
-    Hovoríme, že $m$ je modelom teórie $T$, ak pre každú formulu $A$
-    patriacu $T$ platí $\models A$.
+    Nech $T$ je teória v jazyku $L$, $\mathcal{M}$ je realizácia jazyka $L$.
+    Hovoríme, že $\mathcal{M}$ je modelom teórie $T$, ak pre každú formulu $A$
+    patriacu $T$ platí $\mathcal{M} \models A$.
+%%% }}}
+\end{definicia}
 
+\begin{definicia}[Tautologický dôsledok]
+%%% {{{
     Hovoríme, že formula $A$ je
     sémantickým/tautologickým dôsledkom (vetou teórie) množiny formúl $T$,
-    resp. $A$ je $T$-platná, ak $A$ je splnená.
-    v každom modeli teórie $T$.
+    resp. $A$ je $T$-platná, ak $A$ je splnená v každom modeli teórie $T$.
     Túto skutočnosť označujeme $T \models A$.
 %%% }}}
 \end{definicia}
 
-\fixme{nasledujuce veci}
-\begin{priklad}{Teória čiastočného usporiadania}
-    Majme \fixme{predikát <} na množine $N$ - fixme
+\begin{priklad}{Teória ostrého usporiadania}
+    Majme predikát < na množine $N$, tak, že platí
     \begin{itemize}
-    \item[1] $(\forall x)(\forall y) ((x < y) \implies \neg (y < x))$ - fixme
+    \item[1] $(\forall x)(\forall y) ((x < y) \implies \neg (y < x))$
+    - asymetrickosť
     \item[2] $(\forall x)(\forall y)(\forall z) (((x<y) \land (y<z)) \implies
-        (x<z))$ - fixme
+        (x<z))$ - tranzitívnosť
     \item[3] $(\forall x)(\forall y)( (x\not=y) \implies ((x<y) \lor (y<x)))$ -
-     trichotomičnosť
+     trichotomickosť
     \end{itemize}
+    Ak sú splnené axiómy 1,2, tak daná množina je modelom \fixme{}. Ak je
+    navyše splnená aj axióma 3, množina tvorí teóriu ostrého
+    usporiadania.
 \end{priklad}
 
 \begin{priklad}{Elementárna aritmetika}
 %%% {{{
-    Majme teóriu so špeciálnymi symbolmi
+    Jazyk prvého rádu rozšírme o nasledujúce symboly:
     \begin{itemize}
         \item $0$ - konštanta (nulárny funkčný symbol),
         \item $S$ - $S(x)=x+1$, čiže nasledovník (unárny funkčný symbol),
@@ -66,55 +71,44 @@
     \end{itemize}
     Axiómy elementárnej aritmetiky:
     \begin{itemize}
-        \item[1] $\neg S(x) = 0$
-        \item[2] $S(x) = S(y) \implies x=y$
-        \item[3] $x+0 = x$
-        \item[4] $x+s(y) = s(x) + y$
-        \item[5] $x * 0 = 0$
-        \item[6] $x * S(y) = (x*y)+x$
+        \item[1.] $\neg S(x) = 0$
+        \item[2.] $S(x) = S(y) \implies x=y$
+        \item[3.] $x+0 = x$
+        \item[4.] $x+s(y) = s(x) + y$
+        \item[5.] $x * 0 = 0$
+        \item[6.] $x * S(y) = (x*y)+x$
     \end{itemize}
-    Pätica  $\mathcal{n}=\langle N^+,0,S,+,* \rangle$ \emph{štandardný model}
-    elementárnej aritmetiky. Zároveň je to realizácia aj model. 
-    Takejto aritmetike sa hovorí Robinsonova aritmetika.
-    Ak pridáme axiómu indukcie, dostaneme Peanovu aritmetiku.
+    Zoberme si realizáciu 
+        $\mathcal{N}=\langle N^+,0,S,+,* \rangle, N^+ =
+        \{1,2,\dots\}$.
+        Potom $\mathcal{N}$ je model pre elementárnu aritmetiku,
+        zvykne sa označovať aj ako \emph{štandardný model}.
+        Takejto aritmetike sa hovorí Robinsonova aritmetika.
+        Ak pridáme axiómu indukcie, dostaneme Peanovu aritmetiku.
 %%% }}}
 \end{priklad}
 
 \begin{poznamka}
     Ak si nebudeme všímať axiómy, ale iba relačnú štruktúru
-    $n=<N^+,0,S,+,.>$. Zoberme namiesto $S$ konštantu $1$.
-    Ciže $n'=<N^+,0,1,+,.>$. N' realizuje jazyk teórie telies.
-    Lenže $n'$ nie je modelom tohoto jazyka. \fixme{preco?}
+    $\mathcal{N}=\langle N^+,0,S,+,* \rangle$.
+    Zoberme namiesto $S$ konštantu $1$.
+    Ciže $\mathcal{N}'=\langle N^+,0,1,+,* \rangle$.
+    $\mathcal{N}'$ realizuje jazyk teórie telies.
+    Lenže $\mathcal{N}'$ nie je modelom tohoto jazyka. \fixme{preco?}
 \end{poznamka}
-
-\begin{priklad}[Usporiadania]
-   \fixme{co je toto?:} $\varphi, x, y, z, <$
-    \begin{enumerate}
-        \item $(x,y) \in \varphi  \implies (y,x) \notin  \varphi$
-        \item $(x,y) \in \varphi \land (y,z) \in \varphi \implies (x,z) \in \varphi$
-        \item $x \neq y \implies (x,y) \in \varphi \lor (y,x) \in \varphi$
-    \end{enumerate}
-
-    je modelom pre teóriu ostrého usporiadania.
-    Ďalšie príklady: neostré usporiadanie: antisymetrickosť, tranzitívnosť,
-    reflexívnosť, trichotomockosť.
-\end{priklad}
-
 
 \begin{priklad}[Teória grúp]
 %%% {{{
+    Špeciálne symboly sú $+,-$.
+    Axiómy sú:
     \begin{enumerate}
             \item $((x+y)+z) = (x+(y+z))$
             \item $(x+0) = (0+x) = x$
             \item $x, -x, x+(-x) = 0 = (-x)+x$
+            \fixme{co tam znamena x,-x?}
     \end{enumerate}
 %%% }}}
 \end{priklad}
-
-
-\par
-Pojem platnej formuly je prirodzené zovšobecnenie pojmu \emph{logicky platnej
-formuly}.
 
 Ďalším cieľom je stotožniť dokázateľné formuly s tautológiami.
 
@@ -126,69 +120,105 @@ formuly}.
 \begin{dokaz}
 %%% {{{
     Nech $A_1, A_2, \ldots A_n$ je odvodenie (dôkaz) formuly $A$
-    z predpokladov $T$ (v teórii $T$). $A_1, A_2, \ldots A_n(A)$. \fixme{}
-    \par $m$ nech je ľubovoľný model teórie $T$.
-    Ukážeme (indukciou podľa dĺžky dôkazu), že platí $m \models A_i$
+    z predpokladov $T$ (v teórii $T$). $A_1, A_2, \ldots A_n(A)$ kde
+    $A_n=A$. Nech $\mathcal{M}$ nech je ľubovoľný model teórie $T$ 
+    (čiže platí $\mathcal{M} \models A$).
+    Ukážeme (indukciou podľa dĺžky dôkazu), že platí $\mathcal{M} \models A_i$
     pri predpoklade, že pre $A_j, j < i$ platí $m \models A_j$.
 
     Do dôkazu sa $A_i$ môže dostať niekoľkými spôsobmi:
     \begin{enumerate}
-    \item $A_i \in T$, m -- model $T$, potom $m \models A_i$ a teda
-            $T \models A_i$
+    \item $A_i \in T, \mathcal{M}$ je model $T$. Potom 
+        $\mathcal{M} \models A_i$ a teda $T \models A_i$
+
     \item $A_i$ sa dostane do dôkazu ako axióma predikátovej logiky:
-        \begin{enumerate}
-        \item $A_i$ je axioma výrokovej logiky -- je poskladaná z
-        atomických formúl a logických spojok $\neg$ a $\implies$. Potom
-        $A_i$ je tautológia výrokovej logiky (ak formula je tautológia,
-        jej pravdivostná hodnota nezávisi od ohodnotenia premenných, a
-        $m \models A_i$, teda $m \models A_i[e]$).
+    \begin{enumerate}
+        \item $A_i$ je axióma výrokovej logiky -- je poskladaná z
+            atomických formúl a logických spojok $\neg$ a $\implies$. Potom
+            $A_i$ je tautológia výrokovej logiky (ak formula je tautológia,
+            jej pravdivostná hodnota nezávisi od ohodnotenia premenných, a
+            $\mathcal{m} \models A_i$, teda $\mathcal{M} \models A_i[e]$).
 
-        \item $A_i$ je axioma špecifikácie, teda je tvaru $A_i: (\forall
-        x) B \implies B_x[t]$, $t$ je substitúcia za $x$ do $B$. $m
-        \models A_i$.
-        \par
-        Zaujíma nás prípad, kedy $(\forall x) B$ je pravdivý.\footnote{
-            v opačnom prípade implikácia triviálne platí}
-        To znamená, že pre ľubovoľné o\fixme{individuum m}hodnotenie platí $B[e(x/m)]$, teda
-        $e(x)=m$. Tvrdenie zo zimného semestra: $$m \models A_{x_1,
-        \ldots x_n}[t_1, \ldots t_n][e] \Leftrightarrow m \models
-        A[e(x_1/m_1, \ldots x_n/m_n)]$$ a $$t_i[e] = m_i.$$ 
+        \item $A_i$ je axioma špecifikácie, teda je tvaru 
+            $A_i: (\forall x) B \implies B_x[t]$, 
+            $t$ je substitúcia za $x$ do $B$. 
+            Chceme ukázať, že formula bude pravdivá
+            pri každom ohodnotení $e$.
+            Zaujíma nás prípad, kedy $(\forall x) B$ je pravdivý.\footnote{
+                v opačnom prípade implikácia triviálne platí}
+            To znamená, že pre ľubovoľné indivíduum $m$ platí (Z Tarského
+            definície) $B[e(x/m)]$, teda $e(x)=m$.
+        
+            Tvrdenie zo zimného semestra:
+            \begin{equation*}
+                \mathcal{m} \models A_{x_1, \ldots x_n}[t_1, \ldots t_n][e] 
+                    \Leftrightarrow 
+                \mathcal{m} \models A[e(x_1/m_1, \ldots x_n/m_n)]
+            \end{equation*}
+            a
+            \begin{equation*}
+              t_i[e] = m_i.
+            \end{equation*}
 
-        Ak položím tvrdenie $B_x[t][e]$, zmení sa to na $B[e(x/m)]$ a
-        táto formula je pravdivá v $m \models B[e(x/m)]$.
+            Ak položím tvrdenie $B_x[t][e]$, zmení sa to na $B[e(x/m)]$ a
+            táto formula je pravdivá v $\mathcal{m} \models B[e(x/m)]$.
+            \fixme{co tym chcel autor povedat?}
 
         \item $A_i: (\forall x) (B \implies C) \implies (B \implies
-        (\forall x) C)$ a $x$ nie je voľná v $B$. Mali by sme dokázať,
-        že platí $m \models A_i$. Formula  $m \models (B \implies
-        C)[e(x/m)]$ platí, pozeráme sa na $(B \implies C)$. To je
-        ekvivalentné s $\neg B \lor C$. Dôležitý je tiež predpoklad, že
-        $x$ nie je voľná v $B$, a teda nezávisí od ohodnotenia viazanej
-        premennej. Keď je ľavá časť axiomy pravdivá, musí byť aj pravá
-        \todo{spresniť!} $m \models A_i$.
-        \end{enumerate}
-    \item $A_i$ je niektorá axioma rovnosti:
+            (\forall x) C)$ a $x$ nie je voľná v $B$.
+            Mali by sme dokázať, že platí $\mathcal{M} \models A_i$.
+            Zaujímavý prípad je, keď
+            $\mathcal{M} \models (B \implies C)[e(x/m)]$ platí, vtedy sa
+            pozeráme na platnosť $(B \implies (\forall x)C)$.
+            Posledná formula je ale ekvivalentná s $\neg B \lor (\forall x) C$.
+            Dôležitý je tiež predpoklad, že $x$ nie je voľná v $B$,
+            a teda nezávisí od ohodnotenia viazanej premennej.
+            Ak $B$ nie je pravdivá, tak disjunkcia je pravdivá a
+            problém je vyriešený.
+            Ak by $B$ bola pravdivá, tak by malo byť $(\forall x) C$
+            pravdivé. Lenže to musí byť, inak by neplatilo
+            $(\forall x) (B \implies C)$.
+    \end{enumerate}
+
+    \item $A_i$ je niektorá axióma rovnosti:
+    \begin{enumerate}
+        \item $A_i: x=x$. Potom $A[e]$ je $m=m$ a teda pri každom
+            ohodnotení $\mathcal{M} \provable A$.
+
+        \item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots 
+            \implies f(x_1, \ldots, x_n) = f(y_1, \ldots, y_n).$.
+            Zaujíma nás prípad, keď  $e(x_i) = e(y_i)$, teda
+            $e(x_i)=e(y_i)=m_i$. Vtedy dostávame
+            \begin{equation*}
+              m_1=m_1 \implies m_2=m_2 \implies \ldots
+                f(m_1, \dots, m_n) =f(m_1, \dots, m_n)
+            \end{equation*}
+
+        \item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots 
+            \implies P(x_1, \ldots, x_n) = P(y_1, \ldots, y_n).$.
+            Zaujíma nás opäť prípad, keď $x_i$ aj $y_i$ reprezentujeme 
+            rovnakým indivíduom: $e(x_i/m_i)$ a $e(y_i/m_i)$.
+            Potom
+            $P_m(m_1, \ldots, m_n) = P_m(m_1, \ldots, m_n)$, kde $(m_1,
+        \ldots m_n) \in P$ buď je alebo nie je v relácii.
+    \end{enumerate}
+
+    \item Odvodzovacie pravidlá, $A_i: A_j, A_k$, pričom $x < i$ a
+        $k < i$.
         \begin{enumerate}
-        \item $A_i: x=x$, potom $m\models x=x$, $A_i[e]$ a $m=m$.
-        \item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
-        f(x_1, \ldots, x_n) = f(y_1, \ldots, y_n).$. Zaujíma nás prípad,
-        keď  $e(x_i) = e(y_i)$, teda
-        $e(x_i/m_i)=e(y_i/m_i)$.\fixme{mi?}
-        \fixme{Dostavame m1=m1 -> m2=m2 ... fm(fm,...)=f()}
-        Získavame potom zobrazenie na
-        $f_m(m_1, \ldots m_n)$ a rovnosť platí.
-        \item $A_i: x_1 = y_1 \implies x_2 = y_2 \implies \ldots \implies
-        P(x_1, \ldots, x_n) = P(y_1, \ldots, y_n).$. Zaujíma nás opäť
-        prípad, keď $x_i$ aj $y_i$ reprezentujeme rovnakým indivíduom:
-        $e(x_i/m_i)$ a $e(y_i/m_i)$.  $P_m(m_1, \ldots, m_n)$, $(m_1,
-        \ldots m_n) \in P$ -- buď je v relácii, alebo nie je.
-        \end{enumerate}
-    \item Odvodzovacie pravidlá, $A_i: A_{j_1}, A_{j_2}$, pričom $j_1 < i$ a
-            $j_2 < i$.
-        \begin{enumerate}
-        \item $A_{j_2}. A_{j_1} \implies A_j$, $A_{j_1}$ a $m \models
-        A_{j_1}$, $m \models A_{j_2}$, potom $m \models A_i$.
-        \item $A_i: \forall A_j$, potom $m \models A_j[e(x/m)]$ a $m
-        \models A_j$.
+        \item Modus Ponens:
+            $A_i: A_k$, ak vieme
+            $T \provable A_j, T \provable A_j \implies A_k$.
+            Podľa IP platí
+            $T \models A_j, T \models A_j \implies A_k$ a vďaka
+            korektnosti MP teda aj $T \models A_k$.
+
+        \item Pravidlo zovšebecnenia: $A_i: (\forall x) A_j$.
+            Z IP platí $\models A_j \Rightarrow 
+                \mathcal{M} \models A_i[e(x/m)]$
+            pre ľubovoľné indivíduum $m$. Tým pádom ale
+            $\models (\forall x) A_j$.
+            
         \end{enumerate}
     \end{enumerate}
 %%% }}}
