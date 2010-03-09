@@ -1,0 +1,209 @@
+\section{Veta o úplnosti}
+
+G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
+
+\begin{veta}{G\"odel, 1}
+    Nech $T$ je teória v jazyku $L$ a ak $A$ je
+    ľubovoľná formula jazyka $L$, potom $T \provable A \iff T \models A$,
+    čiže je splnená v každom modeli teórie $T$.
+\end{veta}
+
+\begin{veta}{G\"odel, 2}
+    Teória $T$ je bezosporná práve vtedy, ked $T$ má model.
+\end{veta}
+
+\begin{poznamka}
+    Varianta 1 G\"odelovej vety vyplýva z varianty 2.
+
+    Veta o dedukcii mala nasledovný dôsledok:
+
+    Ak máme teóriu $T$, $A$ je jej formula a $A'$ je uzáver formuly $A$,
+    tak $T \provable A \iff T \union \{ \neg A' \}$ je sporná teória,
+    t.j. podľa vety 2 $T \union \{ \neg A' \}$ nemá model.
+
+    Toto znamená, že v každom modeli teórie $T$ je pravdivý uzáver $A'$.
+    $T \models A' \Rightarrow T \models A$. Z platnosti vety 2 vyplýva veta 1.
+\end{poznamka}
+
+\paragraph{Dôkaz:}
+
+\par Budeme sa snažiť zostrojiť model pre teóriu, ktorá je bezosporná. Majme
+bezospornú teóriu v jazyku $L$. Potrebujeme relácie, zobrazenia a $M$ --
+univerzum. K dispozícii máme len syntaktické prostriedky teórie. Do úvahy
+prichádzajú iba termy bez premenných -- majú jednoznačnú realizáciu (sami sebe
+budú realizáciou).
+
+$$A[e] \iff T \provable A $$.
+
+Možné problémy pri konštrukcii modelu:
+\begin{enumerate}
+    \item Jazyk $L$ neobsahuje žiadne konštanty (a teda žiadne termy bez
+            premenných).
+    \item Ak jazyk $L$ bude jazyk s rovnosťou, môže sa stať, že v teórii $T$
+            bude $T \provable t=s$, ale $t$ a $s$ sú rôzne termy bez
+            premenných (rôzne konštanty).
+    \item Nech $m$ je ľubovoľná realizácia jazyka $L$ a $A$ je uzavretá
+            formula jazyka $L$. Potom práve jedna z formúl $A$, $\neg A$ je
+            pravdivá, ale žiadna z nich nemusí byť dokázateľná v $T$.
+    \item Môže sa stať, že formula $(\exists x)B$ je dokázateľná v teórii
+            $T$, ale pre žiaden term $t$ bez premenných formula $B_x[t]$ nie
+            je dokázateľná v $T$. To znamená, že $(\exists x)B$ 
+            podľa Tarského definície pravdivosti $(\exists x)B$ je
+            nepravdivá, čo je spor s vetou o korektnosti.
+\end{enumerate}
+
+Ako odstránime tieto nedostatky:
+Odstránenie bodu 2 je jednoduché -- riešime vhodnou faktorizáciou, čiže
+zavedieme si množinu $\tau$, čo je množina všetkých termov bez premenných
+a na nej zavedieme reláciu ekvivalencie.
+
+Body 1 a 4 riešime rozšírením o konštanty.
+
+Tretí bod sa rieši tzv. konzervatívnym rošírením teórie (Henkinovským).
+Budú to tzv.  konzervatívne teórie (na pôvodnom jazyku nezískame žiadne nové
+teorémy ani nestratíme žiadne).
+
+\begin{definicia} % uplna teoria
+%%% {{{
+    Hovoríme, že teória $T$ s jazykom $L$ je \emph{úplná}, ak $T$ je
+    bezosporná teória a pre ľubovoľnú uzavretú formulu $A$ na jazyku
+    $L$ buď $A$ alebo $\neg A$ je dokázateľná v $T$.
+%%% }}}
+\end{definicia}
+
+\par Nech $T_h(m)$ je množina všetkých pravdivých uzavreté formuly $T$. 
+Potom $T_h$ je úplná (nemusíme brať otvorené formuly 
+-- napr. $x=0$ v aritmetike nemusí byť pravdivé, 
+lebo závisí od ohodnotenia $x$).
+
+\begin{poznamka}
+ V úplnej teórii (a teda špeciálne v $T_h$) nemôže nastať problém 3,
+ ktorý sme spomínali.
+\end{poznamka}
+
+\begin{definicia}
+%%% {{{ Henkinova teoria
+    Hovoríme, že teória $T$ s jazykom $L$ je \emph{Henkinova}, ak pre
+    ľubovoľnú uzavretú formulu $(\exists x)B$ jazyka $L$ platí
+    \begin{equation}
+        T \provable (\exists x)B \implies B_x[c]
+    \end{equation}
+    pre nejaké $c$ -- konštantu.
+%%% }}}
+\end{definicia}
+
+\begin{poznamka}
+    Ak je teória Henkinova, tak sme vyriešili problémy 1,4.
+\end{poznamka}
+
+\begin{lema}
+    Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
+\end{lema}
+\begin{dokaz}
+    Nech $L$ je jazyk teórie $T$, $\tau$ je množina všetkých
+    termov jazyka $L$ bez premenných. Na množine $\tau$ definujem reláciu
+    ekvivalencie nasledovne:
+    \begin{equation}
+        \forall t_1, t_2 \in \tau :
+            t_1 \equiv t_2 \iff T \provable t_1 = t_2
+    \end{equation}
+    Rovnosť je reflexívna, symetrická, tranzitívna, teda týmto
+    spôsobom definovaná relácia je relácia ekvivalencie a rozdeľuje
+    nám množinu $\tau$ na triedy ekvivalencie:
+    \begin{equation*}
+        [t] = \{ s \in \tau: t \equiv s\}
+    \end{equation*}
+    Univerzum budú tvoriť termy bez premenných.
+    Relačná štruktúra $M$ bude mnomžina všetkých termov bez premenných.
+    Nech $f$ je ľubovoľný $n$-árny funkčný symbol a nech
+     $[t_1], [t_2], \ldots, [t_n] \in M$. Definujeme funkciu $f$ v relačnej
+     štruktúre $M$ nasledovne:
+     \begin{equation*}
+      f_m([t_1], \ldots, [t_n]) = [f(t_1, \ldots t_n)]
+     \end{equation*}
+    Ešte treba ukázať, že táto definícia je konzistentná, čize
+    $f_m([t_1], \ldots, [t_n])=f_m([s_1], \ldots, [s_n])$ ak
+    $s_i \equiv t_i$, čiže nezáleží na výbere reprezentantov.
+    Taktiež je dobré si uvedomiť, že
+    $[t_{x_1,\dots,x_n}[t_1,\dots,t_n]]=t[e], e(x_i/t_i)$.
+
+    Podobne, nech $P$ je $n$-árny predikátový symbol rôzny od $=$ ($=$ sme
+    si už zaviedli). V tom prípade definujeme
+    \begin{equation*}
+     ([t_1], \ldots [t_n]) \in P_m \iff T \provable P(t_1, \ldots, t_n)
+    \end{equation*}
+\end{dokaz}
+
+\paragraph{Poznámka:} Doteraz sme pracovali s $[\ldots]$. Výsledok sa nezmení,
+ak zoberiem $s_1 \in [t_1], \ldots s_n \in [t_n]$. Nezávisí to od reprezentanta
+danej triedy.
+\par
+$$ s_1, \ldots s_n $$
+$$ s_i \in [t_i], i = 1, \ldots n $$
+$$ [t_1], \ldots, [t_n]) \in P_m \iff T \provable P(s_1, \dots s_n) $$
+
+\par
+
+\fixme{zarovnanie na ...}
+\begin{align*}
+    x_1, x_2, &\ldots,& x_n \mbox{-- premenné}.	\\
+    e(x_i) &=& t_i, i=1,\ldots,N	\\
+    t[e] &=& [t_{x_1,\ldots,x_n}][t_1,\ldots, t_n]	\\
+    t[e] &=& [t]
+\end{align*}
+
+% \begin{unknown}
+$A$ -- ľubovoľná uzavretá formula z $L$, potom $m \models A \iff T \provable A$.
+$P(t_1, t_2, \ldots t_n)$ -- atomická formula,  uzavretá, $t_1. \ldots t_n$ sú
+termy bez premenných.
+
+$m \models A \iff ([t_1], \ldots, [t_n]) \in P_m \iff T \provable P(t_1,\ldots
+t_n)$ pre ľubovoľné ohodnotenie.
+
+\par $A: t_1 = t_2$. $m \models t_1 = t_2 \iff [t_1] = [t_2] \iff T \provable t_1 =
+t_2$.
+
+\par $A: \neg B$. Indukčný predpoklad: pre $B$ bolo tvrdenie dokázané ($m\models
+B \iff T \provable B)$. Formula $A$ je pravdivá v $m$ práve vtedy, keď formula $B$
+nie je pravdivá $B$ nie je pravdivá, $T \unprovable B, T \vdash \neg B$.
+
+\par $A. B \implies C$, pričom $B$ a $Cc$ sú dokázané podľa indukčného
+predpokladu. Ak platí $m \models B \implies C$, potom $m \models \neg B \lor m
+\models C$. $T \provable \neg B \lor T \vdash C$.
+
+\begin{align*}
+    T \provable B \implies C \\
+    \provable C \implies (B \implies C)
+\end{align*}
+
+Opačná implikácia:
+\begin{equation*}
+    T\provable B\implies C\Rightarrow m \models B \implies C
+\end{equation*}
+
+Teória $T$ je úplná teória a $B \implies C$ je uzavretá. Pre každú uzavretú
+formulu platí, jedna z možností $T \provable \neg B$ (potom $m \models \neg B$)
+alebo $T \provable B$, a z toho vyplýva, že $T \vdash C$, a teda $m \models C$.
+Tvrdenie je teda dokázané.
+
+\begin{equation}
+    m \models A \iff T \provable A
+\end{equation}
+
+\par Predpokladajme, že formula $A$ je v tvare $A: (\forall x) B$. Pre každú
+inštanciu formuly $B$ tvrdenie platí, $\provable (\forall x) B \implies B_x[t]$
+(axióma špecifikácie). Potom aj $T \provable B_x[t]$ (lebo teória je Henkinova). $m \models B[e(x/t)]$.
+
+\par Ak je pravdivá negácia, potom $T \provable \neg A$, čo znamená, že $(\exists
+x) \neg B$. $T \provable (\exists x) \neg B \implies B_x[c]$, a to znamená, že $T
+\provable \neg B_x[c]$.
+
+\par Nech $A$ je ľubovoľná formula z teórie $T$. Pre ňu platí, že $T \provable A$
+(predpoklad). Potrebujem dokázať, že $T \provable A \iff m \models A$. Zoberiem si
+$A'$ -- uzáver formuly $A$. Na $A'$ sa vzťahuje tvrdenie, ktoré sme už dokázali,
+a teda $m \models A' \iff T \provable A'$. Podľa vety o uzávere:
+$m \models A \iff  m\models A' T \provable A' \iff T \vdash A$
+
+\par Pre ľubovoľnú teóriu, ktorá je idealizovaná (Henkinova a úplná), viem
+zostrojiť model.
+
