@@ -33,6 +33,7 @@
 \end{priklad}
 
 \def\existsxton{(\exists x_1) (\exists x_2) \dots (\exists x_n)}
+\def\forallxton{(\forall x_1) (\forall x_2) \dots (\forall x_n)}
 
 \begin{dokaz}[vety \ref{veta:skolem}]
     Budeme predpokladať, že $A$ je uzavretá (Podľa vety o uzávere
@@ -61,40 +62,57 @@
                     (\forall y) P^{(n+1)} (x_1,\dots,x_n,y)
             \right]
         \end{equation}
-        Postupne ukážeme, že $\provable A \Leftrightarrow \provable
+        Postupne ukážeme, že $\provable A \Leftrightarrow \; \provable
         A^*$.
-        \fixme{vo zvysku Toman robi nejaku drsnu magiu, treba to cele
-        pocheckovat na validitu}
         \begin{itemize}
         \item[$\Rightarrow$]
             \begin{itemize}
             \item[0] $\provable A$
-            \item[1] $\provable (B \implies P^{(n+1)}) \implies
-                            (B \implies P^{(n+1)})$ -- inštancia
+            \item[1] $\provable \highlightb{(B \implies P^{(n+1)}) \implies
+                            (B \implies P^{(n+1)})}$ -- inštancia
                             $X\implies X$.
             \item[2] $\provable (X\implies (Y\implies Z)) \implies
                             (Y\implies (X\implies Z))$ -- veta o zámene
                             predpokladov
             \item[3] $\provable
-                (\underbrace{(B \implies P^{(n+1)})}_{X} \implies 
+                \highlightb{\underbrace{(B \implies P^{(n+1)})}_{X} \implies 
                         (\underbrace{B}_{Y} \implies
-                        \underbrace{P^{(n+1)}}_{Z})) \implies
-                ( \underbrace{B}_{Y} \implies
+                        \underbrace{P^{(n+1)}}_{Z}))} \implies
+                \highlighta{[ \underbrace{B}_{Y} \implies
                  (\underbrace{(B \implies P^{(n+1)})}_{X} \implies
-                        \underbrace{P^{(n+1)}}_{Z}))$ -- inštancia 2
+                        \underbrace{P^{(n+1)}}_{Z})]}$ -- inštancia
+                        kroku 2
             \item[4] $\provable
-                 B \implies
+                 \highlighta{B \implies
                  ((B \implies P^{(n+1)}) \implies
-                        P^{(n+1)}))$ - MP 1,3.
-                        Pozn.: Toman: Ideme to obliecť, zatiaľ je
-                        obnažená.
-            \item[5] $\provable (\forall y) B \implies ((\forall y)
+                        P^{(n+1)}))}$ -- MP 1,3.\footnote{
+                        Toman: Ideme to obliecť, zatiaľ je
+                        obnažená.}
+
+            \item[x] $\provable \highlightc{\highlighto{(\forall y)}
+                B} \implies \highlighto{(\forall y)}(
+                (B \implies P^{(n+1)}) \implies P^{(n+1)})$ --
+                veta o distribúcii kvantifikátorov aplikovaná na
+                5
+            \item[y] $(\forall y)(
+                (B \implies P^{(n+1)}) \implies P^{(n+1)})
+                \implies
+                \highlightb{(\highlighto{(\forall y)}(B \implies P^{(n+1)}) 
+                    \implies
+                     \highlighto{(\forall y)}P^{(n+1)})}$
+                -- \fixme{z coho presne toto vyplyva?}
+
+            \item[5] $\provable \highlightc{(\forall y) B} \implies 
+                \highlightb{((\forall y)
                     (B \implies P^{(n+1)}) \implies
-                    (\forall y) P^{(n+1)})$ -- veta o distribúcii
-                    kvantifikátorov + pravidlo jednoduchého sylogizmu
-                    \fixme{dopisat tie 3 kroky}
-            \item[6] $\provable \existsxton (\forall y) B \implies
-                    \existsxton (\forall y) (B \implies P^{(n+1)})$ --
+                    (\forall y) P^{(n+1)})}$ -- pravidlo jednoduchého sylogizmu
+                    aplikované na x,y
+                    \fixme{odtialto to zacina byt fakt bordel}
+            \item[6] $\provable \highlighta{\existsxton} (\forall y) B \implies
+                    \highlighta{\existsxton} \left[
+                        (\forall y) (B \implies P^{(n+1)})
+                        \implies (\forall y) P^{(n+1)}) \right]$ --
+                    Dokážeme nasledovne:
                     $\provable (\forall x)(A \implies B) \implies
                      ((\exists x) A \implies (\exists x)B)$
                    \begin{itemize}
@@ -119,70 +137,91 @@
             \vskip 0.5cm
         \item[$\Leftarrow$]
             \begin{itemize}
-            \item[1] $\provable \existsxton ((\forall y) (B \implies B) 
-                \implies (\forall y) B)$
+            \item[1] $\provable \highlightc{
+                \existsxton [(\forall y) (B \implies B) 
+                \implies (\forall y) B]}$
             \item[2] $\provable (\exists x) (A \implies B) \implies
                 ((\forall x) A \implies (\exists x) B)$
                 \begin{itemize}
                 \item $\provable A \implies (\neg B \implies \neg (A
                         \implies B))$
                 \item $\provable (\forall x) A \implies (\forall x) (\neg B
-                   \implies \neg (A \implies B)$ -- VDK
-                \item $\provable (\forall x) A \implies (
-                    (\forall x) \neg B \implies
-                    (\forall x) \neg (A \implies B))$ -- VDK + JS
+                   \implies \neg (A \implies B)$ -- veta o distribúcii
+                   kvantifikátorov
                 \item $(\forall x) A \provable
-                    (\forall x) \neg B \implies
-                    (\forall x) \neg (A \implies B)$
+                    (\forall x) (\neg B \implies \neg (A \implies B)$
+                    -- veta o dedukcii                    
                 \item $(\forall x) A \provable
-                    \neg (\forall x) \neg (A \implies B) \implies
-                    \neg (\forall x) \neg B$
+                    \highlighta{(\forall x) \neg B} \implies
+                    \highlightb{(\forall x) \neg (A \implies B)}$ --
+                    veta o distribúcii kvantifikátorov
                 \item $(\forall x) A \provable
-                    (\exists x) (A \implies B) \implies
-                    (\exists) B$
-                \item $(\exists x) (A \implies B) \provable
-                     (\forall x) A  \implies
-                    (\exists) B$
+                    \highlightb{\highlightc{\neg} (\forall x) 
+                                 \neg (A \implies B)} \implies
+                    \highlighta{\highlightc{\neg} (\forall x) 
+                                 \neg B}$ -- zámena implikácie
+                \item $\highlighta{(\forall x)} A \provable
+                    \highlightb{\highlightp{(\exists x)} (A \implies
+                    B)} \implies
+                    \highlightp{(\exists x)} B$ -- nahradenie
+                    kvantifikátorov
+                \item $\highlightb{(\exists x) (A \implies B)} \provable
+                     \highlighta{(\forall x) A } \implies
+                    (\exists x) B$ -- veta o dedukcii
                 \end{itemize}
-            \item[3] $\provable \existsxton ((\forall y) (B \implies B) 
-                \implies  (\forall y) B) \implies
-                [ \existsxton (\forall y_n) (B \implies B)
-                \implies \existsxton (\forall y) B]$.
-            \item[4] $\provable \existsxton (\forall y_n) (B \implies B)
-                \implies \existsxton (\forall y) B$.
-            -- MP 1,3
+            \item[3] $\provable \highlightc{
+                \existsxton [(\forall y) (B \implies B) 
+                \implies  (\forall y) B]} \implies
+                \highlighta{
+                [ \forallxton (\forall y_n) (B \implies B)
+                \implies \existsxton (\forall y) B]}$ -- $n$-krát
+                použijeme 2.
+            \item[4] $\provable \highlighta{
+                \highlighto{\forallxton (\forall y_n) (B \implies B)}
+                \implies \highlightp{\existsxton (\forall y) B}}$.
+                -- MP 1,3
             \item[5]
-                $\provable \existsxton (\forall y) B$.
-            -- $n$-krát pravidlo zovšeobecnenia
+                $\provable \highlighto{\forallxton (\forall y) (B
+                \implies B)}$.
+                -- $n+1$-krát pravidlo zovšeobecnenia použité na $B \implies B$
+            \item[6]
+                $\provable \highlightp{\existsxton (\forall y) B}$.
+                -- MP 4,5
             \end{itemize}
+            \vskip 0.5cm
             Ešte potrebujeme transformovať formulu $A^*$ na formulu s
-            hodnosťou $m-1$.
+            hodnosťou $m-1$. Nech
             $B: (Q_1 z_1)(Q_2 z_2) \dots (Q_l z_l) C$, kde $C$ je formula
             bez kvantifikátorov.
-            $A^\fixme{} \Leftrightarrow \existsxton \left( (\forall y)
+            \begin{itemize}
+            \item
+            $A^* \Leftrightarrow \highlightdim{\existsxton} \left( (\forall y)
                 \left[ (Q_1 z_1) (Q_2 z_2) \dots (Q_l z_l) C \implies
                   P^{(n+1)} \right] \implies (\forall y) P^{(n+1)}\right)$
 
-            $ \existsxton \left( (\forall y) (\overline{Q_1} z_1)
-                        (\overline{Q_2} z_2) \dots
-                        (\overline{Q_l} z_l) \left[
-                            C \implies P^{(n+1)} \right]
-                                \implies (\forall \fixme{n})
-                                    P^{(n+1)} \right)$ -- veta o variantoch
-                                    + l prenexnych operacii c) alebo d)
-            $ \existsxton \left( (\forall y) (\overline{Q_1} z_1)
+            \item
+            $ \highlightdim{\existsxton} \left( (\forall y) (\overline{Q_1} z_1)
                         (\overline{Q_2} z_2) \dots
                         (\overline{Q_l} z_l) \left[
                             C \implies P^{(n+1)} \right]
                                 \implies (\forall u)
                                     P^{(n+1)} \right)$ -- veta o variantoch
-            $ \existsxton \left( \fixme{(\exists y)} (\overline{Q_1} z_1)
+                                    + l prenexnych operacii c) alebo d)
+            \item
+            $ \highlightdim{\existsxton} \left( (\forall y) (\overline{Q_1} z_1)
+                        (\overline{Q_2} z_2) \dots
+                        (\overline{Q_l} z_l) \left[
+                            C \implies P^{(n+1)} \right]
+                                \implies (\forall u)
+                                    P^{(n+1)} \right)$ -- veta o variantoch
+            \item
+            $ \highlightdim{\existsxton} \left( \fixme{(\exists y)} (\overline{Q_1} z_1)
                         (\overline{Q_2} z_2) \dots
                         (\overline{Q_l} z_l) \left[
                             C \implies P^{(n+1)} \right]
                                 \implies (\forall u)
                                     P^{(n+1)} \right)$ -- ???
-
+            \end{itemize}
         \end{itemize}
     \end{itemize}
 \end{dokaz}
