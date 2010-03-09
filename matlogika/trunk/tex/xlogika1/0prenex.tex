@@ -57,7 +57,7 @@ jej ekvivaletom.
             nahraď podformulou $(Qx) (B\implies C)$
     \item[d)] ak $x$ nie je voľná v $C$, tak $((Qx)) B \implies C$
         nahraď $(Qx) (B \implies C)$
-    \item[e)] ak $x$ nie je voľná v $B$, $\squareop \in \{\land,\lor\}$.
+    \item[e)] ak $x$ nie je voľná v $B$, $\square \in \{\land,\lor\}$.
      Potom $B \squareop ((Qx)C)$ resp. $((Qx)B)\squareop C$ nahraď
      $(Qx)(B \squareop C)$
 \end{itemize}
@@ -71,6 +71,7 @@ jej ekvivaletom.
 \end{lema}
 \begin{dokaz}
   %%% {{{ 
+  \par
   \begin{itemize}
     \item[a)] Veta o variantoch
     \item[b)] Platí
@@ -90,7 +91,7 @@ jej ekvivaletom.
         z čoho vieme priamo odvodiť dané tvrdenie.
     \item[c)] Nech $Q=\forall$.
         $\provable (\forall x) (B \implies C) \leftrightarrow
-            (B \implies (\forall x) C)$. \fixme{moze byt x volna?}
+            (B \implies (\forall x) C)$ kde $x$ nie je voľná v $B$.
         \begin{itemize}
         \item[$\Rightarrow$]
             5. Axióma predikátovej logiky
@@ -143,7 +144,6 @@ jej ekvivaletom.
             \item[2] $\provable (B \implies C) \implies
                  ((C \implies (\exists c) C) \implies (B \implies
                  (\exists x) C ))$ -- jednoduchý sylogizmus (JS)
-                 \todo{checkni sylogizmus, dopis do prerekvizit}
 
             \item[3] $\provable
                 \highlighta{
@@ -255,7 +255,7 @@ jej ekvivaletom.
                  -- časť c) tohoto dôkazu
             \item[5]
                 $\provable (\neg C \implies \neg B) \leftrightarrow (B \implies
-                C)$ -- štandardná formula dokázaná vo výrokovej logike
+                C)$ -- axióma A3.
             \item[6]
                 $\provable 
                     (\exists x) (\highlighta{B \implies C}) \leftrightarrow
