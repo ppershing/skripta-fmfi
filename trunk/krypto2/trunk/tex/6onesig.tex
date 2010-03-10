@@ -140,4 +140,36 @@ iba polovicu hodnôt $y_{i,b}$. Podpis sa nám tým predĺži na $16
 
 \subsubsection{Merkleho konštrukcia}
 Ďalši nezávislú možnosť ako skrátiť dĺžku postupnosti vymyslel
-Merkle.
+Merkle. Hlavnou pointou bude pridať akúsi formu checksumu - počtu
+nulových bitov správy. Potom budeme pri podpisovaní podpisovať iba
+jednotkové bity, čím ušetríme v priemernom prípade takmer polovicu bitov
+(čiže v našom prípade $|\sigma| \approx 4 \unit{kB}$).
+
+Presnejšie, majme správu dĺžky $l$. K nej pridáme checksum dĺžky
+$\lceil \log l \rceil$ a na výsledok dĺžky $n=l+\lceil \log l \rceil$
+použijeme podpis, kde podpíšeme iba jednotkové bity.
+
+V prvom rade by sme mali ukázať, že takáto zmena nepokazí bezpečnosť
+schémy. Majme preto známu správu $m$ s podpisom $\sigma$ a
+predpokladajme, že sa útočník snaží vyrobiť $m'$.
+Ak existuje bit $i$, $m_i=0$ a platilo by $m'_i=1$, tak sa dostávame
+do známej situácie, kedy útočník musí vyrobiť platný vzor pre $y_{i,1}$.
+Ošemetná situácia ale nastáva, ak máme bit $m_i=1$ a útočník ho zmení
+na nulu. V tomto prípade totiž nemusí nič podvrhnúť, lebo pre nulový
+bit nemusí nič uviesť. Zachráni nás však checksum - totiž, ak zmenšíme
+celkový počet jednotiek v správe (a to jediné nám ostáva, ak nemáme
+nablyšťanú guľu na lámanie one-way funkcie), vznikne nám aspoň jedna
+jednotka na doteraz neodhalenom mieste - nie je totiž možné, aby sme
+po pričítaní čísla k checksume dostali checksumu pozostávajúci iba zo
+známych bitov - to by znamenalo, že daná checksuma používa iba
+niektoré jednotky z pôvodnej, lenže to je v spore s tým, že je
+väčšia). Preto aj v tomto prípade musí útočník úspešne nájsť vzor
+jednosmernej fukncie a schéma ostáva naďalej bezpečná.
+
+Ďalšou príjemnou vlastnosťou tejto úpravy je automatické zmenšenie
+súkromného a verejného kľúča na polovicu - vôbec nepotrebujeme
+generovať $x_{i,0}$ a $y_{i,0}$.
+
+\subsection{Merkleho stromy}
+\subsection{Stanekova schéma}
+\subsection{Fail/stop podpisové schémy}
