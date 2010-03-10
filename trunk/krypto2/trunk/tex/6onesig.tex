@@ -98,4 +98,46 @@ Overovanie spočíva v overení každého podpísaného bitu správy.
 \end{procedure}
 
 Bezpečnosť schémy je založená na nasledujúcom pozorovaní:
+Aby bol útočník k správe $m$ a jej podpisu $\sigma$ vygenerovať
+falošnú správu $m' \ne m$ a jej podpis $\sigma'$, musel by byť schopný
+vygenerovať $x_{i,b}$ pre nejakú novú dvojicu $(i,b)$.
+To ale znamená invertovať niektorú hodnotu $y_{i,b}$ z verejnej
+funkcie, predpokladáme, že je možné iba so zanedbateľnou
+pravdepodobnosťou.
 
+Na druhej strane, schéma je evidentne jednorázová.
+Až na špeciálny prípad, keď sú podpísané dve správy $m_1,m_2$ líšiace
+sa v práve jednom bite (vtedy si útočník nepomôže), vieme kombinovať
+jednotlivé bity podpisov a podpísať inú správu. V prípade, že
+podpisujeme hash hodnotu, je navyše očakávané, že správy sa budú líšiť
+na zhruba polovici bitov.
+
+Uvažujme teraz praktické aspekty používania takejto schémy. Podpisujme
+hash, napríklad výstup z funkcie SHA-256. Ďalej predpokladajme, že
+$|X|=|Y|=256 \unit{bit}$. Potom dostávame pre súkromný kľúč veľkosť
+$|sk|=2*256*256 bit =16 \unit{kB}$. Verejný kľúč je rovnako dlhý, čiže
+$|pk|=16 \unit{kB}$ a podpis má polovičnú dĺžku kľúčov - $|\sigma|=8
+\unit{kB}$.
+V porovnaní napríklad s RSA je to výrazne horšie. Bolo by teda dobré
+nejakým spôsobom skrátiť kľúče.
+
+Skrátenie súkromného kľúča: Namiesto celého kľúča $(x_{1,0}, x_{1,1},
+\ldots x_{n,1})$ si budeme pamätať iba náhodné $x \inr X$ - seed pre
+pseudonáhodý generátor, ktorý postupne vygeneruje dané hodnoty
+$x_{i,b}$. Problém v tomto prípade je ďalší predpoklad - bezpečnost
+pseudonáhodného generátora (t.j. že z niektorých hodnôt postupnosti
+$x_{1,0}, \ldots, x_{n,1}$ nevieme efektívne vypočítať žiadnu ďalšiu -
+to by bolo ekvivalentné zlomeniu podpisovej schémy).
+
+Skrátenie verejného kľúča: Namiesto celého kľúča zverejníme iba hash
+$y=H(y_{1,0},y_{1,1},\ldots,y_{n,1})$. Tým pádom ale pri podpisovaní
+musíme uviesť aj všetky hodnoty $y$, aby si to overovateľ mohol
+overiť. Po chvíli zamyslenia sa ale môžeme pozorovať, že na overenie
+stačí poslať tie hodnoty $y_{i,b}$, ktoré si overovateľ nemôže
+spočítať. Tieto sú presne negácie bitov správy a teda nám stačí poslať
+iba polovicu hodnôt $y_{i,b}$. Podpis sa nám tým predĺži na $16
+\unit{kB}$.
+
+\subsubsection{Merkleho konštrukcia}
+Ďalši nezávislú možnosť ako skrátiť dĺžku postupnosti vymyslel
+Merkle.
