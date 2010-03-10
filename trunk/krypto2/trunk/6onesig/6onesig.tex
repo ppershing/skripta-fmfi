@@ -1,0 +1,53 @@
+\section{Jednorázové & fail-stop podpisové schémy}
+
+Jednorázové podpisové schémy, ako už ich názov napovedá, slúžia na
+podpísanie práve jednej správy. Ich bezpečnosť je v prípade viacnásobného
+podpisovania ohrozená. Načo sú nám teda takéto podpisové schémy? Zatiaľ to
+vyzerá tak, že sú ia menej výhodné. Existujú však dôvody, prečo sa zaoberať
+aj takýmito zjavne ``okrátenými'' podpisovými schémami.
+
+Ich hlavná výhoda bude spočívať v jednoduchších predpokladoch pri dôkaze
+bezpečnosti. Kým pri bežných podpisových schémach sme stavali na
+tažkosti istých matematických problémov (RSA, dlog, Diffie-Hellman),
+pri jednorázových schémach nám bude stačiť napríklad jednosmernosť
+hashovacej funkcie.\footnote{Už aj toto je pomerne náročný predpoklad,
+    keďže nevieme povedať veľa o existencii one-way funkcií}
+Druhou výhodou môže byť rýchlosť - zrejme je jednoduchšie hashovať hodnoty
+ako napríklad umocňovať.
+Treťou výhodou (i keď skôr teoretickou) je možnosť odolať kvantovým
+výpočtom - pre väčsinu používaných ťažkých problémov sú známe kvantové
+algoritmy, ktoré ich efektívne počítajú. Pre invertovanie hashovacích
+funkcií ale takéto algoritmy nie sú známe.
+
+Otázka teda môže znieť, že či jednorázovosť je až taká obmedzujúca
+vlastnosť. Môžeme napríklad uvažovať komunikáciu s bankou a podpisovanie
+prevodných príkazov. Je jednoducho predstaviteľné, že povedzme za mesiac
+bežný človek nespraví viac ako povedzme 5 príkazov. Preto môžeme použiť
+niečo ako pohľad z opačnej strany - namiesto toho, aby sme navrhovali
+podpisové schémy na polynomiálny počet podpísaných správ,
+môžeme sa snažiť navrhnúť schémy na jednorázové podpisy a tie potom
+rozšíriť nejakým spôsobom pre viac správ.
+
+Jednorázovú podpisovou schému formálne definujeme veľmi podobne ako bežné
+podpisové schémy
+
+\begin{definicia}[Jednorázová podpisová schéma]
+    je trojica algoritmov 
+    $\langle Gen, Sign_{sk}, Verify_{pk} \rangle$ kde
+    $Gen(1^k) \implies \langle pk, sk \rangle$ je generátor kľúčov,
+    $Sign_{sk}(m) \implies \sigma$ je podpisovací algoritmus a
+    $Verify_{pk}(m,\sigma) \implies \{0,1\}$ je overovací algoritmus.
+\end{definicia}
+
+Pojem bezpečnosti takejto schémy si upravíme na jednu správu.
+\begin{definicia}[Bezpečnosť]
+    Uvažujme útočníka ako PPT algoritmus, ktorý má navyše k dispozícii
+    orákulum $Sig_{sk}$. Útočník sa môže raz opýtať orákula na podpis
+    $\sigma$ správy $m$ a jeho cieľom je zostrojiť
+    správu $m' \ne m$ a k nej platný podpis $\sigma'$.
+    Budeme hovoriť, že schéma je bezpečná ak pravdepodobnosť,
+    že ľubovoľný útočník uspeje (t.j. nájde $(m',\sigma')$), je zanedbateľná.
+\end{definicia}
+
+\subsection{\fixme{spelling}Lampartova schéma}
+
