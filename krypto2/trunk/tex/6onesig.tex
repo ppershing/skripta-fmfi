@@ -49,5 +49,53 @@ Pojem bezpečnosti takejto schémy si upravíme na jednu správu.
     že ľubovoľný útočník uspeje (t.j. nájde $(m',\sigma')$), je zanedbateľná.
 \end{definicia}
 
-\subsection{\fixme{spelling}Lampartova schéma}
+\subsection{Lamportova schéma}
+
+Uvažujme, že máme funkciu $f: X \rightarrow Y$, ktorá je jednosmerná.
+Budeme podpisovať správy $m$ fixnej veľkosti $|m|=n$. Toto samo o sebe nie
+je žiadny problém, ak uvážime, že budeme podpisovať len hash správy, ktorý je
+fixnej veľkosti.
+
+Generovanie kľúča bude vyzerať nasledovne:
+%%% {{{ proc GenLamport
+\begin{procedure}
+    \caption{GenLamport($n$)}
+    \For{$i:=1$ \KwTo $n$}{
+        $x_{i,0} \inr X$\;
+        $x_{i,1} \inr X$\;
+        $y_{i,0} \assign f(x_{i,0})$\;
+        $y_{i,1} \assign f(x_{i,1})$\;
+    }
+    \Return $sk=(x_{1,0},x_{1,1},\ldots,x_{n,0},x_{n,1}),\quad
+             pk=(y_{1,0},y_{1,1},\ldots,y_{n,0},y_{n,1})$\;
+\end{procedure}
+%%% }}}
+
+Čitateľ už môže tušiť, ako budeme podpisovať správu - jednoducho postupne
+podpíšeme všetyk jej bity tým, že zverejníme príslušnú časť súkromného
+kľúča.
+
+%%% {{{ SignLamport
+\begin{procedure}
+    \caption{SignLamport($m$)}
+    \For{$i:=1$ \KwTo $n$}{
+        $\sigma_i \assign f(x_{i, m_i})$\;
+    }
+    \Return $\sigma = (\sigma_1, \ldots, \sigma_n)$
+\end{procedure}
+%%% }}}
+
+Overovanie spočíva v overení každého podpísaného bitu správy.
+
+\begin{procedure}
+    \caption{VerifyLamport($m, \sigma$)}
+    \For{$i:=1$ \KwTo $n$}{
+        \If{$f(x_{i, m_i}) \ne y_{i, m_i}$}{
+            \Return reject\;
+        }
+    }
+    \Return accept\;
+\end{procedure}
+
+Bezpečnosť schémy je založená na nasledujúcom pozorovaní:
 
