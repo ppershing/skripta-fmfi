@@ -173,3 +173,77 @@ generovať $x_{i,0}$ a $y_{i,0}$.
 \subsection{Merkleho stromy}
 \subsection{Stanekova schéma}
 \subsection{Fail/stop podpisové schémy}
+
+Predstavme si, že chceme schému pri ktorej sme chránený pred neobmedzene výpočtovo silným
+falšovateľom. 
+Opäť si predstavíme jednorázovú schému. Útočník v prípade získania
+správy, jej podpisu a verejného kľúča nebude schopný identifikovať jednoznačne súkromný kľúč 
+a nebude schopný vyrobiť správny podpis inej správy.
+Pokiaľ sa falšovateľ pokúsi podpisať inú správu, tak podpisovateľ zistí, že bol použitý iný
+ako jeho súkromný kľúč a je to schopný preukázať.
+
+\subsubsection{Heyst Pedersenova schéma}
+
+Uvažujme grupu $G$, kde $|G| = q$, kde $q$ je nejaké prvočíslo.
+Zoberme generátory $g, h \in G$. Súkromný kľúč bude štvorica 
+$s_k = (x_1, x_2, y_1, y_2) \inr Z_q$. Verejný kľúč bude dvojica
+$p_k = (g^{x_1} h^{x_2}, g^{y_1} h^{y_2}) = (z_1, z_2)$.
+
+Podpisom správy $m$ je dvojica $\sigma = Sig_{s_k}(m) = (\sigma_1, \sigma_2) = (x_1 + my_1, x_2 + my_2)$.
+
+Overenie podpisu je otestovanie rovnosti $g^{\sigma_1} h^{\sigma_2} = z_1 z_2^m$.
+
+Teraz si dokážeme niekoľko vlastností tejto schémy.
+
+\begin{lema}
+Pre ľubovoľnú trojicu $p_k, m, \sigma$, kde $\sigma = Sig_{s_k}(m)$ (kde $s_k$ je nejaký vyhovujúci súkromný kľúč)
+existuje $q$ roznych $S_k^*$, takých že $\sigma = Sig_{s_k^*}(m)$.
+\end{lema}
+
+\begin{dokaz}
+Nech $h = g^a$, $z_1 = g^{e_1}$ a $z_2 = g^{e_2}$ (neobmedzene silný útočník vie $a, e_1, e_2$ vypočítať).
+Z toho, že $z_1 = g^{x_1} h^{x_2}$ máme rovnicu $e_1 = x_1 + ax_2$. Podobne z $z_2 = g^{y_1} h^{y_2}$
+dostaneme $e_2 = y_1 + a y_2$. A ešte vďaka tomu, že $\sigma$ je podpis správy $m$ máme rovnice
+$\sigma_1 = x_1 + my_1$, $\sigma_2 = x_2 + my_2$. 
+
+Dostali sme 4 rovnice. Máme 4 neznáme. V maticovom tvare máme:
+$$\left ( \begin{matrix} 1 & a & 0 & 0 \cr 0 & 0 & 1 & a \cr 1 & 0 & m & 0 \cr 0 & 1 & 0 & m \end{matrix} \right )
+\left ( \begin{matrix} x_1 \cr x_2 \cr y_1 \cr y_2 \end{matrix} \right )=
+\left ( \begin{matrix} e_1 \cr e_2 \cr \sigma_1 \cr \sigma_2 \end{matrix} \right )$$
+
+Matica sústavy má ale hodnosť $3$. Keďže jedno riešenie už máme, tak sústava potom má $q$ rôznych riešení, keďže sme v priestore $Z_q^4$.
+
+\end{dokaz}
+
+Toto dokazuje, že potenciálnych súkromných kľúčov je exponenciálne veľa. Na to aby sme ukázali, že útočník má
+šancu na úspech $\frac{1}{q}$ treba ešte ukázať jednu vec.
+Môže ešte nastať patologický prípad, kde veľa súkromných kľúčov pri podpise falošnej správy $m^*$ dá rovnaký podpis.
+Teda budeme mať rôzne kľúče $s_k^{'}, s_k^{''}, \dots$, kde $Sig_{s_k^{'}}(m^*) = Sig_{s_k^{''}}(m^*) = \dots$.
+To, že tento prípad nenastane ukazuje nasledujúca lema.
+
+\begin{lema}
+Pre ľubovoľné $p_k, m, \sigma, m^*, \sigma^*$, kde $\sigma = Sig_{s_k}(m)$, $\sigma^* = Sig_{s_k}(m^*)$ a $s_k$ vyhovuje $p_k$
+existuje maximálne jeden jediný vyhovujúci $s_k$. 
+\end{lema}
+
+\begin{dokaz}
+Prvé 4 rovnice máme rovnaké ako v predchádzajúcej leme. Navyše dostaneme ešte rovnice $x_1 + m^*y_1 = \sigma_1^*$, 
+$x_2 + m^* y_2 = \sigma_2^*$.
+Pokiaľ zostrojíme maticu tejto sústavy bude mať hodnosť $4$ a teda bude mať maximálne jedno riešenie.
+\end{dokaz}
+
+
+Ešte treba vyriešiť otázku ako môže podpisujúci spochybniť podpis a či tomuto spochybneniu môžeme
+veriť.
+
+Keďže je to jednorázová schéma, tak podpisujúci v prípade, že chce spochybniť podpis, tak stačí, že
+zverejní vlastný súkromný kľúč. V tom prípade vieme overiť, že nesedí s podpisom falošnej správy
+a navyše vyhovuje verejnému kľúču.
+
+Ukažeme ešte, že podpisujúci si nevie vymyslieť iný súkromný kľúč. 
+Nech jeho pôvodný súkromný kľúč je $s_k = (x_1, x_2, y_1, y_2)$ a chce si pripraviť nový kľúč 
+$s_k^{'} = (x_1^{'}, x_2^{'}, y_1^{'}, y_2^{'}$.
+Potom platí $z_1 = g^{x_1} h^{y_1} = g^{x_1^{'}} h^{y_1^{'}}$ z čoho máme $h = g^{(x_1 - x_1^{'})(y_1^{'} - y_1)^{-1}}$.
+A teda vieme zistiť $dlog_g h$.
+
+%tuna redukciu na dlog stanek robil trochu inac (cez rovnost podpisov), toto sa mi zda byt priamejsie
