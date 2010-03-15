@@ -179,9 +179,32 @@ Otázkou je ako veľmi môžeme veriť tomu, že prorok poznal stav
 akcií na konci roka. Ukazuje sa, že na iteratívnu konštrukciu
 hašovacích funkciu existuje tzv. chosen prefix attack.
 
-\todo{popis konštrukcie}
+\subsubsection{Konštrukcia}
+
+Pripravme si najprv $2^k$ hodnôt $h_{0,1}, h_{0,2}, \dots, h_{0,2^k}$.
+Následne hľadajme $m_0,1, m_0,2, \dots, m_{0,2^k}$ také, že
+$f(h_{0,1}, m_{0,1}) = f(h_{0,2}, m_{0,2}) = h_{1,1}, \dots f(h_{0,2^k-1}, m_{0,2^k-1}) = f(h_{0,2^k}, m_{0,2^k}) = h_{1, 2^{k-1}}$
+Následne pokračujme podobným spôsobom aj na ďalších úrovniach. Až dostaneme jednu hodnotu $h_{k,1}$. Túto
+hodnotu zverejníme ako hash nášho proroctva.
+Navyše, aby sme za správu vedeli \clqq prilepiť\crqq rozumný obsah, je vhodné aby tieto správy dávali aspoň nejaký zmysel.
+
+Aký čas strávime prípravou tohoto stromu? Nájdenie jednej kolízie trvá čas $O(2^n)$, na prvej úrovni treba $2^{k-1}$ kolízii,
+na druhej $2^{k-2}$ a na poslednej potrebujeme jednu kolíziu. Celkový čas teda je: $O(2^n (2^{k-1} + 2^{k-2} + \dots + 1)) = O(2^n 2^k)$.
+Lepší spôsob je nehľadať kolízie na jednotlivých úrovniach po dvojiciach, ale rovno pre celú úroveň
+potom na jednej úrovni strávime čas $O(2^{k/2 + n/2})$. Celkový čas bude tiež $O(2^{k/2 + n/2})$.
 
 \begin{figure}[h]
     \centering
     \includegraphics[scale=0.9]{img/5/nostradamus.1.mps}
 \end{figure}
+
+Teraz na konci roka dostaneme pôvodnú správu. Označme ju $m$. Po jej zahashovaní sa dostaneme do odtlačku
+$h_m$. Teraz hľadáme správu $\tilde{m}$, pre ktorú platí $f(h_m, \tilde{m}) = h_{0,x_0}$, kde $x_0 \in \{1, 2, \dots, 2^k\}$.
+Následne na základe pripraveného stromu, vieme za správu dolepiť patričné $m_{0,x_0}, m_{1,x_1}, \dots, m_{k,x_k}$ také, že
+výsledná hash bude predtým zverejnená $h_{k,1}$. Teda na konci zverejníme správu $m\tilde{m}m_{0,x_0}, m_{1,x_1}, \dots, m_{k, x_k}$.
+
+Čas hľadania $\tilde{m}$ bude $2^{n-k}$. 
+Celkový čas útoku. Bolo by dobré, aby čas trvania oboch časti útoku bol viacmenej vyvážený. 
+Uvažujme najprv pomalšiu variantu predspracovania. Vtedy chceme, aby $2^{n-k} = 2^{k+n/2}$, z čoho dostaneme
+$k=\frac{n}{4}$ a celkový čas bude $2^{\frac{3}{4} n}$. Pri rýchlejšom predspracovaní
+máme podmienku $2^{n-k} = 2^{k/2 + n/2}$, z čoho máme $k = \frac{n}{3}$ a celkový čas $2^{\frac{2}{3}n}$.
