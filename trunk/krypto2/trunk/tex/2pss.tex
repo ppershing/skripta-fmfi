@@ -62,7 +62,7 @@ Overovanie podpisu je popísané v pseudokóde \ref{proc:verifypss}
     \eIf{$(b \ne 0) \vee (g_2(w) \ne \gamma) 
             \vee (h(m \concat r) \ne w)$}
     {% then
-        \Return fail\;
+        \Return reject\;
     }{% else
         \Return accept\;
     }
