@@ -174,56 +174,115 @@ generovať $x_{i,0}$ a $y_{i,0}$.
 \subsection{Stanekova schéma}
 \subsection{Fail/stop podpisové schémy}
 
-Predstavme si, že chceme schému pri ktorej sme chránený pred neobmedzene výpočtovo silným
-falšovateľom. 
+Predstavme si, že chceme schému pri ktorej sme (ako podpisovateľ) chránený pred neobmedzene výpočtovo silným
+falšovateľom. Inak povedané, žiadny útočník, nech je akokoľvek silný,
+by nemal z prístupu k môjmu verejnému kľúču byť schopný generovať
+platné podpisy. Toto je samozrejme mierne v rozpore s tým, že máme
+vedieť overiť podpis. Preto budeme požadovať miernejšiu vec -
+podpisovateľ bude schopný preukázať, že to nebolo podpísané jeho
+súkromným kľúčom.
 Opäť si predstavíme jednorázovú schému. Útočník v prípade získania
-správy, jej podpisu a verejného kľúča nebude schopný identifikovať jednoznačne súkromný kľúč 
+správy, jej podpisu a verejného kľúča nebude schopný identifikovať
+jednoznačne súkromný kľúč (napríklad preto, že možných súkromných
+kľúčov bude veľmi veľa)
 a nebude schopný vyrobiť správny podpis inej správy.
 Pokiaľ sa falšovateľ pokúsi podpisať inú správu, tak podpisovateľ zistí, že bol použitý iný
 ako jeho súkromný kľúč a je to schopný preukázať.
 
 \subsubsection{Heyst Pedersenova schéma}
 
-Uvažujme grupu $G$, kde $|G| = q$, kde $q$ je nejaké prvočíslo.
-Zoberme generátory $g, h \in G$. Súkromný kľúč bude štvorica 
-$s_k = (x_1, x_2, y_1, y_2) \inr Z_q$. Verejný kľúč bude dvojica
-$p_k = (g^{x_1} h^{x_2}, g^{y_1} h^{y_2}) = (z_1, z_2)$.
+Uvažujme grupu $G$, kde $|G| = q$ a $q$ je nejaké (dostatočne veľké) prvočíslo.
+Zoberme generátory $g, h \in G$.
+Súkromný kľúč bude štvorica  $sk = (x_1, x_2, y_1, y_2) \inr Z_q$.
+Poznamenajme, že narozdiel od ElGamalovej schémy, hodnoty $x,y$ sú
+náhodné a \emph{nezávislé}.
+Verejný kľúč bude dvojica
+$pk = (g^{x_1} h^{x_2}, g^{y_1} h^{y_2}) = (z_1, z_2)$, teda akýmsi
+spôsobom previažeme obe hodnoty. Algoritmický zápis generovania je vo
+funkcii \ref{funct:genhp}
 
-Podpisom správy $m$ je dvojica $\sigma = Sig_{s_k}(m) = (\sigma_1, \sigma_2) = (x_1 + my_1, x_2 + my_2)$.
+\begin{function}[h!]
+    \caption{GenHP($G$)}
+    \label{funct:genhp}
+    $g,h \assign $ rôzne generátory $G$\;
+    $x_1,x_2,y_1,y_2 \inr G$\;
+    $z_1 \assign g^{x_1} h^{x_2}$\;
+    $z_2 \assign g^{y_1} h^{y_2}$\;
+    \Return $sk=(g,h,x_1,x_2,y_1,y_2), pk=(g,h,z_1,z_2)$\;
+\end{function}
 
-Overenie podpisu je otestovanie rovnosti $g^{\sigma_1} h^{\sigma_2} = z_1 z_2^m$.
+Správu $m$ podpíšeme svojim súkromným kľúčom ako lineárnu kombináciu
+$x_i, y_i, m$ pomocou funkcie \ref{funct:signhp}
+\begin{function}[h!]
+    \caption{SignHP($m$)}
+    \label{funct:signhp}
+    $\sigma_1 \assign x_1 + m y_1$\;
+    $\sigma_2 \assign x_2 + m y_2$\;
+    \Return $\sigma=(\sigma_1,\sigma_2)$\;
+\end{function}
+
+Overenie podpisu je jednoduché otestovanie
+rovnosti:
+\begin{function}[h!]
+    \caption{VerifyHP($\sigma,m$)}
+    \eIf{$g^{\sigma_1} h^{\sigma_2} == z_1 z_2^m$}{
+        \Return accept\;
+    }{
+        \Return reject\;
+    }
+\end{function}
 
 Teraz si dokážeme niekoľko vlastností tejto schémy.
 
 \begin{lema}
-Pre ľubovoľnú trojicu $p_k, m, \sigma$, kde $\sigma = Sig_{s_k}(m)$ (kde $s_k$ je nejaký vyhovujúci súkromný kľúč)
-existuje $q$ roznych $S_k^*$, takých že $\sigma = Sig_{s_k^*}(m)$.
+Pre ľubovoľnú trojicu $pk, m, \sigma$, kde $\sigma = SigHP_{sk}(m)$
+a $sk$ je nejaký vyhovujúci súkromný kľúč
+existuje $q$ rôznych kľúčov $sk^*$, takých že $\sigma = Sig_{sk^*}(m)$.
 \end{lema}
 
 \begin{dokaz}
-Nech $h = g^a$, $z_1 = g^{e_1}$ a $z_2 = g^{e_2}$ (neobmedzene silný útočník vie $a, e_1, e_2$ vypočítať).
-Z toho, že $z_1 = g^{x_1} h^{x_2}$ máme rovnicu $e_1 = x_1 + ax_2$. Podobne z $z_2 = g^{y_1} h^{y_2}$
-dostaneme $e_2 = y_1 + a y_2$. A ešte vďaka tomu, že $\sigma$ je podpis správy $m$ máme rovnice
+Nech $h = g^a$, $z_1 = g^{e_1}$ a $z_2 = g^{e_2}$ 
+(neobmedzene silný útočník vie $a, e_1, e_2$ vypočítať).
+Z toho, že $z_1 = g^{x_1} h^{x_2}$ máme rovnicu $e_1 = x_1 + ax_2$.
+Podobne z $z_2 = g^{y_1} h^{y_2}$ dostaneme $e_2 = y_1 + a y_2$.
+A ešte vďaka tomu, že $\sigma$ je podpis správy $m$ máme rovnice
 $\sigma_1 = x_1 + my_1$, $\sigma_2 = x_2 + my_2$. 
 
-Dostali sme 4 rovnice. Máme 4 neznáme. V maticovom tvare máme:
-$$\left ( \begin{matrix} 1 & a & 0 & 0 \cr 0 & 0 & 1 & a \cr 1 & 0 & m & 0 \cr 0 & 1 & 0 & m \end{matrix} \right )
-\left ( \begin{matrix} x_1 \cr x_2 \cr y_1 \cr y_2 \end{matrix} \right )=
-\left ( \begin{matrix} e_1 \cr e_2 \cr \sigma_1 \cr \sigma_2 \end{matrix} \right )$$
+Dostali sme 4 rovnice. Máme 4 neznáme. V maticovom tvare dostávame:
+\begin{equation*}
+    \left ( \begin{matrix}
+                1 & a & 0 & 0 \cr 
+                0 & 0 & 1 & a \cr
+                1 & 0 & m & 0 \cr
+                0 & 1 & 0 & m
+            \end{matrix} \right )
+    \left ( \begin{matrix}
+                x_1 \cr x_2 \cr y_1 \cr y_2
+            \end{matrix} \right )
+    =
+    \left ( \begin{matrix} 
+                e_1 \cr e_2 \cr \sigma_1 \cr \sigma_2
+            \end{matrix} \right )
+\end{equation*}
 
-Matica sústavy má ale hodnosť $3$. Keďže jedno riešenie už máme, tak sústava potom má $q$ rôznych riešení, keďže sme v priestore $Z_q^4$.
+Matica sústavy má ale hodnosť $3$. Jedno riešenie už máme (pôvodný
+súkromný kľúč) a teda sústava má práve $q$ rôznych riešení (sme v
+priestore $Z_q^4$).
 
 \end{dokaz}
 
-Toto dokazuje, že potenciálnych súkromných kľúčov je exponenciálne veľa. Na to aby sme ukázali, že útočník má
+Toto dokazuje, že potenciálnych súkromných kľúčov je exponenciálne veľa.
+Na to aby sme ukázali, že útočník má
 šancu na úspech $\frac{1}{q}$ treba ešte ukázať jednu vec.
-Môže ešte nastať patologický prípad, kde veľa súkromných kľúčov pri podpise falošnej správy $m^*$ dá rovnaký podpis.
-Teda budeme mať rôzne kľúče $s_k^{'}, s_k^{''}, \dots$, kde $Sig_{s_k^{'}}(m^*) = Sig_{s_k^{''}}(m^*) = \dots$.
+Môže totiž nastať patologický prípad, kde veľa súkromných kľúčov
+pri podpise falošnej správy $m^*$ dá rovnaký podpis.
+Teda budeme mať rôzne kľúče $sk^{'}, sk^{''}, \dots$, 
+kde $Sig_{sk^{'}}(m^*) = Sig_{sk^{''}}(m^*) = \dots$.
 To, že tento prípad nenastane ukazuje nasledujúca lema.
 
 \begin{lema}
-Pre ľubovoľné $p_k, m, \sigma, m^*, \sigma^*$, kde $\sigma = Sig_{s_k}(m)$, $\sigma^* = Sig_{s_k}(m^*)$ a $s_k$ vyhovuje $p_k$
-existuje maximálne jeden jediný vyhovujúci $s_k$. 
+Pre ľubovoľné $pk, m, \sigma, m^*, \sigma^*$, kde $\sigma = Sig_{sk}(m)$, $\sigma^* = Sig_{sk}(m^*)$ a $sk$ vyhovuje $pk$
+existuje maximálne jeden jediný vyhovujúci $sk$.
 \end{lema}
 
 \begin{dokaz}
@@ -233,17 +292,19 @@ Pokiaľ zostrojíme maticu tejto sústavy bude mať hodnosť $4$ a teda bude ma�
 \end{dokaz}
 
 
-Ešte treba vyriešiť otázku ako môže podpisujúci spochybniť podpis a či tomuto spochybneniu môžeme
-veriť.
-
-Keďže je to jednorázová schéma, tak podpisujúci v prípade, že chce spochybniť podpis, tak stačí, že
-zverejní vlastný súkromný kľúč. V tom prípade vieme overiť, že nesedí s podpisom falošnej správy
+Ešte treba vyriešiť otázku ako môže podpisujúci spochybniť podpis 
+a či tomuto spochybneniu môžeme veriť.
+Keďže je to jednorázová schéma, tak podpisujúci v prípade,
+že chce spochybniť podpis, tak stačí ak zverejní vlastný súkromný kľúč.
+V tom prípade vieme overiť, že nesedí s podpisom falošnej správy
 a navyše vyhovuje verejnému kľúču.
 
-Ukažeme ešte, že podpisujúci si nevie vymyslieť iný súkromný kľúč. 
-Nech jeho pôvodný súkromný kľúč je $s_k = (x_1, x_2, y_1, y_2)$ a chce si pripraviť nový kľúč 
-$s_k^{'} = (x_1^{'}, x_2^{'}, y_1^{'}, y_2^{'}$.
-Potom platí $z_1 = g^{x_1} h^{y_1} = g^{x_1^{'}} h^{y_1^{'}}$ z čoho máme $h = g^{(x_1 - x_1^{'})(y_1^{'} - y_1)^{-1}}$.
+Ukažeme ešte, že podpisujúci si nevie vymyslieť iný súkromný kľúč
+(samozrejme ak je výpočtovo obmedzený). 
+Nech jeho pôvodný súkromný kľúč je $sk = (x_1, x_2, y_1, y_2)$ a
+chce si pripraviť nový kľúč $sk^{'} = (x_1^{'}, x_2^{'}, y_1^{'}, y_2^{'}$.
+Potom platí $z_1 = g^{x_1} h^{y_1} = g^{x_1^{'}} h^{y_1^{'}}$ z čoho máme 
+$h = g^{(x_1 - x_1^{'})(y_1^{'} - y_1)^{-1}}$.
 A teda vieme zistiť $dlog_g h$.
 
 %tuna redukciu na dlog stanek robil trochu inac (cez rovnost podpisov), toto sa mi zda byt priamejsie
