@@ -6,21 +6,33 @@ Ako sme mali vo výrokovej logike isté normálne tvary - konjunktívnu a
 disjunktívnu normálnu formu, budeme mať aj v predikátovej logike isté
 špeciálne tvary. Zaujímavé sú najmä prexenxná forma a ešte Skolemov
 normálny tvar, čo je špeciálny prípad prexenej formy.
-V prípade prexenxného tvaru ide o preskupenie kvantifikátorov na
+V prípade prenexného tvaru ide o preskupenie kvantifikátorov na
 začiatok formuly - tvar vzniká aplikovaním kvantifikátorov na otvorenú
 formulu.
 
 
 \begin{definicia}
     Formula $A$ je v prenexnom tvare, ak $A$ je v nasledujúcom tvare:
-     $(Q_1 x_1) (Q_2 x_2) (Q_3 x_3) \dots (Q_n x_n) B$, kde
-     $x_1, \dots , x_n$ sú navzájom rôzne premenné, $Q_i$ sú
-     kvantifikátory $(\forall, \exists)$ a 
-     $B$ je bez kvantifikátorov.
+    \begin{equation*}
+     (Q_1 x_1) (Q_2 x_2) (Q_3 x_3) \dots (Q_n x_n) B
+    \end{equation*}
+    kde $x_1, \dots , x_n$ sú navzájom rôzne premenné,
+    $Q_i \in\{\forall, \exists\}$ sú
+    kvantifikátory a  formula $B$ je bez kvantifikátorov.
     Formulu $B$ nazveme otvoreným jadrom formuly $A$, 
-    formulu $(Q_1 x_1) (Q_2 x_2) (Q_3 x_3) \dots (Q_n x_n)$ nazývame
+    formulu $(Q_1 x_1) (Q_2 x_2) (Q_3 x_3) \dots (Q_n x_n)$ nazveme
     prefixom formuly $A$.
 \end{definicia}
+
+\begin{poznamka}
+    \noindent
+    \begin{itemize}
+     \item $x_1, \dots, x_n$ sú navzájom rôzne pre vylúčenie viacnásobných
+        kvantifikácií.
+     \item ak $n=0$, tak $A$ je otvorená a nemá prefix
+     \item $B$ je najväčšia otvorená podformula formuly $A$.
+    \end{itemize}
+\end{poznamka}
 
 \begin{priklad}
     Formula elementárnej aritmetiky:
@@ -29,26 +41,16 @@ formulu.
     \end{equation*}
 \end{priklad}
 
-\begin{poznamka}
-\begin{itemize}
- \item $x_1, \dots, x_n$ sú navzájom rôzne pre vylúčenie viacnásobných
-    kvantifikácií.
- \item ak $n=0$, tak $A$ je otvorená a nemá prefix
- \item $B$ je najväčšia otvorená podformula formuly $A$.
-\end{itemize}
-\end{poznamka}
-
-
 \begin{veta}
  Nech $A$ je ľubovoľná formula predikátovej logiky. Potom existuje
- formula $A'$ v prenexnom tvare také, že
+ formula $A'$ v prenexnom tvare taká, že
  $\provable A \leftrightarrow A'$.
  \label{veta:prenex}
 \end{veta}
 
 Pri prevádzaní formuly na prenexný tvar budeme využívať nasledujúce
 \emph{prenexné} operácie, každá z nich nahrádza podformulu
-jej ekvivaletom.
+jej ekvivalentom.
 \begin{itemize}
     \item[a)] $B$ nahraď variantom formuly $B$ (premenovanie viazaných
     premenných)
@@ -62,8 +64,8 @@ jej ekvivaletom.
      $(Qx)(B \squareop C)$
 \end{itemize}
 \begin{poznamka}
-    Asi stojí za zmienku upozorniť, že v časti c) $x$ nie je voľná v
-    $C$ narozdiel od častí b,d, kde nie je voľna v $B$.
+    Asi stojí za zmienku upozorniť, že v časti c) $x$ nie je voľná vo
+    formule $C$ narozdiel od častí b), d), kde $x$ nie je voľná v $B$.
 \end{poznamka}
 
 \begin{lema}
@@ -71,7 +73,7 @@ jej ekvivaletom.
 \end{lema}
 \begin{dokaz}
   %%% {{{ 
-  \par
+  \noindent
   \begin{itemize}
     \item[a)] Veta o variantoch
     \item[b)] Platí
@@ -89,52 +91,62 @@ jej ekvivaletom.
                 \leftrightarrow \highlightb{(\forall x)} \neg B                
         \end{eqnarray*}
         z čoho vieme priamo odvodiť dané tvrdenie.
-    \item[c)] Nech $Q=\forall$.
+    \item[c)] Nech $Q=\forall$. Chceme ukázať
         $\provable (\forall x) (B \implies C) \leftrightarrow
             (B \implies (\forall x) C)$ kde $x$ nie je voľná v $B$.
         \begin{itemize}
         \item[$\Rightarrow$]
             5. Axióma predikátovej logiky
+
+
         \item[$\Leftarrow$]
             \begin{itemize}
             \item[1] $\provable (\forall x) C \implies C$ --
                 axióma špecifikácie
+
             \item[2] $\provable \highlighta{
                  \underbrace{(B \implies (\forall x) C)}_X
                 \implies 
                  (\underbrace{((\forall x) C \implies C)}_Y
-                    \implies \underbrace{(B \implies C)}_Z)}$.
+                    \implies \underbrace{(B \implies C)}_Z)}$ --
+                    Jednoduchý sylogizmus
+
             \item[*] $\provable X \implies (Y \implies Z)$.
+
             \item[*] $\provable (X \implies (Y \implies Z) \implies
                 (Y \implies (X \implies Z))$ -- pravidlo zámeny
                 predpokladov
+
             \item[3] $\provable \highlighta{
-                ((B \implies (\forall x) C)
+                [(B \implies (\forall x) C)
                 \implies 
                  (((\forall x) C \implies C)
-                    \implies (B \implies C)))
+                    \implies (B \implies C))]
                 }
                 \implies \highlightb{
-                   (((\forall x) C \implies C) \implies
+                   [((\forall x) C \implies C) \implies
                     ((B \implies (\forall x) C) \implies (B \implies
-                    C)))}$.
+                    C))]}$.
+
             \item[4] $\provable
                   \highlightb{
-                   (((\forall x) C \implies C) \implies
+                   ((\forall x) C \implies C) \implies
                     \highlighto{
-                    ((B \implies (\forall x) C) \implies (B \implies
-                    C)))}}$ - MP 2,3
+                    [(B \implies (\forall x) C) \implies (B \implies
+                    C)]}}$ - MP 2,3
+
             \item[5] $\provable \highlighto{
                 (B \implies (\forall x)) \implies (B
                     \implies C)}$ - MP 1,4
+
             \item[6] $\provable (B \implies (\forall x) C) \implies
             \highlighta{(\forall x)} (B \implies C)$ -- 
                 pravidlo zavedenia veľkého kvantifikátora
             \end{itemize}
         \end{itemize}
-     Druhou možnosťou je $Q=\exists$.
+     Druhou možnosťou je $Q=\exists$. Našim cieľom
      $\provable (\exists x) (B \implies C) \leftrightarrow 
-        (B \implies (\exists x) C)$, kde $x$ nie je voľná v $B$.
+        (B \implies (\exists x) C)$ za predpokladu že $x$ nie je voľná v $B$.
         \begin{itemize}
         \item[$\Rightarrow$]
             \begin{itemize}
@@ -147,32 +159,36 @@ jej ekvivaletom.
 
             \item[3] $\provable
                 \highlighta{
-                ((B \implies C) \implies (( C \implies (\exists x) C)
-                \implies (B \implies (\exists x) C)))}
+                [(B \implies C) \implies (( C \implies (\exists x) C)
+                \implies (B \implies (\exists x) C))]}
                 \implies
                 \highlightb{
-                  ((C \implies (\exists x) C) \implies (( B \implies
-                  C) \implies (B \implies (\exists x) C)))}$ -- 
+                  [(C \implies (\exists x) C) \implies (( B \implies
+                  C) \implies (B \implies (\exists x) C))]}$ -- 
                   pravidlo zámeny predpokladov
 
             \item[4] $\provable \highlightb{
                   ((C \implies (\exists x) C) \implies 
-                  \highlighto{(( B \implies
-                  C) \implies (B \implies (\exists x) C)))}}$ -- MP 2,3
+                  \highlighto{[( B \implies
+                  C) \implies (B \implies (\exists x) C))]}}$ -- MP 2,3
+
             \item[5] $\provable
                   \highlighto{(( B \implies
                   C) \implies (B \implies (\exists x) C)))}$ -- MP 1,4
+
             \item[6] $\provable \highlighta{(\exists x)}
                 ( B \implies C) \implies (B \implies (\exists x) C)$
                 -- pravidlo zavedenie existenčného kvantifikátora
             \end{itemize}
-            \vskip 5mm
+
+
+        \vskip 5mm
         \item[$\Leftarrow$]
             \begin{itemize}
                 \item[1] $\provable C \implies (B \implies C)$ -- A1
 
                 \item[2] $\provable (\exists x) C \implies (B \implies
-                C)$ -- pravidlo distribúcie existenčného
+                C)$ -- pravidlo zavedenia existenčného
                 kvantifikátora
 
                 \item[3] $\provable \neg B \implies (B \implies C)$ -- postova
@@ -187,35 +203,35 @@ jej ekvivaletom.
 
                 \item[*] $\provable
                     \highlighta{
-                    (\neg \underbrace{B}_X \implies 
-                        \underbrace{(\exists x) ( B \implies C)}_Z)
+                    [\neg \underbrace{B}_X \implies 
+                        \underbrace{(\exists x) ( B \implies C)}_Z]
                     }
                     \implies
                     \highlightb{
-                    ((\underbrace{(\exists x) C}_Y 
+                    [(\underbrace{(\exists x) C}_Y 
                         \implies 
                       \underbrace{(\exists x) (B \implies C)}_Z)
                     \implies
-                    (\underbrace{B}_X \implies 
+                    ((\underbrace{B}_X \implies 
                         \underbrace{(\exists x) C}_Y)
                       \implies 
                         \underbrace{(\exists x) (B
-                    \implies C)}_Z))}$ -- dokážeme neskôr
+                    \implies C)}_Z)]}$ -- dokážeme neskôr
 
                 \item[6] $\provable
                     \highlightb{
-                    ((( \exists x) C \implies (\exists x) (B \implies C))
+                    [(\exists x) C \implies (\exists x) (B \implies C)]
                     \implies
                     \highlighto{
-                    (B \implies (\exists x) C) \implies (\exists x) (B
-                    \implies C )))}}$ -- MP 5,*
+                    [(B \implies (\exists x) C) \implies (\exists x) (B
+                    \implies C ))]}}$ -- MP 5,*
 
                 \item[7] $\provable
                     \highlighto{
                     (B \implies (\exists x) C) \implies (\exists x) (B
-                    \implies C )))}$ -- MP 2,6
+                    \implies C ))}$ -- MP 2,6
             \end{itemize}
-            Ešte treba dokázať formulu *
+            Ešte treba dokázať formulu (*)
             \begin{itemize}
             \item[a] $\neg X \implies Z, Y \implies Z, X \implies Y,
                 \highlighta{X}
@@ -233,7 +249,7 @@ jej ekvivaletom.
         \end{itemize}
     \item[d)]
         \begin{itemize}
-        \item $Q=\forall:$
+        \item $Q=\forall$: Ukazujeme
             $\provable (\exists x) (B \implies C) \leftrightarrow
              ((\forall x) B \implies C)$ ak $x$ nie je voľná v $C$.
             \begin{itemize}
@@ -270,7 +286,7 @@ jej ekvivaletom.
                     (\highlighto{(\forall x)} B \implies C)$
             \end{itemize}
 
-        \item $Q=\exists:$ 
+        \item $Q=\exists$: Chceli by sme
             $\provable (\exists x) (B \implies C) \leftrightarrow
              ((\forall x) B \implies C)$ ak $x$ nie je voľná v $B$.
             \begin{itemize}
@@ -302,10 +318,10 @@ jej ekvivaletom.
                     (\highlightp{(\exists x)} B \implies C)$
             \end{itemize}
         \end{itemize}
-        \item[e)]
+        \item[e)] Ukazujeme
             $\provable (Qx) (B\squareop C) \leftrightarrow (B\squareop (Qx)C)$,
             kde $x$ nie je voľná v $B$.
-            Na základe operácii c),d) vieme toto dokázať, pretože platí
+            Na základe operácii c), d) toto vieme dokázať, pretože platí
             \begin{align*}
                 \provable (A \lor B) \leftrightarrow (\neg A \implies B) \\
                 \provable (A \land B) \leftrightarrow (A \implies \neg B)
@@ -314,29 +330,32 @@ jej ekvivaletom.
   %%% }}}
 \end{dokaz}
 
-\begin{dokaz}[Dôkaz vety \ref{veta:prenex}]
+\begin{dokaz}[Dôkaz vety \ref{veta:prenex} o prexexných tvaroch]
 %%% {{{
 Budeme postupovať matematickou indukciou vzhľadom na zložitosť formuly $A$.
 \begin{itemize}
     \item $A$ je atomická formula. $A$ je potom v prenexnom tvare.
+
     \item $A=\neg B$. Na $B$ sa vzťahuje IP, teda vieme zostrojiť
         $B'$ takú, že platí
         $\provable B \leftrightarrow B'$.
         Položíme $A'=\neg B'$ a aplikovaním prenexnej operácie b) dostaneme 
         $A''$ v správnom tvare.
+
     \item $A=B \implies C$. Na $B,C$ platí IP a teda existujú formuly
         $B',C'$ v prenexnom tvare, pre ktoré platí
         $\provable B \leftrightarrow B'$, $\provable C \leftrightarrow C'$.
-        Nech $A' = B' \implies C'$. Z vety o \fixme{variantoch?} platí
+        Nech $A' = B' \implies C'$. Na základe vety o ekvivalencii platí
         $\provable A \leftrightarrow A'$. Teraz potrebujeme dostať
         $A'$ do prenexného tvaru.
         Vezmime variant $C''$ formuly $C'$ taký, že $B',C''$ nemajú
         žiadnu spoločnú premennú.
-        \begin{equation}
+        \begin{equation*}
             \provable A \leftrightarrow (B' \implies C'')
-        \end{equation}
-        Teraz použijeme prenexné operácie c,d a formulu
+        \end{equation*}
+        Teraz použijeme prenexné operácie c), d) a formulu
         $B' \implies C''$ prevedieme do prenexného tvaru.
+
     \item $A=(\forall x)B$. Z indukčného predpokladu vyplýva
         existencia $B'$, $\provable B \leftrightarrow B'$.
         Môžu nastať 2 prípady
@@ -349,22 +368,23 @@ Budeme postupovať matematickou indukciou vzhľadom na zložitosť formuly $A$.
 \end{dokaz}
 \begin{poznamka}
     Ak $A$ obsahuje spojky 
-    $\land,\lor$, môžeme použiť prenexnú operácie e) alebo nahradiť
+    $\land,\lor$, môžeme použiť prenexnú operáciu e) alebo formulu nahradiť
     ekvivaletnou formulou obsahujúcou $\neg,\implies$.
     Ak sa vo vormule vyskytuje $\leftrightarrow$, nemôžeme priamo
-    použiť operácie e),d) ale prepíšeme $A\leftrightarrow B$ na
+    použiť operácie e), d) ale $A\leftrightarrow B$ prepíšeme na
     $(A\implies B) \land (B \implies A)$.
 \end{poznamka}
 
 \begin{priklad}
+    \noindent
     Formula $A: B \leftrightarrow (\forall x) C$ kde $x$ nie je voľná
     v $B$ a $y$ sa nevyskytuje v $B,C$.
     \begin{align*}
        (B \implies (\forall x) C) \land ((\forall x) C \implies B) &\\
        (B \implies (\forall x) C) \land ((\forall y) C_x[y] \implies B) 
-       & \mbox{ -- podľa a} \\
+       & \mbox{ -- podľa a)} \\
        (\forall x)(B \implies C) \land (\exists y) (C_x[y] \implies B) 
-       & \mbox{ -- podľa c,d} \\
+       & \mbox{ -- podľa c), d)} \\
        (\forall x)(\exists y)((B \implies C) \land (C_x[y] \implies B)
     \end{align*}
 \end{priklad}
@@ -375,13 +395,13 @@ Budeme postupovať matematickou indukciou vzhľadom na zložitosť formuly $A$.
         (\exists x) (x=y) \implies (\exists x)((x=0) \lor
                     \neg (\exists y)(y<0))& \\
         (\exists x) (x=y) \implies (\exists u)((u=0) \lor
-                    \neg (\exists v)(v<0)) &\mbox{ -- podľa a}\\
+                    \neg (\exists v)(v<0)) &\mbox{ -- podľa a)}\\
         (\exists x) (x=y) \implies (\exists u)((u=0) \lor
-                    (\forall  v) \neg(v<0)) &\mbox{ -- podľa b}\\
+                    (\forall  v) \neg(v<0)) &\mbox{ -- podľa b)}\\
         (\exists x) (x=y) \implies (\exists u)(\forall v)
-                ((u=0) \lor \neg(v<0)) &\mbox{ -- podľa e}\\
+                ((u=0) \lor \neg(v<0)) &\mbox{ -- podľa e)}\\
         (\forall x)(\exists u)(\forall v) (x=y) \implies 
-                ((u=0) \lor \neg(v<0)) &\mbox{ -- podľa c,d}
+                ((u=0) \lor \neg(v<0)) &\mbox{ -- podľa c), d)}
     \end{align*}
 \end{priklad}
 
