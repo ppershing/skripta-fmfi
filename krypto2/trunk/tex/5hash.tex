@@ -198,17 +198,14 @@ Navyše, aby sme za správu vedeli \clqq prilepiť\crqq rozumný obsah,
 je vhodné aby tieto správy dávali aspoň nejaký zmysel.
 
 Aký čas strávime prípravou tohoto stromu?
-Nájdenie jednej kolízie trvá čas $O(2^n)$, na prvej úrovni treba 
+Nájdenie jednej kolízie trvá čas $O(2^{n/2})$, na prvej úrovni treba 
 $2^{k-1}$ kolízii, na druhej $2^{k-2}$ a na poslednej
 potrebujeme jednu kolíziu. Celkový čas je teda
-$O(2^n (2^{k-1} + 2^{k-2} + \dots + 1)) = O(2^n 2^k)$.
+$O(2^n (2^{k-1} + 2^{k-2} + \dots + 1)) = O(2^{n/2} 2^k)$.
 Lepší spôsob je nehľadať kolízie na jednotlivých úrovniach po dvojiciach,
 ale rovno pre celú úroveň.
-Vtedy na jednej úrovni strávime čas $O(2^{k/2 + n/2})$.
-\fixme{nepotrebujeme k tomu predpoklad ze je to MD konstrukcia?}
-Celkový čas bude tiež $O(2^{k/2 + n/2})$.\fixme{preco cas dokopy na
-vsetkych urovniach je rovnaky ako na jednej? nechyba pred $2^{n/2}$
-hodnota $k$ ?}
+Vtedy na prvej úrovni strávime čas $O(2^{k/2 + n/2})$. 
+Celkový čas bude tiež $O(2^{k/2 + n/2})$.
 
 \begin{figure}[h]
     \centering
