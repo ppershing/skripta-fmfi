@@ -207,33 +207,34 @@ $T' \provable A$ aj $T' \vdash \neg A$.
 
 \begin{dokaz}
     Nech $\mathscr{S}$ je množina všetkých uzavretých formúl jazyka $L$.
-    Ďalej definujeme $\mathcal{B} \{ S \mid S \subseteq \mathscr{S}, T \union S
-    \mbox{ je bezosporná}\}$. $\mathcal{B}$ je čiastočne usporiadaná na $\subseteq$.
-    Množina $\mathcal{B}$ má konečnú vlastnosť -- keď zoberiem ľubovoľnú podmnožinu
-    $S \subseteq \mathcal{S}$, bude platiť $$ S \in \mathcal{B} \iff S' \in
-    \mathcal{B}, S' \mbox{ je konečná}, S' \subseteq S$$
-
-     Potrebujeme ukázať, že $\mathscr{S} \subseteq \mathcal{B}\times\mathcal{B}$ je čiastočné usporiadanie, čiže je
-
-    \begin{itemize}
-    \item reflexívna
-    \item antisymetrická
-    \item tranzitívna.
-    \end{itemize}
-
-    Reflexívnosť:
+    Ďalej definujeme
+    $\mathcal{B} = \{ S \mid S \subseteq \mathscr{S}, T \union S
+        \mbox{ je bezosporná}\}$.
+    Množina $\mathcal{B}$ je čiastočne usporiadaná na $\subseteq$ a
+    má konečnú vlastnosť -- keď zoberiem ľubovoľnú podmnožinu
+    $S \subseteq \mathscr{S}$, bude platiť
     \begin{equation*}
-        \forall S \in \mathcal{B}: (S,S) \in \mathscr{S}
+        S \in \mathcal{B} \iff \forall \mbox{ konečné } S' \in
+        \mathcal{B}: S' \subseteq S
     \end{equation*}
 
-    Antisymetrickosť:
-    \begin{align*}
-        (S_1,S_2) \in \mathscr{S} \land (S_2,S_1) \in \mathscr{S}
-            \implies S_1 = S_2, \quad \mbox{t.j.} \\
-        S_1 \subseteq S_2 \land S_2 \subseteq S_1 \implies S_1 = S_2
-    \end{align*}
+     Potrebujeme ukázať, že $\mathscr{S} \subseteq
+     \mathcal{B}\times\mathcal{B}$ je čiastočné usporiadanie vzhľadom
+     na inklúziu, čiže je
 
-    Tranzitívnosť dokážeme analogicky.
+    \begin{itemize}
+        \item reflexívna
+            \begin{equation*}
+                \forall S \in \mathcal{B}: (S,S) \in \mathscr{S}
+            \end{equation*}
+        \item antisymetrická
+            \begin{align*}
+                (S_1,S_2) \in \mathscr{S} \land (S_2,S_1) \in \mathscr{S}
+                    \implies S_1 = S_2, \quad \mbox{t.j.} \\
+                S_1 \subseteq S_2 \land S_2 \subseteq S_1 \implies S_1 = S_2
+            \end{align*}
+        \item tranzitívna. (dokážeme analogicky).
+    \end{itemize}
 
     $\mathcal{B}$ je čiastočne usporiadaná inklúziou.
     \begin{equation*}
