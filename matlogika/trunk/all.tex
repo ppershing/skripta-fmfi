@@ -125,8 +125,8 @@ $$\neg A_x[c_{??} \implies (\forall x) \neg A$$
 $$(\exists x) A \implies A_x[c_A]$$
 \textbf{</skontroluj, malé písmená>}
 
-\par $C_1$ bude množina všetkých $c_A$ a $c_{\neg A}$. Týmito konštantami
-rozšírime jazyk. Induktívne pokračujeme ďalej a podobne vytvárame množinu $C_2$
+\par $C_1$ bude množina všetkých konštánt $c_A$ a $c_{\neg A}$. Týmito konštantami
+rozšírime jazyk $L$. Induktívne pokračujeme ďalej a podobne vytvárame množinu $C_2$
 (zoberieme ľubovoľnú formulu $A$ nad rozšíreným jazykom, ktorá mala jedinú voľnú
 premennú $x$ a obsahovala aspoň jednu konštantu prvého rádu).
 Pridané konštanty budeme nazývať konštanty druhého rádu. Pokračujeme až po
@@ -135,41 +135,61 @@ $C_n$.
 \par Vezmeme formuly, ktoré majú jedinú voľnú premennú $x$ a obsahujú nejakú
 pridávanú konštantu rádu $n$.
 
-\par
-$$C_1 \union C_2 \union \ldots C_n \union C_{n+1} = L(C)$$. 
-Teóriu $T_H$ bude tvoriť jazyk $L(C)$ a pridáme všetky axiomy, ktoré sme pridali
-a tie, ktoré tam už boli. Je ihneď zrejmé, že $T_H$ je rozšírenie teórie $T$.
-Potrebujeme ukázať, že $T_H$ konzervatívne rozšírenie teórie $T$.
+Označme
+\begin{equation*}
+    L(C) = L \union C_1 \union C_2 \union \ldots
+\end{equation*}
+Teóriu $T_H$ bude tvoriť rozšírenie $L(C)$ jazyka $L$, axiómy budú axiómy $T$
+ku ktorým pridáme všetky axiómy $H1$.
+Je ihneď zrejmé, že $T_H$ je rozšírenie teórie $T$.
+Potrebujeme ukázať, že $T_H$ je konzervatívne rozšírenie teórie $T$, t.j.
+že pre každú formulu $A$ jazyka $L$ platí 
+$T_H \provable A \Rightarrow T \models A$
 
-$T_H$ -- konzervatívne rozšírenie, teda keď zoberiem formulu $A$ na jazyku $L$,
-musí platiť:
-$$ T_H \provable A \implies T \vdash A$$
+Nech platí, že v $T_H$ je dokázateľná formula $A$
+a nech $B_1, B_2, \ldots ,B_n$ sú všetky Henkinovské
+axiómy vyskytujúce sa v dôkaze $A$. Keďže dôkaz je konečný, týchto
+axióm je konečný počet. Ďalej môžeme uvažovať (ako sme už ukázali),
+že všetky axiómy $B_1, \ldots, B_n$ sú typu $H1$.
+Máme teda
+\begin{equation*}
+    T, B_1, \dots ,B_n \provable A
+\end{equation*}
+Keďže axiómy $B_1,\ldots,B_n$ sú uzavreté formuly, môžeme použiť vetu o dedukcii
+a dostávame
+\begin{equation*}
+    T \provable B_1 \implies B_2 \implies \ldots \implies B_n \implies A
+\end{equation*}
+Axiómy navyše môžeme poprehadzovať tak, aby $B_1$ obsahovala konštantu maximálneho rádu.
+Teda $B_1$ je tvaru $(\exists x) D \implies D_x[c_D]$, pričom $c_D$ nie je je použitá
+v $B_2, \ldots, B_n$. Použijeme vetu o konštantách a dostávame
+\begin{equation*}
+    T \provable ((\exists x) D \implies D_x[w] ) \implies (B_2 \implies \ldots \implies B_n \implies A)
+\end{equation*}
+kde $w$ je nová premenná.
+Teraz môžeme použiť pravidlo zavedenia existenčného kvantifikátora --
+ak $T \provable A \implies B$ a $w$ nie je voľná v $B$, potom $T\provable (\exists w) A \implies B$.
+Čiže
+\begin{equation*}
+    T \provable (\exists w) ((\exists x)D \implies D_x[w]) \implies (B_2 \implies
+        \ldots \implies B_n \implies A)
+\end{equation*}
+Ďalej použijeme prenexnú operáciu $(Qx) (A\implies B) \iff (A\implies
+(Qx)B)$ (za predpokladu, že $x$ nie je voľná v $A$), aby sme $w$
+preniesli dovnútra. Výsledkom je
+\begin{equation*}
+    T \provable ((\exists x) D \implies (\exists w)D_x[w]) \implies B_2 \implies \ldots \implies B_n \implies A
+\end{equation*}
 
-Nech platí, že v $T_H$ je dokázateľná teória, $B_1, B_2, \ldots B_n$ -- všetky
-axiomy z $H$ a môžem predpokladať, že všetky sú jednoduché. Platí, že:
-$$ T, B_1, \ldots B_n \provable A $$. Môžeme použiť vetu o dedukcii:
-
-$$ T \provable B_1 \implies B_2 \implies \ldots B_n \implies A $$.
-
-Môžeme ich poprehadzovať tak, že $B_1$ obsahuje koštantu maximálneho rádu. Nech
-$B_1$ je tvaru $(\exists x) D \implies D_x[c_D]$, pričom $C_D$ nie je je použitá
-v $B_2, \ldots, B_n$. Použijeme vetu o konštantách a dostávame, že $T \provable
-((\exists x) D \implies D_x[c_D] ) \implies (B_2 \implies \ldots \implies B_n
-\implies A)$.
-
-\par Ak $T \provable A \implies B$, potom $T\vdash (\exists x) A \implies B$.
-$$ T\provable (\exists w) ((\exists x)D \implies D_x[w]) \implies (B_2 \implies
-\ldots \implies B_n \implies A)$$
-
-Použili sme pravidlo zavedenia existenčného kvantifikátora. Ďalej použijeme
-prenexnú operáciu $(Qx) (A\implies B) \iff (A\implies (Qx)B)$ a $x$ nie je voľná
-v $A$. V $T$ je dokázateľné:
-$$T \provable ((\exists x) D \implies (\exists w)D_x[w]) \implies B_2 \implies \ldots \implies B_n \implies A$$
-
-Použijeme vetu o variantoch a dostávame:
-$$ T \provable ( \exists x ) D \implies (\exists w) D_x[w] $$
-$$ T \provable B_2 \implies B-3 \implies \ldots \implies B_n \implies A $$
-$$ T \provable A$$
+Použijeme z vety o variantoch ale máme
+\begin{equation*}
+    T \provable ( \exists x ) D \implies (\exists w) D_x[w] \\
+\end{equation*}
+z čoho pomocou pravidla modus ponens získame
+\begin{equation*}
+    T \provable B_2 \implies B-3 \implies \ldots \implies B_n \implies A
+\end{equation*}
+Opakovaním postupu ďalších $n-1$ krát dostaneme $T \provable A$.
 
 Ukázali sme, že $T_H$ s jazykom $L(C)$ je konzervatívne rozšírenie jazyka $L$.
 \end{dokaz}
