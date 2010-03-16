@@ -1,67 +1,79 @@
 \section{Predikátová logika s rovnosťou}
 
+Predikátovú logiku môžeme rozšíriť o nové axiómy, ktoré budú
+hovoriť o predikáte ``=''.
+
 \par{Axiómy rovnosti:}
-~
+\noindent
 \begin{itemize}
 %%% {{{
-    \item[R1] ak $x$ je premenná, potom formula $x=x$ je axióma
-    \item[R2] ak $x_1,\dots,x_k, y_1, \dots y_k$ sú premenné a 
+    \item[R1:] ak $x$ je premenná, potom formula $x=x$ je axióma
+    \item[R2:] ak $x_1,\dots,x_k, y_1, \dots, y_k$ sú premenné a 
         $f$ je $k$-árny funkčný symbol, potom je axiómou formula
         \begin{equation*}
             (x_1 = y_1) \implies ( (x_2 = y_2) \implies ( \dots
                 \implies ((x_k = y_k) \implies
-                    (f(x_1,\dots,x_k) = f(y_1,\dots,y_k)) \dots )))
+                    [f(x_1,\dots,x_k) = f(y_1,\dots,y_k)] \dots )))
         \end{equation*}
-    \item[R3] ak $x_1,\dots,x_k, y_1, \dots y_k$ sú premenné a 
+    \item[R3:] ak $x_1,\dots,x_k, y_1, \dots y_k$ sú premenné a 
         $P$ je $k$-árny predikátový symbol, potom je axiómou formula
         \begin{equation*}
             (x_1 = y_1) \implies ( (x_2 = y_2) \implies ( \dots
                 \implies ((x_k = y_k) \implies
-                    (P(x_1,\dots,x_k) \implies P(y_1,\dots,y_k)) \dots )))
+                    [P(x_1,\dots,x_k) \implies P(y_1,\dots,y_k)] \dots )))
         \end{equation*}
 %%% }}}        
 \end{itemize}
 
 \begin{priklad}[Teória neostrého čiastočného usporiadania $\le$]
-~
+\noindent
 %%% {{{
     \begin{itemize}
-        \item[1.] $(\forall x) (x,x) \in \phi$ -- Identita
-        \item[2.] $(\forall x) (\forall y) (((x,y) \in \phi \land
-            (y,x) \in \phi) \implies (x=y))$ -- Antisymetrickosť
+        \item[1.] $(\forall x) \langle x,x\rangle \in \varphi$ -- Identita
+
+        \item[2.] $(\forall x) (\forall y) [
+            (\langle x,y \rangle \in \varphi \land
+             \langle y,x \rangle \in \varphi) \implies (x=y)]$ -- 
+             Antisymetrickosť
+
         \item[3.] $(\forall x) (\forall y) (\forall z)
-            (((x,y) \in \phi \land (y,z) \in phi) \implies
-                (x,z) \in \phi)$. Tranzitívnosť
+            [( \langle x,y \rangle \in \varphi \land 
+               \langle y,z \rangle \in \varphi) \implies
+               \langle x,z \rangle \in \varphi]$. Tranzitívnosť
     \end{itemize}
     Ak pridáme trichotomickosť, dostaneme teóriu neostrého
     usporiadania:
     \begin{itemize}
-        \item[4.] $(\forall x) (\forall y) (x \not=y \implies
-            ((x,y) \in \phi \lor (y,x) \in \phi))$
-        \item[4'] $(\forall x) (\forall y) (x = y \lor
-            ((x,y) \in \phi \lor (y,x) \in \phi))$
+        \item[4.] $(\forall x) (\forall y) [x \not=y \implies
+            (\langle x,y \rangle \in \varphi \lor 
+             \langle y,x \rangle \in \varphi)]$
+
+        \item[4'] $(\forall x) (\forall y) [x = y \lor
+            (\langle x,y \rangle \in \varphi \lor 
+             \langle y,x \rangle \in \varphi)]$
     \end{itemize}
 %%% }}}    
 \end{priklad}
 
 \begin{lema}
-~
+Rovnosť je symetrická a tranzitívna.
     \begin{itemize}
-        \item[1] $\provable x=y \implies y=x$ -- symetria
+        \item[1] $\provable (x=y) \implies (y=x)$ -- symetria
         \item[2] $\provable (x=y) \implies ((y=z) \implies (x=z))$ --
             tranzitívnosť
     \end{itemize}
 \end{lema}
 \begin{dokaz}
-~
 %%% {{{
+\noindent
 \begin{itemize}
     \item Symetria:
         \begin{itemize}
-        \item[1] $\provable (x=y) \implies (x=x) \implies (x=x) \implies (y=x)$
+        \item[1] $\provable (x=y) \implies ((x=x) \implies ((x=x)
+                \implies (y=x)))$
             pretože \\
-                $\provable (x_1=y_1) \implies (x_2=y_2) \implies
-                    (x_1=x_2) \implies (y_1=y_2)$ je inštancia R3
+                $\provable (x_1=y_1) \implies ((x_2=y_2) \implies
+                    ((x_1=x_2) \implies (y_1=y_2)))$ je inštancia R3
         \item[2] $\provable A \implies (B \implies (B \implies C))$.
         \item[3] $\provable B \implies (B \implies (A \implies C))$ --
             2x použité pravidlo zámeny predpokladov + veta o dedukcii
@@ -82,19 +94,19 @@
                 -- pravidlo zámeny predpokladov
             \item[4] $\provable (z=z) \implies ((y=x) \implies ((y=z) \implies
                 (x=z)))$
-            \item[5] $\provable x=x$ -- R1
+            \item[5] $\provable z=z$ -- R1
             \item[6] $\provable (y=x) \implies ((y=z) \implies (x=z))$
                 -- MP 4,5
-            \item[7] $\provable ((A \implies B) \implies (B \implies
+            \item[7] $\provable (A \implies B) \implies ((B \implies
                 C)) \implies (A \implies C))$ -- JS
-            \item[8] $\provable (x=y \implies y=x) \implies [
-                (y=x \implies (y=z \implies x=z)) \implies
-                (x=y \implies (y=z \implies x=z))]$ -- inštancia 7
+            \item[8] $\provable ((x=y) \implies (y=x)) \implies [
+                ((y=x) \implies ((y=z) \implies (x=z))) \implies
+                ((x=y) \implies ((y=z) \implies (x=z)))]$ -- inštancia 7
             \item[9] $\provable (x=y) \implies (y=x)$ -- Symetria
             \item[10] $\provable
-                (y=x \implies (y=z \implies x=z)) \implies
-                (x=y \implies (y=z \implies x=z))$ -- MP 9,8
-            \item[11] $\provable (x=y \implies (y=z \implies x=z))$ -- MP 6,10
+                ((y=x) \implies ((y=z) \implies (x=z))) \implies
+                ((x=y) \implies ((y=z) \implies (x=z)))$ -- MP 9,8
+            \item[11] $\provable ((x=y) \implies ((y=z) \implies (x=z)))$ -- MP 6,10
         \end{itemize}
 \end{itemize}
 %%% }}}
@@ -102,15 +114,40 @@
 
 \begin{veta}
     Nech $t_1,\ldots,t_n,s_1,\ldots,s_n$ sú termy, pričom platí
-        $\forall i \in \{1,\dots,n\}: \provable t_i = s_i$.
+        $\forall i \in \{1,\dots,n\}:\; \provable t_i = s_i$.
     Potom
     \begin{itemize}
-    \item[i] Ak $t$ je term, ktorý vznikne z termu $s$ nahradením
-        niektorých výskytov termov $s_i$ za $t_i$, potom 
+    \item[i)] Ak $t$ je term, ktorý vznikne z termu $s$ nahradením
+        niektorých výskytov termov $s_i$ za $t_i$. Potom 
         $\provable t=s$.
-    \item[ii] Ak $A'$ je formula, ktorá vznikne z formuly $A$
+    \item[ii)] Ak $A'$ je formula, ktorá vznikne z formuly $A$
     dosadením $t_i$ za niektoré termy $s_i$, okrem prípadov, keď
-    $t_i$ je \fixme{}.
+    $t_i$ je premenná $x$ v $(\forall x)$ resp. $(\exists x)$. Potom
     $\provable A \leftrightarrow A'$.
     \end{itemize}
 \end{veta}
+
+\begin{dokaz}
+%%% {{{
+\noindent
+\begin{itemize}
+    \item[i)] Dôkaz matematickou indukciou vzhľadom na zložitosť termu $t$.
+        \begin{itemize}
+        \item Ak $t$ je premenná alebo $t$ je $s_i$ pre nejaké $i$.
+            Potom zjavne $\provable t=s_i$.
+
+        \item Nech $t$ je $f(r_1,\dots,r_k)$, $s$ je $f(r_1',\dots,r_k')$.
+            Pre $r_1,\dots,r_k$ platí IP $\provable r_i = r_i'$.
+            Potom $\provable (r_1=r_1') \implies  \dots \implies
+                (r_k = r_k') \implies (f(r_1,\dots,r_k) = f(r_1',
+                    \dots, r_k'))$, čo $k$-násobným použitím MP na 
+                    indukčný predpoklad vedie k
+                    $\provable f(r_1,\dots,r_k) = f(r_1', \dots,
+                    r_k')$.
+                
+        \end{itemize}
+    \item[ii)]
+    \todo{dopisat}
+\end{itemize}
+%%% }}}
+\end{dokaz}
