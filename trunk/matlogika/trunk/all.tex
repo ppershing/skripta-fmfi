@@ -206,14 +206,14 @@ $T' \provable A$ aj $T' \vdash \neg A$.
 \end{veta}
 
 \begin{dokaz}
-    Nech $\mathcal{S}$ je množina všetkých uzavretých formúl jazyka $L$.
-    Ďalej definujeme $\mathcal{B} \{ S \mid S \subseteq \mathcal{S}, T \union S
+    Nech $\mathscr{S}$ je množina všetkých uzavretých formúl jazyka $L$.
+    Ďalej definujeme $\mathcal{B} \{ S \mid S \subseteq \mathscr{S}, T \union S
     \mbox{ je bezosporná}\}$. $\mathcal{B}$ je čiastočne usporiadaná na $\subseteq$.
     Množina $\mathcal{B}$ má konečnú vlastnosť -- keď zoberiem ľubovoľnú podmnožinu
     $S \subseteq \mathcal{S}$, bude platiť $$ S \in \mathcal{B} \iff S' \in
     \mathcal{B}, S' \mbox{ je konečná}, S' \subseteq S$$
 
-     Potrebujeme ukázať, že $\mathcal{S} \subseteq \mathcal{B}\times\mathcal{B}$ je čiastočné usporiadanie, čiže je
+     Potrebujeme ukázať, že $\mathscr{S} \subseteq \mathcal{B}\times\mathcal{B}$ je čiastočné usporiadanie, čiže je
 
     \begin{itemize}
     \item reflexívna
@@ -222,46 +222,70 @@ $T' \provable A$ aj $T' \vdash \neg A$.
     \end{itemize}
 
     Reflexívnosť:
-    $$ \forall S \in \mathcal{B}: (S,S) \in \mathcal{S}$$
+    \begin{equation*}
+        \forall S \in \mathcal{B}: (S,S) \in \mathscr{S}
+    \end{equation*}
 
     Antisymetrickosť:
-    $$ (S',S") \in \mathcal{S} \land (S",S') \in \mathcal{S} \implies S' = S"$$
-    $$ t.j. S' \subseteq S" \land S" \subseteq S' \implies S' = S"$$
+    \begin{align*}
+        (S_1,S_2) \in \mathscr{S} \land (S_2,S_1) \in \mathscr{S}
+            \implies S_1 = S_2, \quad \mbox{t.j.} \\
+        S_1 \subseteq S_2 \land S_2 \subseteq S_1 \implies S_1 = S_2
+    \end{align*}
 
     Tranzitívnosť dokážeme analogicky.
 
     $\mathcal{B}$ je čiastočne usporiadaná inklúziou.
-    $$\emptyset \in \mathcal{B}, \mbox{ lebo } T \union \emptyset = T$$
+    \begin{equation*}
+        \emptyset \in \mathcal{B}, \mbox{ lebo } T \union \emptyset = T
+    \end{equation*}
     Ak by $\emptyset$ nebola v $\mathcal{B}$, potom by $T$ bola sporná.
 
     Množina $\mathcal{B}$ má konečnú vlastnosť:
-     $$S \in \mathcal{S}, S \in \mathcal{B} \iff \forall \textrm{konečná }S' \subseteq S, T \union S' \textrm{ je bezosporná, teda }S' \in \mathcal{B}.$$
+    \begin{equation*}
+        S \in \mathscr{S}, S \in \mathcal{B} \iff \forall \textrm{konečná }S' \subseteq S, T \union S' 
+            \textrm{ je bezosporná, teda }S' \in \mathcal{B}
+    \end{equation*}
 
     $\Rightarrow:$
 
-    $$ S \in \mathcal{B} \implies T \union S  \mbox{ je bezosporná}$$
-    $$ S' \subseteq S, S' \mbox{ je konečná}, T \union S' \mbox{ je bezosporná}\implies S' \in \mathcal{B}$$
+    \begin{align*}
+        S \in \mathcal{B} \implies T \union S  \mbox{ je bezosporná}\\
+        S' \subseteq S, S' \mbox{ je konečná}, T \union S' 
+            \mbox{ je bezosporná}\implies S' \in \mathcal{B}
+    \end{align*}
 
-    $\Leftarrow:$Obrátene: Predpokladajme, že $S'$ je ľubovoľná konečná podmnožina $S$, $T \union S'$ je bezosporná, $S' \in \mathcal{B} \implies S \in \mathcal{B}$.
+    $\Leftarrow:$ Predpokladajme, že $S'$ je ľubovoľná konečná podmnožina $S$,
+    $T \union S'$ je bezosporná, $S' \in \mathcal{B} \implies S \in \mathcal{B}$.
 
-    Tvrdenie dokážeme sporom. Predpokladajme, že $S$ nepatrí do $B$. Potom $T \union S$ je sporná, čiže pre ľubovoľnú dokázateľnú formulu A, $\provable \neg(A \implies A)$.
+    Tvrdenie dokážeme sporom.
+    Predpokladajme, že $S$ nepatrí do $B$.
+    Potom $T \union S$ je sporná, čiže pre ľubovoľnú dokázateľnú formulu A, $\provable \neg(A \implies A)$.
 
-    Nech $A_1, A_2, \cdots A_n$ je dôkaz (odvodenie) $\neg(A \implies A)$. Nech $B_1, B_2, \cdots B_m$ sú tie, ktoré sa v tom dôkaze vyskytujú a patria do $S$. Tvrdíme, že $m>=1$. Prečo? Inak by bola $T$ sporná.
+    Nech $A_1, A_2, \cdots A_n$ je dôkaz (odvodenie) $\neg(A \implies A)$.
+    Nech $B_1, B_2, \cdots B_m$ sú tie, ktoré sa v tom dôkaze vyskytujú a patria do $S$.
+    Tvrdíme, že $m>=1$. Prečo? Inak by bola $T$ sporná.
 
-    $S'=\{B_1 ... B_m\}$ je konečná a nenachádza sa v množine $\mathcal{B} \implies$ SPOR (Jedine, kde mohol vzniknúť, je pri predpoklade $S \notin \mathcal{B} )\footnote{poznámky Lukáša H.}$
+    $S'=\{B_1 ... B_m\}$ je konečná a nenachádza sa v množine $\mathcal{B} \implies$ SPOR 
+    (Jedine, kde mohol vzniknúť, je pri predpoklade $S \notin \mathcal{B} )\footnote{poznámky Lukáša H.}$
 
-    \subsection{Princíp maximality}
+    \begin{lema}[Princíp maximality]
+        Každá neprázdna neprázdna podmnožina $\mathcal{P}(\mathscr{S})$ s konečnou vlastnosťou 
+        má maximálny prvok vzhľadom na inklúziu.
+    \end{lema}
 
-    \paragraph{Definícia princípu maximality.}
-
-    Každá neprázdna neprázdna podmnožina $\mathcal{P}(\mathcal{S})$ s konečnou vlastnosťou má maximálny prvok vzhľadom na inklúziu.
-
-    Nech $S_0$ ja maximálny prvok množiny $\mathcal{B}$ vzhľadom na inklúziu. Položme rozšírenie $T'$ (ktoré hľadáme)  $T' = T \union S_0$. Nech $A$ je ľubovoľná uzavretá, potom v $T'$ buď platí
+    Nech $S_0$ ja maximálny prvok množiny $\mathcal{B}$ vzhľadom na inklúziu.
+    Položme rozšírenie $T'$ (ktoré hľadáme)  $T' = T \union S_0$.
+    Nech $A$ je ľubovoľná uzavretá, potom v $T'$ buď platí
     $T' \provable A $ alebo $T' \vdash \neg A$.
 
-    Nech $T'$ nie je úplná teória. Čiže ani jedno z predošlých nie je dokázateľné. Čiže $\neg A$ sa nenachádza ani v $T$ ani $S_0$. 
+    Nech $T'$ nie je úplná teória. Čiže ani jedno z predošlých nie je dokázateľné.
+    Čiže $\neg A$ sa nenachádza ani v $T$ ani $S_0$. 
 
-    Uvažujme, že $T' \union \{\neg A\}$ je bezosporná teória. To je spor s tým, že $S_0$ je maximálny prvok z $\mathcal{B}$ vzhľadom na inklúziu. Pozn.: Odvoláme sa na predtým dokázaný dôsledok: máme $A$, $A'$ je uzáver. Potom $T \provable A \iff T \union \{\neg A'\}$ je sporná teória.
+    Uvažujme, že $T' \union \{\neg A\}$ je bezosporná teória.
+    To je spor s tým, že $S_0$ je maximálny prvok z $\mathcal{B}$ vzhľadom na inklúziu.
+    Pozn.: Odvoláme sa na predtým dokázaný dôsledok: máme $A$, $A'$ je uzáver.
+    Potom $T \provable A \iff T \union \{\neg A'\}$ je sporná teória.
 
     Dosiahli sme zúplnenie teórie. Máme $T$, získali sme $T'$, ktorá je bezosporná a je úplným rozšírením.
 \end{dokaz}\fixme{naozaj je konec dokazu tu?}
