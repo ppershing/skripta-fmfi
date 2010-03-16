@@ -3,10 +3,12 @@
 Budeme definovať rozšírenia (ktorá ani nepomôžu, ani neuškodia :-). (Henkinova
 veta, Lindenbaumova veta)
 
-\begin{definicia}
+\begin{definicia}[Rozšítenie jazyka]
+%%% {{{
     Jazyk $L'$ je \emph{rozšírením jazyka} $L$, ak každý
     špeciálny symbol jazyka $L$ (prípadne aj symbol $=$)
     je v jazyku $L'$ obsiahnutý s rovnakým významom a s rovnakou árnosťou.
+%%% }}}
 \end{definicia}
 
 \begin{priklad}
@@ -14,17 +16,19 @@ veta, Lindenbaumova veta)
     Jazyk $L$ má symboly $<$ a $=$. Jazyk $L'$ je rozšírením jazyka $L$.
 \end{priklad}    
 
-\begin{definicia}
+\begin{definicia}[Rozšítenie teórie]
+%%% {{{
     Majme teóriu $T'$ s jazykom $L'$. Hovoríme, že $T'$ je
     rozšírením teórie $T$ s jazykom $L$, ak platí,
     že $L'$ je rozšírením jazyka $L$ a pre každý formulu $A$ jazyku $L$
     platí $T \provable A, T' \vdash A$. \fixme{je tam namiesto ciarky
     implikacia ci ekvivanencia}
+%%% }}}    
 \end{definicia}
 
 
 \begin{veta}[Henkinova]
-
+%%% {{{
     \begin{align*}
         \provable (\exists x) \neg B \implies \neg B_x[c] \\
         T \provable  \neg B_x[c] \\
@@ -33,6 +37,7 @@ veta, Lindenbaumova veta)
     \fixme{Co vlastne hovori tato veta? Co su predpoklady a co
     vystup?}
     \fixme{je o chvilu zase ta ista veta?}
+%%% }}}    
 \end{veta}
 \fixme{nema tu byt dokaz?}
 
@@ -94,7 +99,7 @@ $T' \provable A$ aj $T' \vdash \neg A$.
 %%% }}}
 \end{dokaz}    
 
-\begin{veta}{Henkinova} 
+\begin{veta}[Henkinova] 
     K ľubovoľnej teórii $T$ môžeme zostrojiť Henkinovu
     teóriu $T_H$, ktorá je konzervatívnym rozšírením teórie $T$.
 \end{veta}    
@@ -341,7 +346,11 @@ $T' = \{B_1, B_2 ... B_m\}$, $B_i$ - axiomy v $T$ nachádzajúce sa v dôkaze $A
 Môžeme napísať $T' \provable A \iff T' \models A$.
 
 \paragraph{}
-Na základe vety o kompaktnosti ukážeme, že teóriu telies charakteristiky 0 nedokážeme v teórii prvého rádu napísať charakterizovať pomocou konečného počtu axiom. Komut. grupa. distr. zákony ma krát a plus ... rád prvku - konečný, najmenší takýto prvok ... teleso konečnej charakteristiky. A tak ďalej.
+Na základe vety o kompaktnosti ukážeme, že teóriu telies
+charakteristiky 0 nedokážeme v teórii prvého rádu napísať
+charakterizovať pomocou konečného počtu axiom. Komut. grupa. distr.
+zákony ma krát a plus ... rád prvku - konečný, najmenší takýto prvok
+... teleso konečnej charakteristiky. A tak ďalej.
 
 
 \section{Prednáška 12.3.2009}
