@@ -72,10 +72,12 @@ by sa našla taká formula, že $T \provable A$ aj $T \vdash \neg A$, z čoho vy
 $T' \provable A$ aj $T' \vdash \neg A$.
 
 \begin{definicia}[Konzervatívne rozšírenie]
+%%% {{{
     Majme teóriu $T$ a teóriu $T'$. Hovoríme, že $T'$ je
     \emph{konzervatívne rozšírenie} teórie $T$,
     ak $T'$ je rozšírenie $T$ a pre každú formulu $A$ na jazyku $L$,
     pre ktorú platí $T' \provable A$ implikuje $T \provable A$.
+%%% }}}
 \end{definicia}    
 
 \begin{lema} 
@@ -83,11 +85,13 @@ $T' \provable A$ aj $T' \vdash \neg A$.
     bezosporná vtedy a len vtedy, keď $T'$ je bezosporná.
 \end{lema}
 \begin{dokaz}
+%%% {{{
     Vyplýva to z toho, že ak zoberieme konzervatívne rozšírenie,
     pre ľubovoľnú formulu pôvodného jazyka platí, že:
     \begin{equation*}
         T' \provable_L A \Rightarrow T \vdash A
     \end{equation*}
+%%% }}}
 \end{dokaz}    
 
 \begin{veta}{Henkinova} 
@@ -96,6 +100,7 @@ $T' \provable A$ aj $T' \vdash \neg A$.
 \end{veta}    
 
 \begin{dokaz}
+%%% {{{
     Teóriu $T$ rozšírime a priradíme k nej teóriu $T_H$ tak, že
     jednak rozšírime jazyk teórie a jednak pridáme axiómy.
     Nech teória $T$ má jazyk $L$.
@@ -103,160 +108,163 @@ $T' \provable A$ aj $T' \vdash \neg A$.
 
     \fixme{<skontroluj, malé písmená>}
 
-\par Vezmime si formulu $A$ napísanú v jazyku $L$, ktorá má jedinú premennú $x$
-priradíme jej premenné $c_A$ a $c_{\neg A}$ a nasledovné axiomy: 
+    \par Vezmime si formulu $A$ napísanú v jazyku $L$, ktorá má jedinú premennú $x$
+    priradíme jej premenné $c_A$ a $c_{\neg A}$ a nasledovné axiomy: 
 
-$
-\begin{array}{lll}
-\mbox{(*)} & (\exists x) A \implies A_x[c_A] & (H1) \\
-\mbox{(**)} & A_x{c_{\neg A}} \implies (\forall x) A & (H2) \\
-\end{array}
-$
+    $
+    \begin{array}{lll}
+    \mbox{(*)} & (\exists x) A \implies A_x[c_A] & (H1) \\
+    \mbox{(**)} & A_x{c_{\neg A}} \implies (\forall x) A & (H2) \\
+    \end{array}
+    $
 
-Stačila by nám aj jedna konštanta:
-$$B: \neg A$$
-$$ (*) (\exists x) \neg A \implies \neg A_x[c_{\neg A}]$$
-$$\neg \neg A_x[c_{\neg A}] \implies (\forall x) \neg \neg A$$
-$$A_x[c_{\neg A}] \implies (\forall x) A$$
+    Stačila by nám aj jedna konštanta:
+    $$B: \neg A$$
+    $$ (*) (\exists x) \neg A \implies \neg A_x[c_{\neg A}]$$
+    $$\neg \neg A_x[c_{\neg A}] \implies (\forall x) \neg \neg A$$
+    $$A_x[c_{\neg A}] \implies (\forall x) A$$
 
-Alebo:
-$$B: \neg A$$
-$$\neg A_x[c_{??} \implies (\forall x) \neg A$$
-$$(\exists x) A \implies A_x[c_A]$$
-\textbf{</skontroluj, malé písmená>}
+    Alebo:
+    $$B: \neg A$$
+    $$\neg A_x[c_{??} \implies (\forall x) \neg A$$
+    $$(\exists x) A \implies A_x[c_A]$$
+    \textbf{</skontroluj, malé písmená>}
 
-\par $C_1$ bude množina všetkých konštánt $c_A$ a $c_{\neg A}$. Týmito konštantami
-rozšírime jazyk $L$. Induktívne pokračujeme ďalej a podobne vytvárame množinu $C_2$
-(zoberieme ľubovoľnú formulu $A$ nad rozšíreným jazykom, ktorá mala jedinú voľnú
-premennú $x$ a obsahovala aspoň jednu konštantu prvého rádu).
-Pridané konštanty budeme nazývať konštanty druhého rádu. Pokračujeme až po
-$C_n$.
+    \par $C_1$ bude množina všetkých konštánt $c_A$ a $c_{\neg A}$. Týmito konštantami
+    rozšírime jazyk $L$. Induktívne pokračujeme ďalej a podobne vytvárame množinu $C_2$
+    (zoberieme ľubovoľnú formulu $A$ nad rozšíreným jazykom, ktorá mala jedinú voľnú
+    premennú $x$ a obsahovala aspoň jednu konštantu prvého rádu).
+    Pridané konštanty budeme nazývať konštanty druhého rádu. Pokračujeme až po
+    $C_n$.
 
-\par Vezmeme formuly, ktoré majú jedinú voľnú premennú $x$ a obsahujú nejakú
-pridávanú konštantu rádu $n$.
+    \par Vezmeme formuly, ktoré majú jedinú voľnú premennú $x$ a obsahujú nejakú
+    pridávanú konštantu rádu $n$.
 
-Označme
-\begin{equation*}
-    L(C) = L \union C_1 \union C_2 \union \ldots
-\end{equation*}
-Teóriu $T_H$ bude tvoriť rozšírenie $L(C)$ jazyka $L$, axiómy budú axiómy $T$
-ku ktorým pridáme všetky axiómy $H1$.
-Je ihneď zrejmé, že $T_H$ je rozšírenie teórie $T$.
-Potrebujeme ukázať, že $T_H$ je konzervatívne rozšírenie teórie $T$, t.j.
-že pre každú formulu $A$ jazyka $L$ platí 
-$T_H \provable A \Rightarrow T \models A$
+    Označme
+    \begin{equation*}
+        L(C) = L \union C_1 \union C_2 \union \ldots
+    \end{equation*}
+    Teóriu $T_H$ bude tvoriť rozšírenie $L(C)$ jazyka $L$, axiómy budú axiómy $T$
+    ku ktorým pridáme všetky axiómy $H1$.
+    Je ihneď zrejmé, že $T_H$ je rozšírenie teórie $T$.
+    Potrebujeme ukázať, že $T_H$ je konzervatívne rozšírenie teórie $T$, t.j.
+    že pre každú formulu $A$ jazyka $L$ platí 
+    $T_H \provable A \Rightarrow T \models A$
 
-Nech platí, že v $T_H$ je dokázateľná formula $A$
-a nech $B_1, B_2, \ldots ,B_n$ sú všetky Henkinovské
-axiómy vyskytujúce sa v dôkaze $A$. Keďže dôkaz je konečný, týchto
-axióm je konečný počet. Ďalej môžeme uvažovať (ako sme už ukázali),
-že všetky axiómy $B_1, \ldots, B_n$ sú typu $H1$.
-Máme teda
-\begin{equation*}
-    T, B_1, \dots ,B_n \provable A
-\end{equation*}
-Keďže axiómy $B_1,\ldots,B_n$ sú uzavreté formuly, môžeme použiť vetu o dedukcii
-a dostávame
-\begin{equation*}
-    T \provable B_1 \implies B_2 \implies \ldots \implies B_n \implies A
-\end{equation*}
-Axiómy navyše môžeme poprehadzovať tak, aby $B_1$ obsahovala konštantu maximálneho rádu.
-Teda $B_1$ je tvaru $(\exists x) D \implies D_x[c_D]$, pričom $c_D$ nie je je použitá
-v $B_2, \ldots, B_n$. Použijeme vetu o konštantách a dostávame
-\begin{equation*}
-    T \provable ((\exists x) D \implies D_x[w] ) \implies (B_2 \implies \ldots \implies B_n \implies A)
-\end{equation*}
-kde $w$ je nová premenná.
-Teraz môžeme použiť pravidlo zavedenia existenčného kvantifikátora --
-ak $T \provable A \implies B$ a $w$ nie je voľná v $B$, potom $T\provable (\exists w) A \implies B$.
-Čiže
-\begin{equation*}
-    T \provable (\exists w) ((\exists x)D \implies D_x[w]) \implies (B_2 \implies
-        \ldots \implies B_n \implies A)
-\end{equation*}
-Ďalej použijeme prenexnú operáciu $(Qx) (A\implies B) \iff (A\implies
-(Qx)B)$ (za predpokladu, že $x$ nie je voľná v $A$), aby sme $w$
-preniesli dovnútra. Výsledkom je
-\begin{equation*}
-    T \provable ((\exists x) D \implies (\exists w)D_x[w]) \implies B_2 \implies \ldots \implies B_n \implies A
-\end{equation*}
+    Nech platí, že v $T_H$ je dokázateľná formula $A$
+    a nech $B_1, B_2, \ldots ,B_n$ sú všetky Henkinovské
+    axiómy vyskytujúce sa v dôkaze $A$. Keďže dôkaz je konečný, týchto
+    axióm je konečný počet. Ďalej môžeme uvažovať (ako sme už ukázali),
+    že všetky axiómy $B_1, \ldots, B_n$ sú typu $H1$.
+    Máme teda
+    \begin{equation*}
+        T, B_1, \dots ,B_n \provable A
+    \end{equation*}
+    Keďže axiómy $B_1,\ldots,B_n$ sú uzavreté formuly, môžeme použiť vetu o dedukcii
+    a dostávame
+    \begin{equation*}
+        T \provable B_1 \implies B_2 \implies \ldots \implies B_n \implies A
+    \end{equation*}
+    Axiómy navyše môžeme poprehadzovať tak, aby $B_1$ obsahovala konštantu maximálneho rádu.
+    Teda $B_1$ je tvaru $(\exists x) D \implies D_x[c_D]$, pričom $c_D$ nie je je použitá
+    v $B_2, \ldots, B_n$. Použijeme vetu o konštantách a dostávame
+    \begin{equation*}
+        T \provable ((\exists x) D \implies D_x[w] ) \implies (B_2 \implies \ldots \implies B_n \implies A)
+    \end{equation*}
+    kde $w$ je nová premenná.
+    Teraz môžeme použiť pravidlo zavedenia existenčného kvantifikátora --
+    ak $T \provable A \implies B$ a $w$ nie je voľná v $B$, potom $T\provable (\exists w) A \implies B$.
+    Čiže
+    \begin{equation*}
+        T \provable (\exists w) ((\exists x)D \implies D_x[w]) \implies (B_2 \implies
+            \ldots \implies B_n \implies A)
+    \end{equation*}
+    Ďalej použijeme prenexnú operáciu $(Qx) (A\implies B) \iff (A\implies
+    (Qx)B)$ (za predpokladu, že $x$ nie je voľná v $A$), aby sme $w$
+    preniesli dovnútra. Výsledkom je
+    \begin{equation*}
+        T \provable ((\exists x) D \implies (\exists w)D_x[w]) \implies B_2 \implies \ldots \implies B_n \implies A
+    \end{equation*}
 
-Použijeme z vety o variantoch ale máme
-\begin{equation*}
-    T \provable ( \exists x ) D \implies (\exists w) D_x[w] \\
-\end{equation*}
-z čoho pomocou pravidla modus ponens získame
-\begin{equation*}
-    T \provable B_2 \implies B-3 \implies \ldots \implies B_n \implies A
-\end{equation*}
-Opakovaním postupu ďalších $n-1$ krát dostaneme $T \provable A$.
+    Použijeme z vety o variantoch ale máme
+    \begin{equation*}
+        T \provable ( \exists x ) D \implies (\exists w) D_x[w] \\
+    \end{equation*}
+    z čoho pomocou pravidla modus ponens získame
+    \begin{equation*}
+        T \provable B_2 \implies B-3 \implies \ldots \implies B_n \implies A
+    \end{equation*}
+    Opakovaním postupu ďalších $n-1$ krát dostaneme $T \provable A$.
 
-Ukázali sme, že $T_H$ s jazykom $L(C)$ je konzervatívne rozšírenie jazyka $L$.
+    Ukázali sme, že $T_H$ s jazykom $L(C)$ je konzervatívne rozšírenie jazyka $L$.
+%%% }}}
 \end{dokaz}
 
-\paragraph{Veta (Lindenbaum):} Ak $T$ je teória s jazykom $L$ a $T$ je
-bezosporná, potom existuje úplné rozšírenie $T'$ s jazykom $L$.
+\begin{veta}[Lindenbaum]
+    Ak $T$ je bezosporná teória s jazykom $L$, potom existuje úplné
+    rozšírenie $T'$ teórie $T$ s rovnakým jazykom $L$.
+\end{veta}
 
-Ak teória $T$ bude bezosporná, potom aj $T_H$ bude bezosporná.
+\begin{dokaz}
+    Nech $\mathcal{S}$ je množina všetkých uzavretých formúl jazyka $L$.
+    Ďalej definujeme $\mathcal{B} \{ S \mid S \subseteq \mathcal{S}, T \union S
+    \mbox{ je bezosporná}\}$. $\mathcal{B}$ je čiastočne usporiadaná na $\subseteq$.
+    Množina $\mathcal{B}$ má konečnú vlastnosť -- keď zoberiem ľubovoľnú podmnožinu
+    $S \subseteq \mathcal{S}$, bude platiť $$ S \in \mathcal{B} \iff S' \in
+    \mathcal{B}, S' \mbox{ je konečná}, S' \subseteq S$$
 
-\paragraph{Dôkaz:} Nech $\mathcal{S}$ je množina všetkých uzavretých formúl jazyka $L$.
-Ďalej definujeme $\mathcal{B} \{ S \mid S \subseteq \mathcal{S}, T \union S
-\mbox{ je bezosporná}\}$. $\mathcal{B}$ je čiastočne usporiadaná na $\subseteq$.
-Množina $\mathcal{B}$ má konečnú vlastnosť -- keď zoberiem ľubovoľnú podmnožinu
-$S \subseteq \mathcal{S}$, bude platiť $$ S \in \mathcal{B} \iff S' \in
-\mathcal{B}, S' \mbox{ je konečná}, S' \subseteq S$$
+     Potrebujeme ukázať, že $\mathcal{S} \subseteq \mathcal{B}\times\mathcal{B}$ je čiastočné usporiadanie, čiže je
 
- Potrebujeme ukázať, že $\mathcal{S} \subseteq \mathcal{B}\times\mathcal{B}$ je čiastočné usporiadanie, čiže je
+    \begin{itemize}
+    \item reflexívna
+    \item antisymetrická
+    \item tranzitívna.
+    \end{itemize}
 
-\begin{itemize}
-\item reflexívna
-\item antisymetrická
-\item tranzitívna.
-\end{itemize}
+    Reflexívnosť:
+    $$ \forall S \in \mathcal{B}: (S,S) \in \mathcal{S}$$
 
-Reflexívnosť:
-$$ \forall S \in \mathcal{B}: (S,S) \in \mathcal{S}$$
+    Antisymetrickosť:
+    $$ (S',S") \in \mathcal{S} \land (S",S') \in \mathcal{S} \implies S' = S"$$
+    $$ t.j. S' \subseteq S" \land S" \subseteq S' \implies S' = S"$$
 
-Antisymetrickosť:
-$$ (S',S") \in \mathcal{S} \land (S",S') \in \mathcal{S} \implies S' = S"$$
-$$ t.j. S' \subseteq S" \land S" \subseteq S' \implies S' = S"$$
+    Tranzitívnosť dokážeme analogicky.
 
-Tranzitívnosť dokážeme analogicky.
+    $\mathcal{B}$ je čiastočne usporiadaná inklúziou.
+    $$\emptyset \in \mathcal{B}, \mbox{ lebo } T \union \emptyset = T$$
+    Ak by $\emptyset$ nebola v $\mathcal{B}$, potom by $T$ bola sporná.
 
-$\mathcal{B}$ je čiastočne usporiadaná inklúziou.
-$$\emptyset \in \mathcal{B}, \mbox{ lebo } T \union \emptyset = T$$
-Ak by $\emptyset$ nebola v $\mathcal{B}$, potom by $T$ bola sporná.
+    Množina $\mathcal{B}$ má konečnú vlastnosť:
+     $$S \in \mathcal{S}, S \in \mathcal{B} \iff \forall \textrm{konečná }S' \subseteq S, T \union S' \textrm{ je bezosporná, teda }S' \in \mathcal{B}.$$
 
-Množina $\mathcal{B}$ má konečnú vlastnosť:
- $$S \in \mathcal{S}, S \in \mathcal{B} \iff \forall \textrm{konečná }S' \subseteq S, T \union S' \textrm{ je bezosporná, teda }S' \in \mathcal{B}.$$
+    $\Rightarrow:$
 
-$\Rightarrow:$
+    $$ S \in \mathcal{B} \implies T \union S  \mbox{ je bezosporná}$$
+    $$ S' \subseteq S, S' \mbox{ je konečná}, T \union S' \mbox{ je bezosporná}\implies S' \in \mathcal{B}$$
 
-$$ S \in \mathcal{B} \implies T \union S  \mbox{ je bezosporná}$$
-$$ S' \subseteq S, S' \mbox{ je konečná}, T \union S' \mbox{ je bezosporná}\implies S' \in \mathcal{B}$$
+    $\Leftarrow:$Obrátene: Predpokladajme, že $S'$ je ľubovoľná konečná podmnožina $S$, $T \union S'$ je bezosporná, $S' \in \mathcal{B} \implies S \in \mathcal{B}$.
 
-$\Leftarrow:$Obrátene: Predpokladajme, že $S'$ je ľubovoľná konečná podmnožina $S$, $T \union S'$ je bezosporná, $S' \in \mathcal{B} \implies S \in \mathcal{B}$.
+    Tvrdenie dokážeme sporom. Predpokladajme, že $S$ nepatrí do $B$. Potom $T \union S$ je sporná, čiže pre ľubovoľnú dokázateľnú formulu A, $\provable \neg(A \implies A)$.
 
-Tvrdenie dokážeme sporom. Predpokladajme, že $S$ nepatrí do $B$. Potom $T \union S$ je sporná, čiže pre ľubovoľnú dokázateľnú formulu A, $\provable \neg(A \implies A)$.
+    Nech $A_1, A_2, \cdots A_n$ je dôkaz (odvodenie) $\neg(A \implies A)$. Nech $B_1, B_2, \cdots B_m$ sú tie, ktoré sa v tom dôkaze vyskytujú a patria do $S$. Tvrdíme, že $m>=1$. Prečo? Inak by bola $T$ sporná.
 
-Nech $A_1, A_2, \cdots A_n$ je dôkaz (odvodenie) $\neg(A \implies A)$. Nech $B_1, B_2, \cdots B_m$ sú tie, ktoré sa v tom dôkaze vyskytujú a patria do $S$. Tvrdíme, že $m>=1$. Prečo? Inak by bola $T$ sporná.
+    $S'=\{B_1 ... B_m\}$ je konečná a nenachádza sa v množine $\mathcal{B} \implies$ SPOR (Jedine, kde mohol vzniknúť, je pri predpoklade $S \notin \mathcal{B} )\footnote{poznámky Lukáša H.}$
 
-$S'=\{B_1 ... B_m\}$ je konečná a nenachádza sa v množine $\mathcal{B} \implies$ SPOR (Jedine, kde mohol vzniknúť, je pri predpoklade $S \notin \mathcal{B} )\footnote{poznámky Lukáša H.}$
+    \subsection{Princíp maximality}
 
-\subsection{Princíp maximality}
+    \paragraph{Definícia princípu maximality.}
 
-\paragraph{Definícia princípu maximality.}
+    Každá neprázdna neprázdna podmnožina $\mathcal{P}(\mathcal{S})$ s konečnou vlastnosťou má maximálny prvok vzhľadom na inklúziu.
 
-Každá neprázdna neprázdna podmnožina $\mathcal{P}(\mathcal{S})$ s konečnou vlastnosťou má maximálny prvok vzhľadom na inklúziu.
+    Nech $S_0$ ja maximálny prvok množiny $\mathcal{B}$ vzhľadom na inklúziu. Položme rozšírenie $T'$ (ktoré hľadáme)  $T' = T \union S_0$. Nech $A$ je ľubovoľná uzavretá, potom v $T'$ buď platí
+    $T' \provable A $ alebo $T' \vdash \neg A$.
 
-Nech $S_0$ ja maximálny prvok množiny $\mathcal{B}$ vzhľadom na inklúziu. Položme rozšírenie $T'$ (ktoré hľadáme)  $T' = T \union S_0$. Nech $A$ je ľubovoľná uzavretá, potom v $T'$ buď platí
-$T' \provable A $ alebo $T' \vdash \neg A$.
+    Nech $T'$ nie je úplná teória. Čiže ani jedno z predošlých nie je dokázateľné. Čiže $\neg A$ sa nenachádza ani v $T$ ani $S_0$. 
 
-Nech $T'$ nie je úplná teória. Čiže ani jedno z predošlých nie je dokázateľné. Čiže $\neg A$ sa nenachádza ani v $T$ ani $S_0$. 
+    Uvažujme, že $T' \union \{\neg A\}$ je bezosporná teória. To je spor s tým, že $S_0$ je maximálny prvok z $\mathcal{B}$ vzhľadom na inklúziu. Pozn.: Odvoláme sa na predtým dokázaný dôsledok: máme $A$, $A'$ je uzáver. Potom $T \provable A \iff T \union \{\neg A'\}$ je sporná teória.
 
-Uvažujme, že $T' \union \{\neg A\}$ je bezosporná teória. To je spor s tým, že $S_0$ je maximálny prvok z $\mathcal{B}$ vzhľadom na inklúziu. Pozn.: Odvoláme sa na predtým dokázaný dôsledok: máme $A$, $A'$ je uzáver. Potom $T \provable A \iff T \union \{\neg A'\}$ je sporná teória.
-
-Dosiahli sme zúplnenie teórie. Máme $T$, získali sme $T'$, ktorá je bezosporná a je úplným rozšírením.
+    Dosiahli sme zúplnenie teórie. Máme $T$, získali sme $T'$, ktorá je bezosporná a je úplným rozšírením.
+\end{dokaz}\fixme{naozaj je konec dokazu tu?}
 
 Keď máme $T$, $L$, vieme to rozšíriť na $T_H$ s jazykom $L(C)$. Keď máme $T$ bezospornú, $T(H)$ s jazykom $L(C)$ je tiež bezosporná. Dokážem vytvoriť Hankinovskú úplnú $T_H'$, $L(C)$ a pre ňu model $m$.
 
