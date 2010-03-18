@@ -1,0 +1,60 @@
+\section{Inkrementálne hašovanie}
+
+\subsubsection{Motivácia}
+
+Predstavme si, že máme dlhý dokument (súbor, disk),
+označme ho $m$ a chceme si uchovávať jeho hash. Pri klasickom riešení
+by sme museli prejsť celý dokument a spočítať jeho 
+hash $H(m)$. Následne keď urobíme čo i len najmenšiu
+zmenu, tak na to, aby sme získali novú hash musíme opäť
+prejsť celý súbor. Toto je náročné na systémové prostriedky.
+
+\subsection{Triviálne riešenia}
+
+Môžeme náš dokument rozdeliť na časti (disk na sektory)
+a uchovávať hash každej časti osobitne. V prípade, keď
+$m = m_1 m_2 \dots m_k$, tak hash bude 
+$H(m) = <h(m_1), h(m_2), \dots, h(m_k)>$.
+Toto riešenie má ale oveľa dlhšiu hash.
+
+Iné riešenie je použiť Merkleho stromy. Tak si ale preto, aby
+sme mali rýchly update hashe musíme pamätať zloženie celého stromu, čo tiež nie je potešujúce.
+
+
+\subsection{Lepšie riešenia}
+
+Zoberme konečnú komutatívnu grupu $(G, \odot)$ (napr. $(2^n, XOR)$).
+Následne predpokladajme, že máme hašovaciu funkciu s oborom hodnôť $G$.
+Rozdeľme dokument na $k$ blokov $m = x_1 x_2 \dots x_k$ Naša hash bude 
+$H(m) = \displaystyle\bigodot_{j=1}^k h(i, x_i)$. 
+Pokiaľ sa blok $x_i$ zmení na $x_i^{'}$, tak nová hash bude:
+$$H(m^{'}) = H(m) \odot h(i, x_i)^{-1} \odot h(i, x_i^{'})$$
+
+\subsubsection{Praktická realizácia}
+
+Najprv si ukážeme tzv. XOR-HASH.
+Predpokladajme, že $h\colon \{0,1\}^l \to \{0,1\}^n$.
+Hash bude daná vzorcom:
+$H(m) = \displaystyle\bigoplus_{j=1}^k h(i, x_i)$.
+
+Ukážeme, že aj v prípade, že $h$ je kvalitná hašovacia funkcia
+(správa sa ako náhodné orákulum) vieme XOR-HASH invertovať.
+
+Na vstupe majme $z \in \{0,1\}^n$. Najprv si pripravíme
+2 náhodné dokumenty $x^0 = x_1^0 x_2^0 \dots x_k^0$ a 
+$x_1 = x_1^1 x_2^1 \dots x_k^1$. Spočítame si hashe ich častí:
+$a_i^b = h(i, x_i^b)$. 
+Teraz chceme nájsť $y = y_1 y_2 \dots y_k$, kde $y_1 \in \{0,1\}$,
+také, že $z = a_1^{y_1} \oplus a_2^{y_2} \oplus \dots \oplus a_k^{y_k}$
+(teda $H(x_1^{y_1} x_2^{y_2} \dots x_k^{y_k}) = z$).
+Táto rovnica sa dá napísať aj ako:
+$$z = a_1^0 (1 - y_1) \oplus a_1^1 y_1 \oplus \dots \oplus a_k^0 (1 - y_k) \oplus a_k^1 y_k$$
+
+Keďže $z$ má $n$ bitov a všetky tieto bity sa počítajú nezávisle od ostatných vieme
+zostaviť $n$ rovníc nad $Z_2$. A máme $k$ neznámych. Keďže v praktických
+aplikáciách je $k > n$ dostaneme skoro vždy riešenie.
+
+\todo{sanca na najdenie riesenia}
+\todo{adhash}
+\todo{zovseobecneny birthday attack}
+
