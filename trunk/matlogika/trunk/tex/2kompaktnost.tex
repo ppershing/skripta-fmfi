@@ -154,7 +154,7 @@ $T' \provable A$ aj $T' \vdash \neg A$.
     Je ihneď zrejmé, že $T_H$ je rozšírenie teórie $T$.
     Potrebujeme ukázať, že $T_H$ je konzervatívne rozšírenie teórie $T$, t.j.
     že pre každú formulu $A$ jazyka $L$ platí 
-    $T_H \provable A \Rightarrow T \models A$
+    $T_H \provable A \Rightarrow T \provable A$
 
     Nech platí, že v $T_H$ je dokázateľná formula $A$
     a nech $B_1, B_2, \ldots ,B_n$ sú všetky Henkinovské
@@ -190,18 +190,16 @@ $T' \provable A$ aj $T' \vdash \neg A$.
     \begin{equation*}
         T \provable ((\exists x) D \implies (\exists w)D_x[w]) \implies B_2 \implies \ldots \implies B_n \implies A
     \end{equation*}
-
-    Použijeme z vety o variantoch ale máme
+    Z vety o variantoch ale máme
     \begin{equation*}
         T \provable ( \exists x ) D \implies (\exists w) D_x[w] \\
     \end{equation*}
     z čoho pomocou pravidla modus ponens získame
     \begin{equation*}
-        T \provable B_2 \implies B-3 \implies \ldots \implies B_n \implies A
+        T \provable B_2 \implies B_3 \implies \ldots \implies B_n \implies A
     \end{equation*}
     Opakovaním postupu ďalších $n-1$ krát dostaneme $T \provable A$.
-
-    Ukázali sme, že $T_H$ s jazykom $L(C)$ je konzervatívne rozšírenie jazyka $L$.
+    Ukázali sme teda, že $T_H$ s jazykom $L(C)$ je konzervatívne rozšírenie jazyka $L$.
 %%% }}}
 \end{dokaz}
 
@@ -210,7 +208,9 @@ $T' \provable A$ aj $T' \vdash \neg A$.
     rozšírenie $T'$ teórie $T$ s rovnakým jazykom $L$.
 \end{veta}
 
-\begin{dokaz}
+\begin{dokaz}[Lindenbaumovej vety]
+%%% {{{
+    \fixme{vyfaktorovat tento dokaz na viacero nezavislych tvrdeni}
     Nech $\mathscr{S}$ je množina všetkých uzavretých formúl jazyka $L$.
     Ďalej definujeme
     $\mathcal{B} = \{ S \mid S \subseteq \mathscr{S}, T \union S
@@ -222,79 +222,89 @@ $T' \provable A$ aj $T' \vdash \neg A$.
         S \in \mathcal{B} \iff \forall \mbox{ konečné } S' \in
         \mathcal{B}: S' \subseteq S
     \end{equation*}
-
-     Potrebujeme ukázať, že $\mathscr{S} \subseteq
-     \mathcal{B}\times\mathcal{B}$ je čiastočné usporiadanie vzhľadom
-     na inklúziu, čiže je
-
+    %
+     Potrebujeme ukázať, že operácia inklúzie $\Psi, \Psi \subseteq
+     \mathcal{B}\times\mathcal{B}$ je čiastočné usporiadanie, čiže je
+    %
     \begin{itemize}
         \item reflexívna
             \begin{equation*}
-                \forall S \in \mathcal{B}: (S,S) \in \mathscr{S}
+                \forall S \in \mathcal{B}: (S,S) \in \Psi
             \end{equation*}
         \item antisymetrická
             \begin{align*}
-                (S_1,S_2) \in \mathscr{S} \land (S_2,S_1) \in \mathscr{S}
-                    \implies S_1 = S_2, \quad \mbox{t.j.} \\
-                S_1 \subseteq S_2 \land S_2 \subseteq S_1 \implies S_1 = S_2
+                &(S_1,S_2) \in \Psi \land (S_2,S_1) \in \Psi
+                    \then S_1 = S_2, \quad \mbox{t.j.} \\
+                &S_1 \subseteq S_2 \land S_2 \subseteq S_1 \then S_1 = S_2
             \end{align*}
-        \item tranzitívna. (dokážeme analogicky).
+        \item tranzitívna. (dokážeme analogicky)
     \end{itemize}
-
-    $\mathcal{B}$ je čiastočne usporiadaná inklúziou.
+    %
+    $\mathcal{B}$ je teda čiastočne usporiadaná inklúziou $\Psi$.
+    Navyše
     \begin{equation*}
         \emptyset \in \mathcal{B}, \mbox{ lebo } T \union \emptyset = T
     \end{equation*}
-    Ak by $\emptyset$ nebola v $\mathcal{B}$, potom by $T$ bola sporná.
+    Ak by totiž $\emptyset$ nebola v $\mathcal{B}$, potom by $T$ bola sporná.
 
-    Množina $\mathcal{B}$ má konečnú vlastnosť:
+    Teraz ukážeme, že množina $\mathcal{B}$ má konečnú vlastnosť:
     \begin{equation*}
-        S \in \mathscr{S}, S \in \mathcal{B} \iff \forall \textrm{konečná }S' \subseteq S, T \union S' 
+        S \in \mathscr{S}, S \in \mathcal{B} \iff \forall \textrm{
+        konečnú }S' \subseteq S \textrm{ platí } T \union S' 
             \textrm{ je bezosporná, teda }S' \in \mathcal{B}
     \end{equation*}
+   
+   \begin{itemize}
+       \item[$\Rightarrow:$]
+            Nech $S \in \mathcal{B}$. Potom $T \union S$ je bezosporná.
+            Ak teda $S' \subseteq S$ a  $S'$ je konečná, teória 
+            $T \union S'$ bude tiež bezosporná $\then S' \in \mathcal{B}$
+        \item[$\Leftarrow:$]
+            Predpokladajme, že pre každú konečnu podmnožinu $S' \subseteq S$
+            je $T \union S'$ je bezosporná.
+            Chceme ukázať $S' \in \mathcal{B} \then S \in \mathcal{B}$.
 
-    $\Rightarrow:$
+            Tvrdenie dokážeme sporom.
+            Predpokladajme, že $S \not in B$.
+            Potom $T \union S$ je sporná,
+            čiže pre ľubovoľnú dokázateľnú formulu A je dokázateľné
+            $\provable \neg(A \implies A)$.
 
-    \begin{align*}
-        S \in \mathcal{B} \implies T \union S  \mbox{ je bezosporná}\\
-        S' \subseteq S, S' \mbox{ je konečná}, T \union S' 
-            \mbox{ je bezosporná}\implies S' \in \mathcal{B}
-    \end{align*}
-
-    $\Leftarrow:$ Predpokladajme, že $S'$ je ľubovoľná konečná podmnožina $S$,
-    $T \union S'$ je bezosporná, $S' \in \mathcal{B} \implies S \in \mathcal{B}$.
-
-    Tvrdenie dokážeme sporom.
-    Predpokladajme, že $S$ nepatrí do $B$.
-    Potom $T \union S$ je sporná, čiže pre ľubovoľnú dokázateľnú formulu A, $\provable \neg(A \implies A)$.
-
-    Nech $A_1, A_2, \cdots A_n$ je dôkaz (odvodenie) $\neg(A \implies A)$.
-    Nech $B_1, B_2, \cdots B_m$ sú tie, ktoré sa v tom dôkaze vyskytujú a patria do $S$.
-    Tvrdíme, že $m>=1$. Prečo? Inak by bola $T$ sporná.
-
-    $S'=\{B_1 ... B_m\}$ je konečná a nenachádza sa v množine $\mathcal{B} \implies$ SPOR 
-    (Jedine, kde mohol vzniknúť, je pri predpoklade $S \notin \mathcal{B} )\footnote{poznámky Lukáša H.}$
+            Nech $A_1, A_2, \cdots A_n$ je dôkaz $\provable \neg(A \implies A)$.
+            Nech $B_1, B_2, \cdots B_m$ sú tie formuly,
+            ktoré sa v tom dôkaze vyskytujú a patria do množiny $S$.
+            Tvrdíme, že ich počet $m \ge 1$.
+            Prečo? Inak by bola priamo $T$ sporná.
+            Zoberme teraz ale konečnú množinu $S'=\{B_1 ... B_m\}$.
+            Zjavne, $T \union S'$ je sporná teória.
+            To je ale spor s predpokladmi.
+    \end{itemize}
 
     \begin{lema}[Princíp maximality]
         Každá neprázdna neprázdna podmnožina $\mathcal{P}(\mathscr{S})$ s konečnou vlastnosťou 
         má maximálny prvok vzhľadom na inklúziu.
     \end{lema}
 
-    Nech $S_0$ ja maximálny prvok množiny $\mathcal{B}$ vzhľadom na inklúziu.
-    Položme rozšírenie $T'$ (ktoré hľadáme)  $T' = T \union S_0$.
-    Nech $A$ je ľubovoľná uzavretá, potom v $T'$ buď platí
-    $T' \provable A $ alebo $T' \vdash \neg A$.
+    Nech $S_0$ je maximálny prvok množiny $\mathcal{B}$ vzhľadom na inklúziu.
+    Položme rozšírenie $T' = T \union S_0$. Ukážeme, že $T'$ je úplná
+    teória, t.j. že pre ľubovoľnú uzavretú formulu $A$ je dokázateľná
+    v teórii $T'$ buď $A$ alebo $\neg A$.
 
-    Nech $T'$ nie je úplná teória. Čiže ani jedno z predošlých nie je dokázateľné.
-    Čiže $\neg A$ sa nenachádza ani v $T$ ani $S_0$. 
+    Uvažujme sporom - nech $T'$ nie je úplná teória. 
+    Potom existuje uzavretá formula $A$ taká,
+    že $T'\not \provable A$ a $T' \not \provable \neg A$.
+    Lenže z tohoto je evidentné (keďže $T'$ je bezosporná), že aj
+    $T'' = T' \union \{\neg A\}$ je bezosporná teória.\footnote{
+        \fixme{kde sme to dokazali}
+        Odvoláme sa na predtým dokázaný dôsledok: ak $A$ je uzavretá,
+        potom $T \provable A \iff T \union \{\neg A'\}$ je sporná teória.
+    }
+    To je ale v spore s tým, že $S_0$ je maximálny prvok $\mathcal{B}$.
 
-    Uvažujme, že $T' \union \{\neg A\}$ je bezosporná teória.
-    To je spor s tým, že $S_0$ je maximálny prvok z $\mathcal{B}$ vzhľadom na inklúziu.
-    Pozn.: Odvoláme sa na predtým dokázaný dôsledok: máme $A$, $A'$ je uzáver.
-    Potom $T \provable A \iff T \union \{\neg A'\}$ je sporná teória.
-
-    Dosiahli sme zúplnenie teórie. Máme $T$, získali sme $T'$, ktorá je bezosporná a je úplným rozšírením.
-\end{dokaz}\fixme{naozaj je konec dokazu tu?}
+    Dosiahli sme zúplnenie teórie. Pre teóriu $T$ sme získali $T'$,
+    ktorá je bezosporná a je úplným rozšírením $T$ na rovnakom jazyku.
+%%% }}}    
+\end{dokaz}
 
 Keď máme $T$, $L$, vieme to rozšíriť na $T_H$ s jazykom $L(C)$. Keď máme $T$ bezospornú, $T(H)$ s jazykom $L(C)$ je tiež bezosporná. Dokážem vytvoriť Hankinovskú úplnú $T_H'$, $L(C)$ a pre ňu model $m$.
 
