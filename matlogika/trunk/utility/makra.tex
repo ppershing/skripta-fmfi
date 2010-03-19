@@ -4,10 +4,26 @@
 \def\verify#1{\todo{verify: #1}}
 
 \renewcommand{\implies}{\rightarrow}
+\newcommand{\then}{\Rightarrow}
 \newcommand{\notmodels}{\nvDash}
 \newcommand{\union}{\cup}
 \newcommand{\provable}{\vdash}
 \newcommand{\unprovable}{\nvdash}
+
+\newcommand{\startFIXME}{
+    \noindent 
+    ----------------------------------------------------------- \\
+    \fixme{Nasledujúca časť potrebuje skontrolovať a upraviť} \\
+    \noindent
+    -----------------------------------------------------------\\
+}
+\newcommand{\stopFIXME}{
+    \noindent 
+    -----------------------------------------------------------
+    Koniec neoverenej časti
+    \noindent 
+    -----------------------------------------------------------
+}
 
 \def\dotuline{\bgroup 
   \ifdim\ULdepth=\maxdimen  % Set depth based on font, if not set already
@@ -52,7 +68,7 @@
 \newtheorem{dosledok}{Dôsledok:}[section]
 
 \newenvironment{dokaz}{\trivlist
-  \item[\hskip \labelsep{\bfseries Dôkaz:}]}{\endtrivlist}
+  \item[\hskip \labelsep{\bfseries Dôkaz:}]}{$\blacksquare$ \endtrivlist}
 
 \newenvironment{poznamka}{\trivlist
   \item[\hskip \labelsep{\bfseries Poznámka:}]}{\endtrivlist}
