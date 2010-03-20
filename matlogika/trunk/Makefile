@@ -25,6 +25,8 @@ ps: main.ps
 
 main.pdf: main.ps
 	ps2pdf main.ps
+
+commented:
 	# this is commented due to problem with pdfcslatex on windows
 	#rm -f *.toc
 	#pdfcslatex main
@@ -38,9 +40,11 @@ html: dvi
 	for i in * ; do if [ ! -d "$i"] ; then cp "$i" html ; fi ; done
 	cd html ; latex2html -html_version 4.0 -no_navigation -no_subdir -info 0 main.tex ; cd ..
 
+.PHONY: clean
 clean: 
 	rm -f *.{log,aux}
 
+.PHONY: dist-clean
 dist-clean:
 	rm -f *.{log,aux,dvi,ps,pdf,toc,bbl,blg,slo,srs,out,bak,lot,lof}
 
@@ -53,3 +57,6 @@ all: ps pdf
 booklet: main.ps
 	cat main.ps | psbook | psnup -2 >main-booklet.ps
 
+distributable: dist-clean pdf
+	cp main.pdf logika_%date:~6%-%date:~3,2%-%date:~0,2%.pdf
+	
