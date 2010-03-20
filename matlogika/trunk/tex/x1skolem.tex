@@ -1,4 +1,4 @@
-\section{Skolemov tvar formuly}
+\section{Skolemov ivar formuly}
 
 \begin{definicia}[Skolemov normálny tvar\footnote{Pozn.:
     Táto definícia sa mierne líši od štandardnej, v tej sa nemôžu
@@ -14,7 +14,7 @@
 \begin{veta}
     Nech $A$ je formula predikátovej logiky. Potom k nej môžeme
     zostrojiť formulu $A'$ v Skolemovom normálnom tvare, pričom platí
-    $\provable A \Leftrightarrow \provable A'$.
+    $\provable A \iff \provable A'$.
     \label{veta:skolem}
 \end{veta}
 
@@ -61,13 +61,14 @@
         $A$ (a teda ani $B$). Uvažujme nasledujúcu formulu
         \begin{equation}
             A^*: \existsxton \left[
-                (\forall y) (B(x_1,\dots,x_n,y) \implies 
-                    P^{(n+1)}(x_1,\dots,x_n,y)) \implies 
+                (\forall y) [B(x_1,\dots,x_n,y) \implies 
+                    P^{(n+1)}(x_1,\dots,x_n,y)] \implies 
                     (\forall y) P^{(n+1)} (x_1,\dots,x_n,y)
             \right]
         \end{equation}
         Postupne ukážeme, že $\provable A \Leftrightarrow \; \provable
         A^*$.
+        %%% {{{ \provable A <==> \provable A*
         \begin{itemize}
         \item[$\Rightarrow$]
         %%% {{{ ==>
@@ -289,84 +290,84 @@
                 $\provable \highlightp{\existsxton (\forall y) B}$
                 -- MP 4,5
             \end{itemize}
+        %%% }}}
         \end{itemize}
         %%% }}}
 
-        \vskip 0.5cm
-            Ešte potrebujeme transformovať formulu $A^*$ na formulu s
-            hodnosťou $m-1$. Nech
-            $B:(Q_1 z_1)(Q_2 z_2) \dots (Q_l z_l) C$, kde $C$ je formula
-            bez kvantifikátorov. Vieme, že hodnosť $B$, resp.
-            hodnosť $(Q_1 z_1)(Q_2 z_2) \dots (Q_l z_l)$ je $m-1$
-            nakoľko hodnosť $A$ je $m$ a v $A$ sa pred $B$ nachádza
-            jeden všeobecný kvantifikátor.
-            %%% {{{
-            \begin{itemize}
-            %%% pomocne makra
-            \def\lefta{\scalebox{3}[1]{\highlighta{[}}}
-            \def\leftb{\scalebox{3}[1]{\highlightb{[}}}
-            \def\righta{\scalebox{3}[1]{\highlighta{]}}}
-            \def\rightb{\scalebox{3}[1]{\highlightb{]}}}
+        Ešte potrebujeme transformovať formulu $A^*$ na formulu s
+        hodnosťou $m-1$. Nech
+        $B:(Q_1 z_1)(Q_2 z_2) \dots (Q_l z_l) C$, kde $C$ je formula
+        bez kvantifikátorov. Vieme, že hodnosť $B$, resp.
+        hodnosť $(Q_1 z_1)(Q_2 z_2) \dots (Q_l z_l)$ je $m-1$
+        nakoľko hodnosť $A$ je $m$ a v $A$ sa pred $B$ nachádza
+        jeden všeobecný kvantifikátor.
+        %%% {{{
+        \begin{itemize}
+        %%% pomocne makra
+        \def\lefta{\scalebox{3}[1]{\highlighta{[}} }
+        \def\leftb{\scalebox{3}[1]{\highlightb{[}} }
+        \def\righta{\scalebox{3}[1]{\highlighta{]}} }
+        \def\rightb{\scalebox{3}[1]{\highlightb{]}} }
 
-            \item[] $A^*$
-            \item[$\Leftrightarrow$]            
-            $\highlightdim{\existsxton} 
-                \lefta (\forall y)
-                \leftb
-                  (Q_1 z_1) (Q_2 z_2) \dots (Q_l z_l) C \implies
-                  P^{(n+1)} \rightb \implies (\forall y)
-                  P^{(n+1)} \righta$
+        \item[] $A^*$
+        \item[$\Leftrightarrow$]            
+        $\highlightdim{\existsxton} 
+            \lefta (\forall y)
+            \leftb
+              (Q_1 z_1) (Q_2 z_2) \dots (Q_l z_l) C \implies
+              P^{(n+1)} \rightb \implies (\forall y)
+              P^{(n+1)} \righta$
 
-            \item[$\Leftrightarrow$]
-            $ \highlightdim{\existsxton} \lefta
-                        (\forall y) (\overline{Q_1} z_1)
-                        (\overline{Q_2} z_2) \dots
-                        (\overline{Q_l} z_l) \leftb
-                            C \implies P^{(n+1)} \rightb
-                                \implies (\forall u)
-                                    P^{(n+1)} \righta$ -- veta o variantoch
-                                    + $l$ prenexných operácií d)
-            \item[$\Leftrightarrow$]
-            $ \highlightdim{\existsxton} \highlightc{(\exists y)}
-                    \lefta
-                        (\overline{Q_1} z_1)
-                        (\overline{Q_2} z_2) \dots
-                        (\overline{Q_l} z_l) \leftb
-                            C \implies P^{(n+1)} \rightb
-                                \implies (\forall u)
-                                    P^{(n+1)} \righta$ -- prenexná
-                                    operácia d) aplikovaná na $y$
-            \item[$\Leftrightarrow$]
-            $ \highlightdim{\existsxton} (\exists y)
-                        (Q_1 z_1)
-                        (Q_2 z_2) \dots
-                        (Q_l z_l) \lefta \leftb
-                            C \implies P^{(n+1)} \rightb
-                                \implies (\forall u)
-                                    P^{(n+1)} \righta$ -- $l$-krát prenexná
-                                    operácia d)
+        \item[$\Leftrightarrow$]
+        $ \highlightdim{\existsxton} \lefta
+                    (\forall y) (\overline{Q_1} z_1)
+                    (\overline{Q_2} z_2) \dots
+                    (\overline{Q_l} z_l) \leftb
+                        C \implies P^{(n+1)} \rightb
+                            \implies (\forall u)
+                                P^{(n+1)} \righta$ -- veta o variantoch
+                                + $l$ prenexných operácií d)
+        \item[$\Leftrightarrow$]
+        $ \highlightdim{\existsxton} \highlightc{(\exists y)}
+                \lefta
+                    (\overline{Q_1} z_1)
+                    (\overline{Q_2} z_2) \dots
+                    (\overline{Q_l} z_l) \leftb
+                        C \implies P^{(n+1)} \rightb
+                            \implies (\forall u)
+                                P^{(n+1)} \righta$ -- prenexná
+                                operácia d) aplikovaná na $y$
+        \item[$\Leftrightarrow$]
+        $ \highlightdim{\existsxton} (\exists y)
+                    (Q_1 z_1)
+                    (Q_2 z_2) \dots
+                    (Q_l z_l) \lefta \leftb
+                        C \implies P^{(n+1)} \rightb
+                            \implies (\forall u)
+                                P^{(n+1)} \righta$ -- $l$-krát prenexná
+                                operácia d)
 
-            \item[$\Leftrightarrow$]
-            $ \highlightdim{\existsxton} (\exists y)
-                        (Q_1 z_1)
-                        (Q_2 z_2) \dots
-                        (Q_l z_l) (\forall u) \lefta \leftb
-                            C \implies P^{(n+1)} \rightb
-                                \implies
-                                    P^{(n+1)} \righta$ -- prenexná
-                                    operácia c) aplikovaná na $u$
+        \item[$\Leftrightarrow$]
+        $ \highlightdim{\existsxton} (\exists y)
+                    (Q_1 z_1)
+                    (Q_2 z_2) \dots
+                    (Q_l z_l) (\forall u) \lefta \leftb
+                        C \implies P^{(n+1)} \rightb
+                            \implies
+                                P^{(n+1)} \righta$ -- prenexná
+                                operácia c) aplikovaná na $u$
 
-                %%% zmaz pomocne makra
-                \let\lefta\undefined
-                \let\leftb\undefined
-                \let\righta\undefined
-                \let\rightb\undefined
-            \end{itemize}
-            Posledná formula má hodnosť $m-1$ a tak ju vieme podľa
-            indukčného predpokladu previesť na Skolemov normálny tvar.
-            \fixme{naco sme potrebovali uplnu indukciu, moze nastat
-            pripad, ze ta hodnost bude menej ako $m-1$?}
-            %%% }}}
+            %%% zmaz pomocne makra
+            \let\lefta\undefined
+            \let\leftb\undefined
+            \let\righta\undefined
+            \let\rightb\undefined
+        \end{itemize}
+        %%% }}}
+        Posledná formula má hodnosť $m-1$ a tak ju vieme podľa
+        indukčného predpokladu previesť na Skolemov normálny tvar.
+        \fixme{naco sme potrebovali uplnu indukciu, moze nastat
+        pripad, ze ta hodnost bude menej ako $m-1$?}
     \end{itemize}
 %%% }}}    
 \end{dokaz}
