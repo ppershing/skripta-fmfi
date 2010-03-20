@@ -49,8 +49,8 @@ hovoriť o predikáte ``=''.
              \langle y,x \rangle \in \varphi)]$
 
         \item[4'] $(\forall x) (\forall y) [x = y \lor
-            (\langle x,y \rangle \in \varphi \lor 
-             \langle y,x \rangle \in \varphi)]$
+             \langle x,y \rangle \in \varphi \lor 
+             \langle y,x \rangle \in \varphi]$
     \end{itemize}
 %%% }}}    
 \end{priklad}
@@ -88,25 +88,31 @@ Rovnosť je symetrická a tranzitívna.
             \item[1] $\provable (y=x) \implies ((z=z) \implies
                 ((y=z) \implies (x=z)))$, pretože \\
                 $\provable (x_1 = y_1) \implies ((x_2=y_2) \implies
-                 ((x_1=x_2) \implies (y_1=y_2)))$ je je R3.
+                 ((x_1=x_2) \implies (y_1=y_2)))$ je inštancia R3.
             \item[2] $\provable A \implies (B \implies (C \implies D))$
             \item[3] $\provable B \implies (A \implies (C \implies D))$
                 -- pravidlo zámeny predpokladov
-            \item[4] $\provable (z=z) \implies ((y=x) \implies ((y=z) \implies
-                (x=z)))$
-            \item[5] $\provable z=z$ -- R1
-            \item[6] $\provable (y=x) \implies ((y=z) \implies (x=z))$
+            \item[4] $\provable \highlightc{(z=z)} \implies [
+                \highlightp{(y=x) \implies ((y=z) \implies
+                (x=z))}]$
+            \item[5] $\provable \highlightc{z=z}$ -- R1
+            \item[6] $\provable \highlightp{
+                    (y=x) \implies ((y=z) \implies (x=z))}$
                 -- MP 4,5
             \item[7] $\provable (A \implies B) \implies ((B \implies
                 C)) \implies (A \implies C))$ -- JS
-            \item[8] $\provable ((x=y) \implies (y=x)) \implies [
-                ((y=x) \implies ((y=z) \implies (x=z))) \implies
-                ((x=y) \implies ((y=z) \implies (x=z)))]$ -- inštancia 7
-            \item[9] $\provable (x=y) \implies (y=x)$ -- Symetria
-            \item[10] $\provable
-                ((y=x) \implies ((y=z) \implies (x=z))) \implies
-                ((x=y) \implies ((y=z) \implies (x=z)))$ -- MP 9,8
-            \item[11] $\provable ((x=y) \implies ((y=z) \implies (x=z)))$ -- MP 6,10
+            \item[8] $\provable \highlighta{[(x=y) \implies (y=x)]}
+                \implies \Big[\highlightb{
+                [\highlightp{(y=x) \implies ((y=z) \implies (x=z))}] \implies
+                [\highlighto{(x=y) \implies ((y=z) \implies (x=z)))}]} \Big]$ 
+                -- inštancia 7
+            \item[9] $\provable \highlighta{(x=y) \implies (y=x)}$ -- symetria
+            \item[10] $\provable \highlightb{ \highlightp{
+                [(y=x) \implies ((y=z) \implies (x=z))]} \implies
+                [\highlighto{
+                (x=y) \implies ((y=z) \implies (x=z))}]}$ -- MP 9,8
+            \item[11] $\provable \highlighto{
+                (x=y) \implies ((y=z) \implies (x=z))}$ -- MP 6,10
         \end{itemize}
 \end{itemize}
 %%% }}}
@@ -118,11 +124,12 @@ Rovnosť je symetrická a tranzitívna.
     Potom
     \begin{itemize}
     \item[i)] Ak $t$ je term, ktorý vznikne z termu $s$ nahradením
-        niektorých výskytov termov $s_i$ za $t_i$. Potom 
+        niektorých výskytov termov $s_i$ za $t_i$, potom 
         $\provable t=s$.
     \item[ii)] Ak $A'$ je formula, ktorá vznikne z formuly $A$
     dosadením $t_i$ za niektoré termy $s_i$, okrem prípadov, keď
-    $t_i$ je premenná $x$ v $(\forall x)$ resp. $(\exists x)$. Potom
+    $t_i$ je premenná $x$ v kvantifikácii $(\forall x)$ 
+    resp. $(\exists x)$. Potom
     $\provable A \leftrightarrow A'$.
     \end{itemize}
 \end{veta}
@@ -132,12 +139,14 @@ Rovnosť je symetrická a tranzitívna.
 \noindent
 \begin{itemize}
     \item[i)] Dôkaz matematickou indukciou vzhľadom na zložitosť termu $t$.
+        %%% {{{
         \begin{itemize}
-        \item Ak $t$ je premenná alebo $t$ je $s_i$ pre nejaké $i$.
+        \item Nech $t$ je premenná alebo $t$ je $s_i$ pre nejaké $i$.
             Potom zjavne $\provable t=s_i$.
 
-        \item Nech $t$ je $f(r_1,\dots,r_k)$, $s$ je $f(r_1',\dots,r_k')$.
-            Pre $r_1,\dots,r_k$ platí IP $\provable r_i = r_i'$.
+        \item Nech term $t$ je $f(r_1,\dots,r_k)$, 
+            term $s$ je $f(r_1',\dots,r_k')$.
+            Pre $r_1,\dots,r_k$ platí IP, čize $\provable r_i = r_i'$.
             Potom $\provable (r_1=r_1') \implies  \dots \implies
                 (r_k = r_k') \implies (f(r_1,\dots,r_k) = f(r_1',
                     \dots, r_k'))$, čo $k$-násobným použitím MP na 
@@ -146,8 +155,186 @@ Rovnosť je symetrická a tranzitívna.
                     r_k')$.
                 
         \end{itemize}
-    \item[ii)]
-    \todo{dopisat}
+        %%% }}}
+    \item[ii)] Zámena termov prebieha len v atomických podformulách
+        formuly $A$ (každý term je časťou nejakej atomickej podformuly).
+        Máme 2 možnosti, ako vyzerá atomická podformula:
+        %%% {{{
+        \begin{itemize}
+        \item Nech $P$ je atomická podformula. Potom po zámene dostaneme z 
+            $P(r_1, \dots, r_k)$ formulu $P':P(r_1',\dots,r_k')$.
+            Chceme ukázať $\provable P(r_1,\dots,r_k) \leftrightarrow
+                                     P(r_1',\dots,r_k')$, ak vieme, že
+            podľa IP platí $\forall i: \provable r_i = r_i'$
+            %%% {{{
+            \begin{itemize}
+            \item [$\Rightarrow:$] 
+                \begin{itemize}
+                \item $\provable (r_1=r_1') \implies
+                                 (r_2=r_2') \implies \dots \implies
+                                 (r_k=r_k') \implies
+                                 (P(r_1,\dots,r_k) \implies
+                                 P(r_1',\dots,r_k'))$ -- inštancia R3
+                \item $\provable r_i = r_i'$ -- IP
+                \item $\provable P(r_1,\dots,r_k) \implies
+                    P(r_1',\dots, r_k')$ -- $k$-krát MP
+                \end{itemize}
+            \item [$\Leftarrow:$]
+                \begin{itemize}
+                \item $\provable (r_1'=r_1) \implies
+                                 (r_2'=r_2) \implies \dots \implies
+                                 (r_k'=r_k) \implies
+                                 (P(r_1',\dots,r_k') \implies
+                                 P(r_1,\dots,r_k))$ -- inštancia R3
+                \item $\provable r_i' = r_i$ -- IP + symetria
+                \item $\provable P(r_1',\dots,r_k') \implies
+                    P(r_1,\dots, r_k)$ -- $k$-krát MP
+                
+                \end{itemize}
+            \end{itemize}
+            %%% }}}
+        \item Nech atomická podformula je tvaru $r_1 = r_2$. Chceme
+        ukázať $\provable r_1=r_2 \leftrightarrow r_1'=r_2'$.
+        \fixme{Naozaj ut mozeme pouzivat VD? Toman jednoducho
+        prehlasi, ze je predpoklad $\provable r_1=r_2$ co mi neni
+        jasne ze preco by mal byt}
+            %%% {{{
+            \begin{itemize}
+            \item[$\Rightarrow:$]
+                \begin{itemize}
+                \item $\provable r_1=r_1'$ -- IP
+                \item $\provable r_2=r_2'$ -- IP
+                \item $\provable r_1 = r_2 \implies (
+                            r_2 = r_2' \implies r_1 = r_2')$ --
+                            tranzitívnosť
+                \item $r_1=r_2 \provable r_1=r_2'$ -- VD + MP
+                \item $r_1=r_2 \provable r_2'=r_1$ -- symetria + MP
+                \item $\provable r_2' = r_1 \implies (
+                            r_1 = r_1' \implies r_2' = r_1')$ --
+                            tranzitívnosť
+                \item $r_1=r_2 \provable r_2' = r_1'$ -- 2xMP
+                \item $r_1=r_2 \provable r_1' = r_2'$ -- symetria + MP
+                \item $\provable r_1=r_2 \implies r_1'=r_2'$ -- VD
+                \end{itemize}
+            \item[$\Leftarrow:$]
+                \begin{itemize}
+                \item $\provable r_1=r_1'$ -- IP
+                \item $\provable r_2=r_2'$ -- IP
+                \item $\provable r_1' = r_2' \implies (
+                            r_2' = r_2 \implies r_1' = r_2)$ --
+                            tranzitívnosť
+                \item $r_1'=r_2' \provable r_1'=r_2$ -- VD + MP
+                \item $\provable r_1 = r_1' \implies (
+                            r_1' = r_2 \implies r_1 = r_2)$ --
+                            tranzitívnosť
+                \item $r_1'=r_2' \provable r_1 = r_2$ -- 2xMP
+                \item $\provable r_1'=r_2' \implies r_1=r_2$ -- VD
+                \end{itemize}
+            \end{itemize}
+            %%% }}}
+        \end{itemize}
+        %%% }}}
+        Dokázali sme, že atomické podformuly sú ekvivalentné. Spolu s
+        vetou o ekvivalencii to ale znamená, že ja pôvodné formuly sú
+        ekvivalentné.
 \end{itemize}
 %%% }}}
 \end{dokaz}
+
+\begin{veta}
+    Majme term $t$, termy $t_1,\dots,t_n, s_1,\dots s_n$ a formulu
+    $A$.
+    Potom platí
+    \begin{itemize}
+        \item[i)] $\provable t_1=s_2 \implies t_2=s_2 \implies
+            t_n=s_n \implies (t[t_1,\dots,t_n] = t[s_1,\dots,s_n])$.
+        \item[ii)] $\provable t_1=s_2 \implies t_2=s_2 \implies
+            t_n=s_n \implies (A[t_1,\dots,t_n] \leftrightarrow 
+                              A[s_1,\dots,s_n])$.
+    \end{itemize}
+    Ak navyše $x$ je premenná, ktorá nie je obsiahnutá v terme $t$,
+    potom platí
+    \begin{itemize}
+        \item[iii)] $\provable A_x[t] \leftrightarrow 
+            (\forall x)((x=t) \implies A)$
+        \item[iv)] $\provable A_x[t] \leftrightarrow 
+            (\exists x)((x=t) \land A)$
+    \end{itemize}
+\end{veta}
+\begin{dokaz}
+    \noindent
+    \begin{itemize}
+        \item[i),ii)] Ak $t_1,\dots,t_n,s_1,\dots,s_n$ neobsahujú
+            premenné, tak to vyplýva priamo z predchádzajúcej vety a vety
+            o dedukcii. V prípade, že tieto termy obsahujú premenné,
+            tieto premenné nahradíme rôznymi konštantami, použijeme
+            vetu o konštantách, predchádzajúcu vetu a vetu o dedukcii.
+            \fixme{To co tu melie, funguje to? Ak hej, tak mi niekto
+            vysvetlite ako tam pouzijem tu vetu o konstantach, som
+            zvedavy}
+        \item[iii)]
+            %%% {{{
+            \begin{itemize}
+            \item[$\Rightarrow:$]
+                \begin{itemize}
+                \item $\provable x=t \implies (A \leftrightarrow
+                    A_x[t])$ -- podľa ii).
+                \item $\provable \underbrace{x=t}_X \implies (
+                    \underbrace{A_x[t]}_Y \implies
+                    \underbrace{A}_Z)$ -- platí totiž
+                    $\provable (B \implies (C \leftrightarrow D))
+                    \implies (B \implies (D \implies C))$
+                \item $(X \implies (Y \implies Z)) \implies
+                       (Y \implies (X \implies Z))$ -- pravidlo zámeny
+                       predpokladov
+                \item $\provable A_x[t] \implies (x=t \implies A)$ --
+                    MP na pravidlo zámeny predpokladov
+                \item $\provable A_x[y] \implies (\forall x)(x=t
+                    \implies A)$ -- pravidlo zavedenia všeobecného
+                    kvantifikátora
+                \end{itemize}
+
+            \item[$\Leftarrow:$]
+                \begin{itemize}
+                \item $\provable \underbrace{(\forall x)(x=t \implies
+                    A)}_X \implies
+                        (\underbrace{(t=t)}_Y \implies
+                        \underbrace{A_x[t]}_Z)$ -- Axióma špecifikácie
+
+                \item $(X \implies (Y \implies Z)) \implies
+                       (Y \implies (X \implies Z))$ -- pravidlo zámeny
+                       predpokladov
+
+                \item $\provable (t=t) \implies ((\forall x) ((x=t)
+                    \implies A) \implies A_x[t])$ -- MP
+
+                \item $\provable t=t$ - axióma R1
+
+                \item $\provable (\forall x) ((x=t)
+                    \implies A) \implies A_x[t]$ -- MP
+                \end{itemize}
+            \end{itemize}
+            %%% }}}
+        \item[iv)]
+            \begin{itemize}
+            \item[1] $\provable (\forall x)((x=t) \implies A)
+                \leftrightarrow A_x[t]$ -- iii)
+            \item[2] $\provable (\forall x)((x=t) \implies \neg A)
+                \leftrightarrow \neg A_x[t]$ -- inštancia 1
+            \item[3] $\provable \neg \neg A_x[t] \leftrightarrow
+                \neg (\forall x) ((x=t) \implies \neg A)$ -- obmena
+                ekvivalencie
+            \item[4] $\provable A_x[t] \leftrightarrow (\exists x) \neg
+                ((x=t) \implies \neg A)$ -- odstránenie $\neg \neg$ a
+                zámena kvantifikátora
+            \item[5] $\provable \neg(X \implies \neg Y)
+                \leftrightarrow  (X \land Y)$ -- rozpísanie
+                $\land$
+            \item[6] $\provable A_x[t] \leftrightarrow (\exists x)
+                ((x=t) \land A)$ -- veta o ekvivalencii aplikovaná na
+                4,5
+
+            \end{itemize}
+    \end{itemize}
+\end{dokaz}
+
