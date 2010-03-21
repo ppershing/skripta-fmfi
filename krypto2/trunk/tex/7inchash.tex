@@ -30,7 +30,40 @@ $H(m) = \displaystyle\bigodot_{j=1}^k h(i, x_i)$.
 Pokiaľ sa blok $x_i$ zmení na $x_i^{'}$, tak nová hash bude:
 $$H(m^{'}) = H(m) \odot h(i, x_i)^{-1} \odot h(i, x_i^{'})$$
 
-\subsubsection{Praktická realizácia}
+\subsubsection{Súvislosť s problémom vyvažovania}
+
+Dá sa ukázať, že nájsť kolíziu pre incrementálnu hašovaciu
+funkciu používajúcu grupu $G$ je aspoň tak ťažké ako riešiť
+problém vyvažovania (ktorého obťiažnosť závisí hlavne od grupy 
+$G$).
+
+\begin{definicia}
+Máme zadanú grupu $(G, \odot)$ a postupnosť $a_1, a_2, \dots, a_n$. Našou úlohou
+je nájsť čísla $w_1, w_2, \dots, w_n \in \{-1, 0, 1\}$, kde aspoň jedno z nich
+je nenulové a platí $a_1^{w_1} \odot a_2^{w_2} \odot \dots \odot a_n^{w_n}$.
+Tomuto problému hovoríme problém vyvažovania.
+\end{definicia}
+
+\begin{poznamka}
+Pokiaľ je grupa $G$ komutatívna, tak vlastne hľadáme dve neprázdne disjuktné podmnožiny
+$I, J \subseteq \{1, 2, \dots, n\}$, kde platí $\bigodot_{i\in I} a_i = \bigodot_{j \in J} a_j$.
+\end{poznamka}
+
+\begin{lema}
+Ak vieme v grupe $(G, \odot)$ hľadať kolízie pre inkrementálne hašovacie
+funkcie, tak vieme rovnako efektívne riešiť problém vyvažovania.
+\end{lema}
+
+\begin{dokaz}
+Majme orákulum $A$, ktoré hľadá kolíziu pre inkrementálnu hašovaciu
+funkciu nad grupou $(G, \odot)$. Toto orákulum nám položí $q$ otázok
+typu aká je hodnota $h(i, x_i)$. Na tieto otázky mu odpovieme postupne $a_1, a_2, \dots, a_q$.
+Orákulum podá odpoveď $H(x) = H(y)$, čo je vlastne $\bigodot_{i \in I} a_i = \bigodot_{j \in J} a_j$.
+(Keďže predpokladáme, že funkcia $h$ sa správa ako náhodné orákulum, tak sa na všetky zložky
+$x$ a $y$ musí $A$ opýtať.)
+\end{dokaz}
+
+\subsection{XOR-hash}
 
 Najprv si ukážeme tzv. XOR-HASH.
 Predpokladajme, že $h\colon \{0,1\}^l \to \{0,1\}^n$.
@@ -55,6 +88,20 @@ zostaviť $n$ rovníc nad $Z_2$. A máme $k$ neznámych. Keďže v praktických
 aplikáciách je $k > n$ dostaneme skoro vždy riešenie.
 
 \todo{sanca na najdenie riesenia}
-\todo{adhash}
+
+\subsection{Ad-hash}
+
+Tento krát spravíme iteratívnu hash v grupe $(Z_m, +)$.
+Tu sa dá ukázať, že problém vyvažovania pre $(Z_m, +)$
+je ťažký. 
+
+V praxi sa používajú napr. tieto 2 konštrukcie:
+
+NASD konštrukcia:
+$$H(x) = \displaystyle\sum_{i=1}^k h(i, x_i) \bmod 2^{256}$$
+
+DCIHF konštrukcia:
+$$H(x) = \displaystyle\sum_{i=1}^{k-1} \textrm{SHA-1}(x_i, x_{i+1}) \bmod 2^{160}+1$$
+
 \todo{zovseobecneny birthday attack}
 
