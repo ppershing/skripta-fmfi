@@ -90,7 +90,6 @@
 %%% }}}
 \end{priklad}
 
-\startFIXME
 \begin{poznamka}
     Nevšímajme si nachvíľu axiómy, ale iba relačnú štruktúru
     $\mathcal{N}=\langle N^+,0,S,+,* \rangle$.
@@ -99,7 +98,12 @@
     $\mathcal{N}'$ realizuje jazyk teórie telies.
     Lenže $\mathcal{N}'$ nie je modelom tohoto jazyka --
     na to, aby daná realizácia bola modelom, muselo by platiť, že
-    každá formula $T$ je splnená v danej realizácii.
+    každá formula $T$ je splnená v danej realizácii. V našom prípade,
+    v každom telese platí $\provable \neg S(S(0))=S(0)$ (inak
+    povedané, $2 \ne 1$, ak má teleso charakteristiku viac ako 2,
+    v prípade charakteristiky 2 je to $0 \ne 1$). Nuž ale v 
+    $\mathcal{N}'$ je splnená formula $S(S(0))=S(0)$, lebo sa
+    realizuje ako $1=1$.
 \end{poznamka}
 
 \begin{priklad}[Teória grúp]
@@ -107,10 +111,11 @@
     Špeciálne symboly sú $+,-$.
     Axiómy sú:
     \begin{enumerate}
-            \item $((x+y)+z) = (x+(y+z))$
-            \item $(x+0) = (0+x) = x$
-            \item $x, -x, x+(-x) = 0 = (-x)+x$
-            \fixme{co tam znamena x,-x?}
+            \item $((x+y)+z) = (x+(y+z))$ -- asociativita
+            \item $(x+0) = (0+x) = x$ -- existuje neutrálny prvok
+            označený ako 0
+            \item $x+(-x) = 0 = (-x)+x$ -- existujú (ľavé a pravé) inverzné
+            prvky
     \end{enumerate}
 %%% }}}
 \end{priklad}
@@ -226,20 +231,19 @@
 %%% }}}
 \end{dokaz}
 
-\startFIXME
 
 \begin{priklad} % existencia nedokazatelnej formuly a jej negacie v el. ar.
 %%% {{{
     Uvažujme elementárnu aritmetiku, ktorá má svoj štandardný
     model. Uvažujme formulu $x=0$ v $N$.
     \begin{itemize}
-        \item Nech $e(x) = m \neq 0$. Potom formula $A: x=0$ nie je
+        \item Nech $e(x) = m$ kde $m \neq 0$. Potom formula $A:x=0$ nie je
         splnená pre ohodnotenie $e$ a teda $m \notmodels A[e]$.
-        \item Nech $e(c) = 0$. Potom formula $A': \neg x=0$ je je
+        \item Nech $e(x) = 0$. Potom formula $A': \neg x=0$ nie je
         splnená v ohodnotení $e$, t.j. $m \notmodels A'[e]$.
     \end{itemize}
-    To ale znemaná, že formula $A$ ani jej negácia
-    nie sú dokázateľné v elementárnej aritmetike.
+    To ale znemaná, že formula $A$ ani jej negácia $A'$
+    nie sú splniteľné (a teda dokázateľné) v elementárnej aritmetike.
 %%% }}}
 \end{priklad}
 
@@ -247,42 +251,48 @@
 \begin{poznamka} % neexistencia vety o dedukcii v predikatovej logike
 %%% {{{
     Vetu o dedukcii v predikátovej logike nemožno vysloviť pre
-    ľubovoľnú formulu.
+    ľubovoľnú formulu. Ukážeme to na nasledujúcom príklade: Majme
+    formuly $A,A'$
     \begin{align*}
             A: & \neg x=0 \\
             A': & \neg y=0 \\
     \end{align*}
     $A'$ je inštancia formuly $A$. Potom ale platí:
     \begin{align*}
-            A \provable A' & \quad \mbox{čiže}\\
-            \neg x=0 \provable \neg y=0
+            A &\provable A'  \quad \mbox{čiže}\\
+            \neg (x=0) &\provable \neg (y=0)
     \end{align*}
     Môžem podľa vety o dedukcii napísať, že 
-    $\provable \neg x=0 \implies y=0$? Nie, pretože
+    $\provable \neg (x=0) \implies \neg (y=0)$? Nie, pretože ak
+    vezmeme ohodnotenie $e$ nasledovne
     \begin{align*}
-        A \implies A' \\
-        e: \\
-        e(x)= m \neq 0 \\
-        e(x)= 0 \\
-        m \notmodels (A \implies A')[e]
+        e(x) &= m, \quad m \neq 0 \\
+        e(y) &= 0
     \end{align*}
+    dostávame
+    \begin{equation*}
+        m \notmodels (A \implies A')[e]
+    \end{equation*}
 %%% }}}
 \end{poznamka}
 
-\begin{dosledok}{Vety o korektnosti}
+\begin{dosledok}[Vety o korektnosti]
     Ak teória $T$ v jazyku $L$ má model $m$, potom $T$ je
     bezposporná.
 \end{dosledok}
 \begin{dokaz}
 %%% {{{
-    Nech $m$ je model $T$ a $A$ je ľubovoľná uzavretá formula jazyka $L$.
-    Potom práve jedna z formúl $A$, $\neg A$ je pravdivá v modeli $m$
+    Nech $\mathcal{M}$ je model $T$. Teória $T$ je tým pádom
+    bezosporná. Uvažujme ďalej, že $A$ je ľubovoľná uzavretá formula jazyka $L$.
+    Potom práve jedna z formúl $A$, $\neg A$ je pravdivá v modeli
+    $\mathcal{M}$
     (podľa Tarského definície splniteľnosti).
     Lenže tá, ktorá nie je pravdivá, nie je ani dokázateľná 
     (podľa vety o korektnosti).
 %%% }}}
 \end{dokaz}
 
+\startFIXME
 \paragraph{}
 \par Tento výsledok hovorí, ze ak máme vyšetriť bezospornosť nejakej teórie,
 treba nájsť jej model. Keď si zoberieme predikátovú logiku:
