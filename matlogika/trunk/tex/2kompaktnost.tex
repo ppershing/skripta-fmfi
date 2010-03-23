@@ -401,52 +401,69 @@ Toto v literatúre terminologicky nazývajú \emph{slabá logika druhého rádu}
 vieme konečne axiomatizovať teóriu telies charakteristiky 0.
 \emph{Veta o kompaktnosti neplatí v slabej logike druhého rádu.}
 
-Mali sme Godelovu vetu v dvoch tvaroch:
-$$ T \models A \iff T \provable A$$
-Druhý tvar: Teória je bezosporná, keď má model. Z druhého tvaru môžeme sformulovať a dokázať
-\emph{vetu o kompaktnosti}.
+\stopFIXME
 
-\paragraph{Veta o kompaktnosti}
-Nech $T$ je množina formúl jazyka $L$. Model teórie $T$ existuje $\iff$ každá konečná podmnožina
-$T' \subseteq T$, má model.
+Mali sme Godelovu vetu v dvoch tvaroch. Prvý bol
+$ T \models A \iff T \provable A$, druhý ``Teória je bezosporná, keď
+má model''. Preto aj veta o kompaktnosti bude mať druhý tvar.
 
-\paragraph{Dôkaz}
-Vieme, že $T$ má model $\iff$ je bezosporná. Viď aj Lindenbaum -- konečná vlastnosť.
-Každá $T'$ je bezosporná a teda má model.
+\begin{veta}[2. tvar vety o kompaktnosti]
+%%% {{{
+    Nech $T$ je množina formúl jazyka $L$. 
+    Model teórie $T$ existuje práve vtedy, keď každá konečná podmnožina
+    $T' \subseteq T$ má model.
+%%% }}}    
+\end{veta}
 
-Pomocou vety o kompaktnosti tohto tvaru dokážeme zaručiť, že pre Peanovu aritmetiku
-existujú aj neštandardné modely. Najprv si však ukážeme Robinsonovu aritmetiku.
+\begin{dokaz}
+%%% {{{
+    Z 2. G\"odelovej vety vyplýva, že $T$ má model $\iff$ je bezosporná.
+    Z lindenbauma zase, že $T$ je bezosporná $\iff$ každá konečná
+    $T' \subseteq T$ je bezosporná, čo opäť z G\"odelovou vety
+    $\iff$ každá konečná podmnožina $T'$ má model.
+%%% }}}
+\end{dokaz}
 
-\begin{enumerate}
-\item $\neg S(x) = 0$
-\item $S(x) = S(y) \implies x=y$
-\item $x+0 = x$
-\item $x+S(y) = S(x+y)$
-\item $x\cdot 0 = 0$
-\item $x\cdot S(y)= (xy)+x$
-Ak pridáme axiomu
-\item $A_x[0] \implies ((\forall x)(A \implies A_x[S(x)]) \implies (\forall x)A)$,
-\end{enumerate}
-dostaneme Peanovu, pričom mám model $n = \langle N^+,0,D,+,-\rangle$
+\begin{priklad}
+    Pomocou vety o kompaktnosti tohto tvaru dokážeme zaručiť,
+    že pre Peanovu aritmetiku existujú aj neštandardné modely.
+    Zopakujme si najskôr jej axiómy:
 
-Ukážeme, že Peanova aritmetika má aj neštandardné modely. Zavedieme označenie:
+    \begin{enumerate}
+    \item $\provable \neg (S(x) = 0)$
+    \item $\provable (S(x) = S(y)) \implies (x=y)$
+    \item $\provable (x+0) = x$
+    \item $\provable (x+S(y)) = S(x+y)$
+    \item $\provable (x * 0) = 0$
+    \item $\provable (x * S(y)) = ((x*y)+x)$
+    \par \noindent Doteraz sme dostali Robinsonovu aritmetiku. Peanovu
+    aritmetiku dostávame pridaním axiómy indukcie:
+    \item $\provable A_x[0] \implies (\forall x)\Big(A \implies (
+            A_x[S(x)] \implies (\forall x)A)\Big)$
+    \end{enumerate}
+    Táto aritmetika má model 
+    $\mathcal{N} = \langle 0,1,S,+,*,N^+ \rangle$.
 
-$L$, definujeme $\bar{n}$ - numerály:
-\begin{itemize}
-\item $\bar{0} = 0$
-\item $\overline{n+1} = S(\bar{n}) = S(S \cdots (S(0) \cdots ))$
-\end{itemize}
+    Ukážeme, že Peanova aritmetika má aj neštandardné modely.
+    Definujme množinu numerálov $\bar{n}$ - termov jazyka $L$ ako
+    \begin{itemize}
+    \item $\bar{0} = 0$
+    \item $\overline{n+1} = S(\bar{n}) = 
+        \underbrace{S(S( \cdots S}_{(n+1)\mbox{-krát}}(0) \cdots ))$
+    \end{itemize}
 
-K $L$ zostrojíme $L_c$ (do $L$ pridáme konstantu $c$).
-$$\mbox{teória }P_c,\mbox{ jazyk }L_c$$
-$$C_n: c \not= \bar{n}$$
-$$\mbox{zoberieme }T \subseteq P_c, P_c \mbox{ obsahuje len konečne veľa numerálov.}$$
+    K $L$ zostrojíme $L_c$ tak, že do $L$ pridáme konštantu $c$ a
+    teóriu rozšírime o axiómy
+    \begin{equation*}
+        \provable C_n: c \not= \bar{n}
+    \end{equation*}
 
-Vidíme, že každá konečná podmnožina má model, ktorý vznikne expanziou štandardného modelu $n$.
-Konštantu c realizujeme indivíduom, ktoré nepatrí do $t$ (čoho?).
-Čiže každá $T$ má model a na základe vety o kompaktnosti aj $P_c$ má model. Teraz, keď si všimneme,
-že model $P_c$ bude rôzny od štandardného modelu a nebude ani izomorfný, pretože tam máme konštantu $c$.
-Každá konečná podmnožina bude mať model. To je zabezpečené, že vznikne expanziou $n$
-a bude obsahovať konštantu, ktorá sa predtým nevyskytovala.
-$m\triangle L = n$ vznikne redukciou L. Dostaneme $n'$, ktorý bude obshovať konštantu c,
-čím bude neštandardný a nebude izomorfný. Vieme, že existuje, ale nevieme ho skonštruovať.
+    Vidíme, že každá konečná podmnožina $T_c$ má model,
+    ktorý vznikne expanziou štandardného modelu $n$.
+    Konštantu $c$ realizujeme indivíduom $n$, ktoré nepatrí do
+    indivíduí použitých axiómach.
+    Čiže každá $T' \subseteq T_c$ má model a na základe vety o kompaktnosti 
+    aj $T_c$ má model. Teraz si môžeme všimnúť, že model $T_c$ bude rôzny
+    od štandardného modelu a nebude s ním ani izomorfný.
+    Vieme teda,že neštandardný model existuje, ale nevieme ho skonštruovať.
+\end{priklad}
