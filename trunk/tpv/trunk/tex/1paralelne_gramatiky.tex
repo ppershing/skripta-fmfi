@@ -11,6 +11,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 \section{Lindenmayerove systémy ($L$-systémy)}
 
 \begin{motiv}
+%%% {{{
     Pôvodná motivácia, ktorá dala vzniknúť teoretickému modelu, o
     ktorom si teraz niečo bližšie povieme, nebola ani zďaleka taká
     blízka teórii jazykov, ako by si niekto mohol chybne myslieť. Pán
@@ -23,114 +24,150 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     rozhodlo, že sa rozmnoží (presnejšie, že sa každá z nich
     rozmnoží), niekedy zasa niektoré bunky odumreli, a teda z reťazca
     akoby zmizli a inokedy sa s nimi nič nedialo
+%%% }}}    
 \end{motiv}
 
 \subsection{$OL$-systémy}
 
-\begin{definicia}
-    $OL$-systém je trojica $G=(V,P,w)$, kde $V$ je abeceda symbolov,
-    \mbox{$P\subseteq V\times V^{*}$} je množina prepisovacích
-    pravidiel, $proj_{1}(P)=V$ (teda musí existovať pravidlo pre každý
-    symbol abecedy $L$-systému), $w\in V^{+}$ nazývame axiom, alebo
-    počiatočné slovo\footnote{Je dobré si hneď na začiatku uvedomiť
-    rozdiel medzi $L$-systémami a gramatikami, s ktorými sme sa
-    stretli \mbox{v Chomského} hierarchii, počiatočné slovo
-    $L$-systému nemusí tvoriť iba jeden symbol, ba dokonca tu
-    nerozlišujeme medzi terminálmi a neterminálmi}
+\begin{definicia}[$OL$-systém]
+%%% {{{
+    Lindenmayerovým $OL$-systémom nazveme
+    trojicu $G=(V,P,w)$, kde $V$ je abeceda symbolov,
+    $P\subseteq V\times V^{*}$ je množina prepisovacích
+    pravidiel takých, že $proj_{1}(P)=V$ 
+    (teda musí existovať pravidlo pre každý symbol abecedy $L$-systému)
+    a $w\in V^{+}$ nazývame axiom, alebo
+    počiatočné slovo.\footnote{Je dobré si hneď na začiatku uvedomiť
+        rozdiel medzi $L$-systémami a gramatikami, s ktorými sme sa
+        stretli v Chomského hierarchii. Počiatočné slovo
+        $L$-systému nemusí tvoriť iba jeden symbol, ba dokonca tu
+        nerozlišujeme medzi terminálmi a neterminálmi}
+%%% }}}        
 \end{definicia}
 
-\begin{definicia}
-    Krok odvodenia je relácia $\Rightarrow$ na $V^{*}$ definovaná
-    nasledovne: $u\Rightarrow v$ práve vtedy, ak $u=a_{1}\dots a_{n}$,
-    $\forall i\med a_{i}\in V$, $v=b_{1}\dots b_{n}$, $\forall i\med
-    b_{i}\in V^{*}$ a $\forall i\med a_{i}\rightarrow b_{i}\in P$
+\begin{definicia}[Krok odvodenia]
+%%% {{{
+    Krok odvodenia v $OL$-systéme je relácia $\odvodenie$ na $V^{*}$ definovaná
+    nasledovne: $u\odvodenie v$ práve vtedy, ak $u=a_{1} \dots a_{n}$,
+    $\forall i: a_{i} \in V$, $v=b_{1} \dots b_{n}$, 
+    $\forall i: b_{i} \in V^{*}$ a 
+    $\forall i: a_{i} \pravidlo b_{i} \in P$. 
+    Inak povedané, naraz prepíšeme všetky písmená, každé nejakým
+    pravidlom.
+%%% }}}
 \end{definicia}
 
-\begin{definicia}
-    Jazyk\footnote{teda prakticky každá vetná forma, ktorú z
-    počiatočného slova dostaneme (vrátane jeho samého), patrí do
-    jazyka $L(G)$, ak $G$ je $L$-systém} generovaný $OL$-systémom $G$
-    je $L(G)=\{\med u\in V^{*}\mm w\overset{*}\Rightarrow u\med\}$
+\begin{definicia}[Jazyk generovaný $OL$-systémom]
+%%% {{{
+    Jazyk generovaný $OL$-systémom $G$ je 
+    $L(G)=\{u\in V^{*} \mm w \odvodeniena{*} u\}$.\footnote{teda prakticky
+        každá vetná forma, ktorú z
+        počiatočného slova dostaneme (vrátane jeho samého), patrí do
+        jazyka $L(G)$, ak $G$ je $L$-systém
+        }
+%%% }}}        
 \end{definicia}
 
-\begin{definicia}
-    $DOL$-systém je taký $OL$-systém, kde $\forall a\in V\med\exists!
-    \med a\ra u\in P, u\in V^*$ (takémuto \mbox{$OL$-sys\-té\-mu}
-    hovoríme aj deterministický)
+\begin{definicia}[$DOL$-systém]
+%%% {{{
+    Deterministický $OL$-systém je taký $OL$-systém,
+    kde $\forall a\in V$ existuje práve jedno pravidlo
+    $a \pravidlo u\in P, u\in V^*$.
+%%% }}}    
 \end{definicia}
 
-\begin{definicia}
-    $POL$-systém (propagating-pokračujúci) je taký $OL$-systém, ktorý
-    je bez-$\varepsilon$
+\begin{definicia}[$POL$-systém]
+%%% {{{
+    Propagating/pokračujúci $OL$-systém je taký $OL$-systém, ktorý
+    je bez-$\varepsilon$.\fixme{Znamena to, ze nema epilon alebo ze
+        nema epsilonove pravidla}
+%%% }}}        
 \end{definicia}
 
 \begin{priklad}
-    $G_{1}=(\{ a\},\{ a\ra a^{2}\},a)$ potom $L(G_{1})=\{\med
-    a^{2^{n}}\mm n\geq 0\med\}$\\
+%%% {{{ priklad a^{2^n}
+    Uvažujme systém $G_1=(\{ a \},\{ a \pravidlo a^2\}, a)$.
+    Potom $L(G_1)=\{ a^{2^n} \mm n \ge 0\}$.
     Ukážka odvodzovania slova v tomto OL systéme je na obrázku 
     \ref{img:ol_priklad_1}.
-    Ako vidieť, $OL$-systém $G_{1}$ nám
-    úplne jednoducho (použitím jediného pravidla) umožňuje
-    ge\-ne\-ro\-vať jazyk, na ktorý by nám v Chomského hierarchii
-    nestačili ani bezkontextové prostriedky. Sila $OL$-systémov
-    spočíva v paralelnom prepisovaní, kedy v jednom kroku odvodenia
-    musíme použiť prepisovacie pravidlá na všetky symboly. Skúsme ale
-    do $G_{1}$ pridať jedno pravidlo:\\ $G_{1}'=(\{ a\},\{ a\ra a,
-    a\ra a^{2}\},a)$ potom $L_{G_{1}'}=a^{+}$ a veľká sila je razom
-    preč. Je tomu tak preto, lebo pridaním pravidla $a\ra a$ sme
+    Ako vidieť, $OL$-systém $G_1$ nám úplne jednoducho 
+    (použitím jediného pravidla) umožňuje
+    generovať jazyk, na ktorý by nám v Chomského hierarchii
+    nestačili ani bezkontextové prostriedky.
+    Sila $OL$-systémov spočíva v paralelnom prepisovaní,
+    kedy v jednom kroku odvodenia
+    musíme použiť prepisovacie pravidlá na všetky symboly.
+    Skúsme ale do $G_1$ pridať jedno pravidlo:\\
+    $G_{1}'=(\{ a \},\{ a\pravidlo a,
+    a \pravidlo a^2 \}, a)$ potom $L_{G_1'}=a^{+}$ a veľká sila je razom
+    preč. Je tomu tak preto, lebo pridaním pravidla $a\pravidlo a$ sme
     umožnili akoby rozsynchronizovať odvodenie, a teda symboly sa
-    teraz neprepisujú naraz, ale každý v inom čase
+    teraz neprepisujú naraz, ale každý v inom čase.
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics{img/1paralelne_gramatiky/ol_priklady.1.mps}
+        \caption{Príklad generovanie jazyka $a^{2^n}$}
+        \label{img:ol_priklad_1}
+    \end{figure}
+%%% }}}    
 \end{priklad}
 
-\begin{figure}[htp]
-    \centering
-    \includegraphics{img/1paralelne_gramatiky/ol_priklady.1.mps}
-    \caption{Príklad generovanie jazyka $a^{2^n}$}
-    \label{img:ol_priklad_1}
-\end{figure}
 
 \begin{priklad}
-    $G_{2}=(\{a,b\},\{a\ra b,b\ra ab\},a)$ potom jazyk $L(G_{2})$ budú
+%%% {{{ fibonacciho postupnost
+    Uvažujme systém $G_{2}=(\{a,b\},\{ a \pravidlo b, b \pravidlo ab \},a)$.
+    Jazyk $L(G_{2})$ budú
     tvoriť slová, ktorých dĺžky sú členy Fibonacciho postupnosti, ako
     možno vidieť na obrázku \ref{img:ol_priklad_2}. Máme teda
     opäť jeden dosť zložitý, zrejme nie bezkontextový jazyk,
-    ktorý dokážeme $OL$-systémom pomerne jednoducho generovať
+    ktorý dokážeme $OL$-systémom pomerne jednoducho generovať.
+    \begin{figure}[htp]
+        \centering
+        \includegraphics{img/1paralelne_gramatiky/ol_priklady.2.mps}
+        \caption{Generovanie Fibonnaciho postupnosťi}
+        \label{img:ol_priklad_2}
+    \end{figure}
+%%% }}}    
 \end{priklad}
 
-\begin{figure}[htp]
-    \centering
-    \includegraphics{img/1paralelne_gramatiky/ol_priklady.2.mps}
-    \caption{Generovanie Fibonnaciho postupnosťi}
-    \label{img:ol_priklad_2}
-\end{figure}
 
 \begin{priklad}
-    $G_{3}=(\{a,b,c\},\{a\ra abcc,b\ra bcc,c\ra c\},a)$ potom dĺžky
-    slov jazyka $L(G_{3})$ tvoria postupnosť štvorcov (druhých mocnín)
+%%% {{{ stvorce
+    Zoberme $G_3=(\{a,b,c\},\{a \pravidlo abcc,b \pravidlo bcc,
+        c \pravidlo c\},a)$. Dĺžky
+    slov jazyka $L(G_3)$ tvoria postupnosť štvorcov (druhých mocnín)
     prirodzených čísel (obr. \ref{img:ol_priklad_3}).
+
+    \begin{figure}[htp]
+        \centering
+        \includegraphics{img/1paralelne_gramatiky/ol_priklady.3.mps}
+        \caption{Generovanie štvorcov}
+        \label{img:ol_priklad_3}
+    \end{figure}
+%%% }}}
 \end{priklad}
 
-\begin{figure}[htp]
-    \centering
-    \includegraphics{img/1paralelne_gramatiky/ol_priklady.3.mps}
-    \caption{Generovanie štvorcov}
-    \label{img:ol_priklad_3}
-\end{figure}
 
-\begin{definicia}
-    $\mathcal{AFL}$ (Abstract Family of Languages) je každá trieda
-    jazykov obsahujúca nejaký neprázdny jazyk a uzavretá na
-    $\cup,\cdot,+,h_{\varepsilon},h^{-1},\cap\mathcal{R}$
+\begin{definicia}[$\mathcal{AFL}$]
+%%% {{{
+    Abstract Family of Languages je každá trieda
+    jazykov obsahujúca nejaký neprázdny jazyk, ktorá je uzavretá na
+    zjednotenie $\cup$, zreťazenie $\cdot$, kladnú iteráciu $^+$,
+    nevymazávajúci homomorfizmus $h_{\varepsilon}$,
+    inverzný homomorfizmus $h^{-1}$ a prienik s regulárnym jazykom
+    $\cap\mathcal{R}$.
+%%% }}}    
 \end{definicia}
 
 \begin{veta}
-    $\mathcal{L}_{OL}$ je anti-$\mathcal{AFL}$ (t.j. nie je uzavretá
+    $\Lang_{OL}$ je anti-$\mathcal{AFL}$ (t.j. nie je uzavretá
     na žiadnu $\mathcal{AFL}$ operáciu)
 \end{veta}
 
 \begin{dokaz}
     Pre každú $\mathcal{AFL}$ operáciu ukážeme, že trieda
-    $\mathcal{L}_{OL}$ na ňu nie je uzavretá
+    $\Lang_{OL}$ na ňu nie je uzavretá
 
     \begin{itemize}
     \item $\cup :$ $\{a\},\{a^{2}\}\in\mathcal{L}_{OL}$ a sporom
