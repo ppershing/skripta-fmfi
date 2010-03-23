@@ -79,7 +79,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 \begin{definicia}[$POL$-systém]
 %%% {{{
     Propagating/pokračujúci $OL$-systém je taký $OL$-systém, ktorý
-    je bez-$\varepsilon$.\fixme{Znamena to, ze nema epilon alebo ze
+    je bez-$\eps$.\fixme{Znamena to, ze nema epilon alebo ze
         nema epsilonove pravidla}
 %%% }}}        
 \end{definicia}
@@ -153,10 +153,10 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 %%% {{{
     Abstract Family of Languages je každá trieda
     jazykov obsahujúca nejaký neprázdny jazyk, ktorá je uzavretá na
-    zjednotenie $\cup$, zreťazenie $\cdot$, kladnú iteráciu $^+$,
-    nevymazávajúci homomorfizmus $h_{\varepsilon}$,
+    zjednotenie $\union$, zreťazenie $\cdot$, kladnú iteráciu $^+$,
+    nevymazávajúci homomorfizmus $h_{\eps}$,
     inverzný homomorfizmus $h^{-1}$ a prienik s regulárnym jazykom
-    $\cap\mathcal{R}$.
+    $\intersect\mathcal{R}$.
 %%% }}}    
 \end{definicia}
 
@@ -170,82 +170,92 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     $\Lang_{OL}$ na ňu nie je uzavretá
 
     \begin{itemize}
-    \item $\cup :$ $\{a\},\{a^{2}\}\in\mathcal{L}_{OL}$ a sporom
-        predpokladajme, že $L=\{a,a^{2}\}\in\mathcal{L}_{OL}$. Potom
-        existuje nejaký $OL$-systém $G$, ktorý jazyk $\{a,a^{2}\}$
+    \item[$\union:$] Nech $L_1 = \{ a \}, L_2=\{ a^2 \}$.
+        Platí $L_1,L_2 \in \Lang_{OL}$ a sporom
+        predpokladajme, že $L=L_1 \union L_2 = \{ a, a^2 \}\in \Lang_{OL}$.
+        Potom existuje nejaký $OL$-systém $G$, ktorý jazyk $L$
         generuje. Ten ale musí mať nejaký axiom, môžu nastať dve možnosti:
-
+        %%% {{{
         \begin{enumerate}
-        \item axiom je $a$ - potom ale v $G$ existuje pravidlo $a\ra
-            a^{2}$, lebo keby neexistovalo, tak by sme slovo $a^{2}$ nikdy
+        \item axiom je $a$ - potom ale v $G$ existuje pravidlo 
+            $a\pravidlo a^2$,
+            lebo keby neexistovalo, tak by sme slovo $a^2$ nikdy
             nevyrobili, resp. by sme vyrobili iné slová, ktoré do $L$
             nepatria. Keďže máme toto pravidlo, tak môžeme vyrobiť aj slová,
-            ktoré do $L$ nepatria \mbox{(napr. $a^{4}$)}, čo je spor s tým, že
-            $G$ generuje $L$
+            ktoré do $L$ nepatria (napr. $a^4$), čo je spor s tým, že
+            $G$ generuje $L$.
 
         \item axiom je $a^{2}$ - potom ak z neho chceme vyrobiť $a$, tak
-            musíme v $G$ mať pravidlo $a\ra\varepsilon$, ale aj $a\ra a$, lebo
+            musíme v $G$ mať pravidlo $a\pravidlo\eps$,
+            ale aj $a\pravidlo a$, lebo
             keby sme ho nemali, tak vďaka paralelnému prepisovaniu symbolov by
-            sme dostali $\varepsilon\in L$, ale my vieme, že
-            $\varepsilon\not\in L$. Ale ak tu už máme tieto dve pravidlá, tak
-            $\varepsilon$ chtiac-nechtiac niekedy vyrobíme, čo je opäť v spore
-            s tým, že $\varepsilon\not\in L$
+            sme dostali $\eps \in L$. My ale vieme, že
+            $\eps\not\in L$. No a ak tu už máme tieto dve pravidlá, tak
+            $\eps$ chtiac-nechtiac niekedy vyrobíme, čo je opäť v spore
+            s tým, že $\eps\not\in L$
         \end{enumerate}
 
-        Teda dostávame $L\not\in\mathcal{L}_{OL}$ \footnote{Dostávame sa
+        Teda dostávame $L\not\in\mathcal{L}_{OL}$.\footnote{Dostávame sa
         teda k možno trošku prekvapujúcemu výsledku. Ukazuje sa, že i keď
         $L$-systémy v predchádzajúcom texte zvládli taký krkolomný jazyk
         ako bol $L(G_{1})$, neporadia si s evidentne regulárnym jazykom
         obsahujúcim iba dve slová}
+        %%% }}}
 
-    \item $\cdot :$ Zvolíme $L_{1}=\{a\}\in\mathcal{L}_{OL},
-        L_{2}=\{\varepsilon,a\}\in\mathcal{L}_{OL}$ ale $L_{1}\cdot
-        L_{2}=\{a,a^{2}\}\not\in\mathcal{L}_{OL}$ ako sme \mbox{v
-        predchádzajúcej} časti ukázali
+    \item[$\cdot:$] Zvolíme $L_1=\{a\}\in \Lang_{OL},
+        L_2=\{\eps,a\}\in\Lang_{OL}$ ale $L_1 \cdot
+        L_2=\{a,a^2\}\not\in \Lang_{OL}$ ako sme v
+        predchádzajúcej časti ukázali.
 
-    \item $+ :$ Definujme $L=\{aa\}\cup\{b^{2^{n}}\mm
-        n\geq2\}\in\mathcal{L}_{OL}$, dôkaz urobíme sporom, nech $G$ je
+    \item[$ ^+:$] Definujme 
+        $L=\{aa\} \union \{ b^{2^n} \mm n \ge 2 \}
+            \in\Lang_{OL}$. Dôkaz urobíme sporom -- nech $G$ je
         $OL$-systém pre $L^{+}$:
 
         \begin{enumerate}
         \item uvedomme si, že axiomom $G$ môže byť jedine $aa$, ak by tomu
-            tak nebolo, axiomom by muselo byť $b^{i}$ pre nejaké $i\geq4$,
-            potom by sme ale nutne museli mať pravidlo $b\ra a$ alebo $b\ra
-            a^{2}$, ale potom by sme vyrobili aj slovo tvaru $b^{i}a^{j},\med
-            i,j\neq0$, ktoré do jazyka $L^{+}$ nepatrí
+            tak nebolo, axiomom by muselo byť $b^{i}$ pre nejaké $i\geq4$.
+            To by sme ale nutne museli mať pravidlo $b\pravidlo a$ alebo 
+            $b\pravidlo a^2$, lenže potom by sme vyrobili aj slovo tvaru 
+            $b^i a^j$ kde  $i,j\neq0$ a  také slovo do jazyka $L^{+}$
+            nepatrí.
+        \item $\eps \not \in L^{+} \then G$ je $POL$-systém
 
-        \item $\varepsilon\not\in L^{+}\rightsquigarrow G$ je $POL$-systém
-
-        \item $a^{4}\in L^{+}\rightsquigarrow a\ra a^{2}\in P$ (nesmú tu byť
-            pravidlá tvaru $a\ra a,a\ra a^{3}$, pretože by sme mohli vyrobiť
+        \item $a^4 \in L^{+} \then a\pravidlo a^2\in P$ (nesmú tu byť
+            pravidlá tvaru $a\pravidlo a,a\pravidlo a^3$,
+            pretože by sme mohli vyrobiť
             aj slovo $ab^{i}\not\in L^{+}$)
 
-        \item $a^{2}\overset{*}\Rightarrow b^{4}\rightsquigarrow a\ra b^{i}\in
-            P$ pre $1\leq i\leq3$. Ak teraz použijeme $a\ra a^{2}$ a $a\ra
-            b^{i}$ dostaneme $a^{2}\Rightarrow a^{2}b^{i}\not\in L^{+}$
+        \item $a^2 \odvodeniena{*} b^4 \then a\pravidlo b^{i}\in P$ 
+            pre $1\le i\le 3$. Ak teraz použijeme 
+            $a\pravidlo a^2$ a $a\pravidlo b^{i}$ dostaneme 
+            $a^2 \odvodenie a^2 b^i \not\in L^{+}$
         \end{enumerate}
 
-    \item $h_{\varepsilon} :$ Uvažujme jazyk
-        $L=\{\varepsilon,a,a^{2}\}\in\mathcal{L}_{OL}$ a definujme
-        homomorfizmus $h$ nasledovne: $h(a)=a^{2}$, potom
-        $h(L)=\{\varepsilon,a^{2},a^{4}\}\not\in\mathcal{L}_{OL}$, čo sa
-        dokáže rozbitím na prípady podobne ako pre $\cup$
-        \item $h^{-1} :$ Uvažujme jazyk $L=\{a\}\in\mathcal{L}_{OL}$ a
-        homomorfizmus $h$ daný predpisom $h(a)=a^{2}$. Potom
-        $h^{-1}(L)=\emptyset\not\in\mathcal{L}_{OL}$
-        \item $\cap\mathcal{R} :$ Uvažujme jazyk
-        $L_{1}=\{\varepsilon,a,a^{2}\}\in\mathcal{L}_{OL}$ a regulárny
-        jazyk $L_{2}=\{a^{3}\}^{*}$, dostávame rovnosť $L_{1}\cap
-        L_{2}=\{\varepsilon\}\not\in\mathcal{L}_{OL}$
-        \footnote{$\{\varepsilon\}\not\in\mathcal{L}_{OL}$, pretože každý
-        $OL$-systém, ktorý by tento jazyk generoval, by musel mať ako
-        axiom $\varepsilon$, čo je \mbox{z definície} axiomu nemožné}
+    \item[$h_{\eps}:$] Uvažujme jazyk
+        $L=\{\eps,a,a^2\}\in \Lang_{OL}$ a definujme
+        homomorfizmus $h$ nasledovne: $h(a)=a^2$, potom
+        $h(L)=\{\eps,a^2,a^4\} \not \in \Lang_{OL}$, čo sa
+        dokáže rozbitím na prípady podobne ako pre $\union$
+
+    \item[$h^{-1}:$] Uvažujme jazyk $L=\{a\}\in \Lang_{OL}$ a
+        homomorfizmus $h$ daný predpisom $h(a)=a^2$. Potom
+        $h^{-1}(L)=\emptyset \not\in \Lang_{OL}$
+
+    \item[$\intersect\mathcal{R} :$] Uvažujme jazyk
+        $L_1=\{\eps,a,a^2\} \in \Lang_{OL}$ a regulárny
+        jazyk $L_2=\{a^3\}^{*}$.
+        Dostávame rovnosť $L_1 \intersect
+        L_2 =\{\eps\}\not\in \Lang_{OL}$.\footnote{
+            $\{\eps\}\not\in\mathcal{L}_{OL}$, pretože každý
+            $OL$-systém, ktorý by tento jazyk generoval, by musel mať ako
+            axiom $\eps$, čo je z definície axiomu nemožné}
     \end{itemize}
 \end{dokaz}
 
 \begin{dosledok}
     $\mathcal{L}_{OL}$ nie je uzavretá na substitúciu ani na
-    zobrazenie $a$-prekladačom a nie je uzavretá ani na $\cap$ a
+    zobrazenie $a$-prekladačom a nie je uzavretá ani na $\intersect$ a
     $^{C}$ (komplement)
 \end{dosledok}
 
@@ -253,7 +263,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     Čo sa týka uzavretosti tejto triedy na zobrazenie $a$-prekladačom,
     princíp dôkazu je podobný ako pri predchádzajúcich uzáverových
     vlastnostiach. Keďže $\mathcal{L}_{OL}$ nie je uzavretá na
-    $\cap\mathcal{R}$, tak nemôže byť uzavretá ani na $\cap$
+    $\intersect\mathcal{R}$, tak nemôže byť uzavretá ani na $\intersect$
     všeobecne. Uzavretosť na $^{C}$ nechávame na čitateľa
 \end{dokaz}
 
@@ -281,19 +291,19 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     \begin{enumerate}
     \item $L$ je konečný:
         \begin{enumerate}
-        \item $L=\{a\}$ alebo $L=\{\varepsilon,a\}\rightsquigarrow
+        \item $L=\{a\}$ alebo $L=\{\eps,a\}\rightsquigarrow
             L^{*}=a^{*}\in\mathcal{L}_{OL}$
         \item nech $L=\{w_{1},\dots,w_{n}\}$, kde
-            $w_{1}\neq\varepsilon,w_{1}\neq a$ (jazyk musí obsahovať slovo
+            $w_{1}\neq\eps,w_{1}\neq a$ (jazyk musí obsahovať slovo
             dlhšie ako $|a|$), potom $L^{*}=L(G')$, kde $G'=(\{a\},\{a\ra
-            w_{1},\dots,a\ra w_{n},a\ra\varepsilon\},w_{1})$
+            w_{1},\dots,a\ra w_{n},a\ra\eps\},w_{1})$
         \end{enumerate}
 
     \item $L$ je nekonečný: $\forall i\med 1\leq i\leq m$ nech
         $v_{i}$ je najkratšie slovo v $L$ také, že $|v_{i}|\cong i\med
         mod\med m$ ak existuje, inak ho nedefinujeme. Nech $G'$ je
         $OL$-systém tvaru $G'=(\{a\},P',a^{m})$, kde
-        $P'=\{a\ra\varepsilon\}\cup\{a\ra u\mm
+        $P'=\{a\ra\eps\}\union\{a\ra u\mm
         a^{m}\underset{G}\Rightarrow u$ alebo $\exists i\med
         v_{i}\underset{G}\Rightarrow u\}$. Tvrdíme, že $L(G')=L^{*}$
 
@@ -301,7 +311,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
         \item{$\subseteq$:} Každé $u$ v pravých stranách $P'$ patrí do
         $L$ a teda všetky slová generované $OL$-systémom $G'$ patria do
         $L^{*}$, pretože začíname z $a^{m}\in L$, v ďalšom kroku prepíšeme
-        každý symbol buď na $\varepsilon$ (a teda sa ho zbavíme), alebo ho
+        každý symbol buď na $\eps$ (a teda sa ho zbavíme), alebo ho
         prepíšeme na slovo $\in L$, vetná forma má teda v každom kroku
         tvar $w=w_{1}\dots w_{n},\med\forall i\med i=1\dots n\med w_{i}\in
         L\rightsquigarrow w\in L^{*}$
@@ -324,15 +334,15 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 
         Pri prepisovaní $x$ na $y$ budeme postupovať nasledovne: prvé
         písmenko zo skupiny $a^{m}$ prepíšeme na to, na čo by sa to
-        prepísalo celé v $G$, zvyšok prepíšeme na $\varepsilon$, to isté
+        prepísalo celé v $G$, zvyšok prepíšeme na $\eps$, to isté
         urobíme v časti $v_{i}$, inak povedané $y=u_{1}u_{2}\dots
         u_{j}u_{j+1}$, kde $a^{m}\underset{G}\ra u_{i},1\leq i\leq j,
         v_{i}\underset{G}\ra u_{j+1}$, teda $x\underset{G'}\ra y$
 
         \end{description}
-        \item{B)} Nech $w\in L^{*}$: ak $w=\varepsilon, w\in L$, tak je to
+        \item{B)} Nech $w\in L^{*}$: ak $w=\eps, w\in L$, tak je to
         zrejmé z A). Nech $w=w_{1}\dots w_{k},$ \mbox{$w_{i}\in L$},
-        $\forall i\med w_{i}\neq\varepsilon, k\geq2,\forall i\med
+        $\forall i\med w_{i}\neq\eps, k\geq2,\forall i\med
         a^{m}\overset{*}{\underset{G'}\Rightarrow}w_{i}$\\
         $a^{m}\overset{*}\Ra (a^{m})^{k}x$ pre nejaké $x\in a^{*}$ teda
         $a^{m}\overset{*}{\underset{G'}\Ra}a^{mk}\overset{*}{\underset{G'}\Ra}
@@ -343,7 +353,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
         to nasledovne: ak $a\underset{G'}\Ra y$, tak odvodenie
         natiahneme\footnote{toto máme existenciou neepsilonových pravidiel
         zabezpečené} $a^{m}\underset{G'}\Ra a^{m}a^{t}\underset{G'}\Ra
-        y\varepsilon$. Našli sme teda (existuje) odvodenie, kde odvodenia
+        y\eps$. Našli sme teda (existuje) odvodenie, kde odvodenia
         $w_{i}$ majú rovnakú dĺžku $\forall i$
         \end{description}
         \end{description}
@@ -358,15 +368,15 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 \begin{definicia}
     $M$-množina je množina prirodzených čísel
     $M(n,m_{1},\dots,m_{s})$, ktorej tvar je
-    \mbox{$M(n,m_{1},\dots,m_{s})=\{n\}\cup\{k_{1}m_{1}
+    \mbox{$M(n,m_{1},\dots,m_{s})=\{n\}\union\{k_{1}m_{1}
     +\dots+k_{s}m_{s}\mm k_{i}\geq0,1\leq i\leq s\}$}
 \end{definicia}
 
 \begin{veta}
     \label{nekon_ol} (Charakterizácia nekonečných OL-jazykov
-    obsahujúcich $\varepsilon$)
+    obsahujúcich $\eps$)
     \\ Nech $L\subseteq a^{*}$ je
-    ne\-ko\-neč\-ný a obsahuje $\varepsilon$. Potom
+    ne\-ko\-neč\-ný a obsahuje $\eps$. Potom
     $L\in\mathcal{L}_{OL}\Longleftrightarrow$ keď existuje $M$-množina
     $M_{L}$ taká, že $L=\{a^{i}\mm i\in M_{L}\}$
 \end{veta}
@@ -376,12 +386,12 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     \begin{description}
     \item{``$\Ra$''} Keďže $L\in\mathcal{L}_{OL}$, tak existuje nejaký
     $OL$-systém $G$, ktorý ho generuje, určite musí obsahovať (keďže
-    $\varepsilon\in L$) pravidlo $a\ra\varepsilon$. Bez ujmy na
+    $\eps\in L$) pravidlo $a\ra\eps$. Bez ujmy na
     všeobecnosti môžeme predpokladať, že pravidlá v $G$ majú
-    nasledovný tvar: $P=\{\med a\ra\varepsilon,a\ra
+    nasledovný tvar: $P=\{\med a\ra\eps,a\ra
     a^{m_{1}},\dots,a\ra a^{m_{s}}\med\}$, pričom $m_{1}<\dots<m_{s}$
     a $G=(\{a\},P,a^{n})$. $M$-množinu navrhneme nasledovne
-    $M_{L}=\{n\}\cup\{k_{1}m_{1}+\dots+k_{s}m_{s}\}$. Tvrdíme, že
+    $M_{L}=\{n\}\union\{k_{1}m_{1}+\dots+k_{s}m_{s}\}$. Tvrdíme, že
     $L(G)=L(M_{L})$
     \begin{description}
     \item{$\subseteq:$} pre axiom $a^{n}$ máme v $M_{L}$
@@ -389,11 +399,11 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     a k nemu nájdeme príslušný prvok $m\in M_{L}$, ktorý ho
     charakterizuje. Odvodenie má tvar\footnote{takto musí vyzerať
     každé odvodenie, lebo v každom kroku sa $a$ prepíše na nejaké
-    $a^{m_{i}}$ alebo na $\varepsilon$} $a^{n}\underset{G}\Ra
+    $a^{m_{i}}$ alebo na $\eps$} $a^{n}\underset{G}\Ra
     a^{m_{i_{1}}}\dots a^{m_{i_{k}}}(k\leq
     n)\underset{G}\Ra\dots\underset{G}\Ra
     a^{k_{1}m_{1}}a^{k_{2}m_{2}}\dots a^{k_{s}m_{s}}$, pričom niektoré
-    $k_{i}$ (možno aj všetky, vďaka $a\ra\varepsilon$) sa môže rovnať
+    $k_{i}$ (možno aj všetky, vďaka $a\ra\eps$) sa môže rovnať
     $0$, stačí zvoliť $m=k_{1}m_{1}+\dots+k_{s}m_{s}$, pričom $\forall
     i$ je $k_{i}$ rovnaké ako v odvodení
     \item{$\supseteq:$} zoberme prvok $m\in M_{L}$ a k nemu hľadajme
@@ -414,7 +424,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     a^{m_{1}}$, na ďaľších $k_{2}$ symbolov pravidlo $a\ra a^{m_{2}}$
     a tak ďalej, až na posledných $k_{s}$ symbolov aplikujeme pravidlo
     $a\ra a^{m_{s}}$), na zvyšné symboly aplikujeme pravidlo
-    $a\ra\varepsilon$ a sme hotoví, pretože sme našli odvodenie $w$ v
+    $a\ra\eps$ a sme hotoví, pretože sme našli odvodenie $w$ v
     $G$
     \end{description}
     \item{``$\Leftarrow$''} Je daná $M$-množina
@@ -427,7 +437,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 
 \begin{poznamka}
     $L_{1}=\{a^{2^{n}}\mm n\geq0\}\in\mathcal{L}_{OL}$, ale
-    $L_{1}\cup\{\varepsilon\}\not\in\mathcal{L}_{OL}$. Tu sa ukazuje,
+    $L_{1}\union\{\eps\}\not\in\mathcal{L}_{OL}$. Tu sa ukazuje,
     aká dôležitá je existencia, resp. neexistencia prázdneho slova v
     jazyku
 \end{poznamka}
@@ -454,7 +464,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     \begin{enumerate}
     \item $\{a,a^{2}\}\in\mathcal{R}$
     \item $\{a^{i}b^{i}\mm i\geq0\}\in\mathcal{L}_{CF} - \mathcal{R}$
-    \item $\{a^{2^{n}}\mm n\geq0\}\cup\{a^{3}\}\in\mathcal{L}_{CS}
+    \item $\{a^{2^{n}}\mm n\geq0\}\union\{a^{3}\}\in\mathcal{L}_{CS}
     - \mathcal{L}_{CF}$
     \end{enumerate}
 \end{dokaz}
@@ -463,13 +473,13 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     Konečné jazyky v $\mathcal{L}_{OL}$ sú (v abecede $\{a\}$) tvaru:
     \begin{enumerate}
     \item $\{a^{m}\}$ kde $m\geq1$
-    \item $\{\varepsilon,a^{m}\}$ kde $m\geq1$
-    \item $\{a^{m},a^{m-1},\dots,\varepsilon\}$ kde $m\geq1$
+    \item $\{\eps,a^{m}\}$ kde $m\geq1$
+    \item $\{a^{m},a^{m-1},\dots,\eps\}$ kde $m\geq1$
     \end{enumerate}
 \end{poznamka}
 
 \begin{veta}
-    Každý $OL$-systém (jazyk) obsahujúci $\varepsilon$, ktorý je v
+    Každý $OL$-systém (jazyk) obsahujúci $\eps$, ktorý je v
     abecede $\{a\}$ je regulárny
 \end{veta}
 
@@ -482,7 +492,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
         $L=\{a^i\mm i\in M_L\}$. Nech $M_L=\{n,m_1,\dots,m_k\}$. Potom
         regulárna gramatika pre jazyk $L$ bude:
         $G=(\{\sigma,A\},\{a\},\{\sigma\ra a^n,\sigma\ra A,A\ra
-        a^{m_1}A,\dots,A\ra a^{m_k}A,A\ra \varepsilon\},\sigma)$
+        a^{m_1}A,\dots,A\ra a^{m_k}A,A\ra \eps\},\sigma)$
     \end{enumerate}
 \end{dokaz}
 
@@ -495,7 +505,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 \end{poznamka}
 
 \begin{poznamka}
-    Každý jazyk $L\in\mathcal{L}_{CF}$ je tvaru $L'\cap R$ pre
+    Každý jazyk $L\in\mathcal{L}_{CF}$ je tvaru $L'\intersect R$ pre
     $L'\in\mathcal{L}_{OL},R\in\mathcal{R}$
 \end{poznamka}
 
@@ -507,25 +517,25 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 
 \begin{dokaz}
     Definujme najskôr $OL$-systém $G'$ nasledovne:
-    $G'=(V\cup\{x_0\},P\cup\{x_0\ra w_0\},x_0)$, $x_0\not\in V$, platí
-    $L(G')=L(G)\cup \{x_0\}$. Teraz ku každému odvodeniu v $G'$
+    $G'=(V\union\{x_0\},P\union\{x_0\ra w_0\},x_0)$, $x_0\not\in V$, platí
+    $L(G')=L(G)\union \{x_0\}$. Teraz ku každému odvodeniu v $G'$
     uvažujme jeho strom\footnote{ako pre bezkontextové gramatiky -
     koreň tvorí $x_0$,  návestia vrcholov sú symboly $\in
-    V\cup\{x_0\}$, hrany sú orientované a množina orientovaných hrán
+    V\union\{x_0\}$, hrany sú orientované a množina orientovaných hrán
     vycházdajúca z vrchola $v$ má tvar
     $E(v)=\{v_1,\dots,v_k\}\Longleftrightarrow v\ra v_1\dots v_k\in
-    P\cup\{x_0\ra w_0\}$}. Hovoríme, že odvodenie je redukované, keď
+    P\union\{x_0\ra w_0\}$}. Hovoríme, že odvodenie je redukované, keď
     jemu zodpovedajúci strom spĺňa nasledujúcu podmienku: neexistuje
     podstrom $T$ taký, že súčasne platí:
     \begin{enumerate}
-    \item všetky listy $T$ sú $\varepsilon$
+    \item všetky listy $T$ sú $\eps$
     \item $T$ obsahuje vetvu, v ktorej majú dva vrcholy rovnaké
     návestie
     \end{enumerate}
     Pre každé odvodenie slova $w$ existuje redukované odvodenie (obr.
     \ref{strom}), toto získame jednoducho tak, že ztotožníme rovnaké
     uzly v jednej vetve v podstrome $T$ (ktorý obsahuje ako listy iba
-    $\varepsilon$) originálneho stromu odvodenia.
+    $\eps$) originálneho stromu odvodenia.
 
     \begin{figure}[!ht]
     \centering
@@ -534,17 +544,17 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     \end{figure}
 
     Označme $m$ dĺžku najdlhšej pravej strany spomedzi všetkých
-    pravidiel $G'$ a $n=|V\cup\{x_0\}|$. Tvrdíme, že stačí zvoliť:
+    pravidiel $G'$ a $n=|V\union\{x_0\}|$. Tvrdíme, že stačí zvoliť:
     \[
     k=3m^n
     \]
-    Pre $\forall w\neq\varepsilon,w\in L(G')$ s odvodením $x_0\Ra
+    Pre $\forall w\neq\eps,w\in L(G')$ s odvodením $x_0\Ra
     w_0\Ra w_1\Ra\cdots\Ra w_n\equiv w$ bez újmy na všeobecnosti
     predpokladajme, že toto je redukované. Výskyt symbolu $a$ v jednom
     zo slov $w_i$ nazveme neproduktívny $\Longleftrightarrow$ ak tento
     výskyt je návestím koreňa podstromu, ktorého všetky listy majú
-    návestie $\varepsilon$. Inak výskyt nazveme produktívny. Pokiaľ
-    $w\neq\varepsilon$, tak $w_i$ obsahuje najmenej jeden produktívny
+    návestie $\eps$. Inak výskyt nazveme produktívny. Pokiaľ
+    $w\neq\eps$, tak $w_i$ obsahuje najmenej jeden produktívny
     symbol, navyše počet produktívnych symbolov vo $w_i\leq|w|$. Stačí
     nám ukázať, že $\forall i$, keď $Q$ je podslovo $w_i$ a platí
     $|Q|=3m^n$, potom $Q$ obsahuje najmenej jeden produktívny symbol.
@@ -558,7 +568,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     Uvažujme nejaký výskyt symbolu $a$ v $Q_2$. Existuje jediný výskyt
     symbolu $b$ vo $w_{i-n}$ taký, že $a$ je návestie v strome $T$,
     ktorého koreň má návestie $b$. Ďalej, voľbou $Q,m,n$ všetky listy
-    v $T$ majú návestia $\varepsilon$. To je spor, lebo potom existuje
+    v $T$ majú návestia $\eps$. To je spor, lebo potom existuje
     v $T$ vetva s dvoma uzlami s rovnakým návestím
 \end{dokaz}
 
@@ -594,16 +604,16 @@ minimálne taká, ako sila $OL$-systémov) si ukážeme na príklade
 neskôr
 
 \begin{definicia}
-    $EOL$-systém je štvorica $G=(N,T,P,w), P\subseteq (N\cup
-    T)\times(N\cup T)^{*}$ a $\forall a\in (N\cup T)$ existuje v $P$
+    $EOL$-systém je štvorica $G=(N,T,P,w), P\subseteq (N\union
+    T)\times(N\union T)^{*}$ a $\forall a\in (N\union T)$ existuje v $P$
     pravidlo
 \end{definicia}
 
 \begin{definicia}
-    Krok odvodenia je relácia $\Ra$ na $(N\cup T)^{*}$ definovaná
+    Krok odvodenia je relácia $\Ra$ na $(N\union T)^{*}$ definovaná
     nasledovne: \mbox{$u\Ra v$} práve vtedy, keď $u=a_{1}\dots
-    a_{n},\forall i\med a_{i}\in(N\cup T),v=b_{1}\dots b_{n},\forall
-    i\med b_{i}\in(N\cup T)^{*}$ a $\forall i\med a_{i}\ra b_{i}\in P$
+    a_{n},\forall i\med a_{i}\in(N\union T),v=b_{1}\dots b_{n},\forall
+    i\med b_{i}\in(N\union T)^{*}$ a $\forall i\med a_{i}\ra b_{i}\in P$
 \end{definicia}
 
 \begin{definicia}
@@ -614,7 +624,7 @@ neskôr
 \begin{priklad}
     $G_{1}=(\{\sigma\},\{a,b\},\{\sigma\ra a,\sigma\ra b,a\ra
     a^{2},b\ra b^{2}\},\sigma)$, potom zjavne jazyk
-    $L(G_{1})=\{a^{2^{n}}\mm n\geq0 \}\cup\{b^{2^{n}}\mm
+    $L(G_{1})=\{a^{2^{n}}\mm n\geq0 \}\union\{b^{2^{n}}\mm
     n\geq0\}\not\in\mathcal{L}_{OL}$\\ Tento príklad ukazuje, že
     $EOL$-systémy sú silnejšie ako obyčajné $OL$-systémy a tým sme
     vlastne dali odpoveď na otázku, ktorú sme si položili na začiatku
@@ -678,25 +688,25 @@ neskôr
     Označme $N'=\{\xi_a\mm a\in T\}$. Pre jednoduchosť zaveďme
     niekoľko pojmov, ktoré neskôr využijeme:
     \begin{enumerate}
-    \item Nech $S$ je ľubovoľná množina reťazcov z $(N\cup T)^*$, pre
+    \item Nech $S$ je ľubovoľná množina reťazcov z $(N\union T)^*$, pre
     ňu definujeme množinu $A(S)$ nasledovne:
     \begin{enumerate}
     \item reťazec $b_{1}\dots b_{n}\in A(S)\overset{def}
     \Longleftrightarrow$ ak existuje reťazec $a_{1}\dots a_{n}\in S$
     taký, že buď $b_i=a_i$ alebo $a_i\in T$ a $b_i=\xi_i$ (teda
-    $b_i\in N'$), potom $A(S)\subset(N\cup N'\cup T)^*$
+    $b_i\in N'$), potom $A(S)\subset(N\union N'\union T)^*$
     \item ak $S\neq\emptyset$, potom $A(S)\neq\emptyset$, lebo
     $S\subseteq A(S)$
     \end{enumerate}
     \item $\delta_P(a)$ nazveme množinu všetkých pravých strán
     pravidiel pre symbol $a$ z $P$
     \end{enumerate}
-    Definujme synchronizovaný $EOL$-systém $G'$ nasledovne: $G'=(N\cup
-    N'\cup\{F,\sigma'\},T,P',\sigma')$, pričom
+    Definujme synchronizovaný $EOL$-systém $G'$ nasledovne: $G'=(N\union
+    N'\union\{F,\sigma'\},T,P',\sigma')$, pričom
     \begin{tabbing}
     \= xxx \= $P'\med$: \= xxxxxxxxxxxxxxxx \= xxxxxxxxxxx \kill \>\>
     $P':$ \> $\delta_{P'}(\sigma')=A(\{w\})$\\ \>\>\> $\forall
-    a\in(T\cup \{F\})$ \> $(a\ra F)\in P'$\\ \>\>\> $\forall a\in N$
+    a\in(T\union \{F\})$ \> $(a\ra F)\in P'$\\ \>\>\> $\forall a\in N$
     \> $\delta_{P'}(a)=A(\delta_P(a))$\\ \>\>\> $\forall\xi_a\in N'$
     \> $\delta_{P'}(\xi_a)=A(\delta_P(a))$
     \end{tabbing}
@@ -716,7 +726,7 @@ neskôr
 \begin{dokaz}
     Nech $L$ je konečný, potom existuje regulárna gramatika $G$ taká,
     že $L=L(G)$. Táto regulárna gramatika je ale zároveň (po doplnení
-    pravidiel $a\ra a\med\forall a\in(N\cup T)$) aj hľa\-da\-ným
+    pravidiel $a\ra a\med\forall a\in(N\union T)$) aj hľa\-da\-ným
     $EOL$-systémom
 \end{dokaz}
 
@@ -740,7 +750,7 @@ neskôr
 
 \begin{veta}
     Trieda $\mathcal{L}_{EOL}$ je uzavretá na
-    $\cup,\cdot,+,\cap\mathcal{R},h_{\varepsilon}$ a nie je uzavretá
+    $\union,\cdot,+,\intersect\mathcal{R},h_{\eps}$ a nie je uzavretá
     na $h^{-1}$
 \end{veta}
 
@@ -749,20 +759,20 @@ neskôr
     malé technické detaily veľmi nelíši od známych konštrukcií pre
     bezkontextové gramatiky:
     \begin{itemize}
-    \item $\cup :$ Máme $EOL$-systémy $G_{1}$ pre $L_{1}$ a $G_{2}$
+    \item $\union :$ Máme $EOL$-systémy $G_{1}$ pre $L_{1}$ a $G_{2}$
     pre $L_{2}$. Ku $G_{1},G_{2}$ spravíme normálne tvary
     $G'_{1},G'_{2}$ podľa konštrukcie z lemy \ref{norm_tvarEOL}. Bez
-    ujmy na všeobecnosti môžeme predpokladať, že $N'_{1}\cap
-    N'_{2}=\emptyset$. Vytvoríme $G_{3}$ pre $L_{1}\cup L_{2}$
+    ujmy na všeobecnosti môžeme predpokladať, že $N'_{1}\intersect
+    N'_{2}=\emptyset$. Vytvoríme $G_{3}$ pre $L_{1}\union L_{2}$
     nasledovne: zavedieme nový neterminál $\sigma_{3}$ tak, že
     $\sigma_{3}\not\in N'_{1}$ \mbox{a $\sigma_{3}\not\in N'_{2}$}.
-    Ďalej $N_{3}=N'_{1}\cup N'_{2}\cup\{\sigma_{3}\}$,
-    $T_{3}=T'_{1}\cup T'_{2}$, $P_{3}=P'_{1}\cup
-    P'_{2}\cup\{\sigma_{3}\ra\sigma'_{1}|\sigma'_{2}\}$ \mbox{a
+    Ďalej $N_{3}=N'_{1}\union N'_{2}\union\{\sigma_{3}\}$,
+    $T_{3}=T'_{1}\union T'_{2}$, $P_{3}=P'_{1}\union
+    P'_{2}\union\{\sigma_{3}\ra\sigma'_{1}|\sigma'_{2}\}$ \mbox{a
     nakoniec} $G_{3}=(N_{3},T_{3},P_{3},\sigma_{3})$
     \item $h^{-1} :$ Zoberme jazyk $L\in\mathcal{L}_{EOL},
     L=\{a^{2^n}\mm n\geq0\}$ a definujme homomorfizmus $h$ nasledovne:
-    $h(a)=a, h(b)=\varepsilon$. Potom $h^{-1}(L)=\{w\in\{a,b\}^*\mm
+    $h(a)=a, h(b)=\eps$. Potom $h^{-1}(L)=\{w\in\{a,b\}^*\mm
     \#_a w=2^n,n\geq0\}$. Ukážeme, že
     $h^{-1}(L)\not\in\mathcal{L}_{EOL}$. Nech $G$ je $EOL$-systém pre
     $h^{-1}(L)$. Zoberme $w_0\in h^{-1}(L)$, nech $\#_a w_0=n$.
@@ -781,7 +791,7 @@ neskôr
 
 \begin{dokaz}
     Každá bezkontextová gramatika vyhovuje definícii $EOL$-systému (po
-    doplnení pravidiel $a\ra a\med\forall a\in(N\cup T)$), teda platí
+    doplnení pravidiel $a\ra a\med\forall a\in(N\union T)$), teda platí
     nevlastná inklúzia $\mathcal{L}_{CF}\subseteq\mathcal{L}_{EOL}$.
     Že platí aj vlastná inklúzia, sme ukázali v príklade \ref{efko},
     kde sme našli $EOL$-systém pre jazyk $L=\{a^{n}b^{n}c^{n}\mm
@@ -821,8 +831,8 @@ na vetnú formu iba jednu sadu pravidiel
 
 \begin{definicia}
     Indická paralelná gramatika (IP) je štvorica $G=(N,T,P,\sigma)$,
-    pričom \mbox{$\sigma\in N$} $N\cap T=\emptyset, P\subseteq
-    N\times(N\cup T)^{*}$
+    pričom \mbox{$\sigma\in N$} $N\intersect T=\emptyset, P\subseteq
+    N\times(N\union T)^{*}$
 \end{definicia}
 
 \begin{definicia}
@@ -860,7 +870,7 @@ na vetnú formu iba jednu sadu pravidiel
 \end{dokaz}
 
 \begin{veta}
-    $\mathcal{L}_{IP}\cap\mathcal{L}_{CF}=\mathcal{L}_{DBL}$
+    $\mathcal{L}_{IP}\intersect\mathcal{L}_{CF}=\mathcal{L}_{DBL}$
 \end{veta}
 
 \begin{poznamka}
@@ -874,7 +884,7 @@ na vetnú formu iba jednu sadu pravidiel
 \end{veta}
 
 \begin{veta}
-    $\mathcal{L}_{IP}$ je uzavretá na $\cup,\cdot,*,h$
+    $\mathcal{L}_{IP}$ je uzavretá na $\union,\cdot,*,h$
 \end{veta}
 
 \begin{veta}
@@ -889,8 +899,8 @@ na vetnú formu iba jednu sadu pravidiel
 
 \begin{definicia}
     Ruská paralelná gramatika je pätica $G=(N,T,P_{1},P_{2},\sigma)$,
-    pričom $\sigma\in N$, \mbox{$N\cap T=\emptyset$}, $P_{1}, P_{2}$
-    sú konečné množiny pravidiel, $P_{1},P_{2}\subseteq N\times(N\cup
+    pričom $\sigma\in N$, \mbox{$N\intersect T=\emptyset$}, $P_{1}, P_{2}$
+    sú konečné množiny pravidiel, $P_{1},P_{2}\subseteq N\times(N\union
     T)^{*}$
 \end{definicia}
 
@@ -904,10 +914,10 @@ na vetnú formu iba jednu sadu pravidiel
 
 \begin{definicia}
     Absolútne paralelná gramatika (AP) je štvorica $G=(N,T,P,\sigma)$,
-    kde \mbox{$\sigma\in N$}, $N\cap T=\emptyset$, $P$ je konečná
+    kde \mbox{$\sigma\in N$}, $N\intersect T=\emptyset$, $P$ je konečná
     množina pravidiel tvaru
     $(A_{1},\dots,A_{n})\ra(w_{1},\dots,w_{n})$, kde \mbox{$\forall
-    A_{i}\in N$}, $w_{i}\in(N\cup T)^{*}$
+    A_{i}\in N$}, $w_{i}\in(N\union T)^{*}$
 \end{definicia}
 
 \begin{definicia}
@@ -930,7 +940,7 @@ na vetnú formu iba jednu sadu pravidiel
 \end{veta}
 
 \begin{veta}
-    $\mathcal{L}_{AP}\cap 2^{a^{*}}\subseteq\mathcal{R}$ (t.j.
+    $\mathcal{L}_{AP}\intersect 2^{a^{*}}\subseteq\mathcal{R}$ (t.j.
     jednopísmenkové $AP$ jazyky sú regulárne)
 \end{veta}
 
@@ -938,7 +948,7 @@ na vetnú formu iba jednu sadu pravidiel
     Nech $L\in\mathcal{L}_{AP}$ a $G=(N,T,P,A_p)$ je $AP$ gramatika
     taká, že $L(G)=L$. Bez újmy na všeobecnosti môžeme predpokladať,
     že $T=\{a\}$. Nech \mbox{$N=\{A_1,\dots,A_n\}$}. Definujme $N'$
-    nasledovne: $N'=\{A_p\}\cup\{A_{i_1,\dots,i_k}\mm\forall j\med
+    nasledovne: $N'=\{A_p\}\union\{A_{i_1,\dots,i_k}\mm\forall j\med
     A_{i_j}\in N,\med A_{i_1},\dots,A_{i_k}$ sa nachádzajú na pravej
     strane niektorého (rovnakého) z pravidiel $P$ v tomto poradí$\}$.
     Bez újmy na všeobecnosti môžeme pred\-pokla\-dať, že všetky
