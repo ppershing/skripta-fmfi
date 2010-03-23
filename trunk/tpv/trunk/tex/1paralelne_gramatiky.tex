@@ -66,7 +66,10 @@ je bez-$\varepsilon$
 
 \begin{priklad}
 $G_{1}=(\{ a\},\{ a\ra a^{2}\},a)$ potom $L(G_{1})=\{\med
-a^{2^{n}}\mm n\geq 0\med\}$\\ Ako vidieť, $OL$-systém $G_{1}$ nám
+a^{2^{n}}\mm n\geq 0\med\}$\\
+Ukážka odvodzovania slova v tomto OL systéme je na obrázku 
+\ref{img:ol_priklad_1}.
+Ako vidieť, $OL$-systém $G_{1}$ nám
 úplne jednoducho (použitím jediného pravidla) umožňuje
 ge\-ne\-ro\-vať jazyk, na ktorý by nám v Chomského hierarchii
 nestačili ani bezkontextové prostriedky. Sila $OL$-systémov
@@ -79,18 +82,40 @@ umožnili akoby rozsynchronizovať odvodenie, a teda symboly sa
 teraz neprepisujú naraz, ale každý v inom čase
 \end{priklad}
 
+\begin{figure}[htp]
+    \centering
+    \includegraphics{img/1paralelne_gramatiky/ol_priklady.1.mps}
+    \caption{Príklad generovanie jazyka $a^{2^n}$}
+    \label{img:ol_priklad_1}
+\end{figure}
+
 \begin{priklad}
 $G_{2}=(\{a,b\},\{a\ra b,b\ra ab\},a)$ potom jazyk $L(G_{2})$ budú
-tvoriť slová, ktorých dĺžky sú členy Fibonacciho postupnosti, teda
-opäť máme jeden dosť zložitý, zrejme nie bezkontextový jazyk,
+tvoriť slová, ktorých dĺžky sú členy Fibonacciho postupnosti, ako
+možno vidieť na obrázku \ref{img:ol_priklad_2}. Máme teda
+opäť jeden dosť zložitý, zrejme nie bezkontextový jazyk,
 ktorý dokážeme $OL$-systémom pomerne jednoducho generovať
 \end{priklad}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics{img/1paralelne_gramatiky/ol_priklady.2.mps}
+    \caption{Generovanie Fibonnaciho postupnosťi}
+    \label{img:ol_priklad_2}
+\end{figure}
 
 \begin{priklad}
 $G_{3}=(\{a,b,c\},\{a\ra abcc,b\ra bcc,c\ra c\},a)$ potom dĺžky
 slov jazyka $L(G_{3})$ tvoria postupnosť štvorcov (druhých mocnín)
-prirodzených čísel
+prirodzených čísel (obr. \ref{img:ol_priklad_3}).
 \end{priklad}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics{img/1paralelne_gramatiky/ol_priklady.3.mps}
+    \caption{Generovanie štvorcov}
+    \label{img:ol_priklad_3}
+\end{figure}
 
 \begin{definicia}
 $\mathcal{AFL}$ (Abstract Family of Languages) je každá trieda
