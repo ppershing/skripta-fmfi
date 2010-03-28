@@ -40,4 +40,31 @@ zabezpečeniu dôveryhodnej strany. Napriek tomuto problému si ukážeme,
 ako môže taká schéma fungovať.
 
 \subsection{Coksova schéma (2001)}
+
+Bezpečnosť Coksovej schémy sa opiera o problém rozlišovania medzi
+štvorcami a preudoštvorcami. Presnejšie povedané,
+nech $n=pq$ kde $p,q$ sú prvočísla také, že $p \equiv q \equiv 3 \pmod{4}$.
+
+\def\jacobi#1#2{\left( \frac{x}{n} \right)}
+
+Nás budú zaujímať také čísla $x$, pre ktoré Jakobiho symbol
+$\jacobi{x}{n} =1$. Jakobiho symbol totiž vieme počítať aj bez
+faktorizácie $n$, na druhú stranu, overiť, či $x$ je štvorec alebo len
+pseudoštvorec je ľahko rozhodnuteľné.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{img/9/coks.1.mps}
+    \caption{Jakobiho symbol pre $n=pq$}
+    \label{fig:jakobi}
+\end{figure}
+
+
+Schéma bude nasledovná
+\begin{itemize}
+    \item $M_{pk}: \langle n \rangle$
+    \item $M_{sk}: \langle p,q \rangle$
+    \item Extract: $h: \{0,1\}^* \mapsto (QR_n \union QNR_n^{+1})$.
+\end{itemize}
+
 \todo{cela schema}
