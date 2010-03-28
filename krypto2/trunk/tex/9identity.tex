@@ -1,0 +1,43 @@
+\section{Identity based crypto}
+
+Asymetrické kryptovacie systémy, ktoré veľmi dobre poznáme, vyžadujú,
+aby si každý vygeneroval vlastnú inštanciu danej schémy. Problém pri
+takomto riešení je distribúcia verejného kľúča. Ak nemám dostatočne
+dôveryhodný kanál na distribúciu môjho verejného kľúča, útočník si
+môže pripraviť vlastný kľúč a presvedčiť obeť o tom, že je to môj
+kľúč. Navyše, existujú isté ťažkosti s udržiavaním verejných kľúčov a
+limity sú aj v chápanlivosti ľudí o potrebe bezpečného kanálu pri
+distribúcii.
+Isté riešenie tohoto problému,
+ktoré sa ujalo najmä pri webových aplikáciach sú certifikáty --
+kľúč sa podpíše dôveryhodnou autoritou a každý si môže
+overiť, že po kanáli dostal správny kľúč. V tejto kapitole sa budeme
+venovať alternatívnemu riešeniu -- verejným kľúčom bude priamo moja
+identita.
+
+Ako si to teda môžeme predstaviť? Nebudeme generovať inštanciu schémy,
+ale uvažujme rovno, že mojím kľúčom bude priamo moja identifikácia -
+či už email, OpenID konto a pod.
+
+Na pomoc si ale budeme musieť prizvať dôveryhodnú tretiu stranu $T$.
+Táto strana bude mať 2 kľúče master public key $M_{pk}$ a master
+secret key $M_{sk}$. Túto tretiu stranu budeme potrebovať, aby nám
+vygenerovala náš súkromný kľúč k môjmu verejnému kľúču (kontu).
+Formálne, toto generovanie si môžeme popísať ako algoritmus, ktorý
+užívateľovi $U$ priradí na záklede jeho identity $ID_U$ jeho súkromný
+kľúč $U_{sk} = Extract(M_{sk}, ID_U)$. Samozrejme, kľúč ešte treba
+dôveryhodne doručiť, toto ale nebudeme riešiť.
+
+Potom môžeme šifrovať a dešifrovať nasledovne:
+$c=E(m,ID_U,M_{pk})$ a opačne $m = D(c, U_{sk}, M_{pk})$, pričom
+samozrejme požadujeme
+$\forall ID_U \forall m: D(E(m, ID_U, M_{pk}), Extract(M_{sk},ID_U),
+M_{pk})=m$.
+
+Takáto schéma má ale výraznú bezpečnostnú slabinu - kompromitácia
+$M_{sk}$ je fatálna. Je teda otázne, do akej miery môžeme dôverovať
+zabezpečeniu dôveryhodnej strany. Napriek tomuto problému si ukážeme,
+ako môže taká schéma fungovať.
+
+\subsection{Coksova schéma (2001)}
+\todo{cela schema}
