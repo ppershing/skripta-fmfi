@@ -45,7 +45,7 @@ Bezpečnosť Coksovej schémy sa opiera o problém rozlišovania medzi
 štvorcami a preudoštvorcami. Presnejšie povedané,
 nech $n=pq$ kde $p,q$ sú prvočísla také, že $p \equiv q \equiv 3 \pmod{4}$.
 
-\def\jacobi#1#2{\left( \frac{x}{n} \right)}
+\def\jacobi#1#2{\left( \frac{#1}{#2} \right)}
 
 Nás budú zaujímať také čísla $x$, pre ktoré Jakobiho symbol
 $\jacobi{x}{n} =1$. Jakobiho symbol totiž vieme počítať aj bez
@@ -60,11 +60,86 @@ pseudoštvorec je ľahko rozhodnuteľné.
 \end{figure}
 
 
-Schéma bude nasledovná
+Schéma pre dôveryhodnú tretiu stranu bude nasledovná
 \begin{itemize}
     \item $M_{pk}: \langle n \rangle$
     \item $M_{sk}: \langle p,q \rangle$
-    \item Extract: $h: \{0,1\}^* \mapsto (QR_n \union QNR_n^{+1})$.
+    \item Extract: $h: \{0,1\}^* \mapsto (QR_n \union QNR_n^{+1})$,
+    kde $h$ bude dobrá hashovacia funkcia.
 \end{itemize}
 
-\todo{cela schema}
+Najskôr by sme si mali overiť, že vieme ľahko vytvoriť dobrú
+hashovaciu funkciu. Uvažujme $h:\{0,1\}^* \mapsto Z_n$.
+Potom túto funkciu vieme veľmi jednoducho transformovať, aby išla do
+zúženého definičného oboru nasledovným spôsobom.
+
+Zvoľme si $a \inr n$ také, že $\jacobi{a}{n} = -1$.
+\fixme{Naozaj $a$ musi byt nahodne alebo staci fixne?}
+Jednoduché pozorovanie je, že ak $\jacobi{h(x)}{n}=-1$,
+potom $\jacobi{a h(x)}{n}=1$.
+Tým pádom funkcia
+\begin{equation*}
+h'(x) = \begin{cases}
+            h(x)   \quad &\jacobi{h(x)}{n}=1 \\
+            a h(x) \quad &\jacobi{h(x)}{n}=-1
+        \end{cases}
+\end{equation*}
+je dobrým kandidátom na hashovaciu funkciu.
+
+Priradenie kľúčov identite bude prebiehať nasledovne:
+\begin{itemize}
+    \item $U_{pk}=h(ID_U)$
+
+    \item $U_{sk}^2=\begin{cases}
+            \phantom{-} U_{pk}\pmod{n}  \quad& U_{pk} \in QR_n \\
+                     -  U_{pk}\pmod{n}  \quad& U_{pk} \in QNR_n^{+1}
+                    \end{cases}$
+\end{itemize}
+
+\noindent
+Šifrovanie:
+\begin{itemize}
+    \item Správa je $m\in\{-1,1\}$
+    \item Náhodne zvolíme $t_1,t_2$ tak aby platilo
+            $\jacobi{t_1}{n} = \jacobi{t_2}{n} = m$
+    \item $y_1 = t_1 + U_{pk} t_1^{-1} \pmod{n}$
+    \item $y_2 = t_2 - U_{pk} t_2^{-1} \pmod{n}$.\footnote{
+            Pozor -- zmena v znamienku}
+    \item $E(m) = \langle y_1, y_2 \rangle$.
+\end{itemize}
+
+\noindent
+Dešifrovanie:
+Budeme rozlišovať 2 prípady.
+\begin{itemize}
+    \item $U_{sk}^2 \equiv U_{pk}$.
+        Vypočítame Jakobiho symbol $\jacobi{y_1 + 2U_{sk}}{n}$.
+        \begin{align*}
+            \jacobi{y_1 + 2U_{sk}}{n} &=
+            \jacobi{t_1 + U_{pk} t_1^{-1} + 2 U_{sk}}{n} =
+            \jacobi{t_1 + U_{sk}^2 t_1^{-1} + 2 U_{sk}}{n} \\
+            &=
+            \jacobi{t_1(1 + U_{sk}^2 t_1^{-1} + 2 t_1{-1} U_{sk})}{n} =
+            \jacobi{t_1(1+U_{sk}t_1^{-1})^2}{n}  \\
+            &=
+            \jacobi{t_1}{n} \cdot \jacobi{(1+U_{sk}t_1^{-1})^2}{n}=
+            \jacobi{t_1}{n} \cdot 1 \\
+            &= m
+        \end{align*}
+
+    \item $U_{sk}^2 \equiv -U_{pk}$.
+        Vypočítame Jakobiho symbol $\jacobi{y_2 + 2U_{sk}}{n}$.
+        \begin{align*}
+            \jacobi{y_2 + 2U_{sk}}{n} &=
+            \jacobi{t_2 - U_{pk} t_2^{-1} + 2 U_{sk}}{n} =
+            \jacobi{t_2 + U_{sk}^2 t_2^{-1} + 2 U_{sk}}{n} \\
+            &=
+            \jacobi{t_2(1 + U_{sk}^2 t_2^{-1} + 2 t_2{-1} U_{sk})}{n}
+            \\
+            &=
+            \jacobi{t_2}{n} \cdot \jacobi{(1+U_{sk}t_2^{-1})^2}{n} \\
+            &= m
+        \end{align*}
+\end{itemize}
+
+\todo{bezpecnost schemy}
