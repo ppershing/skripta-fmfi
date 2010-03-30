@@ -142,4 +142,28 @@ Budeme rozlišovať 2 prípady.
         \end{align*}
 \end{itemize}
 
-\todo{bezpecnost schemy}
+\subsubsection{Bezpečnosť schémy}
+Predpokladajme, že $U_{sk} \equiv U_{pk}$.
+Ukážeme, že z pohľadu útočníka nenesie $y_2$ žiadnu informáciu o tom, ako
+vyzerá $m$.
+
+Nech $y = t - U_{pk} t^{-1} \pmod{n}$.
+$0=t^2 - y t - U_{pk} \pmod{n}$.
+$ t^2 - y t - U_{pk} \equiv 0 \pmod{p}$.
+Dostali sme kvadratickú rovnicu nad poľom $Z_p$ a teda riešením sú 2 korene
+$r_1,r_2$.
+$(t-r_1)(t-r_2) =t^2 - y t - U_{pk}$.
+$r_1 r_2 \equiv -U_{pk}$.
+
+\fixme{wtf?}
+
+$\jacobi{r_1}{p} \jacobi{r_2}{p} = \jacobi{r_1 r_2}{p} =
+\jacobi{-U_{pk}}{p} = \jacobi{-1}{p} \jacobi{U_{sk}^2}{p}=1$.
+($\jacobi{-1}{p}=1$ pretože $(-1)^\frac{p-1}{2}$.)
+
+To isté môžeme zistiť modulo $q$.
+Skombinovaním jednotilivých riešení modulo prvočísla dostaneme 4 riešenia
+modulo $n$.\fixme{co ak su korene rovnake?}
+\fixme{a co teraz, zacina tu byt bordel}
+
+
