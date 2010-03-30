@@ -75,32 +75,57 @@ $P \lor Q$, $\{P, Q\}$
 $y: f(x)$
 $z: g(x)$
 
-\paragraph{Veta:} Nech $\mathcal{S}$ je množina klauzúl, ktoré tvoria štandardnú
-formu formuly $A$. Potom $A$ nie je splniteľná práve vtedy, keď $\mathcal{S}$
-nie je splniteľná.
+\stopFIXME
 
-\paragraph{Dôkaz:} $A: (Q_1 x_1) \ldots (Q_m x_n) M[x_1, \ldots x_n]$. $Q_r$ je
-existenčný kvantifikátor, potom z $A$ dostávame formulu $A_1$ v tvare $$A_1:
-(\forall x_1) \ldots (\forall x_{r-1}) (Q_{r+1} x_{r+1})  \ldots (Q_n x_n)
-M[x_1, \ldots x_{r-1}, f(x_1, \ldots, x_{r-1}), x_{r+1}, x_n]$$. $A$ -- nie je
-splniteľná práve vtedy, keď $A_1$ nie je splniteľná.
+\begin{veta}
+    Nech $\mathscr{S}$ je množina klauzúl, ktoré tvoria štandardnú
+    formu formuly $A$. Potom $A$ nie je splniteľná $\iff$ $\mathscr{S}$
+    nie je splniteľná.
+\end{veta}
 
-\par Ak $A$ nie je splniteľná, potom ani $A_1$ nie je splniteľná. Nech $A_1$ je
-splniteľná. Potom existuje taká interpretácia $I$, že $I$ vyhovuje $A_1$ ($A_1$
-je pravdivé v $I$). To znamená, že pre všetky $x_1 , \ldots x_{r-1}$ existuje
-také $x_r$, ktoré je rovné $f(x_1, \ldots, x_{r-1})$. Tá istá interpretácia teda
-vyhovuje aj pôvodnej formule $A$.
+\begin{dokaz}
+    Uvažujme formulu $A$ tvaru $A: (Q_1 x_1) \dots (Q_n x_n) M[x_1, \dots x_n]$.
+    Nech $Q_r$ je prvý existenčný kvantifikátor, čiže $A$ je tvaru
+    $(\forall x_1) (\forall x_2) \dots (\forall x_{r-1}) (\exists x_r)
+     (Q_{r+1} x_{r+1}) \dots (Q_n x_n) M[x_1, \dots x_n]$.
+    Existenčný kvantifikátor nahradíme novou $(r-1)$-árnou funkciou $f$ a
+    dostávame formulu $A_1$ v tvare
+    \begin{equation*}
+        A_1: (\forall x_1) \dots (\forall x_{r-1}) (Q_{r+1} x_{r+1})  \dots (Q_n x_n)
+                M[x_1, \dots, x_{r-1}, f(x_1, \dots, x_{r-1}), x_{r+1}, x_n]
+    \end{equation*}
 
-\par Obrátené tvrdenie. Predpokladajme, že $A_1$ nie je splniteľná a teda
-formula $A$ nie je splniteľná. Nech, že $A$ je splniteľná. Potom pre každé $x_1,
-\ldots x_{r-1}$ existuje také $x_r$, že platí $M[x_1, \ldots x_{r-1}, x_r,
-\ldots]$. Rozšírme $I$ na $I'$ tak, že $f(x_1, \ldots x_{r-1}) = X_R$. Ak $A_1$
-nie je splniteľná, tak ani $A_2$ nie je splniteľná. Pôvodnú formulu označíme
-$A_0$, a $A: A_0, \ldots A_m$, pričom platí $A_0 \iff A_1 \iff \cdots \iff A_m$.
-$A_m: A'$
-$A_0 \iff A'$
+    \noindent Tvrdíme, že $A$ nie je splniteľná práve vtedy keď $A_1$ nie je splniteľná:
+    \begin{itemize}
+    %%% {{{
+    \item[$\Rightarrow:$] Sporom. Nech $A_1$ je splniteľná.
+        Potom $\forall x_1,\dots,x_{r-1}$ platí formula $A_1$, čize
+        existuje taká interpretácia $I$, že $I$ vyhovuje $A_1$ ( $A_1$ je pravdivé v $I$).
+        To znamená, že pre všetky $x_1 , \dots x_{r-1}$ existuje také $x_r$,
+        ktoré je rovné $f(x_1, \dots, x_{r-1})$.
+        Tá istá interpretácia teda vyhovuje aj pôvodnej formule $A$.
 
+    \item[$\Leftarrow:$] Opäť sporom. Nech, že $A$ je splniteľná.
+        Potom pre každé $x_1, \dots, x_{r-1}$ existuje také $x_r$, že platí 
+        $M[x_1, \dots, x_{r-1}, x_r, \dots, x_n]$.
+        Máme teda interpretáciu $I$ formuly $A$. Rozšírme $I$ o $(r-1)$-árny funkčný 
+        symbol $f$ tak, že $f(x_1, \dots, x_{r-1}) = x_R$. Potom $I'$
+        vyhovyje formule $A_1$ a teda dostávame spor.
+    %%% }}}
+    \end{itemize}
 
+    \noindent Pokračujme ďalej v dôkaze:
+    Označme pôvodnú formulu ako $A_0$. Potom môžeme dosiahnuť štandardnú formu
+    $S$ ako postupnosť $A_0, A_1, \dots, A_m$, kde každý krok je zámena prvého
+    existenčného kvantifikátora vo formule $A_i$.
+    Ak $A_i$ nie je splniteľná, tak ani $A_{i+1}$ nie je splniteľná.
+    Tým pádom $A_0$ nie je splniteľná $\iff$ $A_1$ nie je splniteľná $\iff
+    \dots \iff$ $A_m\equiv S$ nie je splniteľná.
+    No a $S$ nie je splniteľná práve vtedy keď $\mathscr{S}$ nie je
+    splniteľná.
+\end{dokaz}
+
+\startFIXME
 \par Toto platí iba vtedy, ak formula nie je splniteľná. Majme formulu $A$, $A:
 (\exists x) P(x)$, a $S: P(a)$. Vezmime interpretáciu: $D = \{1, 2 \}$, pričom
 $a: 1$. Hodnoty pre $P$. $P(1)$ -- nepravda, $P(2)$ -- pravda.
