@@ -39,9 +39,9 @@ $M_{sk}$ je fatálna. Je teda otázne, do akej miery môžeme dôverovať
 zabezpečeniu dôveryhodnej strany. Napriek tomuto problému si ukážeme,
 ako môže taká schéma fungovať.
 
-\subsection{Coksova schéma (2001)}
+\subsection{Cocksova schéma (2001)}
 
-Bezpečnosť Coksovej schémy sa opiera o problém rozlišovania medzi
+Bezpečnosť Coksovej schémy \cite{cocks} sa opiera o problém rozlišovania medzi
 štvorcami a preudoštvorcami. Presnejšie povedané,
 nech $n=pq$ kde $p,q$ sú prvočísla také, že $p \equiv q \equiv 3 \pmod{4}$.
 
@@ -50,7 +50,7 @@ nech $n=pq$ kde $p,q$ sú prvočísla také, že $p \equiv q \equiv 3 \pmod{4}$.
 Nás budú zaujímať také čísla $x$, pre ktoré Jakobiho symbol
 $\jacobi{x}{n} =1$. Jakobiho symbol totiž vieme počítať aj bez
 faktorizácie $n$, na druhú stranu, overiť, či $x$ je štvorec alebo len
-pseudoštvorec je ľahko rozhodnuteľné.
+pseudoštvorec nie je ľahko rozhodnuteľné.
 
 \begin{figure}[h]
     \centering
@@ -73,8 +73,9 @@ hashovaciu funkciu. Uvažujme $h:\{0,1\}^* \mapsto Z_n$.
 Potom túto funkciu vieme veľmi jednoducho transformovať, aby išla do
 zúženého definičného oboru nasledovným spôsobom.
 
-Zvoľme si $a \inr n$ také, že $\jacobi{a}{n} = -1$.
-\fixme{Naozaj $a$ musi byt nahodne alebo staci fixne?}
+Zvoľme si $a \in n$ také, že $\jacobi{a}{n} = -1$. Na tomto mieste
+poznamenajme, že $a$ nie je náhodné, ba priam musí byť fixné, inak by
+účastníci nevedeli počítať hash.
 Jednoduché pozorovanie je, že ak $\jacobi{h(x)}{n}=-1$,
 potom $\jacobi{a h(x)}{n}=1$.
 Tým pádom funkcia
@@ -84,7 +85,8 @@ h'(x) = \begin{cases}
             a h(x) \quad &\jacobi{h(x)}{n}=-1
         \end{cases}
 \end{equation*}
-je dobrým kandidátom na hashovaciu funkciu.
+je dobrým kandidátom na hashovaciu funkciu
+$\{0,1\}^* \mapsto (QR_n \union QNR_n^{+1})$.
 
 Priradenie kľúčov identite bude prebiehať nasledovne:
 \begin{itemize}
@@ -94,10 +96,13 @@ Priradenie kľúčov identite bude prebiehať nasledovne:
             \phantom{-} U_{pk}\pmod{n}  \quad& U_{pk} \in QR_n \\
                      -  U_{pk}\pmod{n}  \quad& U_{pk} \in QNR_n^{+1}
                     \end{cases}$
-                \fixme{co je teda sukromny kluc? sk a ziamienko?,
-                alebo sk a pk? alebo ky fras? Zmanienko potrebujeme
-                pri desifrovani!}
 \end{itemize}
+
+\begin{poznamka}
+    Dá sa ukázať, že výpočet $U_{sk}$ možno previesť ako
+    $U_{sk} = (\pm a)^{(n + 5 - p - q)/8}$, t.j. výpočet
+    druhej odmocniny je efektívny.
+\end{poznamka}
 
 \noindent
 Šifrovanie:
@@ -111,9 +116,22 @@ Priradenie kľúčov identite bude prebiehať nasledovne:
     \item $E(m) = \langle y_1, y_2 \rangle$.
 \end{itemize}
 
+
 \noindent
 Dešifrovanie:
-Budeme rozlišovať 2 prípady.
+
+\begin{poznamka}
+    Ako sa o chvíľu ukáže, naša dešifrovacia funkcia
+    nebude formálne fungovať ako $D(c,U_{sk}, M_{pk})$.
+    Čitateľovi, ktorý sa nechce zahrať hru ``nájdi 5 rozdielov''
+    môžeme zahintiť, že na dešifrovanie bude potrebovať aj identitu
+    účastníka, za ktorého to dešifruje, resp. presnejšie povedané bude
+    potrebovať verejný kľúč $U_{pk}$ ktorý sa dá získať ako hash
+    identity. Správne by teda malo byť $D(c,U_{sk},U_{pk}, M_{pk})$.
+\end{poznamka}
+
+Základom bude počítanie Jakobiho symbolu tvaru $\jacobi{y +2 U_{sk}}{n}$.
+Budeme rozlišovať 2 prípady (a práve na to potrebujeme aj verejný kľúč):
 \begin{itemize}
     \item $U_{sk}^2 \equiv U_{pk}$.
         Vypočítame Jakobiho symbol $\jacobi{y_1 + 2U_{sk}}{n}$.
@@ -145,25 +163,42 @@ Budeme rozlišovať 2 prípady.
         \end{align*}
 \end{itemize}
 
+Čo sa týka praktickej realizácie takejto schémy, výpočtové nároky sú
+veľmi nízke. Ak máme správu dĺžky $l$, tak
+šifrovanie pozostáva z $l$ operácii počítania Jakobiho
+symbolu a delenia, dešifrovanie je $l$-krát výpočet Jakobiho symbolu.
+Pre typické parametre ako $n=1024bit$ a $l=128$ je očakávateľné, že
+potrebný čas bude menší ako na jedinú exponenciáciu. Preto jedinou
+reálnou otázkou ostáva veľkosť správy, ktorá v tomto prípade narastie
+na $32KB$.
+
 \subsubsection{Bezpečnosť schémy}
-Predpokladajme, že $U_{sk} \equiv U_{pk}$.
+V prvom rade, je evidentné, že ak útočník pozná faktorizáciu $M_{pk}$,
+systém považujeme za zlomený. Proti tomuto problému sa dá brániť
+rôznymi spôsobmi, Cocks v svojom článku navrhol spôsob bezznalostného
+spoločného výpočtu viacerých dôveryhodných autorít (tým pádom $M_{sk}$
+nemusí byť prítomné naraz na jednom mieste).
+
+V ďalšom teda budeme predpokladať, že útočník nepozná faktorizáciu $M_{pk}$.
+
+Predpokladajme nateraz, že $U_{sk}^2 \equiv U_{pk}$.
 Ukážeme, že z pohľadu útočníka nenesie $y_2$ žiadnu informáciu o tom, ako
 vyzerá $m$.
 
 Nech $y = t - U_{pk} t^{-1} \pmod{n}$.
 Potom
 \begin{align*}
-    t^2 - y t - U_{pk} &\equiv 0 &\pmod{n} \\
-   t^2 - y t - U_{pk} &\equiv 0 &\pmod{p}
+    t^2 - y t - U_{pk} &\equiv 0 \pmod{n} \\
+    t^2 - y t - U_{pk} &\equiv 0 \pmod{p}
 \end{align*}
 Dostali sme kvadratickú rovnicu nad poľom $Z_p$ a teda riešením sú 2 korene
 $r_1,r_2$.
-Dostávame teda 
-\fixme{Preco to ten align tak rozhadze napravo?}
-\begin{align*}
-    (t-r_1)(t-r_2) &\equiv t^2 - y t - U_{pk} \quad&\pmod{n}\\
+Dostávame teda
+%% netusim, ako presvedcit align na to, aby pmod zarovnal vlavo
+\begin{alignat*}{3}
+    (t-r_1)(t-r_2) &\equiv t^2 - y t - U_{pk} &\pmod{n}\\
     r_1 r_2 &\equiv -U_{pk} &\pmod{p}
-\end{align*}
+\end{alignat*}
 
 Počítajme Jakobiho symbol \fixme{naco?}
 
