@@ -200,17 +200,28 @@ Dostávame teda
     r_1 r_2 &\equiv -U_{pk} &\pmod{p}
 \end{alignat*}
 
-Počítajme Jakobiho symbol \fixme{naco?}
+Ak vypočítajme Jakobiho symbol $\jacobi{r_1}{p} \jacobi{r_2}{p}$,
+dostaneme hodnotu $\jacobi{r_1}{p}\jacobi{r_2}{p} = \jacobi{r_1 r_2}{p} =
+\jacobi{-U_{pk}}{p} = \jacobi{-1}{p} \jacobi{U_{sk}^2}{p}=-1\cdot 1=-1$
+(nakoľko platí $\jacobi{-1}{p}=-1$ za predpokladu $p \equiv 3 \pmod{4}$).
 
-$\jacobi{r_1}{p} \jacobi{r_2}{p} = \jacobi{r_1 r_2}{p} =
-\jacobi{-U_{pk}}{p} = \jacobi{-1}{p} \jacobi{U_{sk}^2}{p}=1$, nakoľko
-$\jacobi{-1}{p}=1$.
+\begin{poznamka}[Stanekova básnická otázka na publikum: čo ak sú
+    niektoré 2 korene rovnaké?]
+    Odpoveď: Také neexistujú. Dôvod:
+    Zoberme $r_1 r_2 \equiv -U_{pk} \pmod{p}$, dostaneme $r^2 \equiv
+    -U_{pk} \pmod{p}$, $U_{sk}^2 \equiv U_{pk} \pmod{p}$. Teda
+    $U_{pk}, -U_{pk} \in QR_p$, čo je spor, pretože za predpokladu 
+    $p\equiv 3 \pmod{4}$ je rezíduum práve jedno z nich.
+
+    Iné zdôvodnenie: $r^2$ nemôže byť naraz kvadratické nerezíduum.
+\end{poznamka}
 
 To isté môžeme zistiť modulo $q$.
-Skombinovaním jednotilivých riešení modulo prvočísla dostaneme 4 riešenia
-modulo $n$.\fixme{co ak su korene rovnake? Stanek to nechal na
-rozmyslenie}
-\fixme{a co teraz, zacina tu byt bordel}
+Skombinovaním jednotilivých riešení modulo $p,q$ dostaneme 4 riešenia
+modulo $n$, tieto riešenia (označme ich $t_{--}, t_{-+}, t_{+-},
+t_{++}$) budú v 4 rôznych kvadrantoch 
+(obr. \ref{fig:jakobi}). Nuž ale to sme doma.
+\fixme{ani za toto netusim, ako to z toho vyplyva}
 
 Teraz ukážeme bezpečnosť schémy. Predpokladajme, že útočník vie riešiť
 inštancie tejto schémy, našim cieľom je ukázať, že by potom vedel
@@ -225,8 +236,6 @@ Postupujme nasledovne
         $y_1 = t + a t^{-1} \pmod{n}$.
     \item $y_2$ nebude vôbec závisieť od predchádzajúcich hodnôt,
             $y_2 \inr Z_n^*$
-    \item $m' \assign D(c=\langle y_1, y_2 \rangle, U_{sk}=a,n)
-            $.\footnote{Predpokladáme, že ze dešifrovací algoritmus
-            neoveruje či je $U_{sk}$ konzistentné s $U_{pk}$, t.j.
-            či $U_{sk}^2 \equiv \pm U_{pk}$}
+    \item $m' \assign Attack(c=\langle y_1, y_2 \rangle, U_{pk}=a,M_{pk}=n)
+            $.
 \end{enumerate}
