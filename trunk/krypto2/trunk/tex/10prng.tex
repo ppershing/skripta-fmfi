@@ -1,0 +1,26 @@
+\section{Generátory pseudonáhodných čísel}
+
+Cieľom pseudonáhodných generátorov je vytvárať postupnosti čísel, ktoré sa
+navonok javia ako náhodné, hoci v skutočnosti to tak nie je. Dôvodov prečo
+by sme chceli niečo takéko je niekoľko, najdôležitejšími sú neprístupnosť
+náhodných generátorov a/alebo ich slabá výkonnosť. Ak máme totiž naozaj
+náhodný generátor, ktorý ale generuje len 1 bit za sekundu, na
+vygenerovanie RSA kľúča by sme potrebovali čakať vyše hodinu.
+
+To, že (pseudo)náhodné čísla potrebujeme v kryptografii je evidentné --
+stačí si spomenúť na kryptografické kľúče, príležitostné slová,
+inicializačné vektory blokových šifier, náhodné prvky v asymetrických
+šifrovacích schémach a schémach na digitálne podpisy, náhodných paddingoch.
+Navyše, v mnohých z týchto aplikácii nenáhodnosť ohrozuje bezpečnosť (od
+možnosti dešifrovať správu ako pri \todo{} až po úplné prezradenie
+súkromného kľúča ako pri \todo{}).
+
+My za preudonáhodný generátor budeme považovať deterministický\footnote{
+čo samozrejme priamo znamená, že nenáhodný} algoritmus, ktorý z
+počiatočného ``seedu'' vygeneruje dlhú postupnosť. Bez ujmy na strate
+všeobecnosti, budeme sa venovať len pseudonáhodným generátorom bitov, čiže
+generátorom do postupnosti zloženej z prvkov $\{0,1\}$.
+
+\todo{Fyzikálne generátory}
+
+
