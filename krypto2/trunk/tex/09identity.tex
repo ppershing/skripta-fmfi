@@ -221,8 +221,21 @@ Skombinovaním jednotilivých riešení modulo $p,q$ dostaneme 4 riešenia
 modulo $n$, tieto riešenia (označme ich $t_{--}, t_{-+}, t_{+-},
 t_{++}$) budú v 4 rôznych kvadrantoch 
 (obr. \ref{fig:jakobi}). Nuž ale to sme doma.
-\fixme{ani za toto netusim, ako to z toho vyplyva}
+Chceli by sme ukázať, že znalosť $y_2$ neovplyvní pravdepodobnosť, že
+správa nadobúda istú hodnotu, t.j.
+$Pr[m=m_0]=Pr[m=m_0 | y=y_2]$.
+To je podľa Bayessovej vety
+$Pr[m=m_0 | y=y_2] = Pr[y=y_2 | m=m_0] Pr[m=m_0] / Pr[y=y_2]$.
+No a evidentne (pretože $t$ volíme náhodne a rovnomerne)
+$Pr[y=y_2 | m=+1] =2/j_{+}(n), Pr[y=y_2 | m=-1] = 2/j_{-}(n)$
+kde $j_{+},j_{-}$ označuje počet čísel s Jakobiho symbolom
++1 resp. -1. 
+My však vieme, že $j_{+}(n) = j_{-}(n) = (p-1)(q-1)/2$ a teda
+$Pr[y=y_2| m=+1] = Pr[y=y_2 | m=-1] = Pr[y=y_2]$. Tým sme ale ukázali,
+že $Pr[m=m_0] = Pr[m=m_0 | y=y_2]$ a teda $y_2$ naozaj nič nevypovedá
+o hodnote $m$.
 
+\fixme[skip]
 Teraz ukážeme bezpečnosť schémy. Predpokladajme, že útočník vie riešiť
 inštancie tejto schémy, našim cieľom je ukázať, že by potom vedel
 riešiť problém kvadratickej reziduity $\pmod{n}$.
