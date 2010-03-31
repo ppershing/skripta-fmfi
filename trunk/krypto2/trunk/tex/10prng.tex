@@ -21,6 +21,36 @@ počiatočného ``seedu'' vygeneruje dlhú postupnosť. Bez ujmy na strate
 všeobecnosti, budeme sa venovať len pseudonáhodným generátorom bitov, čiže
 generátorom do postupnosti zloženej z prvkov $\{0,1\}$.
 
-\todo{Fyzikálne generátory}
+\subsection{Fyzikálne generátory náhodných čísel}
+Existuje veľa rôznych spôsobov, ako zkonštruovať generátor náhodných čísel
+na základe určitého fyzikálneho javu. Či už ide o jednoduché hádzanie
+mince, meranie šumu v polovodičových prvkoch, klopné obvody, ...
 
+Tieto generátory ale môžu byť zaťažené istými chybami -- môžu mať odchýlku
+alebo rôzne závislosti medzi jednotlivými vygenerovanými bitmi. Na riešenie
+tejto situácie existujú rôzne tzv. ``korektory''. Prirodzene ale musí byť
+známe, akou chybou daný generátor trpí.
+
+Uveďme si jednoduchý príklad
+\begin{priklad}[Korektor na jednoduchú odchýlku v pravdepodobnosti]
+  Uvažujme náhodný generátor bitov, v ktorom sú všetky vygenerované bity
+  nezávislé, môže sa ale stať, že bit 0 generujeme s inou pravdepodobnosťou
+  ako bit 1.
+
+  Existuje jednoduchý Van Neumanov\fixme{spelling} korektor, ktorý rieši
+  daný problém nasledovne: Zakaždým zoberme dvojicu bitov $r_{2i},r_{2i+1}$
+  a na výstup dajme nasledovné:
+  \begin{itemize}
+    \item[00] - nevypíšem nič, opakuj s ďalšou dvojicou bitov
+    \item[11] - nevypíšem nič, opakuj s ďalšou dvojicou bitov
+    \item[01] - 0
+    \item[10] - 1
+  \end{itemize}
+  Pretože bity sú nezávislé, evidentne pravdepodobnosť dvojice 01 a 10 je
+  rovnaká. Problémom tejto konštrukcie je ale nejasná priepustnosť --
+  môže sa nám stať, že zaradom zahodíme veľa dvojíc. Taktiež, ak je
+  vyváženosť narušená dosť výrazne, korekcia je neefektívna pretože
+  dominantnou dvojicou bude 00 alebo 11 a budeme teda zahadzovať väčšinu
+  vygenerovaných bitov.
+\end{priklad}
 
