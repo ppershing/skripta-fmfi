@@ -1,4 +1,4 @@
-input latexmp;
+%input latexmp;
 %input latexmphelper;% The above code and a call to setupLaTeXMP
 
 prologues:=3;

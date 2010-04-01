@@ -103,5 +103,50 @@ $$H(x) = \displaystyle\sum_{i=1}^k h(i, x_i) \bmod 2^{256}$$
 DCIHF konštrukcia:
 $$H(x) = \displaystyle\sum_{i=1}^{k-1} \textrm{SHA-1}(x_i, x_{i+1}) \bmod 2^{160}+1$$
 
+\subsection{Zovšeobecnený narodeninový útok}
+
+Predstavme si, že máme dva zoznamy slov $L_1, L_2 \in \{0,1\}^n$ vygenerované
+napríklad pomocou hašovacej funkcie. Teraz chceme nájsť
+$x_1 \in L_1, x_2 \in L_2\colon x_1 = x_2 \Leftrightarrow x_1 \oplus x_2 = 0$.
+
+Toto je starý známy narodeninový útok. Pokiaľ obidva zoznamy budú mať veľkosť
+$2^{n/2}$, tak máme celkom dobrú šancu, že takáto dvojica existuje. Nájdeme ju
+už ľahko - jeden zoznam vložíme do hašovacej tabuľký a skúšame potom v tejto
+tabuľke hľadať prvky z druhého zoznamu.
+Celkový čas útoku by bol $O(2^{n/2})$.
+
+Tento druh útoku môžeme zovšeobecniť pre $k$ zoznamov $L_1, L_2, \dots, L_k$.
+Potom naša požiadavka na vybrané slová je: $x_1 \oplus x_2 \oplus \dots \oplus x_k = 0$.
+
+Ukážeme si ako vieme jednoducho hľadať takéto slová pre $k=4$.
+
+Vygenerujeme zoznamy $L_1, L_2, L_3, L_4$ z veľkosťou $2^{n/4}$. 
+Následne vyrobíme všetky kombinácie $x_1 \oplus x_2$ a $x_3 \oplus x_4$, kde
+$x_1 \in L_1, x_2 \in L_2, x_3 \in L_3, x_4 \in L_4$.
+Každej z týchto kombinácií bude $2^{n/2}$. Následne prevedieme útok pre $k=2$.
+Takže celkový čas opäť bude $O(2^{n/2})$.
+
+Zatiaľ sme si ale veľmi nepomohli. Ale v roku 2002 Wagner \cite{birthday}
+našiel rýchlejší útok.
+
+Najprv si ale zadefinujme operáciu spojenia (join). Nech $low_l(x)$ predstavuje
+posledných $l$ bitov slova $x$. Potom:
+$L \bowtie_l L^{'} = \{(x, x^{'}) | x \in L \land x^{'} \in L^{'} \land low_{l}(x) = low_l(x^{'})\}$
+Teda vyberieme z $L$ a $L^{'}$ tie dvojice slov, ktoré sa zhodujú na posledných
+$l$ bitoch.
+
+Teraz si ukážeme útok pre $4$ zoznamy. 
+\begin{enumerate}
+\item Pripravíme si zoznamy veľkosti $2^{n/3}$.
+\item Vypočítame $L_{12} = L_1 \bowtie_{n/3} L_2$.
+\item Vypočítame $L_{34} = L_3 \bowtie_{n/3} L_4$.
+\item Vypočítame $L_{12} \bowtie L_{34}$.
+\end{enumerate}
+
+Pozrime sa na časovú zložitosť. Očakávaná veľkosť $L_{12}$ bude $2^{n/3} \cdot 2^{n/3} / 2^{n/3} = 2^{n/3}$ (zoberieme všetky možné
+dvojice a požadujeme rovnosť posledných $n/3$ bitov). V tomto istom čase vieme aj vygenerovať tento zoznam. To isté
+dostaneme aj pre $L_{34}$. Očakávaná veľkosť výstupu z posledného kroku je $2^{n/3} \cdot 2^{n/3} / 2^{2n/3} = 1$.
+Časová zložitosť opať bude $O(2^{n/3})$.
+
 \todo{zovseobecneny birthday attack}
 
