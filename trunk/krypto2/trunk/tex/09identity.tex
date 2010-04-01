@@ -235,7 +235,7 @@ $Pr[y=y_2| m=+1] = Pr[y=y_2 | m=-1] = Pr[y=y_2]$. Tým sme ale ukázali,
 že $Pr[m=m_0] = Pr[m=m_0 | y=y_2]$ a teda $y_2$ naozaj nič nevypovedá
 o hodnote $m$.
 
-\fixme[skip]
+\medskip
 Teraz ukážeme bezpečnosť schémy. Predpokladajme, že útočník vie riešiť
 inštancie tejto schémy, našim cieľom je ukázať, že by potom vedel
 riešiť problém kvadratickej reziduity $\pmod{n}$.
@@ -248,7 +248,61 @@ Postupujme nasledovne
     \item zvolíme $t \inr Z_n^*: \jacobi{t}{n}=m$, a vypočítame
         $y_1 = t + a t^{-1} \pmod{n}$.
     \item $y_2$ nebude vôbec závisieť od predchádzajúcich hodnôt,
-            $y_2 \inr Z_n^*$
+            $y_2 = t -  t^{-1} \pmod{n}$, kde $t \inr Z_n^*$.
+            Teda Jakobiho symbol $\jacobi{t}{n} \inr \{-1,1\}$.
+            Poznámka: Stanek pôvodne prednášal $y_2 \inr Z_n^*$,
+            čo má ale evidentný problém a to menovite, že pre $y_2$
+            nemusí existovať riešenie. Lenže my chceme vygenerovať
+            náhodnú inštanciu schémy a preto to riešenie musí mať.
     \item $m' \assign Attack(c=\langle y_1, y_2 \rangle, U_{pk}=a,M_{pk}=n)
             $.
+    \item Pýtajme sa otázku $m'=m$?
 \end{enumerate}
+Teraz podľa kvadratickej reziduity $a$ môžeme dostať 2 rôzne
+(pravdepodobnosti výsledkov).
+\begin{itemize}
+    \item Ak $a \in QR_{n}$, potom z $y_2$ program nemôže usúdiť nič,
+    ako sme si vopred povedali a z $y_1$ by nám mal teda vypočítať
+    $m$. Keďže sme predpokladali, že $Attack$ vie riešiť inštancie
+    schémy, dostávame, že $Pr[m=m'] \ge 1/2 + \delta$.
+
+    \item Ak $a \in QNR_{n}^{+1}$, potom nevieme nič usúdiť z $y_1$.
+    Čiže chceme vypočítať $m$ z $y_2$. Lenže $y_2$ sme položili
+    náhodne a teda pravdepodobnosť uhádnutia $m$ je $Pr[m=m'] = 1/2$.
+\end{itemize}
+Vidíme teda, že v týchto dvoch prípadoch sa nám pravdepodobnosti líšia
+aspoň o $\delta$. To je pozitívne, pretože zopakovaním tohoto testu
+niekoľko krát vieme s vysokou pravdepodobnosťou určiť reziduitu $a$.
+
+Teda, je tu ešte jeden drobný háčik. Keďže nevieme povedať nič o
+správaní (teda, hlavne úspešnosti) útočníkovej funkcie $Attack$
+na nerovnomernej distribúcii vstupov (a pre fixné $a$ to je určite
+nerovnomerná distribúcia), musíme nejakým spôsobom znáhodniť aj toto.
+Samozrejme, nechceme pritom prijsť o informáciu, v akom vzťahu je
+reziduita $a'$ a reziduita $a$.
+
+\begin{lema}
+    Nech $n=p,q$, kde $p,q$ sú prvočísla $p\equiv q\equiv 3 \pmod{4}$.
+    Potom $a \in QR_n \iff -a \in QNR_n^{+1}$.
+\end{lema}
+\begin{dokaz}
+    Už sme si povedali, že pre prvočísla kongruentné $3\pmod{4}$ to
+    platí. No ale potom, ak $a$ bolo $QR_n$, tak
+    $\jacobi{a}{p} = \jacobi{a}{q} =1$ a teda
+    $\jacobi{-a}{p} = \jacobi{-a}{q} = -1$, čiže $-a$ je
+    pseudoštvorec. Opačne to dokážeme podobne.
+\end{dokaz}
+
+Nuž ale potom stačí zvoliť
+$a' = a b^2 z$, kde $b \inr Z_n^*$ a $z\inr\{-1,1\}$. 
+Čitateľ si môže rozmyslieť, že $a'$ bude rovnomerne distribuované
+$\inr Z_n^*$, a že budeme vedieť vzájomný vzťah kvadratickej reziduity
+$a$ a $a'$. Tým pádom ale môžeme náš test zopakovať koľkokrát
+potrebujeme a teda s vysokou pravdepodobnosťou budeme vedieť odlíšiť
+kvadratické rezíduá a presudoprvočísla.
+
+Ďalšou evidentnou bezpečnosťou slabinou schémy, ako sme ju tu
+popísali, je možnosť útočníka zmeniť (nastaviť na konkrétnu hodnotu) jednotlivé vity správy podľa
+ľubovôle. Preto je vhodné za správu pripojiť aj hash hodnotu na
+kontrolu integrity, alebo iným spôsobom zaručiť nemanipulovateľnosť
+jednotlivých bitov.
