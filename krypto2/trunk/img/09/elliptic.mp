@@ -20,7 +20,7 @@ etex
     ymax:=10;
     xstep:=0.1;
     path p;
-    graphsize:=1cm;
+    graphsize:=0.7cm;
     p := (xstart, f(xstart))*graphsize
         for x=xstart+xstep step xstep until xmax:
             .. (x,f(x))*graphsize
@@ -30,7 +30,13 @@ etex
 path hline;
 hline = (xmin,0)*graphsize -- (xmax,0)*graphsize;
 
-beginfig(1);
+beginfig(1); 
+    draw p withpen pencircle scaled 1.5;
+    draw p yscaled -1 withpen pencircle scaled 1.5;
+    draw hline;
+endfig;
+
+beginfig(2);
     draw p withpen pencircle scaled 1.5;
     draw p yscaled -1 withpen pencircle scaled 1.5;
     draw hline;
@@ -48,7 +54,7 @@ beginfig(1);
 endfig;
 
 
-beginfig(2);
+beginfig(3);
     draw p withpen pencircle scaled 1.5;
     draw p yscaled -1 withpen pencircle scaled 1.5;
 
@@ -73,7 +79,7 @@ beginfig(2);
     label.rt(btex P+P etex, pointpp);
 endfig;
 
-beginfig(3);
+beginfig(4);
     draw p withpen pencircle scaled 1.5;
     draw p yscaled -1 withpen pencircle scaled 1.5;
 
