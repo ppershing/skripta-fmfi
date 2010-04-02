@@ -125,86 +125,168 @@ $z: g(x)$
     splniteľná.
 \end{dokaz}
 
+\begin{poznamka}
+    Ak $A$ \emph{nie je splniteľná}, potom môžeme písať
+    $A \equiv \mathscr{S}$.
+\end{poznamka}
+
+\begin{poznamka}
+    Ak $A$ je splniteľná, tak tvrdenie neplatí.
+    Majme formulu $A$, ktorá je $A: (\exists x) P(x)$.
+    Tým pádom $S$ je $S: P(a)$ ($x$ sme nahradili skolemovskou
+    konštantou $a$).
+    Vezmime interpretáciu s univerzom $D = \{1, 2 \}$,
+    pričom $a$ priradíme v $I$ hodnotu $1$.
+    Hodnoty pre $P$ budú $P(1)=false, P(2)=true$.
+    Potom ale $A$ je splniteľná v $I$ (existuje také $x$, menovite
+    $2$), lenže $P(a)$ nie je splniteľná.
+    Preto $A \not \equiv S$.
+\end{poznamka}
+
+\begin{poznamka}
+    Z predchádzajúcej poznámky sa ukazuje, že metódy dokazovania
+    formúl budú založené na vyvrátení negácie.
+\end{poznamka}
+
+\begin{poznamka}
+    Majme formulu $A: A_1 \land A_2 \land \ldots \land A_n$.
+    Pre každé $A_i$ si vytvoríme štandardnú formulu $S_i$.
+    Potom štandardná forma pre $A$ je 
+    $\mathscr{S}=\mathscr{S_1} \union \mathscr{S_2} 
+                \union \ldots \union \mathscr{S_m}$,
+    kde $\mathscr{S_i}$ je množina klauzúl štandardnej formu $S_i$.
+    Formula $A$ nie je splniteľná práve vtedy, keď nie je 
+    splniteľná množina klauzúl $\mathscr{S}$.
+\end{poznamka}
+
+\begin{priklad}[Z teórie grúp]
+    Uvedieme príklad, kde sa pokúsime zapísať pomocou množiny
+    klauzúl tvrdenie z teórie grúp. 
+
+    \par Uvažujme grupu a na nej operáciu $\circ$.
+    Platia nasledovné axiomy:
+    \begin{itemize}
+    %%% {{{
+        \item [$A_1:$] $x, y \in G \Rightarrow x \circ y \in G$ --
+                vlastnosť uzavretosti.
+        \item [$A_2:$] $x, y, z \in G \Rightarrow 
+                        (x \circ y) \circ z = x \circ (y \circ z)$ --
+                asociatívnosť operácie.
+        \item [$A_3:$] $x \in G \Rightarrow x \circ e = e \circ x = x$ --
+                existencia neutrálneho prvku.
+        \item [$A_4:$] $x \in G \Rightarrow \exists x^{-1} \in G :
+                            x \circ x^{-1} = e = x^{-1} \circ x$ --
+                existencia inverzného prvku.
+    %%% }}}
+    \end{itemize}
+
+    Chceme ukázať, že ak pre všetky $x \in G$ platí $x \circ x \in G$,
+    potom je grupa komutatívna. Prvou časťou úlohy je formalizovanie zadania:
+    Nech $P(x,y,z)$ označuje $x \circ y = z$ a nech  $i(x) =
+    x^{-1}$.\footnote{ % o tom, ze to ma Toman zle
+        %%% {{{
+        Na tomto mieste by som poznamenal, že to má Toman zle.
+        Totiž, nahradením funkcie predikátom sme stratili jednoznačnosť
+        funkčnej hodnoty, teda, momentálne môže platiť
+        $P(x,y,z) \land P(x,y,z') \land z \ne z'$. Jednoduchou
+        interpretáciou, ktorá spĺňa všetky axiómy je napríklad
+        $P \equiv true$ a evidentne takáto realizácia nie je teóriou grúp.
+        Riešenie je buď pridať piatu axiómu obmedzujúcu $P$ alebo naozaj
+        používať funkčný symbol namiesto predikátového. Každopádne, zvyšok
+        tohoto príkladu bude podľa Tomana.
+        %%% }}}
+    }
+
+    Prepísané axiómy vyzerajú nasledovne:
+    \begin{align*}
+    %%% {{{
+        A_1':\ &(\forall x) (\forall y) (\exists z) P(x,y,z) \\
+        A_2': 
+            \begin{split}
+                & \phantom{\land (} (\forall x) (\forall y) (\forall z)
+                (\forall u) (\forall v) (\forall w)
+                [ (P(x,y,u) \land  P(y,z,v) \land P(u, z, w))
+                    \implies P(x,v,w)] \\ 
+                &\land (\forall x) (\forall y)(\forall z)
+                (\forall u)(\forall v) (\forall w)
+                [(P(x,y,u) \land P(y,z,v) \land P(x,v,w)) \implies P(u,z,w)]
+            \end{split} \\
+        A_3':\ &(\forall x) P(x,e,x) \land (\forall x) P(e,x,x) \\
+        A_4':\ &(\forall x) P(x,i(x),e) \land (\forall x) P(i(x),x,e)
+    %%% }}}
+    \end{align*}
+
+    Späť k nášmu tvrdeniu. Chceme ukázať
+    \begin{align*}
+    %%% {{{
+        &(\forall x \in G : x \circ x \in G) \then
+            (\forall u,v \in G: u \circ v = v \circ u) \\
+        B':\ & (\forall x) P(x,x,e) \implies  
+            (\forall u) (\forall v) [P(u,v,w) \implies P(v,u,w)]
+    %%% }}}
+    \end{align*}
+
+    Teraz potrebujeme ukázať, že
+    $A_1' \land A_2' \land A_3' \land  A_4' \implies B'$.
+    Vytvoríme negáciu výroku a ukážeme, že nie je splniteľná:
+    \begin{align*}
+        F':\ & \neg (A_1' \land A_2' \land A_3' \land A_4') \lor B' \\
+      \neg F':\ & A_1' \land A_2' \land A_3' \land A_4' \land \neg B'
+    \end{align*}
+
+    Ideme vytvárať množinu klauzúl. Prevedením $A_1', A_2', A_3', A_4'$ do
+    štandardnej formy dostávame
+    \begin{align*}
+    %%% {{{
+        \mathscr{S}_1:\ & \Big\{ P(x,y,f(x,y)) \Big\} \\
+        \mathscr{S}_2:\ 
+            \begin{split}
+                 &\Big\{ \neg P(x,y,u) \lor \neg P(y,z,v)
+                    \lor \neg P(u,z,w) \lor P(x,v,w), \\
+                 &\ \ \neg P(x,y,u)\lor \neg P(y,z,v) \lor \neg P(x,v,q)
+                    \lor P(u,z,w) \Big\}
+            \end{split} \\
+        \mathscr{S}_3:\ & \Big\{ P(x,e,x), \ P(e,x,x) \Big\} \\
+        \mathscr{S}_4:\ & \Big\{ P(x,i(x),e), \ P(i(x),x,e) \Big\}
+    %%% }}}
+    \end{align*}
+
+    Ostáva nám vyjadriť $\neg B'$ ako množinu $\mathscr{B}$.
+    \begin{align*}
+    %%% {{{
+        \neg B':\ &
+            \neg [(\forall x) P(x,x,e) \implies
+                    (\forall u) (\forall v)(\forall w)(P(u,v,w) \implies
+                    P(v,u,w))] \iff \\
+        & \neg [ \neg (\forall x) (P(x,x,e)
+                \lor (\forall u) (\forall v) (\forall w)
+                    (\neg P(u,v,w) \lor P(v,u,w))] \iff \\
+        &(\forall x) (P(x,x,e) \land \neg (\forall u)(\forall v) (\forall w) 
+          [\neg P(u,v,w) \lor (P(v,u,w)] \iff \\
+        & (\forall x) P(x,x,e)
+            \land (\exists u) (\exists v) (\exists w)
+                    [P(u,v,w)\land \neg P(v,u,w)]
+    %%% }}}
+    \end{align*}
+
+    Množina $\mathscr{B}$ je potom
+    \begin{equation*}
+        \mathscr{B}:\  \Big\{P(x,x,e),\ P(a,b,c),\ \neg P(b,a,c) \Big\}
+    \end{equation*}
+
+    Máme dokázať, že množina klauzúl 
+    $\mathscr{S} = \mathscr{S}_1 \union \mathscr{S}_2 \union
+        \mathscr{S}_3 \union \mathscr{S}_4 \union \mathscr{B}$
+    nie je splniteľná. Teda pre každú oblasť a interpretáciu je
+    nesplniteľná.
+    Bolo by teda potrebné vyšetriť všetky oblasti.
+    Toto je ale príliš zložité -- overiť niečo na všetkých možných
+    oblastiach je nad naše sily.
+    Nám ale bude stačiť vyšetrovať na \emph{Herbrandovskom univerze},
+    ako si ukážeme v nasledujúcej stati.
+\end{priklad}
+
 \startFIXME
-\par Toto platí iba vtedy, ak formula nie je splniteľná. Majme formulu $A$, $A:
-(\exists x) P(x)$, a $S: P(a)$. Vezmime interpretáciu: $D = \{1, 2 \}$, pričom
-$a: 1$. Hodnoty pre $P$. $P(1)$ -- nepravda, $P(2)$ -- pravda.
-
-(opakovanie z minula) 
-
-\paragraph{Poznámka} Majme formulu $A: A_1 \land A_2 \land \ldots \land A_n$.
-Pre každé $A_1$ si vytvoríme štandardnú formulu $S_1, S_2, \ldots S_m$ Potom
-štandardná forma pre $A$ je $S_1 \union S_2 \union \ldots \union S_m$ (kde $S_i$
-je množina klauzúl). Formula $A$ nie je splniteľná práve vtedy, keď nie je
-splniteľná táto množina klauzúl.
-
-\paragraph{Príklad} Uvedieme príklad, ktorý sa pokúsime zapísať pomocou množiny
-klauzúl -- príklad z teórie grúp. 
-
-\par Uvažujme grupu a na nej operáciu $\circ$. Platia nasledovné axiomy:
-\begin{itemize}
-\item $A1: x, y \in G, x \circ y \in G$ -- vlastnosť uzavretosti.
-\item $A2: x, y, z \in G, (x \circ y) \circ z = x \circ (y \circ z)$ -- asociatívnosť
-operácie.
-\item $A3: x \in G, x \circ e = e \circ x = x$ -- existencia neutrálneho prvku.
-\item $A4: x \in G, \exists x^{-1} \in G, x \circ x^{-1} = e = x^{-1} \circ x$ --
-existencia inverzného prvku.
-\end{itemize}
-Chceme ukázať, že ak pre všetky $x \in G$ platí $x \circ x \in G$, potom grupa
-je komutatívna. Prvou časťou úlohy je formalizovanie zadania:
-
-$$ P(x,y,z), x \circ y = z, i(x) = x^{-1}$$
-Potom axioma $A1$ vyzerá nasledovne:
-$$(A'1) (\forall x) (\forall y) (\exists z) P(x,y,z)$$
-
-
-$$ 
-\begin{array}{l}
-A'2:(\forall x) (\forall y) (\forall z) (\forall u) (\forall v) (\forall w) (P(x,y,u) \land  P(y,z,v)
-\land P(u, z, w) \implies  
-P(x,v,w)) \\ \land (\forall x) (\forall y)(\forall z)
-(\forall u)(\forall v) (\forall w)
-P(x,y,u) \land P(y,z,v) \land P(x,v,w) \implies P(u,z,w)
-\end{array}
-$$
-
-
-$$A'3: (\forall x) P(x,e,x) \land (\forall x) P(e,x,x)$$
-$$A'4: (\forall x) P(x,i(x),e) \land (\forall x) P(i(x),x,e)$$
-
-Záver vety:
-$$B: x \circ x, x \in G, u \
-\circ v = v \circ u; u,v \in G$$
-$$B': (\forall x) P(x,x,e) \implies  (\forall u) (\forall v) (P(u,v,w) \implies
-P(v,u,w))$$.
-
-Teraz potrebujeme ukázať, že $A_1' \land A_2' \land A_3' \land  A_4' \implies
-B'$. Vytvoríme negáciu výroku a ukážeme, že nie je splniteľná:
-$$F: \neg (A_1' \land A_2' \land A_3' \land A_4') \lor B'$$
-$$\neg F:A_1' \land A_2' \land A_3' \land A_4' \land \neg B'$$.
-
-Ideme vytvárať množinu klauzúl. Máme axiomy $A_1'$, $A_2'$, $A_3'$, potom
-množiny sú:
-$$ S_1': \{ P(x,y,f(x,y)) \} $$
-$$ S_2': \{ \neg P(x,y,u) \lor \neg P(y,z,v) \lor \neg P(u,z,w) \lor P(x,v,w),
-\neg P(x,y,u), \lor \neg P(y,z,v) \lor \neg P(x,v,q) \lor P(u,z,w)\}$$
-$$S_3': \{ P(x,e,x), P(e,x,x) \}$$
-$$S_4': \{ P(x,i(x),e),P(i(x),x,e) \}$$
-
-
-TOTO NIEKTO SKONTROLUJTE:
-$$ \neg B': \neg ((\forall x) P(x,x,e) \implies (\forall u) (\forall v)(\forall
-w)(P(u,v,w) \implies P(v,u,w)))$$.
-$$ \neg ( \neg (\forall x) (P(x,x,e) \lor (\forall u) (\forall v) (\forall w)
-(\neg P(u,v,w)) \lor P(v,u,w))) \iff (\forall x) (P(x,x,e) \land \neg (\forall
-u)(\forall v) (\forall w) (\neg P(u,v,qň \lor (P(v,u,w) \iff (forall z) P(x,x,e)
-\land (\exists u) (\exists v) (\exists w) (P(u,v,w)\land \neg (P(v,u,w)$$
-
-$$T: \{P(x,x,e), P(a,b,c), P(b,a,c) \} $$
-
-Máme dokázať, že množina klauzúl nie je splniteľná, a teda pre každú oblasť a
-interpretáciu je nesplniteľná -- bolo by treba vyšetriť všetky oblasti. Nám ale
-bude stačiť vyšetrovať na \emph{Herbrandovskom univerze}.
 
 \section{Herbrandovské univerzum}
 \paragraph{Definícia} \emph{Herbrandovské univerzum množiny klauzúl} $H_0$ je
