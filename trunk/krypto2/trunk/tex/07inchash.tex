@@ -120,7 +120,7 @@ Potom naša požiadavka na vybrané slová je: $x_1 \oplus x_2 \oplus \dots \opl
 
 Ukážeme si ako vieme jednoducho hľadať takéto slová pre $k=4$.
 
-Vygenerujeme zoznamy $L_1, L_2, L_3, L_4$ z veľkosťou $2^{n/4}$. 
+Vygenerujeme zoznamy $L_1, L_2, L_3, L_4$ s veľkosťou $2^{n/4}$. 
 Následne vyrobíme všetky kombinácie $x_1 \oplus x_2$ a $x_3 \oplus x_4$, kde
 $x_1 \in L_1, x_2 \in L_2, x_3 \in L_3, x_4 \in L_4$.
 Každej z týchto kombinácií bude $2^{n/2}$. Následne prevedieme útok pre $k=2$.
@@ -143,10 +143,42 @@ Teraz si ukážeme útok pre $4$ zoznamy.
 \item Vypočítame $L_{12} \bowtie L_{34}$.
 \end{enumerate}
 
+\begin{figure}
+    \centering
+    \includegraphics[scale=1]{img/07/birthday.1.mps}
+    \caption{Zovšeobecnený narodeninový útok pre k = 4}
+\end{figure}
+
+
 Pozrime sa na časovú zložitosť. Očakávaná veľkosť $L_{12}$ bude $2^{n/3} \cdot 2^{n/3} / 2^{n/3} = 2^{n/3}$ (zoberieme všetky možné
 dvojice a požadujeme rovnosť posledných $n/3$ bitov). V tomto istom čase vieme aj vygenerovať tento zoznam. To isté
 dostaneme aj pre $L_{34}$. Očakávaná veľkosť výstupu z posledného kroku je $2^{n/3} \cdot 2^{n/3} / 2^{2n/3} = 1$.
-Časová zložitosť opať bude $O(2^{n/3})$.
+Časová zložitosť opať bude $O(2^{n/3})$. Takto sme dosiahli oveľa lepšiu časovú zložitosť ako pôvodne.
+
+Tento postup vieme zovšeobecniť pre ľubovoľné $k = 2^l$. 
+Najprv si pripravíme zoznamy veľkosti $2^{\frac{n}{l+1}}$. Následne ich postupne spájame v strome, pričom
+vo výške $v$ (výška úplne dole je $1$, smerom nahor rastie) spravíme join na posledných $w_v = \frac{vn}{l + 1}$
+bitoch. Výnimka je koreň tam robíme join na všetkých $n$ bitoch.
+
+{\bf Časová zložitosť:} Každý nekoreňový join vyrobí $2^{\frac{n}{l+1}}$ dvojíc a trvá mu to čas $O(2^{\frac{n}{l+1}})$.
+Koreňový join vyrobí jednu dvojicu a trvá mu to tiež čas $O(2^{\frac{n}{l+1}})$. Celkovo musíme urobiť $k-1$ joinov, takže
+celková časová zložitosť je $O(k 2^{\frac{n}{1+lg k}})$.
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=1]{img/07/birthday.2.mps}
+    \caption{Zovšeobecnený narodeninový útok pre k=8}
+\end{figure}
+
+Zatiaľ tento útok generuje iba $k$-tice pre ktoré platí: $x_1 \oplus x_2 \oplus \dots \oplus x_k = 0$. 
+Ak chceme dosiahnúť rovnosť $x_1 \oplus x_2 \oplus \dots \oplus x_k = c$, stačí zmeniť $L_k$ na $L_k^{'}$
+nasledovne: $L_k^{'} = \{x_k \oplus c | x_k \in L_k\}$. Potom keď nájdeme $x_1 \oplus x_2 \oplus \dots \oplus x_k^{'} = 0$,
+tak $x_k^{'}$ zameníme za príslušné $x_k$ a máme splnenú podmienku, ktorú sme chceli.
+
+Zároveň toto ukazuje, že pokiaľ chceme hľadať kolíziu pre nejaké $k^{'} > k$, tak to vieme
+určite tak rýchlo ako pre $k$. 
+
+Takto by sme vedeli útočiť napríklad už na XOR-hash. Zoznamy ale budú 
 
 \todo{zovseobecneny birthday attack}
 
