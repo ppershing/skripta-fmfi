@@ -1,0 +1,57 @@
+\section{Bezpečnosť trojitého šifrovania}
+
+Uvažujme trojetí šifrovanie pomocou dvoch kľúčov v EDE móde.
+Čiže $TE_{k_1,k_2} (x) = E_{k_1}(D_{k_2}(E_{k_1}(x)))$.
+Predpokladajme, že oba kľúče $k_1, k_2$ majú rovnakú veľkosť a to
+menovite $n$.
+V krypto I sme hovorili o tom, že takéto šifrovanie je odolné voči
+útoku so znalosťou otvoreného textu (KPA).
+Ukazuje sa však, že voľba iba 2 kľúčov má nepríjemne vlastnosti pri
+CPA -- útokom s možnosťou voľby šifrového textu.
+
+Jeden taký možný útok si ukážeme:
+\begin{itemize}
+    \item Predpripravme si hashovaciu tabuľku
+            $\langle m \mapsto \{k^{(1)}, k^{(2)}, \dots \} \rangle$,
+            kde správe $m$ priradíme také hodnoty kľúčov $k^{(i)}$,
+            aby platilo $E_{k^{(i)}}(m)=0$.
+        Tabuľku môžeme predpripraviť napríklad tak, že pre každý možný
+        kľúč $k$ vypočítame $m=D_k(0)$. Predpríprava bude zaberať čas
+        $O(2^n)$.
+    \item Pointou celého útoku bude, že sa začneme venovať takým
+        dvojiciam otvoreného a šifrového textu, pre ktoré po prvom kroku
+        trojitého šifrovania dostaneme číslo 0.
+        \begin{figure}[h]
+            \centering
+            \includegraphics{img/08/triple.1.mps}
+            \caption{Trojité šifrovanie}
+            \label{fig:triple}
+        \end{figure}
+        Preberajme teraz všetkých kandidátov $k_1$ na prvý kľúč.
+        Vypočítajme plaintex ako $p=D_{k_1}(0)$.
+        Následne vypočítame šifrový text ako $c=TE_{k_1,k_2}(x)$.
+        Pretože vieme $k_1$, vráťme sa o 1 krok vo výpočte šifrového
+        textu, dostávame $z=D_{k_1}(y)$.
+        Teraz nám ale nič nebráni pozrieť sa do našej hashovacej
+        tabuľky -- chceme nájsť kľúč $k_2$, taký, že
+        $D_{k_2}(0) = z$, čiže pozrieme zoznam kľúčov v hashovacej
+        tabuľke pri hodnote $z$.
+        Zložitosť tejto časti útoku je teda tiež $O(2^n)$ (za
+        predpokladu, že lookup hashu je v $O(1)$).
+        Výstupom je teda množina dvojíc potenciálnych kľúčov
+        $(k_1,k_2)$, ktorými sa môže šifrovať.
+        Jej očakávaná veľkosť bude $O(2^n)$.
+        \begin{figure}[h]
+            \centering
+            \includegraphics{img/08/triple.2.mps}
+            \caption{Útok na trojité šifrovanie}
+            \label{fig:triple-attack}
+        \end{figure}
+\end{itemize}
+Máme teda útok, ktorého časová zložitosť je $O(2^n)$, čo je menej ako
+očakávaných $O(2^{2n})$. V praxi sa samozrejme daný útok nedá
+realizovať, pokiaľ nám naša obeť nie je ochotná zašifrovať zhruba
+$O(2^n)$ otvorených textov. Morálnym poučením teda bude, že trojité
+kódovanie môže byť síce jednoduchá a pomerne úspešná forma zosilnenia
+šifrovania pre praktické účely, pre teoretické účely je to ale
+nevhodná konštrukcia.
