@@ -58,6 +58,6 @@ booklet: main.ps
 img:
 	(cd img; make all)
 
-.PHONY: distribuable
-distribuable: dist-clean img main.pdf
+.PHONY: prepare_upload
+prepare_upload: dist-clean img main.pdf
 	cp main.pdf `date '+krypto_%y-%m-%d.pdf'`
