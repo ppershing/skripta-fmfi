@@ -65,7 +65,7 @@ beginfig(1);
     myfixsize(h[0][2]);
     myfixsize(h[0][3]);
     myfixsize(h[0][4]);
-    myfixsize(h[0][-1]);
+    myfixsize(h[0][k-1]);
     myfixsize(h[0][0]);
     myfixsize(h[1][1]);
     myfixsize(h[1][2]);
