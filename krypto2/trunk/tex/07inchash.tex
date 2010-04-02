@@ -176,9 +176,20 @@ nasledovne: $L_k^{'} = \{x_k \oplus c | x_k \in L_k\}$. Potom keď nájdeme $x_1
 tak $x_k^{'}$ zameníme za príslušné $x_k$ a máme splnenú podmienku, ktorú sme chceli.
 
 Zároveň toto ukazuje, že pokiaľ chceme hľadať kolíziu pre nejaké $k^{'} > k$, tak to vieme
-určite tak rýchlo ako pre $k$. 
+určite tak rýchlo ako pre $k$. Vyberme si nejaké $x_{k+1}, x_{k+2}, \dots, x_{k^{'}}$ a položme
+$c = x_{k+1} \oplus x_{k+2} \oplus \dots \oplus x_{k^{'}}$. A potom nájdeme kolíziu pre prvých $k$ zoznamov. 
 
-Takto by sme vedeli útočiť napríklad už na XOR-hash. Zoznamy ale budú 
+Takto by sme vedeli útočiť napríklad už na XOR-hash. Vygenerujeme zoznamy a nájdeme kolíziu, ktorá nám po
+vyxorovaní dá požadovanú hašovaciu hodnotu. Pre XOR to ale žiadny pokrok nie je, keďže vieme robiť
+útok s ďaleko lepšou zložitosťou.
 
-\todo{zovseobecneny birthday attack}
+Útok sa dá uplatniť aj na Ad-Hash.
+Pri grupe $(Z_{2^n}, +)$ bude join vyzerať nasledovne: $L_1 \bowtie_l L_2 = \{(x_1, x_2) | x_1 \in L_1 \land x_2 \in L_2 \land low_l(x_1 + x_2) = 0\}$.
+
+Takto vieme zaútočiť na NASD schému. Napríklad pokiaľ by schéma mal 128 blokov, tak by čas útoku bol: $128 \cdot 2^{256/8} = 2^{39}$.
+
+Pre grupu $(Z_m, +)$ použijeme nasledovný join: $L_1 \bowtie_{[a,b]} L_2 = \{(x_1, x_2) | x_1 \in L_1 \land x_2 \in L_2 \land x_1 + x_2 \in <a,b>\}$.
+
+
+Pokiaľ chceme útočiť na PCIHF schému, tak najprv si zvolíme napevno hodnoty $x_2, x_4, x_6, \dots$ a následne dopočítame vhodné hodnoty medzi nimi.
 
