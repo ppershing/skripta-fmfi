@@ -4,8 +4,9 @@ bezznalostné dôkazy. Základná myšlienka sa dá ilustrovať na príklade
 "Alibaba a jaskyňa tajomstiev".
 
 Alibaba na svojich potulkách narazil (alebo skôr naďabil) na jaskyňu,
-ktorá sa na vyslovenie čarovnej formuly otvorí. Po dlhšom skúmaní
-prišiel na to, že jazkyňa vyzerá ako na obr. \ref{fig:alibaba}. Pretože v
+ktorá má čarovnú stenu. Táto stena sa na vyslovenie čarovnej formuly
+otvorí a prepustí človeka na druhú stranu. Po dlhšom skúmaní
+prišiel na to, že jaskyňa vyzerá ako na obr. \ref{fig:alibaba}. Pretože v
 jaskyni neboli žiadne poklady (alebo boli, ale niekto ich stihol
 vybrať skorej), Alibaba sa rozhodol zbohatnúť na TV show.
 Bude ukazovať, že vie tajnú formulku a nafilmujú ho pritom. Nechce ale
@@ -30,7 +31,10 @@ chodí, pretože inak by si musel vedieť niekoľkokrát po sebe správne
 tipnúť, čo sa mu rozhodnú zakričať, keď dôjdu na rázcestie.
 Dôkaz má ale aj ďalšiu vlastnosť - Aladin síce presvedčil štáb, ale
 môže presvedčiť aj divákov? Nie. Čo ak bolo napríklad video
-"nastrihané" iba na dobré pokusy?
+"nastrihané" iba na dobré pokusy? Takémuto ``strihanie'' bude
+vo formálnej definícii zodpovedať simulátor -- mohli by sme povedať,
+že bude zastupovať šikovného strihača filmu, ktorý nepodarené pokusy
+vystrihne.
 
 Bezznalostné dokazovacie systémy sú preto také systémy, pri ktorých
 dokazovateľ presvedčí overovateľa o svojej pravde bez toho aby mu
@@ -38,22 +42,29 @@ prezradil čokoľvek iné. Taktiež, ľubovoľný externý pozorovateľ
 komunikácie nemá byť schopný odlíšiť reálny dôkaz od akéhosi
 vykonštruovaného. 
 
-\begin{definicia}
+\begin{definicia}[Zero knowledge]
 
 Označme:
 \begin{itemize}
 \itemsep -1.2mm
-\item $V^*$ - overovateľ (nečestný)
-\item $S^*$ - simulátor, pravdepodobnostný stroj pracujúci v polynomiálnom čase
-\item $T(V^*, X)$ - množina komuníkácii na vstupe $X$
-\item $F(V^*, X)$ - množina simulovaných komunikácií na vstupe $X$
-\item $p_t$ - pravdepodobnosť, že komunikácia bude $t$
-\item $p_f$ - pravdepodobnosť, že simulátor vygeneruje komunikáciu $f$
+    \item $V^*$ -- overovateľ (nečestný)
+    \item $S^*$ -- simulátor, pravdepodobnostný stroj pracujúci
+        v polynomiálnom čase
+    \item $T(V^*, x)$ -- množina komunikácií na vstupe $x$
+    \item $F(V^*, x)$ -- množina simulovaných komunikácií na vstupe $x$
+    \item $p_t(x,y)$ -- pravdepodobnosť, že komunikácia na vstupe $x$
+            bude $y$
+    \item $p_f(x,y)$ -- pravdepodobnosť, že simulátor vygeneruje na
+            vstupe $x$ komunikáciu $y$
 \end{itemize}
 
 Potom interaktívny dokazovací systém pre jazyk L je perfektné bezznalostný,
 ak 
-$$\forall V^* \exists S^* \forall X \in L: T(V^*, X) = F(V^*, X) \land \forall t \in T\colon p_t = p_f$$
+\begin{equation*}
+    \forall V^*\ \exists S^*\ \forall x \in L \mbox{ platí }
+        T(V^*, x) = F(V^*, x) \mbox{ a tiež } 
+        \forall t \in T(V^*,x) \colon p_t(x,t) = p_f(x,t)
+\end{equation*}
 
 Teda ak simulátor vie generovať takú komunikáciu, ktorá má presne rovnaké rozloženie
 pravdepodobnosti ako reálna komunikácia.
@@ -67,7 +78,7 @@ v polynomiálnom čase hovoríme, že systém je výpočtovo bezznalostný.
 
 \todo{zvysok, blackbox simulator}
 \todo{ZK pre izomorfizmus}
-\todo{preco neizomorfixmus (ako je prezentovany) nie je ZK}
+
 \begin{poznamka}
     Na tomto mieste by sme upozornili čitateľa na fakt, že nami
     prezentovaný algoritmus v predchádzajúcej sekcii na neizomorfizmus grafov
@@ -76,7 +87,7 @@ v polynomiálnom čase hovoríme, že systém je výpočtovo bezznalostný.
     Prečo? Uvažujme falošného verifikátora $V'$,
     ktorý má graf $G$ a vie, že je izomorfný buď s $G_0$ alebo s
     $G_1$. V tomto prípade môže využiť provera $P$ ako orákulum na
-    problém izomorfizmu grafov - jednoducho mu pošle $G$, čo je
+    problém izomorfizmu grafov -- jednoducho mu pošle $G$, čo je
     validná správa a vráti sa mu index.
 
     No dobre. A ako súvisí to, že $V'$ vie niečo zistiť s definíciou
