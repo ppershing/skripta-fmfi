@@ -1,12 +1,9 @@
-%input latexmp;
-%input latexmphelper;% The above code and a call to setupLaTeXMP
-
 prologues:=3;
 verbatimtex
-%&latex
-\documentclass{minimal}
-\usepackage[utf8]{inputenc}
-\begin{document}
+    %&latex
+    \documentclass{minimal}
+    \usepackage[utf8]{inputenc}
+    \begin{document}
 etex
 
 beginfig(1);
@@ -39,28 +36,27 @@ beginfig(1);
                 \mbox{štvorce} \end{array} $etex, (radius/2.5,
                 -radius/2.5));
    
-   label.lft(btex $\displaystyle \left( \frac {x}{q} \right) =
-   \phantom{-}1$ etex,
-            (-radius*1.2, radius/2));
-   label.lft(btex $\displaystyle \left( \frac {x}{q} \right) = -1$ etex,
-            (-radius*1.2, -radius/2));
+    label.lft(btex $\displaystyle \left( \frac {x}{q} \right) =
+                    \phantom{-}1$ etex, (-radius*1.2, radius/2));
+    label.lft(btex $\displaystyle \left( \frac {x}{q} \right) = -1$ etex,
+              (-radius*1.2, -radius/2));
 
 
-   label.bot(btex $\displaystyle \left( \frac {x}{p} \right) = 1$ etex,
-            (-radius/2, -radius*1.2));
-   label.bot(btex $\displaystyle \left( \frac {x}{p} \right) = -1$ etex,
-            (radius/2, -radius*1.2));
+    label.bot(btex $\displaystyle \left( \frac {x}{p} \right) = 1$ etex,
+              (-radius/2, -radius*1.2));
+    label.bot(btex $\displaystyle \left( \frac {x}{p} \right) = -1$ etex,
+              (radius/2, -radius*1.2));
     
     draw (-2*radius,0) -- (-radius,0) dashed evenly;
     draw (0, -radius) -- (0, -2*radius) dashed evenly;
 
     path specialne;
-    specialne = fullcircle xscaled (4cm) yscaled (1cm) shifted
-        (2.5*radius, radius);
+    specialne = fullcircle xscaled (4cm) yscaled (1cm)
+                    shifted (2.5*radius, radius);
     fill specialne withcolor lightgray;
     draw specialne withpen pencircle;
     label(btex $(x,n)\ne 1 \Rightarrow \left( \frac{x}{n}
-    \right)=0$ etex, (2.5*radius, radius));
+                \right)=0$ etex, (2.5*radius, radius));
 endfig;
 
 end
