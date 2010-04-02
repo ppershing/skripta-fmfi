@@ -7,18 +7,19 @@ Cieľom provera je akýmsi spôsobom presvedčiť overovateľa o znalosti
 nejakého faktu.
 Formálne,
 interaktívnym dokazovacím systémom (IDS) nazveme dvojicu
-$\langle P,V \rangle$, kde $P$ je pravdepodobnostný TS s neobmedzenou výpočtovou silou,
+$\langle P,V \rangle$, kde $P$ je pravdepodobnostný TS
+s neobmedzenou výpočtovou silou,
 $V$ je pravdepodobnostný TS pracujúci v polynomiálnom čase.
 Oba stroje zdieľajú spoločný vstup $x$, môžu počas svojho výpočtu
-komunikovať a o akceprovaní resp. zamietaní vstupu $x$ rozhoduje iba
+komunikovať a o akceptovaní resp. zamietaní vstupu $x$ rozhoduje iba
 $V$.
-IDS pre jazyk $L$ je $\langle P,V \rangle$ pre ktorý platí
+IDS pre jazyk $L$ je dvojica $\langle P,V \rangle$ pre ktorú platí
 \begin{itemize}
-\item {\bf úplnosť} - $\forall x \in L: 
-    Pr[V\textit{ akceptuje } x \textit{ v systéme } 
+\item {\bf úplnosť} -- $\forall x \in L:
+    Pr[V\textit{ akceptuje } x \textit{ v systéme }
         \langle P,V \rangle ] \ge 2/3$
-\item {\bf korektnosť} - $\forall P^*: \forall x \not \in L: 
-    Pr[V\textit{ akceptuje } x \textit{ v systéme } 
+\item {\bf korektnosť} -- $\forall P^*: \forall x \not \in L:
+    Pr[V\textit{ akceptuje } x \textit{ v systéme }
         \langle P^*,V \rangle ] \le 1/3$
 \end{itemize}
 Prvá podmienka hovorí o tom, že ak $x\in L$, dokazovateľ s veľkou
@@ -26,22 +27,22 @@ pravdepodobnosťou presvedčí overovateľa o správnosti.
 Naopak, korektnosť tvrdí, že ľubovoľný (podvodný) dokazovateľ
 presvedčí overovateľa na zlom vstupe len s nízkou pravdepodobnosťou.
 
-\begin{komentar}
+\begin{poznamka}
     Pre $L \in P$ je jednoduché navrhnúť IDS. Overovateľ bude ignorovať
     komunikáciu a môže si vypočítať príslušnosť slova sám.
     Pre $L \in NP$ je jednoduché navrhnúť IDS posielajúci práve jednu
-    správu - konkrétny dôkaz - výpočet NTS pre problém L.
-\end{komentar}
+    správu -- konkrétny dôkaz, či výpočet NTS pre problém L.
+\end{poznamka}
 
 \begin{priklad}
-    Uvažujme problém $GNI \not \in NP$ - grafový neizomorfizmus.
+    Uvažujme problém $GNI \not \in NP$ -- problém grafového neizomorfizmu.
     Vstup pozostáva zo zápisu dvoch grafov $G_0, G_1$, akceptovať chceme, keď
     dané dva grafy nie sú izomorfné. Môžeme použiť nasledovný protokol
-    pri dôkaze: Uvažujme $k$ kôl, v každom z nich prebehne nasledujúca
+    pri dôkaze: Uvažujme $k$ kôl, v každom z nich prebehne takáto
     komunikácia:
     %% FIXME: preco 'P \send V' je vizualne dlhsie ako 'V \send P'?
     \begin{itemize}
-        \item $V$ si zvolí $i \inr \{0,1\}$, permutáciu
+        \item $V$ si zvolí $i \inr \{0,1\}$ a permutáciu
          $\pi \inr perm(|G_0|)$
         \item $V \send P: H = \pi(G_i)$.
         \item $P \send V: i'$ reprezentujúce graf $G$, s ktorým je $H$
@@ -54,11 +55,22 @@ presvedčí overovateľa na zlom vstupe len s nízkou pravdepodobnosťou.
     uhádnutie indexu $i$, ktorý si vymyslí $V$. 
     Pravdepodobnosť akceptovania po $k$ kolách je teda $2^{-k}$.
     Naopak, ak $G_0 \not \isomorph G_1$, tak čestný dokazovateľ vie
-    vždy odlíšiť $G_0$ od $G_1$ a teda akceptujeme s pravdepodobnosťou 1.
+    vždy odlíšiť permutáciu $G_0$ a $G_1$,
+    čize akceptujeme s pravdepodobnosťou 1.
 \end{priklad}
 
-\todo{dosiahnute vysledky}:
-IP = QIP (Quantum Interactive proof) = PSPACE
-MIP = NEXPTIME
-\todo{pridat referencie na clanky}
+Pre interaktívne dokazovacie systémy sa dá dokázať mnoho zaujímavých
+vlastností. Napríklad, že $IP=PSPACE$,
+čiže inak povedané, čokoľvek čo
+vieme robiť v polynomiálnom priestore vieme robiť interaktívnym
+dokazovacím systémom. O tom, ako na to je písané napr. v
+\cite{ip-pspace}. Aby sme neostali staromódni, nedávnym dôkazom
+(August 2009) bolo $QIP=PSPACE$ \cite{qip-pspace}, čiže to,
+že kvantové počítače nepomôžu sile interaktívnych dôkazov.
+Dôkaz je veľmi technický a využíva viacero rôznych redukcií a známych
+rovností tried zložitosti. Odporúčame si ho prečítať hlavne ak má
+čitateľ pocit, že kvantovým výpočtom aspoň trochu chápe.
 
+Ďalšou možnosťou, kam môžeme rozvíjať interaktívne dokazovacie systémy
+sú takzvané MIP -- multiprover IP. Pri týchto akoby overovaťel mohol
+krížovo vyslúchať dokazovateľov, ktorí so sebou nemôžu komunikovať.

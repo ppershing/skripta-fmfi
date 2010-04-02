@@ -5,7 +5,7 @@ prvky je takzvaný oblivious transfer. Ide o akýsi prenos údajov,
 pričom sender sa nedozvie, či boli údaje prenesené, prípadne ktoré
 údaje boli prenesené.
 
-\begin{definicia}{(1-2 OT)}
+\begin{definicia}[1-2 OT]
     1-2 oblivious transferom nazveme komunikáciu podľa nasledujúcej
     schémy:
     \begin{itemize}
@@ -18,7 +18,7 @@ pričom sender sa nedozvie, či boli údaje prenesené, prípadne ktoré
     \end{itemize}
 \end{definicia}
 
-\begin{definicia}{(50\% OT)}
+\begin{definicia}[50\% OT]
     50\% oblivious transferom nazveme komunikáciu podľa nasledujúcej
     schémy:
     \begin{itemize}
@@ -29,7 +29,7 @@ pričom sender sa nedozvie, či boli údaje prenesené, prípadne ktoré
     \end{itemize}
 \end{definicia}
 
-\begin{priklad}{Realizácia 50\% OT}
+\begin{priklad}[Realizácia 50\% OT]
     Nech $A$ chce poslať správu účastníkovi $B$ s 50\%-nou
     pravdepodobnosťou úspechu. Na začiatku si $A$ zvolí inštanciu RSA
     s $n=pq$, kde $p,q$ sú veľké prvočísla. Bude nasledovať
@@ -39,8 +39,8 @@ pričom sender sa nedozvie, či boli údaje prenesené, prípadne ktoré
     \item $A \send B: n,e,E(m)$ 
     \item $B$ si zvolí $x \inr Z_n$
     \item $B \send A: x^2$
-    \item $A$ s pomocou faktorizácie vyberie nejakú odmocninu $z \in
-    \{x,-x,y,-y\}$.
+    \item $A$ s pomocou faktorizácie vyberie nejakú odmocninu
+        $z \inr \{x,-x,y,-y\}$.
     \item $A \send B: z$.
     $B$ vie faktorizovať $n$ (a dešifrovať správu) s
     pravdepodobnosťou 50\% (ak $z \not = \pm x$, tak jednoducho
@@ -48,7 +48,7 @@ pričom sender sa nedozvie, či boli údaje prenesené, prípadne ktoré
  \end{itemize} 
 \end{priklad}
 
-\begin{priklad}{Realizácia 1-2 OT}
+\begin{priklad}[Realizácia 1-2 OT]
  1-2 OT budeme realizovať za pomoci diskrétneho logaritmu.
  Účastník $A$ si zvolí grupu $G$, $n=|G|$ a generátor $g\in G$.
  \begin{itemize}
@@ -61,13 +61,14 @@ pričom sender sa nedozvie, či boli údaje prenesené, prípadne ktoré
     $g$ je generátor) hodnota $x': g^{x'} = y_{1-b}$. Teda, $A$ nevie
     odlíšiť jednotlivé hodnoty.
     \item $B \send A: y_0$.
-    \item $A$ zvolí $k_0,k_1 \inr G$ a vytvorí šifrované správy 
+    \item $A$ si zvolí $k_0,k_1 \inr G$ a vytvorí šifrované správy 
     $E_0 = \langle g^{k_0}, y_0^{k_0} \xor m_0 \rangle$,
     $E_1 = \langle g^{k_1}, y_1^{k_1} \xor m_1 \rangle$.
     \item $A \send B: E_0, E_1$.
     \item $B$ dešifruje $m_b$ ako $(g^{k_b})^x \xor (y_b ^ {k_b} \xor
     m_b)$.
     Pokiaľ $B$ nevie riešiť DH problém, druhú správu nedostane.
+    \todo{dokaz}
  \end{itemize}
 \end{priklad}
 
@@ -77,7 +78,10 @@ pričom sender sa nedozvie, či boli údaje prenesené, prípadne ktoré
     50\% OT sa dá simulovať pomocou 1-2 OT.
 \end{lema}
 \begin{dokaz}
-    Postup je jednoduchý. Nech $A$ chce poslať správu $m \ne 0$.
+    Postup je jednoduchý. Nech $A$ chce poslať správu 
+    $m \ne 0$.\footnote{Predpokladáme, že vieme posielať správy, ktoré
+        sú dlhšie ako 1 bit.\fixme{ako spravit konveziu z 1 bitu?}
+    }
     Nech $c \inr \{0,1\}$ a nech $m_c = m, m_{1-c} = 0$. $A$ pošle
     správy $m_0, m_1$ pomocou 1-2 OT. $B$ prijme správu $m$ s
     pravdepodobnosťou 50\%, inak prijme 0 a vie, že sa prenos

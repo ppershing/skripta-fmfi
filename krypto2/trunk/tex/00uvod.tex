@@ -1,32 +1,44 @@
 \section{0. prednáška - Ako (ne)šifrovať disky}
 
-V decembri 2009 bola nájdená bezpečnostná chyba v niektorých šifrovaných USB diskoch
+V decembri 2009 bola nájdená bezpečnostná chyba
+v niektorých šifrovaných USB diskoch
 (Kingston DataTraveler BlackBox, SanDisk Cruzer Enterprise FIPS Edition a
-Verbatim Corporate Secure FIPS Edition). Všetky výrobcovia uvádzajú, že disky
-spĺňajú bezpečnostný štandart FIPS 140-2 a používajú úplne rovnaký systém zabezpečenia,
+Verbatim Corporate Secure FIPS Edition).
+Všetci traja výrobcovia uvádzajú, že disky spĺňajú bezpečnostný 
+štandard FIPS 140-2.
+
+Zistilo sa, že disky vnútorne používajú úplne rovnaký systém zabezpečenia,
 ktorý vyzerá nasledovne:
 \begin{itemize}
-\item Používateľ zadá disku heslo.
-\item Heslo za pretransformuje cez MD5 hash a prvá polovica výslednej hashe sa použije ako kľúč K.
-\item Následne sa pomocou AES-256 a kľúča K odšifruje daných 32 bajtov z disku (označme ich $X$). Potom zistí, či
-$D_K(X)=C$, kde $C$ je pevne známa konštanta (u všetkých výrobcov dokonca rovnaká). Ak áno, tak sa disk odomkne a dáta sa sprístupnia.
-Ak nie, tak sa požiadavka zamietne. Dešifrovanie ostatných dát nezávisí od hesla.
+    \item Používateľ zadá heslo k disku.
+    \item Heslo za pretransformuje cez MD5 hash a prvá polovica
+        výslednej hash hodnoty sa použije ako kľúč $K$.
+    \item Následne sa pomocou AES-256 a kľúča $K$ odšifruje
+        prvých 32 bajtov z disku (označme ich $X$).
+        Obslužný program potom zistí, či $D_K(X)=C$,
+        kde $C$ je pevne známa konštanta
+        (dokonca u všetkých výrobcov dokonca rovnaká).
+        Ak overenie sedí, tak sa disk odomkne a dáta sa sprístupnia.
+        Ak nie, tak sa požiadavka zamietne.
+        Za pozornosť stojí najmä fakt, že dešifrovanie ostatných dát
+        nezávisí od hesla.
 \end{itemize}
+
+Útok na tento systém je vcelku jednoduchý.
+Stačí v pamäti prepísať výsledok dešifrovacej transformácie tesne
+predým, ako sa overí či je zhodná so známou konštantou.
+
+Pre čitateľov, ktorý by sa chceli viac ponoriť do tejto tematiky
+ponúkame odkaz na krátku správu o tomto bezpečnostnom probléme
+\cite{drive_enc} a výrazne dlhší report, ktorý zohľadňuje rôzne útoky
+na usb flash disky
+\cite{usb_flash_enc}.
+
 
 \begin{figure}[htp]
     \centering
     \includegraphics[scale=1]{img/00/extern-drive-encryption.1.mps}
     \label{fig:extern_drive_encryption}
-    \caption{Šifrovanie externého disku}
+    \caption{``Šifrovanie'' externého disku}
 \end{figure}
-
-Útok na tento systém je vcelku jednoduchý. Stačí v pamäti prepísať výsledok dešifrovacej transformácie. 
-
-%Viac na:
-%\url{http://www.h-online.com/security/news/item/NIST-certified-USB-Flash-drives-with-hardware-encryption-cracked-895308.html}
-
-%A ešte na (pekny dokument nie priamo suvisiaci):
-%Investigating 'secure'USB stickspsu.edu [PDF]
-%PJ Bakker… - Citeseer
-%\url{http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.84.2539&rep=rep1&type=pdf}
 
