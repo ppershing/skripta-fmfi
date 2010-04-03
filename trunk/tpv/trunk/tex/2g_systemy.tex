@@ -66,12 +66,12 @@ $u$ 1-$a$-prekladač $M$ vygeneruje výstup $v$} keď $v\in M(u)$.
 \begin{priklad}
 \label{gs_prikl_aprekladac} Zostrojíme $g$-systém  $G=(N,T,M,S)$ pre jazyk
 $L=\{ww\mm w\in\{a,b\}^*\}$. Neterminály budú $N=\{S,A\}$,
-terminály $T=\{a,b\}$, $a$-prekladač $M$ bude (obr.\ref{gs_obr_aprekl}).
+terminály $T=\{a,b\}$, $a$-prekladač $M$ bude (obr.\ref{fig:ap-to-gsystemrekl}).
 \begin{figure}[!ht]
   \centering
   \includegraphics{img/gsystems/a_prekl}
   \caption{1-$a$-prekladač $g$-systému pre jazyk $L$ z príkladu
-  \ref{gs_prikl_aprekladac}} \label{gs_obr_aprekl}
+  \ref{gs_prikl_aprekladac}} \label{fig:ap-to-gsystemrekl}
 \end{figure}
 \end{priklad}
 
@@ -175,25 +175,30 @@ sekvenčný.
 \begin{description}
 \item{$EOL$:} Nech množina pravidiel $EOL$ je $P=\{ a_1\ra u_1,a_2\ra u_2,\dots,a_n\ra u_n\}$
 potom príslušný $g$-systém bude vyzerať ako na obrázku
-\ref{gs_obr_EOL_g}a.
+\ref{fig:eol-to-gsystem}a.
 
 \begin{figure}[!ht]
-\centering
-\includegraphics{img/gsystems/eol_g}
-\caption{Modelovanie $EOL$-systémov a $CF$-gramatík pomocou $g$-systémov}
-\label{gs_obr_EOL_g}
+    \centering
+    \subfigure[EOL]{
+        \includegraphics{img/gsystems/eol-to-gsystem.1.mps}
+    }
+    \subfigure[CF]{
+        \includegraphics{img/gsystems/cf-to-gsystem.1.mps}
+    }
+    \caption{Modelovanie $EOL$-systémov a $CF$-gramatík pomocou $g$-systémov}
+    \label{fig:eol-to-gsystem}
 \end{figure}
 
 \item{$CF$:} Nech množina pravidiel $CF$ je $P=\{a_1\ra u_1, a_2\ra u_2,\dots,a_n\ra
 u_n\}$ potom príslušný $g$-systém bude vyzerať ako na obrázku
-\ref{gs_obr_EOL_g}b.
+\ref{fig:eol-to-gsystem}b.
 \end{description}
 \end{priklad}
 
 \begin{poznamka}
 Gramatika $G$ je bezkontextová práve vtedy, keď existuje sekvenčný
 $g$-systém $G'$ s dvoma stavmi taký, že $L(G)=L(G')$. Implikácia
-``$\Ra$'' vyplýva z konštrukcie na\linebreak obrázku \ref{gs_obr_EOL_g}b,
+``$\Ra$'' vyplýva z konštrukcie na\linebreak obrázku \ref{fig:eol-to-gsystem}b,
 dôkaz opačnej implikácie nie je triviálny a presahuje rámec tohto
 textu.
 \end{poznamka}
@@ -217,12 +222,13 @@ $\mathcal{L}_{AP}=\mathcal{L}_{\tilde{\mathcal{G}}}$
 $G'\in\tilde{\mathcal{G}}$ nasledovne. Každému pravidlu v $G$
 tvaru $(A_1,\dots A_k)\ra (w_1,\dots w_k))$ zodpovedá v
 1-$a$-prekladači $g$-systému $G'$ práve jedna cesta znázornená na
-obrázku \ref{gs_obr_ap}.
+obrázku \ref{fig:ap-to-gsystem}.
 
 \begin{figure}[!ht]
-\centering
-\includegraphics{img/gsystems/ap}
-\caption{Konštrukcia $g$-systému k $AP$ gramatike} \label{gs_obr_ap}
+    \centering
+    \includegraphics{img/gsystems/ap-to-gsystem.1.mps}
+    \caption{Konštrukcia $g$-systému k $AP$ gramatike}
+    \label{fig:ap-to-gsystem}
 \end{figure}
 
 \item{$\supseteq$:} Pre každú cestu v 1-$a$-prekladači z $q_0$ do $q_F$
