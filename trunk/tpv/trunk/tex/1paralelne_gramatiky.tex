@@ -213,34 +213,42 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
         $OL$-systém pre $L^{+}$:
 
         \begin{enumerate}
-        \item uvedomme si, že axiomom $G$ môže byť jedine $aa$, ak by tomu
+        \item Uvedomme si, že axiomom $G$ môže byť jedine $aa$, ak by tomu
             tak nebolo, axiomom by muselo byť $b^{i}$ pre nejaké $i\geq4$.
             To by sme ale nutne museli mať pravidlo $b\pravidlo a$ alebo 
             $b\pravidlo a^2$, lenže potom by sme vyrobili aj slovo tvaru 
-            $b^i a^j$ kde  $i,j\neq0$ a  také slovo do jazyka $L^{+}$
-            nepatrí.
+            $b^k a^l$ kde  $k,l\neq0$ a  také slovo do jazyka $L^{+}$
+            nepatrí. \fixme{Cela tato cast nejako nesedi, preco
+            axiomom nemoze byt $a^2b^4$?}
+
         \item $\eps \not \in L^{+} \then G$ je $POL$-systém
+
+        \item Pretože $aa$ je axiom, a $a \pravidlo \eps \not \in G$,
+            musí existovať pravidlo typu
+            $a\pravidlo b^i, i\ge 0$ (inak by sme nemohli vytvoriť
+            slovo čisto zložené z písmen $b$)
 
         \item $a^4 \in L^{+} \then a\pravidlo a^2\in P$ (nesmú tu byť
             pravidlá tvaru $a\pravidlo a,a\pravidlo a^3$,
             pretože by sme mohli vyrobiť
-            aj slovo $ab^{i}\not\in L^{+}$)
+            aj slovo $ab^{i}\not\in L^{+}$ resp.
+            $a^3b^i \not \in L^{+}$)
 
         \item $a^2 \odvodeniena{*} b^4 \then a\pravidlo b^{i}\in P$ 
             pre $1\le i\le 3$. Ak teraz použijeme 
             $a\pravidlo a^2$ a $a\pravidlo b^{i}$ dostaneme 
-            $a^2 \odvodenie a^2 b^i \not\in L^{+}$
+            $a^2 \odvodenie a^2 b^i \not\in L^{+}$, čo je spor.
         \end{enumerate}
 
     \item[$h_{\eps}:$] Uvažujme jazyk
         $L=\{\eps,a,a^2\}\in \Lang_{OL}$ a definujme
         homomorfizmus $h$ nasledovne: $h(a)=a^2$, potom
         $h(L)=\{\eps,a^2,a^4\} \not \in \Lang_{OL}$, čo sa
-        dokáže rozbitím na prípady podobne ako pre $\union$
+        dokáže rozbitím na prípady podobne ako pre $\union$.
 
     \item[$h^{-1}:$] Uvažujme jazyk $L=\{a\}\in \Lang_{OL}$ a
         homomorfizmus $h$ daný predpisom $h(a)=a^2$. Potom
-        $h^{-1}(L)=\emptyset \not\in \Lang_{OL}$
+        $h^{-1}(L)=\emptyset \not\in \Lang_{OL}$.
 
     \item[$\intersect\mathcal{R} :$] Uvažujme jazyk
         $L_1=\{\eps,a,a^2\} \in \Lang_{OL}$ a regulárny
