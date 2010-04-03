@@ -99,14 +99,15 @@ z druhej pásky zhodné so vstupom na prvej páske.
 frázovej gramatike $G$ treba zostrojiť $g$-systém $G'$ taký, že
 $L(G')=L(G)$. $G'$ zostrojíme nasledovne:\newline ku každému
 pravidlu $a_1a_2\dots a_n\ra b_1b_2\dots b_m$ urobíme v
-$g$-systéme cestu ako na\linebreak obrázku \ref{gs_obr_gre}.
+$g$-systéme cestu ako na\linebreak obrázku \ref{fig:re-to-gsystem}.
 \end{description}
 \end{dokaz}
 
 \begin{figure}[!ht]
-\centering
-\includegraphics{img/gsystems/re_g}
-\caption{Konštrukcia $g$-systému ku frázovej gramatike}\label{gs_obr_gre}
+    \centering
+    \includegraphics{img/gsystems/re-to-gsystem.1.mps}
+    \caption{Konštrukcia $g$-systému ku frázovej gramatike}
+    \label{fig:re-to-gsystem}
 \end{figure}
 
 \pagebreak
@@ -128,16 +129,17 @@ nejakého slova $w$ vznikne vetná forma dĺžky väčšej ako je $|w|$.
 Preto na simuláciu stačí priestor ohraničený dĺžkou vstupného
 slova, a teda vystačíme s LBA.
 \item{$\supseteq$:} Konštrukcia je podobná ako v predchádzajúcej vete
-(obr.\ref{gs_obr_gcs}) s využitím toho, že v kontextových gramatikách nie
+(obr.\ref{fig:cs-to-gsystem}) s využitím toho, že v kontextových gramatikách nie
 je pravá strana pravidla kratšia ako ľavá, takže v konštrukcii
 1-$a$-prekladača nepotrebujeme pravidlá s $\varepsilon$ výstupom.
 \end{description}
 \end{dokaz}
 
 \begin{figure}
-\centering
-\includegraphics{img/gsystems/cs_g}
-\caption{Konštrukcia $g$-systému ku kontextovej gramatike}\label{gs_obr_gcs}
+    \centering
+    \includegraphics{img/gsystems/cs-to-gsystem.1.mps}
+    \caption{Konštrukcia $g$-systému ku kontextovej gramatike}
+    \label{fig:cs-to-gsystem}
 \end{figure}
 
 \begin{definicia}
@@ -172,27 +174,33 @@ sekvenčný.
 \section{Modelovanie známych gramatík pomocou $g$-systémov}
 
 \begin{priklad}
-\begin{description}
-\item{$EOL$:} Nech množina pravidiel $EOL$ je $P=\{ a_1\ra u_1,a_2\ra u_2,\dots,a_n\ra u_n\}$
-potom príslušný $g$-systém bude vyzerať ako na obrázku
-\ref{fig:eol-to-gsystem}a.
+    Ukážeme si, že pomocou $g$-systémov vieme jednoducho modelovať
+    $EOL$ a bezkontextové gramatiky:
+    \begin{description}
+    \item{$EOL$:} Nech množina pravidiel $EOL$ je
+        $P=\{ a_1\pravidlo u_1,a_2\pravidlo u_2,\dots,a_n\pravidlo
+        u_n\}$.
+        Potom príslušný $g$-systém bude vyzerať ako na obrázku
+        \ref{fig:eol-to-gsystem}a.
 
-\begin{figure}[!ht]
-    \centering
-    \subfigure[EOL]{
-        \includegraphics{img/gsystems/eol-to-gsystem.1.mps}
-    }
-    \subfigure[CF]{
-        \includegraphics{img/gsystems/cf-to-gsystem.1.mps}
-    }
-    \caption{Modelovanie $EOL$-systémov a $CF$-gramatík pomocou $g$-systémov}
-    \label{fig:eol-to-gsystem}
-\end{figure}
+    \item{$CF$:} Nech množina pravidiel $CF$ je
+        $P=\{a_1\pravidlo u_1, a_2\pravidlo u_2,\dots,a_n\pravidlo
+        u_n\}$. Príslušný $g$-systém zostrojíme podľa obrázku
+        \ref{fig:eol-to-gsystem}b.
+    \end{description}
 
-\item{$CF$:} Nech množina pravidiel $CF$ je $P=\{a_1\ra u_1, a_2\ra u_2,\dots,a_n\ra
-u_n\}$ potom príslušný $g$-systém bude vyzerať ako na obrázku
-\ref{fig:eol-to-gsystem}b.
-\end{description}
+    \begin{figure}[!ht]
+        \centering
+        \subfigure[EOL]{
+            \includegraphics{img/gsystems/eol-to-gsystem.1.mps}
+        }
+        \subfigure[CF]{
+            \includegraphics{img/gsystems/cf-to-gsystem.1.mps}
+        }
+        \caption{Modelovanie $EOL$-systémov a
+                    $CF$-gramatík pomocou $g$-systémov}
+        \label{fig:eol-to-gsystem}
+    \end{figure}
 \end{priklad}
 
 \begin{poznamka}
