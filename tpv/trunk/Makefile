@@ -57,3 +57,7 @@ booklet: main.ps
 .PHONY: img
 img:
 	(cd img; make all)
+
+.PHONY: prepare_upload
+prepare_upload: dist-clean img main.pdf
+	cp main.pdf `date '+tpv_%y-%m-%d.pdf'`
