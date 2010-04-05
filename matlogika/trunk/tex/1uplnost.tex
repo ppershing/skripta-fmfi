@@ -183,10 +183,9 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
     Potom $T \provable A \iff \mathcal{M} \models A$.
 \end{veta}
 
-\startFIXME
 \begin{dokaz}
     Budeme postupovať matematickou indukciou vzhľadom na zložitosť
-    formuly:
+    formuly. Pri dokazovaní sa ale obmedzíme iba na uzavreté formuly.
     \begin{itemize}
     \item[1:]
         \begin{itemize}
@@ -203,10 +202,12 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
                 ([t_1],[t_2],\dots,[t_n]) \in P_\mathcal{M} \iff
                 T \provable P(t_1,t_n, \dots, t_n)$.
             \fixme{O co islo v tomto bode?}
+
         \item Formula môže byť tvaru $A:t_1=t_2$. V tom prípade
             $\mathcal{M} \models t_1 = t_2 \iff [t_1]=[t_2] \iff
                 T \provable t_1=t_2$
         \end{itemize}
+
     \item[2:]   Máme niekoľko možností, ako mohla formula $A$ vzniknúť:
         \begin{itemize}
         \item $A:\neg B$. Na formulu $B$ sa vzťahuje IP, keďže $B$ je
@@ -216,65 +217,97 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
             alebo $T \provable B$. Keďže je bezosporná, platí práve
             jedna možnosť. Tým sme ale ukázali, že
             $\mathcal{M} \models A \iff T \provable A$.
-        \item $A: B \implies C$
-        \item $A: (\forall x) B$
+
+        \item $A: B \implies C$. Ma formuly $B,C$ sa vzťahuje IP.
+            Rozoberme si teda obe implikácie tvrdeni
+            $\mathcal{M} \models B \implies C \iff
+             T \provable B \implies C$.
+            \begin{itemize}
+            \item[$\Rightarrow:$] Vieme, že $(B \implies C)
+                    \leftrightarrow \neg B \lor C$. Čiže môžeme
+                    predpokladať, že aspoň 1 z tvrdení 
+                    $\mathcal{M} \models \neg B$,
+                    $\mathcal{M} \models C$ platí. Rozoberme obe
+                    možnosti -- pri prvej dostávame, že $\neg B$ je
+                    pravdivá (a z IP dokázateľná)
+                    \begin{itemize}
+                    \item $T \provable \neg B$ -- IP
+                    \item $\provable \neg B \implies (B \implies C)$ --
+                        z vety o neutrálnej formule
+                    \item $T \provable B \implies C$ -- MP na prvé 2
+                        formuly
+                    \end{itemize}
+                    V druhom prípade predpokladáme pravdivosť $C$,
+                    t.j.
+                    \begin{itemize}
+                    \item $T \provable C$ -- IP
+                    \item $\provable C \implies (B \implies C)$ -- A1
+                    \item $T \provable B \implies C$ -- MP
+                    \end{itemize}
+                    Ak to zhrnieme, ak platí
+                    $\mathcal{M} \models B \implies C$, je formula
+                    $B \implies C$ dokázateľná v $T$.
+
+            \item[$\Leftarrow:$] Uvažujeme, že
+                $T \provable B \implies C$.
+                Teória $T$ je úplná teória a $B \implies C$ je uzavretá.
+                Pre každú uzavretú formulu platí jedna z možností
+                $T \provable \neg B$ (potom $m \models \neg B$ a sme
+                hotoví) alebo $T \provable B$.
+                Vtedy ale musí platiť $T \provable C$
+                a teda $m \models C$. Tým je tvrdenie dokázané.
+
+                Ešte sa môžeme vrátiť k tomu, prečo platí $T \provable C$.
+                Uvažujme totiž $T \provable \neg C$.
+                \begin{itemize}
+                \item $T \provable B \implies C$
+                \item $T \provable B$ -- predpoklad
+                \item $T \provable C$ -- MP
+                \item $T \provable \neg C$ -- predpoklad a zároveň
+                    spor s bezospornosťou teórie $T$.
+                \end{itemize}
+            \end{itemize}
+
+        \item $A: (\forall x) B$. Pre každú
+            inštanciu formuly $B$ tvrdenie platí.
+            Pretože je teória úplná, môžu nastať 2 prípady:
+            \begin{itemize}
+            \item Platí $T\provable A$.
+                Teda, $T \provable (\forall x) B$.
+                Ďalej platí $\provable (\forall x) B \implies B_x[c]$
+                -- axióma špecifikácie.
+                Potom aj $T \provable B_x[c]$ (MP na axiómu
+                špecifikácie). Lenže z IP dostávame
+                $\mathcal{M} \models B_x[c] \then 
+                 \mathcal{M} \models (\forall x) B$.
+
+            \item Platí $T \provable \neg A$. Vtedy
+                $T \provable (\exists x) \neg B$. Ďalej, keďže teória je
+                Henkinovská, platí tiež 
+                $T \provable (\exists x) \neg B \implies \neg B_x[c]$.
+                Pomocou MP odvodíme
+                $T \provable \neg B_x[c]$. Potobne ako v
+                predchádzajúcom prípade máme
+                $\mathcal{M} \models \neg B_x[c] \then
+                 \mathcal{M} \not \models B$ (formula $B_x[c]$ je
+                 nepravdivá a preto aj formula $(\forall x) B$ je
+                 nepravdivá). Nuž ale potom
+                 $\mathcal{M} \models \neg A$.
+            \end{itemize}
 
         \end{itemize}
     \end{itemize}
+
+    Ukázali sme, že pre uzavreté formuly vieme pomocou indukcie
+    dokázať tvrdenie vety. Teraz, nech $A$ je ľubovoľná formula z teórie $T$.
+    Pre ňu platí, že $T \provable A$ (predpoklad).
+    Potrebujem dokázať, že $T \provable A \iff m \models A$.
+    Zoberiem si $A'$ -- uzáver formuly $A$.
+    Na $A'$ sa vzťahuje naša indukcia a teda $m \models A' \iff T \provable A'$.
+    Podľa vety o uzávere ale platí
+    $m \models A \iff  m\models A' T \provable A' \iff T \provable A$
 \end{dokaz}
-% \begin{unknown}
-$A$ -- ľubovoľná uzavretá formula z $L$, potom $m \models A \iff T \provable A$.
-$P(t_1, t_2, \ldots t_n)$ -- atomická formula,  uzavretá, $t_1. \ldots t_n$ sú
-termy bez premenných.
 
-$m \models A \iff ([t_1], \ldots, [t_n]) \in P_m \iff T \provable P(t_1,\ldots
-t_n)$ pre ľubovoľné ohodnotenie.
+\par{Záver:} Pre ľubovoľnú teóriu, ktorá je idealizovaná (Henkinova a
+úplná), vieme zostrojiť model.
 
-\par $A: t_1 = t_2$. $m \models t_1 = t_2 \iff [t_1] = [t_2] \iff T \provable t_1 =
-t_2$.
-
-\par $A: \neg B$. Indukčný predpoklad: pre $B$ bolo tvrdenie dokázané ($m\models
-B \iff T \provable B)$. Formula $A$ je pravdivá v $m$ práve vtedy, keď formula $B$
-nie je pravdivá $B$ nie je pravdivá, $T \unprovable B, T \vdash \neg B$.
-
-\par $A. B \implies C$, pričom $B$ a $Cc$ sú dokázané podľa indukčného
-predpokladu. Ak platí $m \models B \implies C$, potom $m \models \neg B \lor m
-\models C$. $T \provable \neg B \lor T \vdash C$.
-
-\begin{align*}
-    T \provable B \implies C \\
-    \provable C \implies (B \implies C)
-\end{align*}
-
-Opačná implikácia:
-\begin{equation*}
-    T\provable B\implies C\Rightarrow m \models B \implies C
-\end{equation*}
-
-Teória $T$ je úplná teória a $B \implies C$ je uzavretá. Pre každú uzavretú
-formulu platí, jedna z možností $T \provable \neg B$ (potom $m \models \neg B$)
-alebo $T \provable B$, a z toho vyplýva, že $T \vdash C$, a teda $m \models C$.
-Tvrdenie je teda dokázané.
-
-\begin{equation}
-    m \models A \iff T \provable A
-\end{equation}
-
-\par Predpokladajme, že formula $A$ je v tvare $A: (\forall x) B$. Pre každú
-inštanciu formuly $B$ tvrdenie platí, $\provable (\forall x) B \implies B_x[t]$
-(axióma špecifikácie). Potom aj $T \provable B_x[t]$ (lebo teória je Henkinova). $m \models B[e(x/t)]$.
-
-\par Ak je pravdivá negácia, potom $T \provable \neg A$, čo znamená, že $(\exists
-x) \neg B$. $T \provable (\exists x) \neg B \implies B_x[c]$, a to znamená, že $T
-\provable \neg B_x[c]$.
-
-\par Nech $A$ je ľubovoľná formula z teórie $T$. Pre ňu platí, že $T \provable A$
-(predpoklad). Potrebujem dokázať, že $T \provable A \iff m \models A$. Zoberiem si
-$A'$ -- uzáver formuly $A$. Na $A'$ sa vzťahuje tvrdenie, ktoré sme už dokázali,
-a teda $m \models A' \iff T \provable A'$. Podľa vety o uzávere:
-$m \models A \iff  m\models A' T \provable A' \iff T \vdash A$
-
-\par Pre ľubovoľnú teóriu, ktorá je idealizovaná (Henkinova a úplná), viem
-zostrojiť model.
-
-\stopFIXME
