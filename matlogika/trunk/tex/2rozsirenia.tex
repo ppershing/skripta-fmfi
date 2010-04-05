@@ -1,9 +1,8 @@
 \section{Rozšírenia teórie}
 
-\startFIXME
-
-Budeme definovať rozšírenia (ktorá ani nepomôžu, ani neuškodia :-). (Henkinova
-veta, Lindenbaumova veta)
+V nasledujúcej časti budeme definovať rozšírenia,
+ktoré v istom zmysle ani nepomôžu ani
+neuberú sile teórii.
 
 \begin{definicia}[Rozšítenie jazyka]
 %%% {{{
@@ -14,8 +13,10 @@ veta, Lindenbaumova veta)
 \end{definicia}
 
 \begin{priklad}
-    Nech jazyk $L'$ je jazyk s rovnosťou a špeciálnymi symbolmi $<$ a $0$.
-    Jazyk $L$ má symboly $<$ a $=$. Jazyk $L'$ je rozšírením jazyka $L$.
+    Nech jazyk $L'$ je jazyk s rovnosťou a špeciálnymi symbolmi
+    ``$<$'' a ``$0$''.
+    Jazyk $L$ má symboly ``$<$'' a ``$=$''.
+    Jazyk $L'$ je potom rozšírením jazyka $L$.
 \end{priklad}    
 
 \begin{definicia}[Rozšítenie teórie]
@@ -23,83 +24,80 @@ veta, Lindenbaumova veta)
     Majme teóriu $T'$ s jazykom $L'$. Hovoríme, že $T'$ je
     rozšírením teórie $T$ s jazykom $L$, ak platí,
     že $L'$ je rozšírením jazyka $L$ a pre každý formulu $A$ jazyku $L$
-    platí $T \provable A, T' \vdash A$. \fixme{je tam namiesto ciarky
-    implikacia ci ekvivanencia}
+    platí $T \provable A \then T' \provable A$. 
 %%% }}}    
 \end{definicia}
 
+\begin{priklad}
+    Uvažujme teóriu grúp -- je to teória s rovnosťou, ktorá
+    používa špeciálny symbol ``$+$'' a existuje v nej neutrálny prvok.
+    
+    Axiomy:
+    \begin{itemize}
+    \item $\forall x,y,z: (x+y)+z = x+(y+z)$
+    \item $(x+0) = x = (0+x)$
+    \item $(x+(-x)) = 0 = ((-x)+x)$
+    \end{itemize}
 
-\begin{veta}[Henkinova]
-%%% {{{
-    \begin{align*}
-        \provable (\exists x) \neg B \implies \neg B_x[c] \\
-        T \provable  \neg B_x[c] \\
-        m \models  (\forall x) B \iff T (\forall c) B \\
-    \end{align*}
-    \fixme{Co vlastne hovori tato veta? Co su predpoklady a co
-    vystup?}
-    \fixme{je o chvilu zase ta ista veta?}
-%%% }}}    
-\end{veta}
-\fixme{nema tu byt dokaz?}
+    Ak si vezmeme relačnú štruktúru $m=\langle \mathbb{N}^+,0,+ \rangle$,
+    táto realizuje jazyk teórie grúp.
+    Nie je však modelom (nie všetky axiomy nie sú splnené, menovite
+    napríklad inverzné prvky).
+    Pokiaľ ale vezmeme $m=\langle \mathbb{Z},0,+ \rangle$,
+    táto množina tvorí model teórie grúp.  
 
+    Teraz si zoberme jazyk $L = \{0,1,+,*\}$
+    a uvažujme postupne nasledujúce teórie:
+    \begin{enumerate}
+    \item teória grúp
+    \item teória okruhov
+    \item teória oborov integrity
+    \item teória telies
+    \item teória polí
+    \item teória zväzov
+    \end{enumerate}
+    Každá z týchto teórii je rozšírením tej predchádzajúcej.
+\end{priklad}
 
-\par Relačná štruktúra $<M, P_m, t_m>$ -- model pre množinu formúl $T$. Vezmeme
-ľubovoľnú formulu $A \in T$ a platí $m \models A$, potom $T$ je modelom.
+\begin{poznamka}
+    Je dôležité si uvedomiť, že nie všetky axiómy pôvodnej teórie $T$
+    sa musia nachádzať aj v rozšírenej teórii $T'$ -- 
+    stačí, ak sa dajú odvodiť v $T'$.
+\end{poznamka}
 
-\par $T \provable A$. $A'$ -- uzáver A. $$ m \models A' \iff T \vdash A'$$. Ak v
-modeli $m$ je splnená formula $A'$, potom musí byť splnená aj $A$. Štruktúra,
-ktorú sme uvažovali, je modelom pre našu teóriu.
-
-\paragraph{Záver:} Pre idealizovanú teóriu viem vytvoriť model.
-
-\par Ďalšou úlohou je rozšíriť bezospornú teóriu do úplnej a Henkinovskej.
-
-\paragraph{Príklad (čo je to model):} Teória grúp -- je to teória s rovnosťou a
-používa špeciálny symbol $+$ a existuje v ňom neutrálny prvok. Axiomy:
-
-$$\forall x,y,z (x+y)+z = x+(y+z)$$
-$$(x+0) = (0+x) = x$$
-$$(x+(-x)) = ((-x)+x) = 0$$.
-
-\par Ak si vezmeme relačnú štruktúru $m=<N^+,0,+>$, táto realizuje jazyk teórie
-grúp, ale nie je modelom (nie všetky axiomy nie sú splnené). Pokiaľ ale vezmeme
-$m=<Z,0,+>$, táto množina tvorí model teórie grúp.  
-
-\par Máme daný jazyk $L$, jazyk $L'$, ktorý je rozšírením $L$ (obsahuje každý
-symbol z $L$ s rovnakou hodnotou a árnosťou). Vezmime jazyk $L= \{0, 1, +,
-\cdot \}$. Ak nad týmto jazykom budeme pridávať axiómy, môžeme získať teórie ako
-teória okruhov, teória oborov integrity, teória telies, \ldots . Zistíme, že
-teória telies je rozšírenie teórie oborov integrity a tie sú rozšírením teórie
-okruhov. 
-
-\par Ak máme teóriu $T$, $T'$ je rozšírenie $T$ a je bezosporná. Potom teória
-$T$ je taktiež bezosporná. Ak by sme pripustili, že teória $T$ je sporná, potom
-by sa našla taká formula, že $T \provable A$ aj $T \vdash \neg A$, z čoho vyplýva
-$T' \provable A$ aj $T' \vdash \neg A$.
-
-\begin{definicia}[Konzervatívne rozšírenie]
-%%% {{{
-    Majme teóriu $T$ a teóriu $T'$. Hovoríme, že $T'$ je
-    \emph{konzervatívne rozšírenie} teórie $T$,
-    ak $T'$ je rozšírenie $T$ a pre každú formulu $A$ na jazyku $L$,
-    pre ktorú platí $T' \provable A$ implikuje $T \provable A$.
-%%% }}}
-\end{definicia}    
-
-\begin{lema} 
-    Nech $T'$ je konzervatívne rozšírenie $T$, potom $T$ je
-    bezosporná vtedy a len vtedy, keď $T'$ je bezosporná.
-\end{lema}
+\begin{poznamka}
+ Ak teória $T'$ nad jazykom $L'$ je rozšírením teórie $T$ nad jazykom
+ $L$ a vieme že $T'$ je bezosporná, potom aj $T$ je bezosporná.
+\end{poznamka}
 \begin{dokaz}
-%%% {{{
-    Vyplýva to z toho, že ak zoberieme konzervatívne rozšírenie,
-    pre ľubovoľnú formulu pôvodného jazyka platí, že:
+    Predpokladajme, že $T$ je sporná teória. Teda je v nej dokázateľná
+    každá formula.
+    Špeciálne, je dokázateľné $T \provable A$ a $T \provable \neg A$.
+    Keďže $T'$ je rozšírenie, musí potom platiť
+    $T' \provable A$ a $T' \provable \neg A$. To je ale spor.
+\end{dokaz}
+
+\begin{definicia}[konzervatívne rozšírenie]
+    Hovoríme, že teória $T'$ nad jazykom $L'$ je konzervatívnym
+    rozšírením teórie $T$ nad jazykom $L$, ak pre každú formulu
+    $A$ nad jazykom $L$ platí $T' \provable A \then T \provable A$.
+    Inak povedané, konzervatívnym rozšírením nezískame žiadne nové 
+    teorémy.
+\end{definicia}
+
+\begin{poznamka}
+    Spojením posledných dvoch definícii dostávame, že pre
+    konzervatívne rozšírenie $T',L'$ teórie $T,L$ platí
     \begin{equation*}
-        T' \provable_L A \Rightarrow T \vdash A
+        \forall A \in L: T \provable A \iff T' \provable A
     \end{equation*}
-%%% }}}
-\end{dokaz}    
+\end{poznamka}
+
+\begin{poznamka}
+    Nech $T',L'$ je konzervatívne rozšírenie $T,L$. Potom platí (z
+    predchádzajúcej poznámky)
+    $T$ je bezosporná $\iff$ $T'$ je bezosporná.
+\end{poznamka}
 
 \begin{veta}[Henkinova] 
     K ľubovoľnej teórii $T$ môžeme zostrojiť Henkinovu
@@ -111,53 +109,52 @@ $T' \provable A$ aj $T' \vdash \neg A$.
     Teóriu $T$ rozšírime a priradíme k nej teóriu $T_H$ tak, že
     jednak rozšírime jazyk teórie a jednak pridáme axiómy.
     Nech teória $T$ má jazyk $L$.
-    Budeme tvoriť jazyk rozšírený jazyk $L_H$ (budeme pridávať konštanty):
+    Budeme tvoriť rozšírený jazyk $L_H$ tak, že budeme pridávať konštanty:
 
-    \fixme{<skontroluj, malé písmená>}
+    Pre každú formulu $A$ napísanú v jazyku $L$,
+    ktorá má jedinú premennú $x$ vytvoríme konštanty $c_A, c_{\neg A}$
+    a nasledovné axiomy: 
+    \begin{itemize}
+        \item[H1:]  $(\exists x) A \implies A_x[c_A]$
+        \item[H2:]  $A_x{c_{\neg A}} \implies (\forall x) A$
+    \end{itemize}
 
-    \par Vezmime si formulu $A$ napísanú v jazyku $L$, ktorá má jedinú premennú $x$
-    priradíme jej premenné $c_A$ a $c_{\neg A}$ a nasledovné axiomy: 
+    Stačil by nám aj jeden typ axiómy, ako sa môžeme ľahko presvedčiť:
+    \begin{itemize}
+        \item $(\exists x) \neg A \implies \neg A_x[c_{\neg A}]$ -- H1
+        \item $\neg \neg A_x[c_{\neg A}] \implies
+                (\forall x) \neg \neg A$ -- obmena implikácie
+        \item $A_x[c_{\neg A}] \implies (\forall x) A$ -- odstránenie
+            dvojitej negácie
+    \end{itemize}
 
-    $
-    \begin{array}{lll}
-    \mbox{(*)} & (\exists x) A \implies A_x[c_A] & (H1) \\
-    \mbox{(**)} & A_x{c_{\neg A}} \implies (\forall x) A & (H2) \\
-    \end{array}
-    $
+    Konštanty $c_a, c_{\neg A}$ nazývame Henkinove konštanty prvého
+    rádu. Tieto konštanty nám vytvoria množinu konštánt, označme ju
+    $C_1$. Týmito konštantami rozšírime jazyk $L$.
+    
+    Teraz zoberme formulu $B$ na jazyku $L(C_1)$, ktorá obsahuje práve
+    jednu voľnú premennú a aspoň jednu konštantu z $C_1$. K tejto
+    formule priradíme podobne ako minule konštanty $c_B, c_{\neg B}$.
+    Takto dosiahnuté konštanty budeme nazívať Henkinovské konštanty
+    druhého rádu a ich množinu označíme ako $C_2$.
+    
+    Induktívne pokračujeme ďalej a podobne vytvárame množinu $C_3,
+    C_4, \dots$.
+    Množinu $C_{n+1}$ vo všeobecnosti vytvoríme z množiny $C_n$, tak,
+    že zoberieme formuly nad jazykom $L(C_n)$, ktoré obsahujú jednu
+    voľnú premennú a aspoň jednu konštantu $n$-tého rádu.
 
-    Stačila by nám aj jedna konštanta:
-    $$B: \neg A$$
-    $$ (*) (\exists x) \neg A \implies \neg A_x[c_{\neg A}]$$
-    $$\neg \neg A_x[c_{\neg A}] \implies (\forall x) \neg \neg A$$
-    $$A_x[c_{\neg A}] \implies (\forall x) A$$
-
-    Alebo:
-    $$B: \neg A$$
-    $$\neg A_x[c_{??} \implies (\forall x) \neg A$$
-    $$(\exists x) A \implies A_x[c_A]$$
-    \textbf{</skontroluj, malé písmená>}
-
-    \par $C_1$ bude množina všetkých konštánt $c_A$ a $c_{\neg A}$. Týmito konštantami
-    rozšírime jazyk $L$. Induktívne pokračujeme ďalej a podobne vytvárame množinu $C_2$
-    (zoberieme ľubovoľnú formulu $A$ nad rozšíreným jazykom, ktorá mala jedinú voľnú
-    premennú $x$ a obsahovala aspoň jednu konštantu prvého rádu).
-    Pridané konštanty budeme nazývať konštanty druhého rádu. Pokračujeme až po
-    $C_n$.
-
-    \par Vezmeme formuly, ktoré majú jedinú voľnú premennú $x$ a obsahujú nejakú
-    pridávanú konštantu rádu $n$.
-
-    Označme
+    Označme si teraz
     \begin{equation*}
-        L(C) = L \union C_1 \union C_2 \union \ldots
+        L(C) = L \union \bigcup_{i=1}^{\infty} C_i
     \end{equation*}
-    Teóriu $T_H$ bude tvoriť rozšírenie $L(C)$ jazyka $L$, axiómy budú axiómy $T$
-    ku ktorým pridáme všetky axiómy $H1$.
+    Teóriu $T_H$ bude tvoriť rozšírenie $L(C)$ jazyka $L$,
+    axiómy budú axiómy $T$ ku ktorým pridáme všetky axiómy $H1$.
     Je ihneď zrejmé, že $T_H$ je rozšírenie teórie $T$.
     Potrebujeme ukázať, že $T_H$ je konzervatívne rozšírenie teórie $T$, t.j.
     že pre každú formulu $A$ jazyka $L$ platí 
     $T_H \provable A \Rightarrow T \provable A$
-
+    \startFIXME
     Nech platí, že v $T_H$ je dokázateľná formula $A$
     a nech $B_1, B_2, \ldots ,B_n$ sú všetky Henkinovské
     axiómy vyskytujúce sa v dôkaze $A$. Keďže dôkaz je konečný, týchto
