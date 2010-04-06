@@ -214,24 +214,48 @@ postupne preberali možné parametre $B$ a $p$.
 Teraz si predstavíme algoritmus ECDSA určený na digitálne podpisovanie
 správ.
 
-\todo{ECDSA}
-Parametre, ktoré sa zvyknú uvádzať v tabuľkách eliptických kriviek
+Začneme parametrami, ktoré sa zvyknú uvádzať v tabuľkách eliptických
+kriviek:
 \begin{itemize}
     \item $A$
     \item $B$
-    \item $2P$ -- modulus
-    \item $FR$ -- field representation - buď ako polynómy nad $GF(2^m)$
-        alebo ako mocniny generátora
+    \item $p$ -- prvočíselný modulus
+    \item $FR$ -- field representation -- buď ako polynómy nad
+        $GF(2^m)$ (binárne polia)
+        alebo ako mocniny generátora (prvočíselné polia)
+        alebo Koblitzove krivky.
     \item $seed$ -- keď niekto neverí vygenerovaným krivkám, môže si
         overiť, že boli vygenerované podľa tohoto seedu.
-    \item $G$ -- generátor vhodnej podgrupy, je to bod patriaci krivke
-    \item $n$ -- rád generátora \fixme{grupy ci podgrupy?}
+    \item $G$ -- generátor prvočíselnej podgrupy, je to bod patriaci krivke
+    \item $n$ -- rád $G$ (generátora podgrupy)
     \item $k$ -- kofaktor, $k=|E| / n$
 \end{itemize}
 \begin{poznamka}
-    V štandarde sa používajú len krivky s kofaktorom $k=1$, teda platí
-    $G \isomorph Z_p$.
+    V štandarde sa používajú krivky s kofaktorom $k=1,2,4$, teda (ako
+    sa ukáže), dĺžka verejného a privátneho kľúča je približne
+    rovnaká.
 \end{poznamka}
+
+Čo sa týka prvočíselného modula $p$, štandard prechádza plejádou
+hodnôt od 192 po 521 bitov. \fixme{nie 512?}
+Príklady:
+\begin{itemize}
+    \item $2^{192} - 2^{64} - 1$ 
+    \item $2^{384} ?? 2^{126} ...$ \fixme{}
+    \item $2^{521} - 1$.
+\end{itemize}
+Vo všeobecnosti sa volia takmer mersenovské prvočísla.
+
+Ale vráťme sa k samotnému podpisovaniu. Prvou častou je generovanie
+kľúčov:
+\begin{procedure}
+    \caption{GenECDSA()}
+    \label{proc:genecdsa}
+    $sk = d \inr \{1, \dots, n-1\}$ \;
+    $pk = Q = d*G = \underbrace{G+G+G+\dots+G}_{d \times}$ \;
+\end{procedure}
+
+\todo{zvyšok ECDSA}
 
 \todo{ElGamal v eliptickych}
 
