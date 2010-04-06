@@ -2,55 +2,102 @@
 
 \startFIXME
 
-Procedúry založené na Herbrandovej myšlienke vyvrátenia (nájdenie interpretácie,
-ktorá vyvracia danú formulu). Davis a Putnam pracovali s formulou v prefixovom
+Budeme sa zaoberať procedúram založených na Herbrandovej myšlienke vyvrátenia 
+(nájdenie interpretácie, ktorá vyvracia danú formulu).
+Davis a Putnam pracovali s formulou v prefixovom
 normálnom tvare a vychádzali z nasledujúcich hľadísk:
 \begin{enumerate}
-	\item Každá formula môže byť vyjadrená v prefixovom normálnom tvare.
-	\item Pretože matica (jadro) neobsahuje kvantifikátory, môže byť
-	vyjadrená v konjunktívnej normálnej forme.
-	\item Zachovajúc nesplniteľnosť formúly môžeme z nej eliminovať
-	existenčné kvantifikátory pomocou skolemovských funkcií (keď máme
-	premennú vyjadrenú v prefixovom normálnom tvare a eliminujeme z nej
-	existenčný kvantifikátor, dostaneme formulu, ktorá je nesplniteľná
-	vtedy, keď je nesplniteľná pôvodná formula -- nesplniteľnosť
-	transformovanej formuly sa robí ľahšie).
+    \item Každá formula logiky 1. rádu
+        môže byť vyjadrená v prefixovom normálnom tvare.
+
+    \item Pretože matica (jadro) neobsahuje kvantifikátory, môže byť
+        vyjadrená v konjunktívnej normálnej forme.
+
+    \item Zachovajúc nesplniteľnosť formúly môžeme z nej eliminovať
+        existenčné kvantifikátory pomocou tzv. skolemovských funkcií (keď máme
+        premennú vyjadrenú v prefixovom normálnom tvare a eliminujeme z nej
+        existenčný kvantifikátor, dostaneme formulu, ktorá je nesplniteľná
+        vtedy, keď je nesplniteľná pôvodná formula -- nesplniteľnosť
+        transformovanej formuly sa robí ľahšie).
 \end{enumerate}
 
-Transformácia formuly. Majme formulu $A: (Q_1 x_1) (Q_2 x_2) \ldots (Q_n x_n)
-M$, $M$ -- konjunktívny normálny tvar. $Q_r$ je existenčný kvantifikátor v
-prefixe $(Q_1 x_1) \ldots (Q_n x_n)$, $1 \leq r \leq n$ vľavo od $Q_r$ nestojí
-žiaden veľký kvantifikátor.
-$A': Q_r$, $M$, za $x_r$ dosadíme $c$ ktorá v $M$.
-$Q_{s_1}, Q_{s_2}, \ldots Q_{S_m}$ (zoznam všeob. kvantifikátorov) vľavo od
-$Q_r$,  $1 \leq s_1 \leq s_2, \ldots \leq s_m < r$.
+Transformácia formuly:
+Majme formulu $A: (Q_1 x_1) (Q_2 x_2) \ldots (Q_n x_n) M$,
+kde $M$ je konjunktívnom normálnom tvare.
+Nech $Q_r$ je existenčný kvantifikátor v prefixe $(Q_1 x_1) \ldots
+(Q_n x_n)$, $1 \le r \le n$.
 
-Za premennú $x_r$ dosadíme do $M$ term $f(x_{s_1}, \ldots, x_{s_m})$. Tieto
-funkcie voláme Skolemove funkcie a $c$ voláme Skolemove konštanty.
+Uvažujme, že vľavo od $Q_r$ nestojí žiaden veľký kvantifikátor.
+Vtedy, ak z prefixu vynechám $(Q_r x_r)$ a $x_r$ v $M$ nahradím
+novou konštantou $c_r$ a mám formulu, ktorá je nesplniteľná práve
+vtedy, keď bola nesplniteľná pôvodná formula.
 
-\paragraph{Príklad.} Nájdite štandardnú formu pre formuly:
-$$ (\exists x) (\forall y) (\forall z) (\exists u) (\forall v) (\exists w)
-P(x,y,z,u,v,w)$$.
-Premennú $x$ budeme nahrádzať konštantou $c$ (ktorá nie je v predikáte),
-premennú $u$ nahradíme $f(y,z)$ a premennú $w$ nahradíme funkciou $g(y,z,v)$ .
+Na druhej strane, naľavo od $Q_r$ sa môžu vyskytovať všeobecné
+kvantifikátory, $Q_{s_1}, Q_{s_2}, \dots Q_{S_m}$,
+kde $1 \le s_1 < s_2 < \dots < s_m < r$.
+Vtedy opäť odstránime $(Q_r x_r)$ z prefixu a
+za premennú $x_r$ dosadíme do $M$ term 
+$f(x_{s_1}, \ldots, x_{s_m})$. Túto funkciu voláme Skolemova funkcie a
+konštanty $c$ voláme Skolemove konštanty.
 
-$$ (\forall y)(\forall z)(\forall w) P(x,y,z,f(y,z),v,g(y,z,v)) $$
+Tento postup môžem zopakovať pre všetky existenčné kvantifikátory a
+výsledok nazveme štandardnou skolemovskou formou.
 
-\paragraph{Príklad:} Nájdite štandardnú formulu: $$ (\forall x)(\exists y)
-(\exists z) \left((\neg P(x,y) \land Q(x,z))\lor R(x,y,z)\right) $$.
+\begin{priklad}
+    Nájdite štandardnú formu pre formuly:
+    \begin{equation*}
+        (\exists x) (\forall y) (\forall z) (\exists u) (\forall v) (\exists w)
+        P(x,y,z,u,v,w)
+    \end{equation*}
+    Premennú $x$ budeme nahrádzať konštantou $c$ (ktorá nie je v predikáte),
+    premennú $u$ nahradíme $f(y,z)$ a
+    premennú $w$ nahradíme funkciou $g(y,z,v)$. Výsledkom je
+    \begin{equation*}
+        (\forall y)(\forall z)(\forall w) P(c,y,z,f(y,z),v,g(y,z,v))
+    \end{equation*}
+\end{priklad}
 
-$$ (\forall x) (\exists y) (\exists z)(\neg P(x,y) \lor R(x,y,z)) \land
-(Q(x,z)\lor R(x,y,z))$$
+\begin{priklad}
+    Nájdite štandardnú formu pre formulu:
+    \begin{equation*}
+        (\forall x)(\exists y) (\exists z) 
+        \left[ (\neg P(x,y) \land Q(x,z))\lor R(x,y,z)\right]
+    \end{equation*}
+    Využijeme distributívne zákony pre logické spojky a dostaneme
+    \begin{equation*}
+        (\forall x) (\exists y) (\exists z)
+        \left[ \Big(\neg P(x,y) \lor R(x,y,z)\Big) \land
+            \Big(Q(x,z)\lor R(x,y,z)\Big)\right]
+    \end{equation*}
+    a po Skolemizácii máme
+    \begin{equation*}
+        (\forall x) \left[
+            \Big(\neg P(x,f(x)) \lor R(x,f(x),g(x) \Big) \land
+            \Big( Q(x,g(x))\lor R(x,f(x),g(x) \Big) \right]
+    \end{equation*}
+\end{priklad}
 
-$$ (\forall x) (\neg P(x,f(x)) \lor R(x,f(x),g(x)) \land Q(x,g(x))\lor
-R(x,f(x),g(x)))$$
 
-\paragraph{Definícia:} \emph{Literál} -- premenná, alebo jej negácia. 
-\paragraph{Definícia:} \emph{Klauzula} -- disjunkcia literálov. \emph{Jednotková
-klauzula} (tiež jednoliterálna klauzula) obsahuje jeden literál. 
+\begin{definicia}[Literál]
+    Premenná, alebo jej negácia.
+\end{definicia}
+\begin{definicia}[Klauzula]
+    Disjunkcia literálov.
+    Špeciálne \emph{jednotková klauzula} (tiež jednoliterálna klauzula)
+    obsahuje jeden literál. 
+\end{definicia}
 
-\paragraph{Definícia:} \emph{Prázdna klauzula} neobsahuje žiaden literál
-(označujeme ju $\square$). Prázdna klauzula je nesplniteľná.  
+\begin{definicia}[Prázdna klauzula]
+    Klauzala neobsahujúca žiaden literál, (označujeme ju $\varepsilon$).
+    Prázdna klauzula je nesplniteľná, pretože neobsahuje žiaden
+    literál, ktorý by mohol byť splniteľný.    
+\end{definicia}
+\begin{poznamka}
+    Ak sa nad tým, zamyslíme, definovali sme si nesplniteľnosť
+    prázdnej klauzuly tak, aby výraz $\varepsilon \lor K$ bol
+    ekvivalentný výrazu $K$.
+\end{poznamka}
+
 
 \par (niečo na tabuli)
 $\{\neg P(x,y), R(x,y,z) \}$ \\
