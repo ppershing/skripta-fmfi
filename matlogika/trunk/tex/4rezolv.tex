@@ -5,8 +5,8 @@ rádu.
 
 Keď uvažujeme výrokovú logiku, interpretujeme formulu $A$ funkciou
 $\bar{v}$ -- valuáciou.
-Formulu sme nazvali tautológiou, ak $\bar{v}(A)$, ak pre každú
-interpretáciu dostaneme pravdu - treba preskúmať $2^n$ interpretácii.
+Formulu sme nazvali tautológiou, ak $\bar{v}(A)$ je pre každú
+interpretáciu pravda -- treba preskúmať $2^n$ interpretácii.
 V predikátovej logike je to ešte horšie.
 
 Zopakujme si, čo už vieme. V predikátovej logike máme funkčné a
@@ -14,22 +14,23 @@ predikátové symboly. Univerzum budem označovať netradične ako $D$.
 Znakom $M$ budeme totiž označovať jadro(maticu) formuly v prenexnom
 tvare.
 
-$n$-árny funkčný symbol bude funkcie $f(x_1,\dots,x_n): D^n \rightarrow D$.
-$n$-árny predikátový symbol bude funkcia
+Funkcia $f$ bude realizovaná ako $n$-árna funkcia $f(x_1,\dots,x_n): D^n \rightarrow D$.
+Predikát $P$ bude realizovaný ako $n$-árna funckia
 $P(x_1,\dots,x_n): D^n \rightarrow \{0,1\}$.
 
 Vo formule rozlišujeme voľné a viazané premenné.
-Ak má formula voľné premenné, neviem určiť jej pravdivostnú hodnotu,
-iba ak za všetky voľné premenné dosadím konštanty.
+Ak má formula voľné premenné, nevieme určiť jej pravdivostnú hodnotu,
+iba ak za všetky voľné premenné dosadíme konštanty.
 
-Ďalej, ku každej formule A viem zostrojiť takú,
+Ďalej, ku každej formule $A$ viem zostrojiť takú,
 ktorá je v prefixovom (prenexnom) tvare -- t.j. je 
 prefix + jadro: $(Q_1 x_+)\cdots(Q_n x_n)M$.
 
 Na upravenie formuly do tohoto tvaru používame prenexné operácie.
 Skutočnosť, že premenná $x$ má voľný výskyt vo formule $A$ budeme
-značiť ako $A(x)$, v opačnom prípade budeme písať jednoducho $B$.
+značiť ako $A(x)$, v opačnom prípade budeme písať jednoducho $A$.
 
+\medskip
 Prenexné operácie:
 \begin{align*}
     (Qx)A(x) \lor B &\equiv (Qx)(A(x) \lor B) \tag{1a}\\
@@ -65,56 +66,56 @@ prenexné operácie zhrnúť do nasledujúcich všeobecných transformácií.
     (Q_3 x)A(x) \land (Q_4 x)B(x) \equiv
         (Q_3 x)(Q_4 z)(A(x) \land B(z)) \tag{4b}
 \end{align*} 
-kde v oboch prípadoch $z$ je premenná, ktorá sa nevyskytuje voľne v A
-(a ani v pôvodnom B(x)).
+kde v oboch prípadoch $z$ je premenná, ktorá sa nevyskytuje voľne v $A$
+(a ani v pôvodnom $B(x)$).
 Tento najvšeobecnejší tvar ale zbytočne pridáva premenné a preto je
 vhodný iba v prípadoch, keď nefungujú operácie 1 až 3.
 \subsection{Algoritmus na zostrojenie prenexného tvaru}
-\startFIXME
-\paragraph{Krok 1}
-Odstránenie implikácií a ekvivalencií:
-\begin{align*}
-    A \leftrightarrow B &\equiv (A \implies B) \land (B \implies B) \\
-    A \implies B &\equiv \neg A \lor B
-\end{align*}
 
-\paragraph{Krok 2}
-Odstránenie dvojitej negácie a presun negácie k formule.
-\begin{align*}
-    \neg (\neg A) &\equiv A \\
-    \neg (A \lor B) &\equiv (\neg A \land \neg B) \\
-    \neg (A \land B) &\equiv (\neg A \lor \neg B) \\
-    \neg (\forall x) A(x) &\equiv (\exists x) \neg A(x) \\
-    \neg (\exists x) A(x) &\equiv (\forall x) \neg A(x)
-\end{align*}
+\begin{enumerate}
+\item Odstránenie implikácií a ekvivalencií:
+    \begin{align*}
+        A \leftrightarrow B &\equiv (A \implies B) \land (B \implies A) \\
+        A \implies B &\equiv \neg A \lor B
+    \end{align*}
 
-\paragraph{Krok 3}
-Premenovanie viazaných premenných, ak je to potrebné.
+\item Odstránenie dvojitej negácie a presun negácie k formule.
+    \begin{align*}
+        \neg (\neg A) &\equiv A \\
+        \neg (A \lor B) &\equiv (\neg A \land \neg B) \\
+        \neg (A \land B) &\equiv (\neg A \lor \neg B) \\
+        \neg (\forall x) A(x) &\equiv (\exists x) \neg A(x) \\
+        \neg (\exists x) A(x) &\equiv (\forall x) \neg A(x)
+    \end{align*}
 
-\paragraph{Krok 4}
-Použijeme zákony:
-\begin{align*}
-    (Q x) A(x) \lor B &\equiv (Q x)(A(x) \lor B) \\
-    (Q x)A(x) \land B &\equiv (Q x)(A(x) \land B) \\
-    (\forall x) A(x) \land (\forall x)B(x) &\equiv 
-        (\forall x)(A(x) \land B(x)) \\
-    (\exists x)A(x) \lor (\exists x)B(x) &\equiv 
-        (\exists x) (A(x)\lor B(x)) \\
-    (Q_1 x) A(x) \lor (Q_2 x)B(x) &\equiv
-        (Q_1 x)(Q_2 z) (A(x)\lor B(z)) \mbox{ $z$ nie je v $A(x)$}. \\
-    (Q_3 x) A(x) \land (Q_4 x)(B(X) &\equiv 
-        (Q_3 x)(Q_4 z)(A(x) \land (B(z))
-\end{align*}
+\item  Premenovanie viazaných premenných, ak je to potrebné.
+
+\item Použijeme zákony:
+    \begin{align*}
+        (Q x) A(x) \lor B &\equiv (Q x)(A(x) \lor B) \\
+        (Q x)A(x) \land B &\equiv (Q x)(A(x) \land B) \\
+        (\forall x) A(x) \land (\forall x)B(x) &\equiv 
+            (\forall x)(A(x) \land B(x)) \\
+        (\exists x)A(x) \lor (\exists x)B(x) &\equiv 
+            (\exists x) (A(x)\lor B(x)) \\
+        (Q_1 x) A(x) \lor (Q_2 x)B(x) &\equiv
+            (Q_1 x)(Q_2 z) (A(x)\lor B(z)) \mbox{ kde $z$ je nová
+            premenná} \\
+        (Q_3 x) A(x) \land (Q_4 x)(B(X) &\equiv 
+            (Q_3 x)(Q_4 z)(A(x) \land (B(z)) \mbox{ kde $z$ je nová
+            premenná}
+    \end{align*}
+\end{enumerate}
 
 \begin{priklad}
     \begin{align*}
-        (\forall x)(\forall y) \left( (\exists z)(P(x,z) \land
-            P(y,z)\right) \implies (\exists u) Q(x,y,u)) \equiv \\
-        (\forall x)(\forall y)\left(\neg (\exists z)(P(x,z)\land 
-            P(y,z))\lor(\exists u)Q(x,y,u)\right) \equiv \\
-        (\forall x)(\forall y)\left((\forall z)(\neg P(x,z)\lor 
-            \neg P(y,z)\right)\lor(\exists u)Q(x,y,u)) \equiv \\
-        (\forall x)(\forall y)(\forall z)(\exists u)(\neg P(x,z) \lor 
-            \neg P(y,z) \lor Q(x,y,u))
+        (\forall x)(\forall y) \left[ (\exists z) \left(P(x,z) \land
+            P(y,z)\right) \implies (\exists u) Q(x,y,u) \right] &\equiv \\
+        (\forall x)(\forall y)\left[\neg (\exists z)(P(x,z)\land 
+            P(y,z))\lor(\exists u)Q(x,y,u)\right] &\equiv \\
+        (\forall x)(\forall y)\left[(\forall z)(\neg P(x,z)\lor 
+            \neg P(y,z))\lor(\exists u)Q(x,y,u)\right] &\equiv \\
+        (\forall x)(\forall y)(\forall z)(\exists u) \left[ \neg P(x,z) \lor 
+            \neg P(y,z) \lor Q(x,y,u) \right] &
     \end{align*}
 \end{priklad}
