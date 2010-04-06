@@ -163,3 +163,76 @@ $\ref{fig:elliptic-plus}$.
         [0,1] + [3,3] &= [6, 6] 
     \end{align*}
 \end{priklad}
+
+Dostali sme sa do stavu, že máme grupu bodov eliptickej krivky. Toto
+samo o sebe je síce pekné, ale na naše účely to nestačí. To, čo by sme
+momentálne potrebovali vedieť je, že aká veľká daná grupa je (koľko má
+prvkov) a či obsahuje malé podgrupy.
+
+Druhá vlastnosť nás nezaujíma len tak zo zvedavosti -- Pohlig Hellmanov
+algoritmus, ktorý dobre poznáme by v tomto prípade narobil paseku a
+bezpečnosť schémy by bola ohrozená. Preto by sme boli najradšej, ak by
+sme mali prvočíselnú grupu. Začneme však postupne:
+
+\begin{veta}[\fixme{nazov}]
+    Nech $E$ je grupa bodov eliptickej krivky $\pmod{p}$.
+    Potom platí
+    \begin{equation*}
+        P+1 - 2 \sqrt{P} \le |E| \le P + 1 + 2 \sqrt{P}
+    \end{equation*}
+\end{veta}
+
+Dá sa teda garantovať, že počet bodov eliptickej krivky je dostatočne
+veľký, no o veľkých prvočíselných faktoroch nám to nič nepovie.
+Na pomoc príde \fixme{meno} Schufov algoritmus, ktorý v čase
+$O((\log{p})^6)$ vie presne určiť počet bodov krivky. Problém je však
+v tom, že na praktické účely je aj toto priveľa -- v roku 2001 vraj
+výpočet pre 200 bitové čísla trval niekoľho hodín. Teda, v súčasnosti
+nie je efektívne počítať veľkosť grupy tvojenej bodmi eliptickej
+krivky, minimálne nie na takej úrovni ako sa používa RSA napríklad pri
+zabezpečovaní secure http.
+
+Ako teda, že sa eliptické krivky používajú v praxi? Odpoveď je
+jednoduchá -- niekto si dal záležať a našiel takú grupu, že $|E|$ je
+prvočíslo. Napríklad, v štandarde DSS (Digital Signature standard), v
+časti o ECDSA (Elliptic Curve DSA) sa explicitne uvádzajú krivky,
+ktoré sa majú používať. Tieto krivky majú napevno zvolené $A=-3$ a $B$
+bolo volené tak, aby $|E|$ bolo prvočíslo -- napríklad tak, že sa
+postupne preberali možné parametre $B$ a $p$.
+
+\begin{poznamka}[Pre fanúšikov algebry]
+    Dá sa ukázať, že grupa $(E,+)$ je izomorfná so
+    $Z_{n_1} \times Z_{n_2}$, kde $n_2$ delí $n_1$, $n_2$ delí $p-1$ a
+    $n_1,n_2$ sú jednoznačne určené.
+    Navyše, vhodnou voľbou parametrov sa dá dosiahnuť, že
+    $n_2=1$, t.j. dostávame izomorfizmus so $Z_p^*$. Prirodzenou
+    otázkou v takomto prípade je, či izomorfizmus nezmenšuje
+    bezpečnosť -- mohli by sa dať aplikovať klasické algoritmy na
+    faktorizáciu aj na eliptické krivky. \fixme{ako to vlastne je?}
+\end{poznamka}
+
+Teraz si predstavíme algoritmus ECDSA určený na digitálne podpisovanie
+správ.
+
+\todo{ECDSA}
+Parametre, ktoré sa zvyknú uvádzať v tabuľkách eliptických kriviek
+\begin{itemize}
+    \item $A$
+    \item $B$
+    \item $2P$ -- modulus
+    \item $FR$ -- field representation - buď ako polynómy nad $GF(2^m)$
+        alebo ako mocniny generátora
+    \item $seed$ -- keď niekto neverí vygenerovaným krivkám, môže si
+        overiť, že boli vygenerované podľa tohoto seedu.
+    \item $G$ -- generátor vhodnej podgrupy, je to bod patriaci krivke
+    \item $n$ -- rád generátora \fixme{grupy ci podgrupy?}
+    \item $k$ -- kofaktor, $k=|E| / n$
+\end{itemize}
+\begin{poznamka}
+    V štandarde sa používajú len krivky s kofaktorom $k=1$, teda platí
+    $G \isomorph Z_p$.
+\end{poznamka}
+
+\todo{ElGamal v eliptickych}
+
+\todo{zvysok co Stanek rozpraval a nemam v poznamkach}
