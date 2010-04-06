@@ -72,7 +72,7 @@ výsledok nazveme štandardnou skolemovskou formou.
     a po Skolemizácii máme
     \begin{equation*}
         (\forall x) \left[
-            \Big(\neg P(x,f(x)) \lor R(x,f(x),g(x) \Big) \land
+            \Big(\neg P(x,f(x)) \lor R(x,f(x),g(x)) \Big) \land
             \Big( Q(x,g(x))\lor R(x,f(x),g(x) \Big) \right]
     \end{equation*}
 \end{priklad}
@@ -98,15 +98,33 @@ výsledok nazveme štandardnou skolemovskou formou.
     ekvivalentný výrazu $K$.
 \end{poznamka}
 
+\begin{poznamka}
+    Štandardná skolemovská forma sa dá zadať aj v množinovom zápise.
+    Takýto zápis budeme často využívať.
+\end{poznamka}
 
-\par (niečo na tabuli)
-$\{\neg P(x,y), R(x,y,z) \}$ \\
-$P \lor Q$, $\{P, Q\}$
-
-$y: f(x)$
-$z: g(x)$
-
-\stopFIXME
+\begin{priklad}
+    Uvažujme klauzulu $P \land Q \land \neg R$.\footnote{
+    Toman na tomto mieste píše $P \lor Q \lor \neg R$, som si však
+    takmer istý, že to má byť opačne.
+    }
+    Ako vieme ju zapísať ako
+    množinu literálov v konjunkcii nasledovne
+    $\{P, Q, \neg R\}$.
+    Podobne, pre štandardnú formu
+    \begin{equation*}
+        (\forall x) \left[
+            \Big(\neg P(x,f(x)) \lor R(x,f(x),g(x)) \Big) \land
+            \Big( Q(x,g(x))\lor R(x,f(x),g(x) \Big) \right]
+    \end{equation*}
+    z minulého príkladu vieme spraviť ekvivalentný množinový zápis ako
+    \begin{equation*}
+        \left\{
+            \neg P(x,f(x)) \lor R(x,f(x),g(x)), \quad
+            Q(x,g(x))\lor R(x,f(x),g(x) 
+        \right\}
+    \end{equation*}
+\end{priklad}
 
 \begin{veta}
     Nech $\mathscr{S}$ je množina klauzúl, ktoré tvoria štandardnú
@@ -126,6 +144,7 @@ $z: g(x)$
                 M[x_1, \dots, x_{r-1}, f(x_1, \dots, x_{r-1}), x_{r+1}, x_n]
     \end{equation*}
 
+\startFIXME
     \noindent Tvrdíme, že $A$ nie je splniteľná práve vtedy keď $A_1$ nie je splniteľná:
     \begin{itemize}
     %%% {{{
