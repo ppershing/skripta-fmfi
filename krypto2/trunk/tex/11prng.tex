@@ -54,3 +54,59 @@ Uveďme si jednoduchý príklad
   vygenerovaných bitov.
 \end{priklad}
 
+\subsection{Pseudonáhodné generátory}
+
+\begin{definicia}
+Algoritmus $G$ je pseudonáhodný generátor (PRNG) so vstupom $s \in \{0,1\}^n$ (seed) ak platí:
+\begin{itemize}
+\item $\exists l(\cdot)\colon |G(s)| = l(n) > n$ (teda generátor generuje dlhšiu postupnosť ako seed, ktorý dostane)
+\item Vlastnosť pseudonáhodnosti: $\forall \text{PPT}~ D\colon |Pr[D(r) = 1] - Pr[D(G(s)) = 1]| \leq negl(n)$, kde 
+$r \inr \{0,1\}^{l(n)}, s \inr \{0,1\}^n$ (teda nevieme statistickým testom rozlíšiť výstupnú postupnosť od náhodnej postupnosti)
+\end{itemize}
+\end{definicia}
+
+Táto definícia sa dosť ťažko overuje. Existuje ale tzv. Next-bit test, pri ktorom sa ukáže, že ak algoritmus
+spĺňa Next-bit text, tak je aj PRNG.
+
+\begin{definicia}
+Algoritmus $G$ spĺňa Next-bit text, ak pre ľubovoľný PPT $A$ platí:
+$forall i < l(n)\colon Pr[A(x_1, x_2, \dots, x_i) = x_{i+1}] \leq \frac{1}{2} + negl(n)$, kde
+$x \in G(s), s \inr \{0,1\}^n$ (teda neexistuje algoritmus, ktorý na základe
+prvých $i$ bitov vie úspešne tipnút nasledujúci bit).
+\end{definicia}
+
+\begin{veta}
+Algoritmus $G$ je PRNG práve vtedy ak spĺňa Next-bit test.
+\end{veta}
+
+\begin{dokaz}
+"$\Rightarrow$": Ak by $G$ nespĺňal Next-bit test, tak priamo máme rozlišovací algoritmus.
+
+"$\Leftarrow$": Nech $G$ nespĺňa nejaký štatistický test $A^{'}$. Na základe neho zostrojíme Next-bit
+test $A$ nasledovne:
+
+Uvažujme nasledovné distribúcie ($x_1 \dots x_{l(n)} \leftarrow G(s), r_1 \dots r_{l(n)} \inr \{0,1\}$):
+$$H_0 = r_1 r_2 \dots r_{l(n)}$$
+$$H_1 = x_1 r_2 \dots r_{l(n)}$$
+$$H_2 = x_1 x_2 r_3 \dots r_{l(n)}$$
+$$\dots$$
+$$H_{l(n)} = x_1 x_2 \dots x_{l(n)}$$
+
+Keďže $A^{'}$ vie rozlišovať, tak platí:
+$$|Pr[A^{'}(t) = 1 | t \in H_0] - Pr[A^{'}(t) = 1 | t \in H_{l(n)}]| \geq \frac{1}{p(n)}$$
+Bez ujmy na všeobecnosti predpokladajme, že výraz v absolútnej hodnote je kladný.
+Potom ho vieme rozpísať ako:
+$$(Pr[A^{'}(t) = 1 | t \in H_0] - Pr[A^{'}(t) = 1 | t \in H_{1}]) + (Pr[A^{'}(t) = 1 | t \in H_1] - Pr[A^{'}(t) = 1 | t \in H_{2}])
++ \dots $$ $$+ (Pr[A^{'}(t) = 1 | t \in H_{l(n)-1}] - Pr[A^{'}(t) = 1 | t \in H_{l(n)}]) \geq \frac{1}{p(n)}$$
+
+A teraz aspoň jeden sčítanec v zátvorke musí byť nezanedbateľný (ináč by bol celý výsledok zanedbateľný), čiže
+$\exists i < l(n)\colon Pr[A^{'}(t) = 1 | t \in H_{i}] - Pr[A^{'}(t) = 1 | t \in H_{i+1}] \geq \frac{1}{l(n)p(n)}$.
+
+A Next-bit test $A(x_1 \dots x_i)$ zostrojíme nasledovne:
+Zoberieme postupnosti $s_0 = x_1 \dots x_i 0 r_{i+2} \dots r_{l(n)}, s_1 = x_1 \dots x_i 1 r_{i+2} \dots r_{l(n)}$
+a posuňme ich $A^{'}$. Ak:
+$A^{'}(s_0) = A^{'}(s_1)$, tak vratíme $b \inr \{0,1\}$. Ak $A^{'}(s_0) = 0 = \neg A^{'}(s_1)$, tak vrátime 0.
+A ak $A^{'}(s_0) = 1 = \neg A^{'}(s_1)$, tak vrátime 1.
+
+Dá sa ukázať, že šanca na úspech bude $\frac{1}{2} + \frac{1}{l(n)p(n)}$.
+\end{dokaz}
