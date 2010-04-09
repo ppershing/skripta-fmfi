@@ -60,7 +60,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 \begin{definicia}[Jazyk generovaný $OL$-systémom]
 %%% {{{
     Jazyk generovaný $OL$-systémom $G$ je 
-    $L(G)=\{u\in V^{*} \mm w \odvodeniena{*} u\}$.\footnote{teda prakticky
+    $L(G)=\{u\in V^{*} \mm w \odvodenie^{*} u\}$.\footnote{teda prakticky
         každá vetná forma, ktorú z
         počiatočného slova dostaneme (vrátane jeho samého), patrí do
         jazyka $L(G)$, ak $G$ je $L$-systém
@@ -79,14 +79,23 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 \begin{definicia}[$POL$-systém]
 %%% {{{
     Propagating/pokračujúci $OL$-systém je taký $OL$-systém, ktorý
-    je bez-$\eps$.\fixme{Znamena to, ze nema epilon alebo ze
-        nema epsilonove pravidla}
-%%% }}}        
+    je bez-$\eps$ (neobsahuje slovo $\eps$).
+%%% }}}
 \end{definicia}
+
+\begin{poznamka}
+%%% {{{ preco to nie je rovnake ako x->\eps
+    Predchádzajúca definícia \emph{nie je} ekvivalentná, že
+    $OL$-systém neobsahuje pravidlá tvaru $x \pravidlo \eps$.
+    Môžeme sa o tom presvedčiť na jednoduchom systéme
+    $G=(\{a,b\},\ \{a \pravidlo a, b \pravidlo \eps\},\ a)$, ktorý
+    obsahuje jediné slovo -- $a$.
+%%% }}}
+\end{poznamka}
 
 \begin{priklad}
 %%% {{{ priklad a^{2^n}
-    Uvažujme systém $G_1=(\{ a \},\{ a \pravidlo a^2\}, a)$.
+    Uvažujme systém $G_1=(\{ a \},\ \{ a \pravidlo a^2\},\ a)$.
     Potom $L(G_1)=\{ a^{2^n} \mm n \ge 0\}$.
     Ukážka odvodzovania slova v tomto OL systéme je na obrázku 
     \ref{img:ol_priklad_1}.
@@ -98,8 +107,8 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     kedy v jednom kroku odvodenia
     musíme použiť prepisovacie pravidlá na všetky symboly.
     Skúsme ale do $G_1$ pridať jedno pravidlo:\\
-    $G_{1}'=(\{ a \},\{ a\pravidlo a,
-    a \pravidlo a^2 \}, a)$ potom $L_{G_1'}=a^{+}$ a veľká sila je razom
+    $G_{1}'=(\{ a \},\ \{ a\pravidlo a,
+    a \pravidlo a^2 \},\ a)$ potom $L_{G_1'}=a^{+}$ a veľká sila je razom
     preč. Je tomu tak preto, lebo pridaním pravidla $a\pravidlo a$ sme
     umožnili akoby rozsynchronizovať odvodenie, a teda symboly sa
     teraz neprepisujú naraz, ale každý v inom čase.
@@ -116,7 +125,8 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 
 \begin{priklad}
 %%% {{{ fibonacciho postupnost
-    Uvažujme systém $G_{2}=(\{a,b\},\{ a \pravidlo b, b \pravidlo ab \},a)$.
+    Uvažujme systém $G_{2}=(\{a,b\},\ \{ a \pravidlo b, b \pravidlo ab \},
+        \ a)$.
     Jazyk $L(G_{2})$ budú
     tvoriť slová, ktorých dĺžky sú členy Fibonacciho postupnosti, ako
     možno vidieť na obrázku \ref{img:ol_priklad_2}. Máme teda
@@ -134,8 +144,8 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 
 \begin{priklad}
 %%% {{{ stvorce
-    Zoberme $G_3=(\{a,b,c\},\{a \pravidlo abcc,b \pravidlo bcc,
-        c \pravidlo c\},a)$. Dĺžky
+    Zoberme $G_3=(\{a,b,c\},\ \{a \pravidlo abcc,b \pravidlo bcc,
+        c \pravidlo c\},\ a)$. Dĺžky
     slov jazyka $L(G_3)$ tvoria postupnosť štvorcov (druhých mocnín)
     prirodzených čísel (obr. \ref{img:ol_priklad_3}).
 
@@ -148,6 +158,7 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
 %%% }}}
 \end{priklad}
 
+%%% cast o AFL
 
 \begin{definicia}[$\mathcal{AFL}$]
 %%% {{{
@@ -156,23 +167,24 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
     zjednotenie $\union$, zreťazenie $\cdot$, kladnú iteráciu $^+$,
     nevymazávajúci homomorfizmus $h_{\eps}$,
     inverzný homomorfizmus $h^{-1}$ a prienik s regulárnym jazykom
-    $\intersect\mathcal{R}$.
+    $\intersect \Regclass$.
 %%% }}}    
 \end{definicia}
 
 \begin{veta}
-    $\Lang_{OL}$ je anti-$\mathcal{AFL}$ (t.j. nie je uzavretá
+    $\Langclass{OL}$ je anti-$\mathcal{AFL}$ (t.j. nie je uzavretá
     na žiadnu $\mathcal{AFL}$ operáciu)
 \end{veta}
 
 \begin{dokaz}
+%%% {{{
     Pre každú $\mathcal{AFL}$ operáciu ukážeme, že trieda
-    $\Lang_{OL}$ na ňu nie je uzavretá
+    $\Langclass{OL}$ na ňu nie je uzavretá
 
     \begin{itemize}
     \item[$\union:$] Nech $L_1 = \{ a \}, L_2=\{ a^2 \}$.
-        Platí $L_1,L_2 \in \Lang_{OL}$ a sporom
-        predpokladajme, že $L=L_1 \union L_2 = \{ a, a^2 \}\in \Lang_{OL}$.
+        Platí $L_1,L_2 \in \Langclass{OL}$ a sporom
+        predpokladajme, že $L=L_1 \union L_2 = \{ a, a^2 \}\in \Langclass{OL}$.
         Potom existuje nejaký $OL$-systém $G$, ktorý jazyk $L$
         generuje. Ten ale musí mať nejaký axiom, môžu nastať dve možnosti:
         %%% {{{
@@ -202,170 +214,257 @@ neterminálov na jeden krok a ako uvidíme, existuje množstvo
         obsahujúcim iba dve slová}
         %%% }}}
 
-    \item[$\cdot:$] Zvolíme $L_1=\{a\}\in \Lang_{OL},
-        L_2=\{\eps,a\}\in\Lang_{OL}$ ale $L_1 \cdot
-        L_2=\{a,a^2\}\not\in \Lang_{OL}$ ako sme v
-        predchádzajúcej časti ukázali.
+    \item[$\cdot:$] Zvolíme $L_1=\{a\}\in \Langclass{OL},
+        L_2=\{\eps,a\}\in\Langclass{OL}$ ale $L_1 \cdot
+        L_2=\{a,a^2\}\not\in \Langclass{OL}$ ako sme ukázali v
+        predchádzajúcej časti.
 
     \item[$ ^+:$] Definujme 
         $L=\{aa\} \union \{ b^{2^n} \mm n \ge 2 \}
-            \in\Lang_{OL}$. Dôkaz urobíme sporom -- nech $G$ je
+            \in\Langclass{OL}$. Dôkaz urobíme sporom -- nech $G$ je
         $OL$-systém pre $L^{+}$:
 
         \begin{enumerate}
-        \item Uvedomme si, že axiomom $G$ môže byť jedine $aa$, ak by tomu
-            tak nebolo, axiomom by muselo byť $b^{i}$ pre nejaké $i\geq4$.
-            To by sme ale nutne museli mať pravidlo $b\pravidlo a$ alebo 
-            $b\pravidlo a^2$, lenže potom by sme vyrobili aj slovo tvaru 
-            $b^k a^l$ kde  $k,l\neq0$ a  také slovo do jazyka $L^{+}$
-            nepatrí. \fixme{Cela tato cast nejako nesedi, preco
-            axiomom nemoze byt $a^2b^4$?}
+        %%% {{{
+        \item Môžeme predpokladať, že $L$ je nad abecedou $\{a,b\}$.
+            Ak by totiž bol nad väčšou abecedou, ostatné písmená
+            by nemohli byť odvoditeľné a teda ich môžeme (aj s
+            pravidlami, ktoré ich obsahujú) odstrániť
 
-        \item $\eps \not \in L^{+} \then G$ je $POL$-systém
+        \item $\eps \not \in L^{+} \then G$ je $POL$-systém. Ba čo
+            viac, $L$ nemôže obsahovať pravidlá $a \pravidlo \eps$ a
+            $b \pravidlo \eps$. Zdôvodnenie je jednoduché --
+            predstavme si, že máme aspoň jedno z týchto pravidiel.
+            Vieme, že slovo $a^2$ resp. $b^4$ sú v jazyku $L^{+}$.
+            Potom by sme ale mohli odvodiť (pomocou príslušného
+            pravidla) slovo $\eps$, čo je spor.
 
-        \item Pretože $aa$ je axiom, a $a \pravidlo \eps \not \in G$,
+        \item Uvedomme si, že axiomom $G$ môže byť jedine $aa$.
+            Totiž, tým, že nemáme epsilonové pravidlá,
+            počas odvodzovania nemôžeme skracovať slovo.
+            To ale znamená, že axiomom musí byť najkratšie slovo, a
+            také máme práve jedno -- $aa$.
+
+
+        \item Pretože $aa$ je axiom a $a \pravidlo \eps \not \in G$,
             musí existovať pravidlo typu
-            $a\pravidlo b^i, i\ge 0$ (inak by sme nemohli vytvoriť
-            slovo čisto zložené z písmen $b$)
+            $a\pravidlo b^t$ (inak by sme nemohli vytvoriť
+            slovo čisto zložené z písmen $b$).
+            Navyše musí platiť $1 \le t\le 3$ -- ak by bolo $t$ príliš
+            veľké, nevedeli by sme odvodiť $b^4$ (druhé najkratšie
+            slová v jazyku $L^{+}$ sú $a^4$ a $b^4$,
+            pričom z $a^4$ nemôžeme odvodiť $b^4$, inak by sme
+            potrebovali pravidlo $a \pravidlo b$ a vtedy by sme vedeli
+            odvodiť $a^2 \odvodenie b^2 \not \in L^{+}$).
 
-        \item $a^4 \in L^{+} \then a\pravidlo a^2\in P$ (nesmú tu byť
-            pravidlá tvaru $a\pravidlo a,a\pravidlo a^3$,
-            pretože by sme mohli vyrobiť
-            aj slovo $ab^{i}\not\in L^{+}$ resp.
-            $a^3b^i \not \in L^{+}$)
+        \item Vieme, že $a^4 \in L^{+}$. Potom $a\pravidlo a^2 \in P$.
+            Dôkaz je jednoduchý
+            -- potrebujeme nejakým spôsobom odvodiť $a^4 \in L^{+}$.
+            Pravidlá $a\pravidlo a,a\pravidlo a^3$ by nám
+            umožnovali odvodiť aj slovo $ab^{3t}\not\in L^{+}$
+            resp. $a^3b^t \not \in L^{+}$ a teda ich nemôžeme mať.
+           
+            Keď uvážime, že $a^4$ môžeme byť schopní odvodiť len zo
+            slov $a^2, b^4$ pretože ostatné slová $\in L$ sú už
+            dlhšie, ostanú nám 2 možnosti -- buď máme
+            $a \pravidlo a^2 \in P$ alebo vieme z $b^4$ odvodiť $a^4$,
+            čo implikuje $b \pravidlo a \in P$. Lenže to by muselo
+            platiť $a \pravidlo bb \in P$, lebo chceme na jediný krok
+            odvodiť $aa \odvodenie b^4$ (odvodenie nemôže byť na viac
+            krokov, keďže ako sme spomínali, nemáme ďalšie krátke
+            slová).
+            Čiže $a \pravidlo bb, b \pravidlo a \in P$.
+            Potom ale môžeme odvodiť $aa \odvodenie b^4 \odvodenie
+              ab^6 \not \in L^{+}$ a dostávame spor.
 
-        \item $a^2 \odvodeniena{*} b^4 \then a\pravidlo b^{i}\in P$ 
-            pre $1\le i\le 3$. Ak teraz použijeme 
-            $a\pravidlo a^2$ a $a\pravidlo b^{i}$ dostaneme 
-            $a^2 \odvodenie a^2 b^i \not\in L^{+}$, čo je spor.
+        \item Ak teraz použijeme na axiom $aa$ pravidlá 
+            $a\pravidlo a^2$ a $a\pravidlo b^{t}$, dostaneme 
+            $a^2 \odvodenie a^2 b^t \not\in L^{+}$, čo je spor.
+        %%% }}}
         \end{enumerate}
 
     \item[$h_{\eps}:$] Uvažujme jazyk
-        $L=\{\eps,a,a^2\}\in \Lang_{OL}$ a definujme
+        $L=\{\eps,a,a^2\}\in \Langclass{OL}$ a definujme
         homomorfizmus $h$ nasledovne: $h(a)=a^2$, potom
-        $h(L)=\{\eps,a^2,a^4\} \not \in \Lang_{OL}$, čo sa
+        $h(L)=\{\eps,a^2,a^4\} \not \in \Langclass{OL}$, čo sa
         dokáže rozbitím na prípady podobne ako pre $\union$.
 
-    \item[$h^{-1}:$] Uvažujme jazyk $L=\{a\}\in \Lang_{OL}$ a
+    \item[$h^{-1}:$] Uvažujme jazyk $L=\{a\}\in \Langclass{OL}$ a
         homomorfizmus $h$ daný predpisom $h(a)=a^2$. Potom
-        $h^{-1}(L)=\emptyset \not\in \Lang_{OL}$.
+        $h^{-1}(L)=\emptyset \not\in \Langclass{OL}$.
 
-    \item[$\intersect\mathcal{R} :$] Uvažujme jazyk
-        $L_1=\{\eps,a,a^2\} \in \Lang_{OL}$ a regulárny
+    \item[$\intersect \Regclass :$] Uvažujme jazyk
+        $L_1=\{\eps,a,a^2\} \in \Langclass{OL}$ a regulárny
         jazyk $L_2=\{a^3\}^{*}$.
         Dostávame rovnosť $L_1 \intersect
-        L_2 =\{\eps\}\not\in \Lang_{OL}$.\footnote{
-            $\{\eps\}\not\in\mathcal{L}_{OL}$, pretože každý
+        L_2 =\{\eps\}\not\in \Langclass{OL}$.\footnote{
+            Jazyk $\{\eps\}\not \Langclass{OL}$, pretože každý
             $OL$-systém, ktorý by tento jazyk generoval, by musel mať ako
-            axiom $\eps$, čo je z definície axiomu nemožné}
+            axiom $\eps$, čo je z definície axiomu nemožné.
+        }
     \end{itemize}
+%%% }}}
 \end{dokaz}
 
 \begin{dosledok}
-    $\mathcal{L}_{OL}$ nie je uzavretá na substitúciu ani na
+    $\Langclass{OL}$ nie je uzavretá na substitúciu ani na
     zobrazenie $a$-prekladačom a nie je uzavretá ani na $\intersect$ a
-    $^{C}$ (komplement)
+    $^{C}$ (komplement).
 \end{dosledok}
 
 \begin{dokaz}
-    Čo sa týka uzavretosti tejto triedy na zobrazenie $a$-prekladačom,
+%%% {{{
+    Čo sa týka uzavretosti tejto triedy na zobrazenie $\alpha$-prekladačom,
     princíp dôkazu je podobný ako pri predchádzajúcich uzáverových
-    vlastnostiach. Keďže $\mathcal{L}_{OL}$ nie je uzavretá na
-    $\intersect\mathcal{R}$, tak nemôže byť uzavretá ani na $\intersect$
-    všeobecne. Uzavretosť na $^{C}$ nechávame na čitateľa
+    vlastnostiach. Keďže $\Langclass{OL}$ nie je uzavretá na
+    $\intersect \Regclass$, tak nemôže byť uzavretá ani na $\intersect$
+    všeobecne. Uzavretosť na $^{C}$ nechávame na čitateľa.
+%%% }}}
 \end{dokaz}
 
+%%%
+
 \begin{veta}
-    $\mathcal{L}_{OL}$ je uzavretá na zrkadlový obraz
+    $\Langclass{OL}$ je uzavretá na zrkadlový obraz.
 \end{veta}
 
 \begin{dokaz}
+%%% {{{
     Idea je rovnaká ako pre bezkontextové gramatiky. Je daný jazyk
     $L$. Nech $G=(V,P,w)$ je $OL$-systém taký, že $L(G)=L$. Zostrojíme
-    $OL$-systém $G'=(V',P',w')$ tak, že $V=V'$, ak $a\ra b_{1}\dots
-    b_{n}\in P$, potom $a\ra b_{n}\dots b_{1}\in P^{'}$ a ak
-    $w=w_{1}\dots w_{m},\forall i\med w_i\in V$, tak $w'=w_{m}\dots
-    w_{1}$. Je zrejmé, že $L(G')=L^{R}$
+    $OL$-systém $G'=(V',P',w')$ nasledovne: $V'=V$, ak 
+    $a\pravidlo b_{1}\dots b_{n}\in P$,
+    potom $a\pravidlo b_{n}\dots b_{1}\in P^{'}$ a ak
+    $w=a_{1}\dots a_{m}$ kde $a_i\in V$, tak $w'=a_{m}\dots
+    a_{1}$. Je zrejmé, že $L(G')=L^{R}$.
+%%% }}}
 \end{dokaz}
 
+%%% L \subseteq a* <=> L \in L_OL
+
 \begin{veta}
-    Nech $L\in\mathcal{L}_{OL}$ je jazyk $L\subseteq a^{*}$, potom
-    $L^{*}\in\mathcal{L}_{OL}$
+    Nech $L \in \Langclass{OL}$ je jazyk spĺňajúci $L\subseteq a^{*}$.
+    Potom $L^{*} \in \Langclass{OL}$.
 \end{veta}
 
 \begin{dokaz}
-    Nech $L=L(G)$ kde $G=(\{a\},P,a^{m}),m\geq1$
+    Nech $L=L(G)$ kde $G=(\{a\},\ P,\ w\eq a^{m})$ pričom $m\geq1$. Máme 2 možnosti:
 
     \begin{enumerate}
-    \item $L$ je konečný:
+    \item $L$ je konečný: Pretože $L \in \Langclass{OL}$, musí platiť
+        $L \ne \{\eps\}, L \ne \emptyset$.
         \begin{enumerate}
-        \item $L=\{a\}$ alebo $L=\{\eps,a\}\rightsquigarrow
-            L^{*}=a^{*}\in\mathcal{L}_{OL}$
+        \item $L=\{a\}$ alebo $L=\{\eps,a\}$. Potom
+            $L^{*}=a^{*} \in \Langclass{OL}$
+
         \item nech $L=\{w_{1},\dots,w_{n}\}$, kde
-            $w_{1}\neq\eps,w_{1}\neq a$ (jazyk musí obsahovať slovo
-            dlhšie ako $|a|$), potom $L^{*}=L(G')$, kde $G'=(\{a\},\{a\ra
-            w_{1},\dots,a\ra w_{n},a\ra\eps\},w_{1})$
+            $w_{1}\neq\eps$ a tiež $w_{1}\neq a$ (jazyk musí obsahovať aspoň
+            jedno slovo dĺžky aspoň 2).
+            Potom $L^{*}=L(G')$, kde $G'=(\{a\},\ 
+            \{a \pravidlo \eps, a\pravidlo w_1, a \pravidlo w_2, \dots,
+            a \pravidlo w_{n}\},\ w_{1})$.
         \end{enumerate}
 
-    \item $L$ je nekonečný: $\forall i\med 1\leq i\leq m$ nech
-        $v_{i}$ je najkratšie slovo v $L$ také, že $|v_{i}|\cong i\med
-        mod\med m$ ak existuje, inak ho nedefinujeme. Nech $G'$ je
-        $OL$-systém tvaru $G'=(\{a\},P',a^{m})$, kde
-        $P'=\{a\ra\eps\}\union\{a\ra u\mm
-        a^{m}\underset{G}\Rightarrow u$ alebo $\exists i\med
-        v_{i}\underset{G}\Rightarrow u\}$. Tvrdíme, že $L(G')=L^{*}$
+    \item $L$ je nekonečný:
+        Pre $0 \le i < m$ označme ako $v_i$
+        najkratšie slovo v $L$ také, že $|v_{i}|\equiv i \pmod{m}$ ak 
+        také slovo existuje, inak $v_i$ nedefinujeme.
+        Nech $G'$ je $OL$-systém tvaru $G'=(\{a\},\ P',\ a^{m})$, kde
+        $P'=\{a\pravidlo\eps\}\union
+            \{a\pravidlo u \mm a^{m} \underset{G}{\odvodenie} u
+            \mbox{ alebo }
+            \exists i: v_{i} \underset{G}{\odvodenie} u\}$.
+        Tvrdíme, že $L(G')=L^{*}$.
 
         \begin{description}
-        \item{$\subseteq$:} Každé $u$ v pravých stranách $P'$ patrí do
-        $L$ a teda všetky slová generované $OL$-systémom $G'$ patria do
-        $L^{*}$, pretože začíname z $a^{m}\in L$, v ďalšom kroku prepíšeme
-        každý symbol buď na $\eps$ (a teda sa ho zbavíme), alebo ho
-        prepíšeme na slovo $\in L$, vetná forma má teda v každom kroku
-        tvar $w=w_{1}\dots w_{n},\med\forall i\med i=1\dots n\med w_{i}\in
-        L\rightsquigarrow w\in L^{*}$
+        \item{$\subseteq$:} Každé $u$ na pravej strane nejakého
+            pravidla z $P'$ patrí do
+            $L$ a teda všetky slová generované $OL$-systémom $G'$ patria do
+            $L^{*}$, pretože začíname z $a^{m}\in L$, v ďalšom kroku prepíšeme
+            každý symbol buď na $\eps$ (a teda sa ho zbavíme), alebo ho
+            prepíšeme na slovo $\in L$. Vetná forma má teda v každom kroku
+            tvar $w=w_1 \dots w_n$ kde
+            $\forall i\in\{1,\dots,n\}:w_i\in L$ a teda $w\in L^{*}$.
+
         \item{$\supseteq$:} Opäť budeme kvôli lepšej zrozumiteľnosti
-        rozlišovať dva prípady:
-        \begin{description}
-        \item{A)} $L\subseteq L(G')$ ukážeme MI vzhľadom na počet krokov
-        odvodenia nasledovne:
-        \begin{description}
-        \item{$1^{\circ}$} $a^{m}\in L$, súčasne $a^{m}\in L(G')$
-        \item{$2^{\circ}$} ak $x\in L$ a $x\underset{G}\Rightarrow y$, potom
-        $x\underset{G'}\Rightarrow y$, lebo $x=(a^{m})^{j}v_{i}$ pre
-        nejaké $i,j$
-        \[
-        \overbrace{\underbrace{aa\dots a}_{m}\underbrace{aa\dots
-        a}_{m}\dots\underbrace{aa\dots a}_{m}
-        \underbrace{\underbrace{aa\dots a}_{m}\dots\underbrace{aa\dots
-        a}_{m}\underbrace{aa\dots a}_{i}}_{v_{i}}}^{x}
-        \]
+            rozlišovať dva prípady:
+            \begin{description}
+            \item{A)} $L\subseteq L(G')$ (pozor, zatiaľ neukazujeme $L^*$).
+                Ukážeme matematickou indukciou vzhľadom na počet krokov
+                odvodenia nasledovne:
+                \begin{description}
+                %%% {{{
+                \item{$1^{\circ}$} $a^{m}\in L$, súčasne $a^{m}\in L(G')$
 
-        Pri prepisovaní $x$ na $y$ budeme postupovať nasledovne: prvé
-        písmenko zo skupiny $a^{m}$ prepíšeme na to, na čo by sa to
-        prepísalo celé v $G$, zvyšok prepíšeme na $\eps$, to isté
-        urobíme v časti $v_{i}$, inak povedané $y=u_{1}u_{2}\dots
-        u_{j}u_{j+1}$, kde $a^{m}\underset{G}\ra u_{i},1\leq i\leq j,
-        v_{i}\underset{G}\ra u_{j+1}$, teda $x\underset{G'}\ra y$
+                \item{$2^{\circ}$} Ak $x\in L$ a
+                    $x\underset{G}\odvodenie y$, potom
+                    $x\underset{G'}\odvodenie y$, lebo musí platiť
+                    $x=(a^{m})^{j}v_{i}$ pre nejaké $i,j$.
+                    Situáciu tema môžeme znázorniť nasledovne:
 
-        \end{description}
-        \item{B)} Nech $w\in L^{*}$: ak $w=\eps, w\in L$, tak je to
-        zrejmé z A). Nech $w=w_{1}\dots w_{k},$ \mbox{$w_{i}\in L$},
-        $\forall i\med w_{i}\neq\eps, k\geq2,\forall i\med
-        a^{m}\overset{*}{\underset{G'}\Rightarrow}w_{i}$\\
-        $a^{m}\overset{*}\Ra (a^{m})^{k}x$ pre nejaké $x\in a^{*}$ teda
-        $a^{m}\overset{*}{\underset{G'}\Ra}a^{mk}\overset{*}{\underset{G'}\Ra}
-        w^{1}\dots w_{k}$ teda sme našli nejaké odvodenie slova $w$, no
-        ešte musíme zabezpečiť, aby slová $w_{1},\dots,w_{k}$ vznikali
-        synchrónne na rovnaký počet krokov (musíme akosi ntiahnuť
-        odvodenie tých $w_{i}$, ktoré vznikajú skôr ako ostatné. Urobíme
-        to nasledovne: ak $a\underset{G'}\Ra y$, tak odvodenie
-        natiahneme\footnote{toto máme existenciou neepsilonových pravidiel
-        zabezpečené} $a^{m}\underset{G'}\Ra a^{m}a^{t}\underset{G'}\Ra
-        y\eps$. Našli sme teda (existuje) odvodenie, kde odvodenia
-        $w_{i}$ majú rovnakú dĺžku $\forall i$
-        \end{description}
-        \end{description}
+                    \begin{equation*}
+                    %%% {{{
+                        \overbrace{
+                            \underbrace{aa\dots a}_{m}
+                            \underbrace{aa\dots a}_{m}\dots
+                            \underbrace{aa\dots a}_{m}
+                            \underbrace{\underbrace{aa\dots a}_{m}\dots
+                                        \underbrace{aa\dots a}_{m}
+                                        \underbrace{aa\dots a}_{i}
+                                        }_{v_{i}}
+                                    }^{x}
+                    %%% }}}
+                    \end{equation*}
 
+                    Pri prepisovaní $x$ na $y$ budeme postupovať nasledovne:
+                    prvé písmenko zo skupiny $a^{m}$ prepíšeme na to,
+                    na čo by sa to prepísalo celé v $G$,
+                    zvyšok prepíšeme na $\eps$.
+                    To isté urobíme v časti $v_{i}$,
+                    inak povedané $y=u_1 u_2 \dots u_j v$,
+                    kde $a^m \underset{G}{\odvodenie} u_j$ pre
+                    $j\in\{1,\dots, i\}$ 
+                    a $v_i \underset{G}{\odvodenie} v$.
+                    Teda $x\underset{G'}{\odvodenie} y$.
+                %%% }}}
+                \end{description}
+
+
+            \item{B)} Nech $w\in L^{*}$. Ak $w=\eps$ alebo $w\in L$, tak je to
+                zrejmé z A).
+                Nech teda $w=w_1 \dots w_k, w_{i}\in L$.
+                Môžeme predpokladať, že
+                $\forall i\in\{1,\dots,k\}: w_i \ne \eps$,
+                $k\geq2$, $\forall i: a^m \underset{G'}{\odvodenie^*}
+                w_i$.
+
+                Náš jazyk obsahuje (aspoň jedno) pravidlo, ktoré má
+                dlhšiu pravú stranu (inak by pôvodný systém pre $L$
+                musel mať iba pravidlá s pravou stranou $\eps$ alebo
+                $a$ a to by bolo v spore s tým, že je nekonečný)
+                a preto vieme odvodiť
+                $a^m \underset{G'}\odvodenie^* (a^m)^{k} x$ pre nejaké
+                $x\in a^{*}$. Postupne teda môžeme odvodzovať
+                $a^m \underset{G'}{\odvodenie^*} a^{mk} x
+                     \underset{G'}{\odvodenie^*} w^1 \dots w_k \eps$,
+                čiže sme našli nejaké odvodenie slova $w$, no
+                ešte musíme zabezpečiť, aby slová $w_1, \dots, w_k$ vznikali
+                synchrónne na rovnaký počet krokov
+                (musíme akosi natiahnuť odvodenie tých $w_i$,
+                ktoré vznikajú skôr ako ostatné).
+                Urobíme to nasledovne: ak $a^m
+                \underset{G'}\odvodenie^* y$,
+                tak odvodenie natiahneme\footnote{
+                    toto máme existenciou neepsilonových pravidiel zabezpečené
+                } nasledovne -- namiesto $a^m
+                \underset{G'}\odvodenie^* y$ 
+                spravíme
+                $a^m \underset{G'}\odvodenie a^{m} z
+                     \underset{G'}\odvodenie^* y\eps$.
+                Tým pádom existuje odvodenie, kde
+                jednotlivé pod-odvodenia $w_{i}$ majú rovnakú dĺžku.
+            \end{description}
+        \end{description}
     \end{enumerate}
 \end{dokaz}
 
