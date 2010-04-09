@@ -1,12 +1,11 @@
 \section{Skolemovské štandardné formuly}
 
-\startFIXME
-
 Budeme sa zaoberať procedúram založených na Herbrandovej myšlienke vyvrátenia 
 (nájdenie interpretácie, ktorá vyvracia danú formulu).
 Davis a Putnam pracovali s formulou v prefixovom
 normálnom tvare a vychádzali z nasledujúcich hľadísk:
 \begin{enumerate}
+%%% {{{
     \item Každá formula logiky 1. rádu
         môže byť vyjadrená v prefixovom normálnom tvare.
 
@@ -19,6 +18,7 @@ normálnom tvare a vychádzali z nasledujúcich hľadísk:
         existenčný kvantifikátor, dostaneme formulu, ktorá je nesplniteľná
         vtedy, keď je nesplniteľná pôvodná formula -- nesplniteľnosť
         transformovanej formuly sa robí ľahšie).
+%%% }}}        
 \end{enumerate}
 
 Transformácia formuly:
@@ -44,6 +44,7 @@ Tento postup môžem zopakovať pre všetky existenčné kvantifikátory a
 výsledok nazveme štandardnou skolemovskou formou.
 
 \begin{priklad}
+%%% {{{
     Nájdite štandardnú formu pre formuly:
     \begin{equation*}
         (\exists x) (\forall y) (\forall z) (\exists u) (\forall v) (\exists w)
@@ -55,9 +56,11 @@ výsledok nazveme štandardnou skolemovskou formou.
     \begin{equation*}
         (\forall y)(\forall z)(\forall w) P(c,y,z,f(y,z),v,g(y,z,v))
     \end{equation*}
+%%% }}}    
 \end{priklad}
 
 \begin{priklad}
+%%% {{{
     Nájdite štandardnú formu pre formulu:
     \begin{equation*}
         (\forall x)(\exists y) (\exists z) 
@@ -75,6 +78,7 @@ výsledok nazveme štandardnou skolemovskou formou.
             \Big(\neg P(x,f(x)) \lor R(x,f(x),g(x)) \Big) \land
             \Big( Q(x,g(x))\lor R(x,f(x),g(x) \Big) \right]
     \end{equation*}
+%%% }}}    
 \end{priklad}
 
 
@@ -103,7 +107,12 @@ výsledok nazveme štandardnou skolemovskou formou.
     Takýto zápis budeme často využívať.
 \end{poznamka}
 
+\begin{poznamka}
+    Formula môže mať viacero štandardných foriem.
+\end{poznamka}
+
 \begin{priklad}
+%%% {{{
     Uvažujme klauzulu $P \land Q \land \neg R$.\footnote{
     Toman na tomto mieste píše $P \lor Q \lor \neg R$, som si však
     takmer istý, že to má byť opačne.
@@ -124,6 +133,7 @@ výsledok nazveme štandardnou skolemovskou formou.
             Q(x,g(x))\lor R(x,f(x),g(x) 
         \right\}
     \end{equation*}
+%%% }}}    
 \end{priklad}
 
 \begin{veta}
@@ -133,6 +143,7 @@ výsledok nazveme štandardnou skolemovskou formou.
 \end{veta}
 
 \begin{dokaz}
+%%% {{{
     Uvažujme formulu $A$ tvaru $A: (Q_1 x_1) \dots (Q_n x_n) M[x_1, \dots x_n]$.
     Nech $Q_r$ je prvý existenčný kvantifikátor, čiže $A$ je tvaru
     $(\forall x_1) (\forall x_2) \dots (\forall x_{r-1}) (\exists x_r)
@@ -144,7 +155,6 @@ výsledok nazveme štandardnou skolemovskou formou.
                 M[x_1, \dots, x_{r-1}, f(x_1, \dots, x_{r-1}), x_{r+1}, x_n]
     \end{equation*}
 
-\startFIXME
     \noindent Tvrdíme, že $A$ nie je splniteľná práve vtedy keď $A_1$ nie je splniteľná:
     \begin{itemize}
     %%% {{{
@@ -155,11 +165,12 @@ výsledok nazveme štandardnou skolemovskou formou.
         ktoré je rovné $f(x_1, \dots, x_{r-1})$.
         Tá istá interpretácia teda vyhovuje aj pôvodnej formule $A$.
 
-    \item[$\Leftarrow:$] Opäť sporom. Nech, že $A$ je splniteľná.
+    \item[$\Leftarrow:$] Opäť sporom. Nech $A$ je splniteľná.
+        Teda existuje interpretácia $I$, ktorá vyhovuje formule $A$.
         Potom pre každé $x_1, \dots, x_{r-1}$ existuje také $x_r$, že platí 
         $M[x_1, \dots, x_{r-1}, x_r, \dots, x_n]$.
-        Máme teda interpretáciu $I$ formuly $A$. Rozšírme $I$ o $(r-1)$-árny funkčný 
-        symbol $f$ tak, že $f(x_1, \dots, x_{r-1}) = x_R$. Potom $I'$
+        Rozšírme $I$ o $(r-1)$-árny funkčný 
+        symbol $f$ tak, že $f(x_1, \dots, x_{r-1}) = x_r$. Potom $I'$
         vyhovyje formule $A_1$ a teda dostávame spor.
     %%% }}}
     \end{itemize}
@@ -173,10 +184,12 @@ výsledok nazveme štandardnou skolemovskou formou.
     \dots \iff$ $A_m\equiv S$ nie je splniteľná.
     No a $S$ nie je splniteľná práve vtedy keď $\mathscr{S}$ nie je
     splniteľná.
+%%% }}}
 \end{dokaz}
 
 \begin{poznamka}
-    Ak $A$ \emph{nie je splniteľná}, potom môžeme písať
+    Ak $A$ \emph{nie je splniteľná}, tak splniteľnosť $A$ je
+    ekvivalentná splniteľnosti $\mathscr{S}$, teda môžeme písať
     $A \equiv \mathscr{S}$.
 \end{poznamka}
 
