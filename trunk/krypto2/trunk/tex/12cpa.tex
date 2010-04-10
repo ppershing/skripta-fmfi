@@ -1,1 +1,93 @@
 \section{CPA odolnosť symetrických šifier}
+
+Majme nejaký symetrický šifrovací systém. Formálne nech:
+$\Pi = <Gen(1^n); E_k(\cdot); D_k(\cdot)>$, kde $Gen$ je generátor
+kľúča s dĺžkou $n$, $E_k(\cdot)$ je šifrovacia transformácia (môže byť
+pravdepodobnostná a nakoniec sa ukáže, že je dobré aby aj bola)
+a $D_k(\cdot)$ je dešifrovacia transformácia. Samozrejme, požadujeme, aby
+systém bol korektný teda $\forall x, k\colon D_k(E_k(x))=x$.
+
+Chceme, aby systém bol odolný voči útoku s možnosťou voľby otvoreného textu.
+Teda útočník má k dispozícií orákulum, ktoré mu umožňuje zašifrovať ľubovoľný
+text, ktorý si vyberie. Na to, aby sme ukázali, že systém je odolný vočí 
+útoku s voľbou otvoreného textu, tak je dobré ukázať, že útočník
+nevie rozlišovať šifrové texty, teda:
+
+\begin{definicia}
+Šifrovací systém $\Pi$ má nerozlíšiteľné šifrové texty pri $CPA$, ak platí:
+$$Pr[PrivK_{A,\Pi}^{CPA}(n) = 1] \leq \frac{1}{2} + negl(n)$$
+
+Kde $PriK_{A,\Pi}^{CPA}$ je experiment s útočníkom $A$ na šifre $\Pi$ definový nasledovne:
+\begin{enumerate}
+\item $K = Gen(1^n)$ - vygenerujeme nejaký kľúč
+\item Útočníkový dáme šifrovacie orákulum, to si označme ako $A^{E_k(\cdot)}$. Následne $A^{E_k(\cdot)} \to (m_0,m_1)$ -
+útočník vygeneruje 2 otvorené texty (navyše požadujeme $|m_0| = |m_1|$). 
+\item Zvolíme $b \inr \{0,1\}$ a položíme $c = E_k(m_b)$, to pošleme útočníkovi.
+\item Útočník sa pokúsi rozlíšiť šifrový text $A^{E_k(\cdot)}(c) \to b^{'} \in \{0,1\}$.
+\item Ak $b=b{'}$, tak experiment vráti $1$, ináč $0$.
+\end{enumerate}
+\end{definicia}
+
+Všimnime si, že nijako nezakazujeme útočníkovi sa priamo spýtať na zašifrovanie $m_0$, resp. $m_1$. 
+Preto $E_k$ nemôže byť deterministický. 
+
+\subsection{Pseudonáhodné funkcie}
+
+Podobne ako sme chceli pseudonáhodným generátorom konštruovať
+postupnosť, ktorá sa čo najviac podobala na náhodnú, tak tu
+chceme zostrojiť funkciu, ktorá sa čo najviac podobná na náhodnú. 
+Tá má následné mnohostranné využitie, napr. pri konštrukciu symetrických šifier.
+
+Pseudonáhodnú funkciu definujeme podobne ako pseudonáhodnú postupnosť (nevieme ju
+v pravdepodobnostnom polynomiálnom čase odlíšiť od náhodnej). 
+Navyše to bude funkcia s kľúčom. 
+Teda $F: \{0,1\}^* \times \{0,1\}^* \to \{0,1\}^*$. Pre jednoduchosť, nech dĺžky
+kľúča, správý a výstupu funkciu sú rovnaké, teda $n = |k| = |x| = |F_k(x)|$.
+
+\begin{definicia}
+Funkcia $F_k(x)$ je pseudonáhodná ak $\forall PPT D \exists negl(\cdot)\colon$
+$$|Pr[D^{F_k} = 1] - Pr[D^f = 1]| \leq negl(n)$$
+kde: $k \inr \{0,1\}^n; f \inr \{ \{0,1\}^n \to \{0,1\}^n\}$.
+\end{definicia}
+
+Pokiaľ máme pseudonáhodný generátor $G$, tak vieme pomocou neho zostrojiť pseudonáhodnú
+funkciu nasledovne:
+Nech $|G(x)=2n|$ a $G(x) = G_0(x)||G_1(x)$. Potom $F_k(x_1 x_2 \dots x_n) = G_{x_n}(\dots(G_{x_2}(G_{x_1}(k)))\dots)$.
+
+Teraz si ukážeme ako pomocou pseudonáhodnej funkciu zostrojiť symetrickú šifru $\Pi$, ktorá má nerozlíšiteľné
+šifrové texty pri CPA útoku:\\
+$Gen(1^n)\colon k \inr \{0,1\}^n$\\
+$E_k(m)\colon <r, F_k(r) \oplus m> m \in \{0,1\}^n, r \inr \{0,1\}^n$\\
+$D_k(<r,s>) = F_k(r) \oplus s$
+
+\begin{veta}
+$\Pi$ má nerozlíšiteľné šifrové texty pri CPA útoku, ak $F_k(\cdot)$ je pseudonáhodná.
+\end{veta}
+
+\begin{dokaz}
+Dôkaz rozdelíme na 2 kroky.
+
+{\bf 1. krok:} Zostrojíme šifrovací systém $\tilde{\Pi}$, kde miesto $F_k(\cdot)$ použijeme
+náhodnú funkciu $f$. Ukážeme, že tento systém má nerozlíšiteľný šifrové texty pri CPA útoku.
+Útočník teda dostane zašifrovaný text $<r_c, f(r_c) \oplus m_b>$.
+Môžu nastať 2 situácie. Buď $r_c$ bolo použité v odpovediach na útočníkové otázky alebo nie. Ak bolo, tak túto situáciu
+označme ako $Repeat$. Počet otázok označme ako $q(n)$, keďže útočník pracuje v polynomiálnom čase, aj
+tento počet je polynomiálny. Potom šanca na úspech útočníka je nasledovná:
+$$Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1] = Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1\land Repeat]  + Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1 \land \neg Repeat]$$
+
+Vieme, že $Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1\land Repeat] \leq Pr[Repeat] = \frac{q(n)}{2^n} = neql(n)$.
+A navyše $Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1\land \neg Repeat] = \frac{1}{2}$, lebo v tomto prípade útočník
+nevie nič a môže len tipovať, teda celkovo: $Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1] \leq \frac{1}{2} + negl(n)$, čo sme chceli dokázať.
+
+{\bf 2. krok:} Ukážeme, že ak $\Pi$ nie je bezpečná, tak vieme rozlišovať medzi $F_k(\cdot)$ a $f$.
+Nech útočník $A$ má nezanedbateľnú pravdepodobnosť úspechu $\frac{1}{2}+\epsilon(n)$. 
+Potom náš rozlišovač $D$ bude simulovať $A$ pričom pri šifrovaní použije funkciu, ktorú sa práve 
+snaží odlíšiť. A vráti $1$ ak útočník uspel a $0$ ak neuspel.
+Potom platí: $Pr[D^{F_k} = 1] - Pr[D^f = 1] = Pr[PrivK_{A,\Pi}^{CPA}(n)=1] - Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1] 
+= \epsilon(n) - negl(n)$, čo je nezanedbateľná šanca na úspech.
+\end{dokaz}
+
+
+
+
+
