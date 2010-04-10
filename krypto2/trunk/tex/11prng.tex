@@ -110,3 +110,11 @@ A ak $A^{'}(s_0) = 1 = \neg A^{'}(s_1)$, tak vrátime 1.
 
 Dá sa ukázať, že šanca na úspech bude $\frac{1}{2} + \frac{1}{l(n)p(n)}$.
 \end{dokaz}
+
+Príkladom pseudonáhodného generátora je generátor podľa štandardu ANSI-X9.17:
+
+Na začiatku nastavíme náhodné hodnoty $K, seed$. 
+
+Vygenerovanie náhodného výstupu vyzerá nasledovne. Zoberie sa $timestamp$ a zašifruje
+sa pomocou kľúča $K$, dostaneme hodnotu $T_i = E_k(timestamp)$. Výstup z generátora bude
+hodnota $out = E_k(T_i \oplus seed)$. Navyše sa nastaví nový seed ako hodnota $E_k(T_i \oplus out)$.
