@@ -288,11 +288,11 @@ kľúčov popísané v \ref{proc:genecdsa}.
 
 Podpisovanie budeme robiť veľmi podobne podpisovaniu v klasickej DSA
 schéme, teda, podpisom bude správa $\langle r,s \rangle$ získaná 
-volaním funkcie \ref{proc:sigecdsa}.
+volaním funkcie \ref{proc:signecdsa}.
 
 \begin{procedure}[!h]
-    \caption{SigECDSA($m,sk=d, D=\langle q,FR, A,B,G,n,h \rangle$)}
-    \label{proc:sigecdsa}
+    \caption{SignECDSA($m,sk=d, D=\langle q,FR, A,B,G,n,h \rangle$)}
+    \label{proc:signecdsa}
     \Repeat{$s=0$}{
         \Repeat{$r=0$}{
             $k \inr \{ 1, \dots, n-1 \}$ \;
