@@ -6,21 +6,23 @@ si niekoľko užitočných tvrdení, ktoré budeme neskôr využívať. Jedná s
 hlavne o vlastnosti náhodného zobrazenia.
 
 Majme náhodné zobrazenie $f:X \rightarrow X$, kde $|X| = n$.
-Budeme uvažovať postupnosť $x_0 = s, x_1=f(s)=f(x_0), x_2 =
-f(f(s))=f(x_1), \dots x_{i+1} = f(x_{i})$ pre nejaké začiatočné $s$.
+Budeme uvažovať postupnosť $x_0 = s,\ x_1=f(s)=f(x_0),\ x_2 =
+f(f(s))=f(x_1),\ \dots,\ x_{i+1} = f(x_{i})$ pre nejaké začiatočné $s$.
 Keďže obor hodnôt je konečný, najviac po $n$ krokoch sa nám nejaké
 číslo zopakuje a dostaneme cyklus. Vo všeobecnosti môžeme postupnosť
 rozdeliť na začiatočný ``chvost'' dĺžky $\lambda$ a cyklus dĺžky
 $\mu$, ako na obrázku \ref{fig:cyclelen}.
 
 \begin{figure}[h!]
-    \caption{Chvost a telo cyklu pri náhodnom zobrazení}
-    \label{fig:cyclelen}
     \centering
     \includegraphics[scale=0.9]{img/03/cyclelen.1.mps}
+    \caption{Chvost a telo cyklu pri náhodnom zobrazení}
+    \label{fig:cyclelen}
 \end{figure}
 
-Základom pre ďalšiu analýzu bude nasledujúce tvrdenie
+\noindent
+Základom pre ďalšiu analýzu bude nasledujúce tvrdenie:
+
 \begin{lema}
     Nech $f:X\rightarrow X, |X|=n$ je náhodné zobrazenie.
     Potom pre $n\rightarrow \infty$ platí
@@ -44,24 +46,25 @@ ktoré používajú konštantńu pamäť.
 \subsubsection{Metódy na hľadanie cyklov}
 
 Začneme Floydovou metódou, ktorá sa niekedy aj označuje metódou dvoch
-bežcov. Pracuje na veľmi jednoduchom princípe - predstavme si, že máme
-2 bežce - ukazovatele na prvky postupnosti. Ak jedným bežcom budeme
-pohybovať rýchlejšie ako druhým a oba tieto ptvky ležia v cykle, po
+bežcov. Pracuje na veľmi jednoduchom princípe -- predstavme si, že máme
+2 bežce -- ukazovatele na prvky postupnosti. Ak jedným bežcom budeme
+pohybovať rýchlejšie ako druhým a oba tieto prvky ležia v cykle, po
 istom čase (najneskôr celý prechod cyklu) jeden z ukazovateľov dobehne
 ten prvý. Formálne, metóda porovnáva nasledujúce dvojice prvkov:
-$(x_1,x_2), (x_2,x_4), (x_3,x_6), (x_4,x_8), \dots$.
+$(x_1,x_2),\ (x_2,x_4),\ (x_3,x_6),\ (x_4,x_8),\ \dots$.
 Jej funkčnosť dokážeme nasledovne: Predpokladajme, že v aktuálnom
 kroku algoritmu máme prvky $x_i, x_{j=2i}$. Ďalej redpokladajme,
 že oba tieto prvky ležia v cykle, ktorého dĺžka je $\lambda$.
 Ak by platilo $i = j \pmod{\lambda}$, tak nutne platí $x_i = x_j$.
-Uvažujme teda, že rovnosť nenastáva. V tom prípade ale platí $j-i = i \ne
-0 \pmod{\lambda}$ a táto hodnota každým krokom vzrastie o 1. Čiže,
-najneskôr o $\lambda$ krokov bude $j-i = 0 \pmod{\lambda}$.
+Uvažujme teda, že rovnosť nenastáva. V tom prípade ale platí 
+$j-i = i \pmod{\lambda}$. Na začiatku je táto hodnota 0 
+a každým krokom algoritmu vzrastie o 1. Čiže,
+najneskôr o $\lambda$ krokov bude $j-i \equiv 0 \pmod{\lambda}$.
 Preto môžeme časovú zložitosť algoritmu ohraničiť ako $O(\mu+\lambda)$.
 
 \begin{algorithm}
-    \label{algo:floyd}
     \caption{Floydov algoritmus na hľadanie cyklov}
+    \label{algo:floyd}
     $x1 \assign f(s)$\;
     $x2 \assign f(f(s))$\;
     \While{$x1 \ne x2$}{
@@ -71,6 +74,7 @@ Preto môžeme časovú zložitosť algoritmu ohraničiť ako $O(\mu+\lambda)$.
     output $\assign$ prvok cyklu je $x1$\;
 \end{algorithm}
 
+\medskip
 Ďalšou metódou je Brentova metóda detekcie cyklov. Má rovnakú
 asymptotickú časovú zložitosť ako Floydova, v praxi však používa menej
 výpočtov funkcie $f$ a preto je zväčša preferovaná.
@@ -80,19 +84,19 @@ $x_{2^i+k}$, až dosiahneme ďalšiu mocninu dvojky, vtedy začneme ďalším
 blokom. Algoritmus skončí v okamihu, keď je dĺžka aktuálneho bloku
 (mocnina dvojky) väčšia ako dĺžka cyklu a už sme do cyklu vošli.
 Preto je čas Brentovej metódy $O(\lambda + \mu)$.
-Graficky je to naznačené na obrázku \ref{fig:brent} a príslušný kód je
-\ref{algo:brent}.
+Graficky je to naznačené na obrázku \ref{fig:brent} a príslušný
+algoritmus je \ref{algo:brent}.
 
 \begin{figure}[h!]
-    \label{fig:brent}
-    \caption{Brentova metóda na hľadanie cyklov}
     \centering
     \includegraphics{img/03/brent.1.mps}
+    \caption{Brentova metóda na hľadanie cyklov}
+    \label{fig:brent}
 \end{figure}
 
 \begin{algorithm}
-    \label{algo:floyd}
     \caption{Brentov algoritmus}
+    \label{algo:brent}
     $x1 \assign f(s)$\;
     $x2 \assign f(f(s))$\;
     $i \assign 2$\;

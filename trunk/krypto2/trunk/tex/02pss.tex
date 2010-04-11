@@ -1,15 +1,15 @@
-\subsection{PSS - Probabilistic signature scheme}
+\subsection{PSS -- Probabilistic signature scheme}
 
 PSS je dokázateľne bezpečná (za istých predpokladov) schéma na
 digitálne podpisy. Navrhli ju páni Mihir Bellare a Philip Rogaway
-v \cite{pss}. Celá schéma je vlastne akýmsi znáhodnením hashovania - k
+v \cite{pss}. Celá schéma je vlastne akýmsi znáhodnením hashovania -- k
 správe sa pridá náhodný reťazec dĺžky $k_0$ a hash sa počíta až
 potom. Samozrejme, pri overovaní hashu treba nejakým spôsobom
 vyriešiť, aby sme sa dozvedeli použitý náhodný reťazec. Ako sa ukáže
 neskôr, toto nie je až taký veľký problém ak použijeme ďalšiu
 hashovaciu funkciu.
 
-PSS má oproti doteraz spomínaným schémam jednu veľkú výhodu - pri
+PSS má oproti doteraz spomínaným schémam jednu veľkú výhodu -- pri
 dôkaze jej bezpečnosti sa ukáže ``tesná'' hranica. T.j., možnosť
 prelomiť PSS s pravdepodobnosťou $\eps$ priamo umožňuje lámanie RSA s
 rovnakou pravdepodobnosťou.
@@ -17,13 +17,13 @@ rovnakou pravdepodobnosťou.
 
 \subsubsection{RSA-PSS}
 
-Podpisová schéma $PSS[k_0,k_1]=(GenPSS,SignPSS,VerifyPSS)$ je
+Podpisová schéma $PSS[k_0,k_1]=\langle GenPSS,SignPSS,VerifyPSS\rangle$ je
 parametrizovaná dvoma hodnotami $k_0, k_1$.
-Generovanie kľúča $k$ je presne rovnaké ako v $GenRSA-FDH$.
+Generovanie kľúča $k$ je presne rovnaké ako v $GenRSA\mbox{-}FDH$.
 
-Pri podpisovaní bude náš algoritmus používať 2 hashovacie funkcie.
-Prvú si označíme $h$ a nazveme ju kompresor, pretože 
-$h:\{0,1\}^* \rightarrow \{0,1\}^{k_1}$.
+Pri podpisovaní bude náš algoritmus používať dve hashovacie funkcie.
+Prvú si označíme $h$ a nazveme ju kompresor, pretože bude skracovat
+správu, $h:\{0,1\}^* \rightarrow \{0,1\}^{k_1}$.
 Druhá funkcia bude $g$ (nazvaná aj generátor), pričom
 $g:\{0,1\}^{k_1} \rightarrow \{0,1\}^{k-k_1-1}$.
 
