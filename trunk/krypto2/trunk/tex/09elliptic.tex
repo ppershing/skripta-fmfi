@@ -32,7 +32,8 @@ generovaniu krivky dostatočnú pozornosť.
     \end{equation*}
     kde $A,B$ sú vopred zvolené konštanty.
     Pre body $(x,y)$ si zavedieme grupovú operáciu sčítania ``+''
-    a neutrálny prvok $0$, ktorý bude predstavovať bod v nekonečne.
+    a neutrálny prvok $\mathbf{0}$
+    ktorý bude predstavovať bod v nekonečne.
 \end{definicia}
 
 Ak si zoberieme pole $F=R$, eliptická krivka $x^3 -3x+3=y^2$ je
@@ -73,7 +74,7 @@ Poďme ale späť k sčítavaniu
     Majme body $P=[x_1,y_1]$ a $Q=[x_2,y_2]$.\footnote{Body
         eliptických kriviek zvykneme označovať veľkými písmenami}
     Nech $P \ne -Q$, kde znamienkom ``-'' budeme označovať
-    bod $(x,-y)$ (Prípad $P = -Q$ definujeme ako $P+Q=0$).
+    bod $(x,-y)$ (Prípad $P = -Q$ definujeme ako $P+Q=\mathbf{0}$).
     Potom operáciu sčítania $P+Q$ definujeme nasledovne:
 
     \begin{equation*}
@@ -90,7 +91,7 @@ Poďme ale späť k sčítavaniu
     \end{equation*}
 \end{definicia}
 
-Budeme tvrdiť, že množina bodov $\{(x,y)\} \union 0$
+Budeme tvrdiť, že množina bodov $\{(x,y)\} \union \mathbf{0}$
 eliptickej krivky spolu s operáciu ``+'' bude tvoriť grupu. Toto
 netriviálne algebraické tvrdenie prenecháme na neveriaceho
 čitateľa. Ak teda zoberieme ako $F$ nejaké konečné
@@ -154,7 +155,7 @@ $\ref{fig:elliptic-plus}$.
        E=\Big\{ [0,1], [0,10], [1,5], [1,6],
                 [2,0], [3,3], [3,8],
                 [4,5], [4,6], [5,2], [5,9],
-                [6,5], [6,6], [9,2], [9,9], 0 \Big\}
+                [6,5], [6,6], [9,2], [9,9], \mathbf{0} \Big\}
     \end{equation*}
     Príklad niektorých sčítaní:
     \begin{align*}
@@ -184,7 +185,7 @@ sme mali prvočíselnú grupu. Začneme však postupne:
 
 Dá sa teda garantovať, že počet bodov eliptickej krivky je dostatočne
 veľký, no o veľkých prvočíselných faktoroch nám to nič nepovie.
-Na pomoc príde \fixme{meno} Schufov algoritmus, ktorý v čase
+Na pomoc príde Schoofov algoritmus, ktorý v čase
 $O((\log{p})^6)$ vie presne určiť počet bodov krivky. Problém je však
 v tom, že na praktické účely je aj toto priveľa -- v roku 2001 vraj
 výpočet pre 200 bitové čísla trval niekoľho hodín. Teda, v súčasnosti
@@ -211,6 +212,7 @@ postupne preberali možné parametre $B$ a $p$.
     faktorizáciu aj na eliptické krivky. \fixme{ako to vlastne je?}
 \end{poznamka}
 
+
 Teraz si predstavíme algoritmus ECDSA určený na digitálne podpisovanie
 správ.
 
@@ -227,7 +229,7 @@ kriviek:
     \item $seed$ -- keď niekto neverí vygenerovaným krivkám, môže si
         overiť, že boli vygenerované podľa tohoto seedu.
     \item $G$ -- generátor prvočíselnej podgrupy, je to bod patriaci krivke
-    \item $n$ -- rád $G$ (generátora podgrupy)
+    \item $n$ -- rád $G$ (generátora podgrupy), je to prvočíslo
     \item $k$ -- kofaktor, $k=|E| / n$
 \end{itemize}
 \begin{poznamka}
@@ -246,17 +248,133 @@ Príklady:
 \end{itemize}
 Vo všeobecnosti sa volia takmer mersenovské prvočísla.
 
+\begin{poznamka}
+    Pre záujemcov máme výpis jednej takej krivky zo štandardu FIPS 186-3
+    (\cite{fips186}).
+    \paragraph{D.1.3.3.2 Curve B-283}
+    \begin{itemize}
+        \item $n$ =   77706 7556890291 6283677847 6272940756 2656962592 
+                    4376904889 1091965267 7004427778 7378692871
+        \item Polynomial Basis:  
+            \begin{itemize}
+            \item $b$ = 27b680a c8b8596d a5a4af8a 19a0303f ca97fd76 45309fa2 
+                    a581485a f6263e31 3b79a2f5  
+            \item $G_x$ = 5f93925 8db7dd90 e1934f8c 70b0dfec 2eed25b8 557eac9c 
+                    80e2e198 f8cdbecd 86b12053  
+            \item $G_y$ = 3676854 fe24141c b98fe6d4 b20d02b4 516ff702 350eddb0 
+                    826779c8 13f0df45 be8112f4  
+            \end{itemize}
+        \item Normal Basis:  
+            \begin{itemize}
+            \item $seed$ =  77e2b073 70eb0f83 2a6dd5b6 2dfc88cd 06bb84be  
+            \item $b$ = 157261b 894739fb 5a13503f 55f0b3f1 0c560116 66331022 
+                    01138cc1 80c0206b dafbc951  
+            \item $G_x$ = 749468e 464ee468 634b21f7 f61cb700 701817e6 bc36a236 
+                    4cb8906e 940948ea a463c35d  
+            \item $G_y$ = 62968bd 3b489ac5 c9b859da 68475c31 5bafcdc4 ccd0dc90 
+                    5b70f624 46f49c05 2f49c08c  
+            \end{itemize}
+    \end{itemize}
+\end{poznamka}
+
 Ale vráťme sa k samotnému podpisovaniu. Prvou častou je generovanie
-kľúčov:
-\begin{procedure}
-    \caption{GenECDSA()}
+kľúčov popísané v \ref{proc:genecdsa}.
+\begin{procedure}[!h]
+    \caption{GenECDSA($n$)}
     \label{proc:genecdsa}
     $sk = d \inr \{1, \dots, n-1\}$ \;
     $pk = Q = d*G = \underbrace{G+G+G+\dots+G}_{d \times}$ \;
 \end{procedure}
 
-\todo{zvyšok ECDSA}
+Podpisovanie budeme robiť veľmi podobne podpisovaniu v klasickej DSA
+schéme, teda, podpisom bude správa $\langle r,s \rangle$ získaná 
+volaním funkcie \ref{proc:sigecdsa}.
 
-\todo{ElGamal v eliptickych}
+\begin{procedure}[!h]
+    \caption{SigECDSA($m,sk=d, D=\langle q,FR, A,B,G,n,h \rangle$)}
+    \label{proc:sigecdsa}
+    \Repeat{$s=0$}{
+        \Repeat{$r=0$}{
+            $k \inr \{ 1, \dots, n-1 \}$ \;
+            $\langle x_1, y_1 \rangle = k * G$ \;
+            $r \assign x_1 \pmod{n}$ \;
+        }
+        $s \assign k^{-1}(\mbox{SHA-1}(m) + d*r) \pmod{n}$ \;
+    }
+    \Return{$\langle r,s \rangle$}\;
+\end{procedure}
 
+Čitateľ sa možno čuduje, prečo pri podpisovaní vôbec nevyužívame
+súradnicu $y_1$ z bodu $k*G$ eliptickej krivky. Jeden z dôvodov môže
+byť nasledujúci -- $y_1$ môže nadobúdať len 2 rôzne hodnoty. Preto
+je zrejme výhodné obetovať stratu bezpečnosti o 1 bit výmenov za veľkosť
+podpisu (ak by sme chceli podpisovať aj $y_1$, potrebovali by sme
+zväčšiť veľkosť podpisu). Dĺžka podpisu ECDSA je $2|E|$.\fixme{nemala
+by to byt 2 x velkost podgrupy?}
+
+Overovanie podpisu je taktiež nápadne podobné štandardnému DSA
+algoritmu a je popísané vo funkcii \ref{proc:verifyecdsa}.
+
+\begin{procedure}[!h]
+    \caption{verifyECDSA($m,sig=\langle r,s \rangle,pk= Q,
+            D=\langle q,FR, A,B,G,n,h \rangle$)}
+    \label{proc:verifyecdsa}
+    \lIf{$(r \not \in \{1, \dots, n-1\} \lor
+           s \not \in \{1, \dots, n-1\})$}{reject}\;
+    $u_1 \assign \mbox{SHA-1}(m) s^{-1}\pmod{n}$ \;
+    $u_2 \assign r s^{-1} \pmod{n}$ \;
+    $X \assign u_1 * G + u_2 * Q$ \;
+    \lIf{$(X=\mathbf{0})$}{reject\;}
+    $ \langle x_1, y_1 \rangle \assign X$ \;
+    \eIf{$x_1 \pmod{n} = r$}{
+        accept\;
+        }{
+        reject\;
+        }
+\end{procedure}
+
+\fixme{Nasledujucu vec Stanek povedal (ale neviem, ci to bolo presne
+tak formulovane), kazdopadne, mne sa zda ze to nesedi, lebo neviem
+nikde najst podmienku v overovani, ze by nastala tato situacia}
+Bolo by dobré poznamenať, že pri generovaní podpisu nezaručujeme
+podmienku $X=\mathbf{0}$. Odpravedlniť toto správanie sa dá tým, že
+pravdepodobnosť nastatia takejto udalosti je zanedbateľná a zrejme
+je rozumné ušetriť na rýchlosti podpisovania
+na úkor nemožnosti overenia podpisu v tomto nepravdepodobnom prípade.
+
+Ako vždy by bolo pekné ukázať, že overovanie korektných podpisov
+funguje.
+Predpokladajme, že správa bola podpísaná správne, teda platí
+$s = k^{-1} (\mbox{SHA-1}(m) + d r) \pmod{n}$.
+Potom 
+\begin{equation*}
+    k \equiv s^{-1} (\mbox{SHA-1}(m) + d r)  \equiv
+    s^{-1} \mbox{SHA-1}(m) + s^{-1} d r \equiv u_1 + u_2 d \pmod{n}
+\end{equation*}
+Tým pádom
+$u_1 G + u_2 Q = (u_1 + u_2 d)*G = k*G$.
+To, že je ťažké sfalšovať podpis sa dokáže podobne ako v krypto I pre
+DSA. Z podobných vlastností tiež môžeme vypichnúť nutnosť testovanie,
+že $r,s$ patria do správneho intervalu.
+
+\begin{poznamka}
+    Uvažujme ElGamalov šifrovací algoritmus. Ak si dobre spomenieme,
+    tento algoritmus pracuje v ľubovoľnej cyklickej grupe
+    prvočíselného rádu. Preto sa dá realizovať aj na eliptických
+    krivkách. Má to ale drobný háčik.
+    Ako si čitateľ iste všimol, pri podpisovaní nepotrebujeme
+    žiadnym spôsobom vedieť prevádzať správu resp. jej hash na body
+    eliptickej krivky, všetky výpočty (až na násobenie body krivky
+    číslom) sa dejú v $Z_n$. Pri šifrovaní ElGamalom 
+    je ale situácia odlišná -- potrebujeme vedieť efektívne prevádzať
+    medzi bodmi krivky a bitovými reťazcami. Existujú algoritmy, ktoré
+    toto vedia istým spôsobom zabezpečiť (tieto algoritmy ale väčšinou
+    používajú rôzne prvočíselné podgrupy eliptickej krivky, nie
+    pôvodne vygenerovanú).
+\end{poznamka}
+
+Pretože problém mapovania správy na body eliptickej krivky je pomerne
+náročný, v praxi sa na šifrovanie používa nasledujúca modifikácia
+ElGamaloho šifrovacieho systému.
+\todo{ElGamal}
 \todo{zvysok co Stanek rozpraval a nemam v poznamkach}
