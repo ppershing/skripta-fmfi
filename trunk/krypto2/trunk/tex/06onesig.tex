@@ -3,7 +3,7 @@
 Jednorázové podpisové schémy, ako už ich názov napovedá, slúžia na
 podpísanie práve jednej správy. Ich bezpečnosť je v prípade viacnásobného
 podpisovania ohrozená. Načo sú nám teda takéto podpisové schémy? Zatiaľ to
-vyzerá tak, že sú ia menej výhodné. Existujú však dôvody, prečo sa zaoberať
+vyzerá tak, že sú iba menej výhodné. Existujú však dôvody, prečo sa zaoberať
 aj takýmito zjavne ``okrátenými'' podpisovými schémami.
 
 Ich hlavná výhoda bude spočívať v jednoduchších predpokladoch pri dôkaze
@@ -12,18 +12,19 @@ tažkosti istých matematických problémov (RSA, dlog, Diffie-Hellman),
 pri jednorázových schémach nám bude stačiť napríklad jednosmernosť
 hashovacej funkcie.\footnote{Už aj toto je pomerne náročný predpoklad,
     keďže nevieme povedať veľa o existencii one-way funkcií}
-Druhou výhodou môže byť rýchlosť - zrejme je jednoduchšie hashovať hodnoty
+Druhou výhodou môže byť rýchlosť -- zrejme je jednoduchšie hashovať hodnoty
 ako napríklad umocňovať.
 Treťou výhodou (i keď skôr teoretickou) je možnosť odolať kvantovým
-výpočtom - pre väčsinu používaných ťažkých problémov sú známe kvantové
+výpočtom -- pre väčsinu používaných ťažkých problémov sú známe kvantové
 algoritmy, ktoré ich efektívne počítajú. Pre invertovanie hashovacích
 funkcií ale takéto algoritmy nie sú známe.
 
 Otázka teda môže znieť, že či jednorázovosť je až taká obmedzujúca
 vlastnosť. Môžeme napríklad uvažovať komunikáciu s bankou a podpisovanie
-prevodných príkazov. Je jednoducho predstaviteľné, že povedzme za mesiac
-bežný človek nespraví viac ako povedzme 5 príkazov. Preto môžeme použiť
-niečo ako pohľad z opačnej strany - namiesto toho, aby sme navrhovali
+prevodných príkazov. Je jednoducho predstaviteľné, že
+bežný človek za mesiac nespraví viac ako povedzme 20 príkazov.
+Preto môžeme použiť
+niečo ako pohľad z opačnej strany -- namiesto toho, aby sme navrhovali
 podpisové schémy na polynomiálny počet podpísaných správ,
 môžeme sa snažiť navrhnúť schémy na jednorázové podpisy a tie potom
 rozšíriť nejakým spôsobom pre viac správ.
@@ -34,9 +35,9 @@ podpisové schémy
 \begin{definicia}[Jednorázová podpisová schéma]
     je trojica algoritmov 
     $\langle Gen, Sign_{sk}, Verify_{pk} \rangle$ kde
-    $Gen(1^k) \implies \langle pk, sk \rangle$ je generátor kľúčov,
-    $Sign_{sk}(m) \implies \sigma$ je podpisovací algoritmus a
-    $Verify_{pk}(m,\sigma) \implies \{0,1\}$ je overovací algoritmus.
+    $Gen(1^k) \rightarrow \langle pk, sk \rangle$ je generátor kľúčov,
+    $Sign_{sk}(m) \rightarrow \sigma$ je podpisovací algoritmus a
+    $Verify_{pk}(m,\sigma) \rightarrow \{0,1\}$ je overovací algoritmus.
 \end{definicia}
 
 Pojem bezpečnosti takejto schémy si upravíme na jednu správu.
@@ -57,8 +58,9 @@ je žiadny problém, ak uvážime, že budeme podpisovať len hash správy, ktor
 fixnej veľkosti.
 
 Generovanie kľúča bude vyzerať nasledovne:
+
 %%% {{{ proc GenLamport
-\begin{procedure}
+\begin{procedure}[H]
     \caption{GenLamport($n$)}
     \For{$i:=1$ \KwTo $n$}{
         $x_{i,0} \inr X$\;
@@ -66,17 +68,17 @@ Generovanie kľúča bude vyzerať nasledovne:
         $y_{i,0} \assign f(x_{i,0})$\;
         $y_{i,1} \assign f(x_{i,1})$\;
     }
-    \Return $sk=(x_{1,0},x_{1,1},\ldots,x_{n,0},x_{n,1}),\quad
-             pk=(y_{1,0},y_{1,1},\ldots,y_{n,0},y_{n,1})$\;
+    \Return $\langle sk=(x_{1,0},x_{1,1},\ldots,x_{n,0},x_{n,1}),\quad
+             pk=(y_{1,0},y_{1,1},\ldots,y_{n,0},y_{n,1}) \rangle$\;
 \end{procedure}
 %%% }}}
 
-Čitateľ už môže tušiť, ako budeme podpisovať správu - jednoducho postupne
-podpíšeme všetyk jej bity tým, že zverejníme príslušnú časť súkromného
+Čitateľ už môže tušiť, ako budeme podpisovať správu -- jednoducho postupne
+podpíšeme všetky jej bity tým, že zverejníme príslušnú časť súkromného
 kľúča.
 
 %%% {{{ SignLamport
-\begin{procedure}
+\begin{procedure}[H]
     \caption{SignLamport($m$)}
     \For{$i:=1$ \KwTo $n$}{
         $\sigma_i \assign f(x_{i, m_i})$\;
@@ -87,7 +89,8 @@ kľúča.
 
 Overovanie spočíva v overení každého podpísaného bitu správy.
 
-\begin{procedure}
+%%% {{{ VerifyLamport
+\begin{procedure}[H]
     \caption{VerifyLamport($m, \sigma$)}
     \For{$i:=1$ \KwTo $n$}{
         \If{$f(x_{i, m_i}) \ne y_{i, m_i}$}{
@@ -96,13 +99,14 @@ Overovanie spočíva v overení každého podpísaného bitu správy.
     }
     \Return accept\;
 \end{procedure}
+%%% }}}
 
 Bezpečnosť schémy je založená na nasledujúcom pozorovaní:
 Aby bol útočník k správe $m$ a jej podpisu $\sigma$ vygenerovať
 falošnú správu $m' \ne m$ a jej podpis $\sigma'$, musel by byť schopný
 vygenerovať $x_{i,b}$ pre nejakú novú dvojicu $(i,b)$.
 To ale znamená invertovať niektorú hodnotu $y_{i,b}$ z verejnej
-funkcie, predpokladáme, že je možné iba so zanedbateľnou
+funkcie a to predpokladáme, že je možné iba so zanedbateľnou
 pravdepodobnosťou.
 
 Na druhej strane, schéma je evidentne jednorázová.
@@ -112,24 +116,28 @@ jednotlivé bity podpisov a podpísať inú správu. V prípade, že
 podpisujeme hash hodnotu, je navyše očakávané, že správy sa budú líšiť
 na zhruba polovici bitov.
 
+\medskip
 Uvažujme teraz praktické aspekty používania takejto schémy. Podpisujme
 hash, napríklad výstup z funkcie SHA-256. Ďalej predpokladajme, že
 $|X|=|Y|=256 \unit{bit}$. Potom dostávame pre súkromný kľúč veľkosť
-$|sk|=2*256*256 bit =16 \unit{kB}$. Verejný kľúč je rovnako dlhý, čiže
+$|sk|=2*256*256 \unit{bit} =16 \unit{kB}$. Verejný kľúč je rovnako dlhý, čiže
 $|pk|=16 \unit{kB}$ a podpis má polovičnú dĺžku kľúčov - $|\sigma|=8
 \unit{kB}$.
 V porovnaní napríklad s RSA je to výrazne horšie. Bolo by teda dobré
 nejakým spôsobom skrátiť kľúče.
 
-Skrátenie súkromného kľúča: Namiesto celého kľúča $(x_{1,0}, x_{1,1},
-\ldots x_{n,1})$ si budeme pamätať iba náhodné $x \inr X$ - seed pre
+\subsubsection{Skrátenie súkromného kľúča}
+
+Namiesto celého kľúča $(x_{1,0}, x_{1,1},
+\ldots x_{n,1})$ si budeme pamätať iba náhodné $x \inr X$ -- seed pre
 pseudonáhodý generátor, ktorý postupne vygeneruje dané hodnoty
-$x_{i,b}$. Problém v tomto prípade je ďalší predpoklad - bezpečnost
+$x_{i,b}$. Problém v tomto prípade je ďalší predpoklad -- bezpečnost
 pseudonáhodného generátora (t.j. že z niektorých hodnôt postupnosti
 $x_{1,0}, \ldots, x_{n,1}$ nevieme efektívne vypočítať žiadnu ďalšiu -
 to by bolo ekvivalentné zlomeniu podpisovej schémy).
 
-Skrátenie verejného kľúča: Namiesto celého kľúča zverejníme iba hash
+\subsubsection{Skrátenie verejného kľúča}
+Namiesto celého kľúča zverejníme iba hash
 $y=H(y_{1,0},y_{1,1},\ldots,y_{n,1})$. Tým pádom ale pri podpisovaní
 musíme uviesť aj všetky hodnoty $y$, aby si to overovateľ mohol
 overiť. Po chvíli zamyslenia sa ale môžeme pozorovať, že na overenie
@@ -140,7 +148,7 @@ iba polovicu hodnôt $y_{i,b}$. Podpis sa nám tým predĺži na $16
 
 \subsubsection{Merkleho konštrukcia}
 Ďalši nezávislú možnosť ako skrátiť dĺžku postupnosti vymyslel
-Merkle. Hlavnou pointou bude pridať akúsi formu checksumu - počtu
+Merkle. Hlavnou pointou bude pridať akúsi formu checksumu -- počtu
 nulových bitov správy. Potom budeme pri podpisovaní podpisovať iba
 jednotkové bity, čím ušetríme v priemernom prípade takmer polovicu bitov
 (čiže v našom prípade $|\sigma| \approx 4 \unit{kB}$).
@@ -156,14 +164,14 @@ Ak existuje bit $i$, $m_i=0$ a platilo by $m'_i=1$, tak sa dostávame
 do známej situácie, kedy útočník musí vyrobiť platný vzor pre $y_{i,1}$.
 Ošemetná situácia ale nastáva, ak máme bit $m_i=1$ a útočník ho zmení
 na nulu. V tomto prípade totiž nemusí nič podvrhnúť, lebo pre nulový
-bit nemusí nič uviesť. Zachráni nás však checksum - totiž, ak zmenšíme
+bit nemusí nič uviesť. Zachráni nás však checksum -- totiž, ak zmenšíme
 celkový počet jednotiek v správe (a to jediné nám ostáva, ak nemáme
 nablyšťanú guľu na lámanie one-way funkcie), vznikne nám aspoň jedna
-jednotka na doteraz neodhalenom mieste - nie je totiž možné, aby sme
+jednotka na doteraz neodhalenom mieste. Nie je totiž možné, aby sme
 po pričítaní čísla k checksume dostali checksumu pozostávajúci iba zo
-známych bitov - to by znamenalo, že daná checksuma používa iba
+známych bitov -- to by znamenalo, že daná checksuma používa iba
 niektoré jednotky z pôvodnej, lenže to je v spore s tým, že je
-väčšia). Preto aj v tomto prípade musí útočník úspešne nájsť vzor
+väčšia. Preto aj v tomto prípade musí útočník úspešne nájsť vzor
 jednosmernej fukncie a schéma ostáva naďalej bezpečná.
 
 Ďalšou príjemnou vlastnosťou tejto úpravy je automatické zmenšenie
