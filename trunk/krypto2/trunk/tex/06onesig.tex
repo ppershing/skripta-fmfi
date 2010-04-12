@@ -179,7 +179,37 @@ súkromného a verejného kľúča na polovicu - vôbec nepotrebujeme
 generovať $x_{i,0}$ a $y_{i,0}$.
 
 \subsection{Merkleho stromy}
+
+Ako sme už písali, jedna z možností ako ``vylepšiť'' našu schému
+je nájsť spôsob, ako z jednorazovej schémy spraviť schému na pár
+použití. Jednoduchý spôsob je vygenerovať potrebný počet inštancií
+schémy a zverejniť príslušné verejné kľúče. Problém tohoto prístupu je
+čisto praktický -- musíme zverejniť veľmi dlhý verejný kľúč (všetky
+verejné kľúče). V prípade, že máme napríklad jednu centrálnu autoritu,
+ktorá vydáva súkromné kľúče a na svojej stránke zverejňuje všetky
+verejné kľúče, môže to robiť isté problémy.
+
+Preto by sme chceli akýmsi spôsobom zredukovať údaje o všetkých
+verejných kľúčoch do nejakého odtlačku. Môžeme to spraviť rekurzvívne
+-- označme si $H_{i,j}$ ako odtlačok všetkých kľúčov v intervale $<i,j>$.
+Potom môžeme definovať rekurzívne $H_{l,r}=h(H_{l,m} || H_{m+1,r})$ kde
+$m$ je stred medzi $l$ a $r$, čiže $m=\lfloor (l+r)/2 \rfloor$ a
+$h$ je hashovacia funkcia. Takýmto spôsobom môžeme vybudovať celý
+strom.
+\begin{figure}[h]
+    \centering
+    \includegraphics{img/06/merkle.1.mps}
+    \caption{Merkleho strom}
+    \label{fig:merkle}
+\end{figure}
+
+\todo{}
+Viac o Merkleho stromoch a iných vylepšeniach Lamportovej schémy
+možno nájsť v \cite{merkle}.
+
 \subsection{Stanekova schéma}
+\todo{}
+
 \subsection{Fail/stop podpisové schémy}
 
 Predstavme si, že chceme schému pri ktorej sme (ako podpisovateľ) chránený pred neobmedzene výpočtovo silným
