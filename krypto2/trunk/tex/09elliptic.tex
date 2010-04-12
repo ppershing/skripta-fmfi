@@ -279,7 +279,8 @@ Vo všeobecnosti sa volia takmer mersenovské prvočísla.
 
 Ale vráťme sa k samotnému podpisovaniu. Prvou častou je generovanie
 kľúčov popísané v \ref{proc:genecdsa}.
-\begin{procedure}[!h]
+
+\begin{procedure}[H]
     \caption{GenECDSA($n$)}
     \label{proc:genecdsa}
     $sk = d \inr \{1, \dots, n-1\}$ \;
@@ -290,7 +291,7 @@ Podpisovanie budeme robiť veľmi podobne podpisovaniu v klasickej DSA
 schéme, teda, podpisom bude správa $\langle r,s \rangle$ získaná 
 volaním funkcie \ref{proc:signecdsa}.
 
-\begin{procedure}[!h]
+\begin{procedure}[H]
     \caption{SignECDSA($m,sk=d, D=\langle q,FR, A,B,G,n,h \rangle$)}
     \label{proc:signecdsa}
     \Repeat{$s=0$}{
@@ -309,13 +310,12 @@ súradnicu $y_1$ z bodu $k*G$ eliptickej krivky. Jeden z dôvodov môže
 byť nasledujúci -- $y_1$ môže nadobúdať len 2 rôzne hodnoty. Preto
 je zrejme výhodné obetovať stratu bezpečnosti o 1 bit výmenov za veľkosť
 podpisu (ak by sme chceli podpisovať aj $y_1$, potrebovali by sme
-zväčšiť veľkosť podpisu). Dĺžka podpisu ECDSA je $2|E|$.\fixme{nemala
-by to byt 2 x velkost podgrupy?}
+zväčšiť veľkosť podpisu). Dĺžka podpisu ECDSA je $2 \lceil \log n \rceil$.
 
 Overovanie podpisu je taktiež nápadne podobné štandardnému DSA
 algoritmu a je popísané vo funkcii \ref{proc:verifyecdsa}.
 
-\begin{procedure}[!h]
+\begin{procedure}[H]
     \caption{verifyECDSA($m,sig=\langle r,s \rangle,pk= Q,
             D=\langle q,FR, A,B,G,n,h \rangle$)}
     \label{proc:verifyecdsa}
@@ -333,17 +333,8 @@ algoritmu a je popísané vo funkcii \ref{proc:verifyecdsa}.
         }
 \end{procedure}
 
-\fixme{Nasledujucu vec Stanek povedal (ale neviem, ci to bolo presne
-tak formulovane), kazdopadne, mne sa zda ze to nesedi, lebo neviem
-nikde najst podmienku v overovani, ze by nastala tato situacia}
-Bolo by dobré poznamenať, že pri generovaní podpisu nezaručujeme
-podmienku $X=\mathbf{0}$. Odpravedlniť toto správanie sa dá tým, že
-pravdepodobnosť nastatia takejto udalosti je zanedbateľná a zrejme
-je rozumné ušetriť na rýchlosti podpisovania
-na úkor nemožnosti overenia podpisu v tomto nepravdepodobnom prípade.
-
 Ako vždy by bolo pekné ukázať, že overovanie korektných podpisov
-funguje.
+je korektné.
 Predpokladajme, že správa bola podpísaná správne, teda platí
 $s = k^{-1} (\mbox{SHA-1}(m) + d r) \pmod{n}$.
 Potom 
@@ -351,11 +342,12 @@ Potom
     k \equiv s^{-1} (\mbox{SHA-1}(m) + d r)  \equiv
     s^{-1} \mbox{SHA-1}(m) + s^{-1} d r \equiv u_1 + u_2 d \pmod{n}
 \end{equation*}
-Tým pádom
-$u_1 G + u_2 Q = (u_1 + u_2 d)*G = k*G$.
+Tým pádom $u_1 G + u_2 Q = (u_1 + u_2 d)*G = k*G$.
 To, že je ťažké sfalšovať podpis sa dokáže podobne ako v krypto I pre
-DSA. Z podobných vlastností tiež môžeme vypichnúť nutnosť testovanie,
-že $r,s$ patria do správneho intervalu.
+DSA. Z podobných implementačných detailov tiež môžeme vypichnúť
+nutnosť testovania,
+že $r,s$ patria do správneho intervalu, inak hrozí pomerne jednoduchá
+možnosť falšovania podpisov.
 
 \begin{poznamka}
     Uvažujme ElGamalov šifrovací algoritmus. Ak si dobre spomenieme,
@@ -378,3 +370,67 @@ náročný, v praxi sa na šifrovanie používa nasledujúca modifikácia
 ElGamaloho šifrovacieho systému.
 \todo{ElGamal}
 \todo{zvysok co Stanek rozpraval a nemam v poznamkach}
+
+
+Teraz trochu pouvažujeme nad tým, ako čo najviac zefektívniť prácu na
+eliptických krivkách. Uvažujme napríklad výpočet $15*G$ štandardnou
+exponenciáciou(v našom prípade ale neumocňujeme, iba násobíme):
+$15*G = 8*G + 4*G + 2*G + G$. Tento zápis vieme ale spraviť aj
+efektívnejšie : $15*G = 16*G - G$. V prvom rade si môžeme všimnúť, že
+sme pridali jedno sčítanie $16*G = 8*G + 8*G$, ušetrili sme ale dve
+sčítanie. Na druhej strane, výpočet inverzného prvku je úplne zadarmo,
+keďže je to iba zmena znamienka $y$-ovej súradnice.
+
+Vo všeobecnosti, čím viac núl má číslo, ktorým chceme
+násobiť, tým menej operácii budeme potrebovať. V binárnej sústave s
+tým veľmi veľa nenarobíme, lebo existuje iba jedna reprezentácia
+čísla. Môžeme sa však inšpirovať príkladom, kde sme použíli cifru
+``$-1$'' a skúsiť použiť číselnú sústavu s ciframi $0,1,-1$.
+
+\begin{definicia}[NAF -- Non Adjacent Form]
+    Uvažujme reprezentáciu čísla v $0,1,-1$ kovej sústave.
+    Túto reprezentáciu budeme nazývať Non Adjacent Form, ak každé dve
+    nenulové cifry budú oddelené aspoň jednou nulovou.
+\end{definicia}
+
+\begin{priklad}
+    Uvažujme nasledujúce zápisy čísla 7:
+    \begin{align*}
+        (0\ 1\ 1\ 1)_2 &= 4+2+1=7 \\
+        (1\ 0\ -1\ 1)_2 &= 8-2+1=7 \\
+        (1\ -1\ 1 1)_2 &= 8-4+2+1=7 \\
+        (1\ 0\ 0\ -1)_2 &= 8-1=7
+    \end{align*}
+    Z týchto zápisoj je NAF iba posledný.
+\end{priklad}
+
+\begin{poznamka}
+    NAF reprezentácia pre dané celé číslo je jedinečná, teda
+    neexistujú 2 rôzne NAF reprezentácie toho istého čísla.
+\end{poznamka}
+
+To čo je ale pre nás zaujímavé je nasledovná vec -- uvažujme náhodné
+binárne číslo. Očakávaný počet jednotkových bitov je práve polovica.
+Naproti tomu, v NAF je očakávaný počet nenulových bitov iba jedna
+tretina. Preto sa oplatí najskôr číslo previesť do NAF reprezentácie a
+až potom počítať násobenie v grupe. Algoritmus na takýto prevod je
+napríklad \ref{algo:naf}.
+
+\begin{algorithm}[H]
+    \caption{Algoritmus na prevod z binárnej reprezetácie do NAF}
+    \label{algo:naf}
+    \todo{NAF algoritmus}
+\end{algorithm}
+
+\begin{priklad}
+    Postup algoritmu: \\
+    \begin{center}
+        \begin{tabular}{rrrrr}
+            0 1 1 1& 0 1 1 1& 0 1 0 1& 0 0 0 1& 1 1 1 1 \\
+            0 1 1 1& 0 1 1 1& 0 1 0 1& 0 0 \emph{1 0}& \emph{0 0 0-1} \\
+            0 1 1 1& \emph{1 0 0-1}& 0 1 0 1& 0 0 1 0& 0 0 0-1 \\
+            \emph{1 0 0 0}&\emph{-1} 0 0-1& 0 1 0 1& 0 0 1 0& 0 0 0-1
+        \end{tabular}
+    \end{center}
+    Z 13-tich jednotiek sme dostali 7 nenulových prvkov.
+\end{priklad}
