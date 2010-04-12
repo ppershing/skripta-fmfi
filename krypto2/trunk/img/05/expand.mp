@@ -7,8 +7,7 @@ verbatimtex
 \begin{document}
 etex
 beginfig(1);
-
-
+%%% {{{
     size:=22;
 
     pair downright,upright;
@@ -49,10 +48,11 @@ beginfig(1);
 
     arrow.top(0.5, btex $(m^*)^{2^{k-1}} || m_k$ etex)(a[1][5],a[1][6]) a[1][5].c{upright}..a[1][6].c;
     arrow.bot(0.5, btex $m'_k$ etex)(a[1][5],a[1][6]) a[1][5].c{downright}..a[1][6].c;
-
+%% }}}
 endfig;
 
 beginfig(2);
+%%% {{{
     with spacing ((70,50)) matrix.a(10,10);
 
     node_hidden.a[1][0](btex $\cdots$ etex);
@@ -73,13 +73,24 @@ beginfig(2);
 
     arrow.top(0.5, btex $invert$ etex)(a[1][2],a[1][3])
         a[1][2].c{upright}..a[1][3].c;
+%%% }}}        
 endfig;
 
-
 beginfig(3);
+%%% {{{
+    loopsize:=25;
+    size:=20;
+
+    put.a(0,0);
+    node.a(btex $h_i$ etex);
+    loop.top(0.5, btex $m_i$ etex)(a) 90;
+%%% }}}
+endfig;
+
+beginfig(4);
+%%% {{{
     randomseed:=1;
     
-    with spacing ((70,50)) matrix.a(10,10);
     loopsize:=15;
     size:=10;
 
@@ -100,6 +111,58 @@ beginfig(3);
             cutafter (circlepath xscaled 100 yscaled 200)
             dashed evenly;
     endfor;
+%%% }}}    
+endfig;
+
+beginfig(5);
+%%% {{{
+    size:=22;
+
+    pair downright,upright;
+    downright=(1,-1);
+    upright=(1,1);
+
+    with spacing ((70,50)) matrix.a(3,10);
+
+    % zaciatok
+    node.a[1][0](btex $h_0$ etex);
+    node.a[1][1](btex $h_1$ etex);
+    % stred
+    node_hidden.a[1][2](btex $\cdots\cdots$ etex);
+    node.a[1][3](btex $h_x$ etex);
+    node_hidden.a[1][4](btex $\cdots\cdots$ etex);
+    %koniec
+    node.a[1][5](btex $h_{l}$ etex);
+    node.a[1][6](btex $h_{l-1}$ etex);
+
+    node.a[2][0](btex etex);
+    node.a[2][2](btex $h_{exp}$ etex);
+    arrow_dash.bot(0.5, btex expanzia etex) (a[2][0], a[2][2])
+        a[2][0].c -- a[2][2].c;
+
+    arrow.top(0.5, btex $\tilde{m}$ etex)(a[2][2],a[1][3])
+        a[2][2].c  -- a[1][3].c;
+
+    arrow.top(0.5, btex $m_1$ etex)(a[1][0],a[1][1])
+        a[1][0].c{upright}..a[1][1].c;
+
+    arrow_dash.top(0.5, btex $m_2$ etex)(a[1][1],a[1][2])
+        a[1][1].c{upright}..a[1][2].c;
+
+
+    arrow_dash.top(0.5, btex $m_x$ etex)(a[1][2],a[1][3])
+        a[1][2].c{upright}..a[1][3].c;
+
+
+    arrow_dash.top(0.5, btex $m_{x+1}$ etex)(a[1][3],a[1][4])
+        a[1][3].c{upright}..a[1][4].c;
+
+    arrow_dash.top(0.5, btex $m_{l-1}$ etex)(a[1][4],a[1][5])
+        a[1][4].c{upright}..a[1][5].c;
+
+    arrow.top(0.5, btex $m_{l}$ etex)(a[1][5],a[1][6])
+        a[1][5].c{upright}..a[1][6].c;
+%%% }}}
 endfig;
 
 end
