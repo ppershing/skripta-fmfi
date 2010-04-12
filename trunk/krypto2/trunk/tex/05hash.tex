@@ -134,21 +134,30 @@ Pre útočníka môže byť výhodné mať kolidujúce správy rôznej dĺžky.
 V nasledujúcom texte si popíšeme nájdenie takej multikolízie,
 kde všetky správy majú rôzne dĺžky. Nech $m^*$ je ľubovoľný
 text dĺžky 1 blok.
-Označme ako $F(h_i, a_1||a_2||\dots||a_x) = f(f(\dots f(h_i, a_1), a_2), \dots, a_x)$,
+Označme ako $F(h_i, a_1||a_2||\dots||a_x) = 
+    f(f(\dots f(h_i, a_1), a_2), \dots, a_x)$,
 teda viackrát za sebou použitú kompresnú funkciu $f$.
 Postup je podobný ako pri hľadaní multikolízie:
 \begin{enumerate}
-\itemsep -1.2mm
-\item Položme $h_0 = IV$
-\item Nájdime $m_1$ a $m_1'$ také, že: $f(h_0, m_1) = f(f(h_0, m^*), m_1') = F(h_0, m^*||m_1') = h_1$. 
-\item Nájdeme ďalšie dvojice $m_2, m_2', \dots, m_k, m_k'$ také, že platí:
-$f(h_{i-1}, m_i) = F(h_{i-1}, (m^*)^{2^{i-1}}||m_i') = h_i$
-\item Každú dvojicu vieme nájsť v čase $O(2^{n/2})$. Celkový čas bude $O(k 2^{n/2})$.
-Dostali sme opäť $2^k$ rôznych kolidujúcich textov, ktoré tentokrát 
-majú dlžky $k, k+1, \dots, k+2^k-1$ blokov. 
-Blok príslušnej dĺžky nájdeme tak, že od dĺžky odpočítame $k$, následne
-sa pozrieme na binárny zápis výsledku postupne odzadu. Ak je tam $0$, ideme
-po hrana, ktorá nemá $m^*$, v prípade $1$ ideme po tej druhej.
+    \itemsep -1.2mm
+
+    \item Položme $h_0 = IV$.
+
+    \item Nájdime $m_1$ a $m_1'$ také, že: 
+        $f(h_0, m_1) = f(f(h_0, m^*), m_1') = F(h_0, m^*||m_1') = h_1$. 
+
+    \item Nájdeme ďalšie dvojice $m_2, m_2', \dots, m_k, m_k'$ také, že platí:
+        $f(h_{i-1}, m_i) = F(h_{i-1}, (m^*)^{2^{i-1}}||m_i') = h_i$.
+
+    \item Každú dvojicu vieme nájsť v čase $O(2^{n/2})$.
+        Celkový čas bude $O(k 2^{n/2})$.
+        
+        Dostali sme opäť $2^k$ rôznych kolidujúcich textov, ktoré tentokrát 
+        majú dlžky $k, k+1, \dots, k+2^k-1$ blokov. 
+        Blok príslušnej dĺžky nájdeme tak, že od dĺžky odpočítame $k$, následne
+        sa pozrieme na binárny zápis výsledku postupne odzadu.
+        Ak je tam $0$, ideme po hrana, ktorá nemá $m^*$,
+        v prípade $1$ ideme po tej druhej.
 \end{enumerate}
 
 \begin{figure}[h!]
@@ -158,38 +167,73 @@ po hrana, ktorá nemá $m^*$, v prípade $1$ ideme po tej druhej.
     \label{fig:expand1}
 \end{figure}
 
+\subsubsection{Davis-Meyerova konštrukcia}
 
 Pri niektorých hašovacích funkciách, ktoré využívajú
 Davies-Meyerovu konštrukciu vieme expandovateľnú správu hľadať
 ešte jednoduchšie. Príkladom môže byť SHA-1, ktorej kompresná funkcia
 je definovaná nasledovne:
-$f(h, m) = E_m(h)+h$
+$f(h, m) = E_m(h)+h$.
 
 Zoberme náhodné $m$. Potom vieme vypočítať tzv. pevný bod, teda vnútorný
 stav ktorý sa po \clqq zhašovaní\crqq $m$ nezmení:
-$$f(h,m) = h$$
-$$E_m(h) + h= h$$
-$$h = E_m^{-1}(0)$$
+\begin{align*}
+    f(h,m) = h \\
+    E_m(h) + h= h \\
+    h = E_m^{-1}(0)
+\end{align*}
 
-Vypočítajme si $2^{n/2}$ pevných bodov $h_1, h_2, \dots, h_{2^{n/2}}$ a k ním príslušné správy
+Útočiť na DM konštrukcie je možné nasledovne -- vypočítajme si $2^{n/2}$ 
+pevných bodov $h_1, h_2, \dots, h_{2^{n/2}}$ a k ním príslušné správy
 $m_1, m_2, \dots, m_{2^{n/2}}$. 
-Následne skúšajme rôzne $m'$ a hľadajme také, kde $f(h_0, m') = h_i$, kde $i \in \{1, 2, \dots 2^{n/2}\}$.
-Vďaka narodeninovému paradoxu stačí $2^{n/2}$ pokusov. Takto sme v čase $O(2^{n/2})$ našli správu, ktorú
+Následne skúšajme rôzne $m'$ a hľadajme také, kde $f(h_0, m') = h_i$,
+$i \in \{1, 2, \dots, 2^{n/2}\}$.
+Vďaka narodeninovému paradoxu stačí $2^{n/2}$ pokusov.
+Takto sme v čase $O(2^{n/2})$ našli správu, ktorú
 vieme ľubovoľne natiahnuť.
-\todo{OBRAZOK}
+\begin{figure}[h!]
+    \centering
+    \subfigure[Pevný bod]{
+        \includegraphics{img/05/expand.3.mps}
+        \hspace{1cm}
+    }
+    \subfigure[Hľadanie kolízií]{
+        \includegraphics{img/05/expand.4.mps}
+    }
 
-Následne hľadanie expandovateľnej správy vieme využiť na efektívnejšie hľadanie druhého vzoru ako hrubou silou.
-Majme správu, ktorá je dlhá $k + 2^k - 1$ blokov. Následne zostrojme expandovateľnú správu dĺžky $k$, ktorej hash je $h_k'$.
-Následne skúšajme nájsť  $\tilde{m}$ také, že $f(h_k', \tilde{m})$ sa rovná niektorej z hodnôt $h_{k+1}, \dots h_{k+2^k-1}$. Ak áno 
-(označme takú hodnotu ako $h_x$), tak môžeme bloky $m_1, m_2, \dots, m_x$ nahradiť príslušnou expandovateľnou správou.
-Očakávaný počet pokusov je $\Theta(2^{n-k})$. 
+    \caption{Hľadanie kolízií v MD konštrukcii}
+\end{figure}
 
-Čo to v praxi znamená? Zoberme bežne používanú SHA-1, ktorej výstup má 160 bitov. Teda,
-očákavaný počet operácií pre nájdenie druhého vzoru je úmerný $2^{160}$. Maximálna dĺžka správy
-pre SHA-1 je $2^{64} - 1$ bytov, čo je asi $2^{55}$ blokov. Zoberme správu dĺžky
-$54 + 2^{54} - 1$ blokov. Najprv v čase $2^{80}$ nájdeme expandovateľnú správu (SHA-1 je DM konštrukcia).
-Následne potrebujeme ešte $2^{106}$ pokusov na nájdenie \clqq spájacieho\crqq bloku.
-Toto je síce stály veľký počet, ale oproti očakávanému počtu je to značné zlepšenie.
+\subsubsection{Hľadanie druhého vzoru}
+Následne hľadanie expandovateľnej správy vieme využiť na efektívnejšie
+hľadanie druhého vzoru ako hrubou silou.
+Majme správu, ktorá je dlhá $l=2^k + k - 1$ blokov.
+Následne zostrojme expandovateľnú správu, ktorá môže nadobúdať dĺžky $k$
+až $2^k + k -1$, ktorej hash je $h_{expand}$.
+Skúšajme nájsť  $\tilde{m}$ také, že $f(h_{expand}, \tilde{m})$ 
+sa rovná niektorej z hodnôt $h_{k+1}, \dots, h_{k+2^k-1}$.
+Ak sa nám podarí nájsť vhodnú hodnotu
+(označme ju ako $h_x$), tak môžeme bloky $m_1, m_2, \dots, m_x$ 
+nahradiť príslušnou variantou expandovateľnej správy.
+Očakávaný počet potrebných pokusov je $\Theta(2^{n-k})$. 
+
+\begin{figure}{h}
+    \centering
+    \includegraphics{img/05/expand.5.mps}
+    \caption{Hľadanie druhého vzoru}
+\end{figure}
+
+Čo to v praxi znamená? Zoberme bežne používanú SHA-1, 
+ktorej výstup má 160 bitov. Teda,
+očákavaný počet operácií pre nájdenie druhého vzoru je úmerný $2^{160}$.
+Maximálna dĺžka správy pre SHA-1 je $2^{64} - 1$ bytov,
+čo je asi $2^{55}$ blokov.
+Zoberme správu dĺžky $54 + 2^{54} - 1$ blokov.
+Najprv v čase $2^{80}$ nájdeme expandovateľnú správu (SHA-1 je DM konštrukcia).
+Následne potrebujeme ešte $2^{106}$ pokusov na nájdenie 
+``spájacieho'' bloku.
+Toto je síce stály veľký počet, ale oproti očakávanému počtu $2^{160}$
+je to značné zlepšenie.
 
 \subsection{Obrana pred týmto druhom útokov}
 Tieto útoky ukazujú, že iteratívna konštrukcia nie je najvhodnejšia.
@@ -197,41 +241,49 @@ To, čo ju môže zachrániť je mať aspoň 2-krát dlhší medzistav
 (t.j. hodnoty $h_1, h_2, \dots, h_{k-1}$). Potom sa skomplikuje hľadanie
 kolízií v medzistavoch a konštrukcia je proti týmto útokom bezpečná.
 
-\subsection{Nostradamov útok}
+\subsection{Nostradamov útok (alebo tiež herding attack)}
 
 Uvažujme nasledujúcu situáciu. Svetovo známy prorok Nostradamus
 vyriekne začiatkom roka 2009 proroctvo, týkajúce sa budúcnosti.
+Nostradamus je prorok veľkého kalibru a preto vyriekne proroctvá
+možné i všemožné, skrátka, natára veľa vecí.
 Môže to byť napríklad stav akciového indexu na konci roka 2010.
-Akurát ho nezverejní (nechce predsa ovplyvniť burzu) a zverejní
-len hash tohoto proroctva (v podstate je to niečo ako commitment).
+Akurát ho nezverejní (nechce predsa ovplyvniť burzu, spôsobiť globálnu
+ekonomickú krízu, ...) a zverejní len hash tohoto proroctva 
+(v podstate je to niečo ako commitment).
 
-Následne na konci roka odhalí svoje proroctvo. Hash je v poriadku, proroctvo
+Následne na konci roka odhalí svoje proroctvo na svojej stránke.
+Hash je v poriadku, proroctvo
 o akciách hovorí pravdu, za ním sú ešte nejaké ďalšie proroctvá.
 Otázkou je ako veľmi môžeme veriť tomu, že prorok poznal stav
-akcií na konci roka. Ukazuje sa, že na iteratívnu konštrukciu
+akcií na konci roka. Nostradamus sa nám síce môže snažiť vsugerovať,
+že on je naozaj ten pravý prorok, ale je to tak?
+
+Ukazuje sa, že na iteratívnu konštrukciu
 hašovacích funkciu existuje tzv. chosen prefix attack.
 
 \subsubsection{Konštrukcia ``proroctva''}
 
-Pripravme si najprv $2^k$ hodnôt $h_{0,1}, h_{0,2}, \dots, h_{0,2^k}$.
-Následne hľadajme $m_{0,1}, m_{0,2}, \dots, m_{0,2^k}$ také, že
+Pripravme si najprv $2^k$ hodnôt $h_{0,1},\ h_{0,2},\ \dots,\ h_{0,2^k}$.
+Nad týmito hodnotami ideme vybudovať strom nasledovne:
+hľadajme $m_{0,1},\ m_{0,2},\ \dots,\ m_{0,2^k}$ také, že
 \begin{align*}
-    f(h_{0,1}, m_{0,1}) &= f(h_{0,2}, m_{0,2}) = h_{1,1} \\
+    f(h_{0,1},\ m_{0,1}) &= f(h_{0,2},\ m_{0,2}) = h_{1,1} \\
   &  \dots \\
-    f(h_{0,2^k-1}, m_{0,2^k-1}) &= f(h_{0,2^k}, m_{0,2^k}) = h_{1,
+    f(h_{0,2^k-1},\ m_{0,2^k-1}) &= f(h_{0,2^k},\ m_{0,2^k}) = h_{1,
         2^{k-1}} 
 \end{align*}
 Následne pokračujme podobným spôsobom aj na ďalších úrovniach
 pokiaľ nedostaneme jedinú hodnotu $h_{k,1}$.
 Túto hodnotu zverejníme ako hash nášho proroctva.
-Navyše, aby sme za správu vedeli \clqq prilepiť\crqq rozumný obsah,
+Navyše, aby sme za správu vedeli ``prilepiť'' rozumný obsah,
 je vhodné aby tieto správy dávali aspoň nejaký zmysel.
 
 Aký čas strávime prípravou tohoto stromu?
 Nájdenie jednej kolízie trvá čas $O(2^{n/2})$, na prvej úrovni treba 
 $2^{k-1}$ kolízii, na druhej $2^{k-2}$ a na poslednej
 potrebujeme jednu kolíziu. Celkový čas je teda
-$O(2^n (2^{k-1} + 2^{k-2} + \dots + 1)) = O(2^{n/2} 2^k)$.
+$O\big(2^n (2^{k-1} + 2^{k-2} + \dots + 1)\big) = O(2^{n/2} 2^k)$.
 Lepší spôsob je nehľadať kolízie na jednotlivých úrovniach po dvojiciach,
 ale rovno pre celú úroveň.
 Vtedy na prvej úrovni strávime čas $O(2^{k/2 + n/2})$. 
@@ -248,11 +300,10 @@ Označme ju $m$. Po jej zahashovaní sa dostaneme do odtlačku
 $h_m$. Teraz hľadáme správu $\tilde{m}$, pre ktorú platí
 $f(h_m, \tilde{m}) = h_{0,x_0}$, kde $x_0 \in \{1, 2, \dots, 2^k\}$.
 Následne na základe pripraveného stromu vieme za správu dolepiť patričné 
-$m_{0,x_0}, m_{1,x_1}, \dots, m_{k,x_k}$ také, že
+$m_{0,x_0},\ m_{1,x_1},\ \dots,\ m_{k,x_k}$ také, že
 výsledný hash bude predtým zverejnený $h_{k,1}$.
-\fixme{jazykove okienko - ten hash alebo ta hash?}
 Teda na konci zverejníme správu 
-$m || \tilde{m} || m_{0,x_0} || m_{1,x_1} || \dots || m_{k, x_k}$.
+$m || \tilde{m} || m_{0,x_0} || m_{1,x_1} || \dots || m_{k, 1}$.
 
 Čas hľadania $\tilde{m}$ bude $2^{n-k}$.
 
@@ -260,8 +311,8 @@ $m || \tilde{m} || m_{0,x_0} || m_{1,x_1} || \dots || m_{k, x_k}$.
 Bolo by dobré, aby čas trvania oboch častí útoku bol viacmenej vyvážený. 
 Uvažujme najprv pomalšiu variantu predspracovania.
 Vtedy chceme, aby $2^{n-k} = 2^{k+n/2}$, z čoho dostaneme
-$k=\frac{n}{4}$ a celkový čas bude $2^{\frac{3}{4} n}$.
+$k=n/4$ a celkový čas bude $2^{3n/4}$.
 Pri rýchlejšom predspracovaní máme podmienku $2^{n-k} = 2^{k/2 + n/2}$,
-z čoho máme $k = \frac{n}{3}$ a celkový čas $2^{\frac{2}{3}n}$.
+z čoho máme $k = n/3$ a celkový čas $2^{2n/3}$.
 
 \fixme{realne priklady}

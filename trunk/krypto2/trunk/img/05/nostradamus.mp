@@ -123,5 +123,12 @@ beginfig(1);
     label("...", (h[2][0].c) +(xdist/2,-ydist/2) );
     label("...", (h[2][1].c) +(xdist/2,ydist/2) );
 
+    circleit.start(btex $h_m$ etex);
+    start.c=(-50,-220);
+    myfixsize(start);
+    drawboxed(start);
+    mydrawarrow.lft(btex $\tilde{m}$ etex)
+        start.c .. (-50, -150) .. h[0][4].c +(-5,0)
+        cut(start, h[0][4]);
 endfig;
 end
