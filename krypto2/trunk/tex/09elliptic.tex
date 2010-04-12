@@ -175,11 +175,11 @@ algoritmus, ktorý dobre poznáme by v tomto prípade narobil paseku a
 bezpečnosť schémy by bola ohrozená. Preto by sme boli najradšej, ak by
 sme mali prvočíselnú grupu. Začneme však postupne:
 
-\begin{veta}[\fixme{nazov}]
+\begin{veta}[Hasseho veta]
     Nech $E$ je grupa bodov eliptickej krivky $\pmod{p}$.
     Potom platí
     \begin{equation*}
-        P+1 - 2 \sqrt{P} \le |E| \le P + 1 + 2 \sqrt{P}
+        p+p - 2 \sqrt{p} \le |E| \le p + 1 + 2 \sqrt{p}
     \end{equation*}
 \end{veta}
 
@@ -209,7 +209,10 @@ postupne preberali možné parametre $B$ a $p$.
     $n_2=1$, t.j. dostávame izomorfizmus so $Z_p^*$. Prirodzenou
     otázkou v takomto prípade je, či izomorfizmus nezmenšuje
     bezpečnosť -- mohli by sa dať aplikovať klasické algoritmy na
-    faktorizáciu aj na eliptické krivky. \fixme{ako to vlastne je?}
+    faktorizáciu aj na eliptické krivky.
+    Odpoveď je, že bezpečnosť krivky (grupy) nám tento izomorfizmus
+    nepokazí. Také chabé zdôvodnenie je, že síce vieme o tom, že tam
+    izomorfizmus je, na druhej strane je dostatočne komplikovaný.
 \end{poznamka}
 
 
@@ -239,41 +242,43 @@ kriviek:
 \end{poznamka}
 
 Čo sa týka prvočíselného modula $p$, štandard prechádza plejádou
-hodnôt od 192 po 521 bitov. \fixme{nie 512?}
+hodnôt od 192 po 521 bitov.
 Príklady:
 \begin{itemize}
-    \item $2^{192} - 2^{64} - 1$ 
-    \item $2^{384} ?? 2^{126} ...$ \fixme{}
-    \item $2^{521} - 1$.
+    \item $p=2^{192} - 2^{64} - 1$ 
+    \item $p=2^{521} - 1$.
 \end{itemize}
 Vo všeobecnosti sa volia takmer mersenovské prvočísla.
 
 \begin{poznamka}
     Pre záujemcov máme výpis jednej takej krivky zo štandardu FIPS 186-3
-    (\cite{fips186}).
-    \paragraph{D.1.3.3.2 Curve B-283}
+    (\cite{fips186}).Krivka je v štandarde označená
+    ``D.1.3.3.2 Curve B-283''.
     \begin{itemize}
-        \item $n$ =   77706 7556890291 6283677847 6272940756 2656962592 
-                    4376904889 1091965267 7004427778 7378692871
+        \item
+            \begin{verbatim}
+n =   77706 7556890291 6283677847 6272940756 2656962592 
+            4376904889 1091965267 7004427778 7378692871;
+            \end{verbatim}
         \item Polynomial Basis:  
-            \begin{itemize}
-            \item $b$ = 27b680a c8b8596d a5a4af8a 19a0303f ca97fd76 45309fa2 
-                    a581485a f6263e31 3b79a2f5  
-            \item $G_x$ = 5f93925 8db7dd90 e1934f8c 70b0dfec 2eed25b8 557eac9c 
-                    80e2e198 f8cdbecd 86b12053  
-            \item $G_y$ = 3676854 fe24141c b98fe6d4 b20d02b4 516ff702 350eddb0 
-                    826779c8 13f0df45 be8112f4  
-            \end{itemize}
+            \begin{verbatim}
+b   = 27b680a c8b8596d a5a4af8a 19a0303f ca97fd76
+              45309fa2 a581485a f6263e31 3b79a2f5;
+G_x = 5f93925 8db7dd90 e1934f8c 70b0dfec 2eed25b8
+              557eac9c 80e2e198 f8cdbecd 86b12053; 
+G_y = 3676854 fe24141c b98fe6d4 b20d02b4 516ff702
+              350eddb0 826779c8 13f0df45 be8112f4; 
+            \end{verbatim}
         \item Normal Basis:  
-            \begin{itemize}
-            \item $seed$ =  77e2b073 70eb0f83 2a6dd5b6 2dfc88cd 06bb84be  
-            \item $b$ = 157261b 894739fb 5a13503f 55f0b3f1 0c560116 66331022 
-                    01138cc1 80c0206b dafbc951  
-            \item $G_x$ = 749468e 464ee468 634b21f7 f61cb700 701817e6 bc36a236 
-                    4cb8906e 940948ea a463c35d  
-            \item $G_y$ = 62968bd 3b489ac5 c9b859da 68475c31 5bafcdc4 ccd0dc90 
-                    5b70f624 46f49c05 2f49c08c  
-            \end{itemize}
+            \begin{verbatim}
+seed = 77e2b073 70eb0f83 2a6dd5b6 2dfc88cd 06bb84be;
+b    =  157261b 894739fb 5a13503f 55f0b3f1 0c560116
+                66331022 01138cc1 80c0206b dafbc951;
+G_x  =  749468e 464ee468 634b21f7 f61cb700 701817e6
+                bc36a236 4cb8906e 940948ea a463c35d; 
+G_y  =  62968bd 3b489ac5 c9b859da 68475c31 5bafcdc4
+                ccd0dc90 5b70f624 46f49c05 2f49c08c; 
+            \end{verbatim}
     \end{itemize}
 \end{poznamka}
 
@@ -294,8 +299,8 @@ volaním funkcie \ref{proc:signecdsa}.
 \begin{procedure}[H]
     \caption{SignECDSA($m,sk=d, D=\langle q,FR, A,B,G,n,h \rangle$)}
     \label{proc:signecdsa}
-    \Repeat{$s=0$}{
-        \Repeat{$r=0$}{
+    \Repeat{$s \not =0$}{
+        \Repeat{$r \not =0$}{
             $k \inr \{ 1, \dots, n-1 \}$ \;
             $\langle x_1, y_1 \rangle = k * G$ \;
             $r \assign x_1 \pmod{n}$ \;
@@ -349,6 +354,9 @@ nutnosť testovania,
 že $r,s$ patria do správneho intervalu, inak hrozí pomerne jednoduchá
 možnosť falšovania podpisov.
 
+V prípade, že čitateľa zaujalo podpisovanie správ pomocou DSA na eliptických
+krivkách, vrelo mu odporúčame pozrieť sa na \cite{ecdsa}.
+
 \begin{poznamka}
     Uvažujme ElGamalov šifrovací algoritmus. Ak si dobre spomenieme,
     tento algoritmus pracuje v ľubovoľnej cyklickej grupe
@@ -367,10 +375,44 @@ možnosť falšovania podpisov.
 
 Pretože problém mapovania správy na body eliptickej krivky je pomerne
 náročný, v praxi sa na šifrovanie používa nasledujúca modifikácia
-ElGamaloho šifrovacieho systému.
-\todo{ElGamal}
-\todo{zvysok co Stanek rozpraval a nemam v poznamkach}
+ElGamalovho šifrovacieho systému. Na šifrovanie budeme používať
+kľúče vygenerované tým istým spôsobom ako pri podpisovaní, máme teda
+$sk=d \inr \{1,\dots,n-1\}$ a $pk=Q=d*G$.
 
+\begin{procedure}[H]
+    \caption{ECEG::encrypt($m$)}
+    \Repeat{$(x_0 \not =0)$}{
+        $k \inr \{ 1, \dots, n-1\}$ \;
+        $ R \assign k*G$ \;
+        $ \langle x_0, y_0 \rangle \assign k*Q$ \;
+    }
+    $ s \assign x_0 * m \pmod{p}$ \;
+    \Return $\langle R, s \rangle$ \;
+\end{procedure}
+
+\begin{procedure}[H]
+    \caption{ECEG::decrypt($\langle R, s\rangle$)}
+    \tcp{platí $d*R = d k * G = kd*G = k*Q$}
+    $\langle x_0, y_0 \rangle \assign d*R$ \;
+    $ m \assign  s * x_0^{-1} \pmod{p}$ \;
+    \Return $m$ \;
+\end{procedure}
+
+\begin{poznamka}
+    Výpočet súkromného kľúča je ekvivalentný problému diskrétneho
+    logaritmu v danej grupe.
+\end{poznamka}
+\begin{poznamka}
+    Pretože útočník má k dispozícii $d*G, k*G$ a chce $dk*G$, je
+    zlomenie schémy ekvivalentné riešeniu Diffie-Hellmanovho problému.
+\end{poznamka}
+\begin{poznamka}
+    Opäť používame iba jednu súradnicu, pretože druhú si útočník vie
+    ľahko dopočítať. Preto je tiež možné hodnotu
+    $R = \langle x', y' \rangle$ v šifrovom texte nahradiť dvojicou
+    $\langle x', + \rangle$ resp. $\langle x', - \rangle$
+    a ušetríme na veľkosti šifrového textu.
+\end{poznamka}
 
 Teraz trochu pouvažujeme nad tým, ako čo najviac zefektívniť prácu na
 eliptických krivkách. Uvažujme napríklad výpočet $15*G$ štandardnou
@@ -419,11 +461,33 @@ napríklad \ref{algo:naf}.
 \begin{algorithm}[H]
     \caption{Algoritmus na prevod z binárnej reprezetácie do NAF}
     \label{algo:naf}
-    \todo{NAF algoritmus}
+    $i \assign 0$\;
+    \While{$i < bitlength$}{
+        \If{$(bit[i] = 0)$}{
+            $i \assign i+1$ \;
+            continue \;
+        }
+        \If{$(bit[i]=1) \land (bit[i+1]=0)$}{
+            $i \assign i+2$ \;
+            continue \;
+        }
+        \tcp{našli sme po sebe idúce jednotky, zistíme pokiaľ siahajú}
+        $j \assign i$\;
+        \lWhile{$(bit[j]=1)$}{$j \assign j+1$\;}
+        \tcp{a nahradíme postupnosťou 1 0 ... 0 -1}
+        $bit[j] \assign 1$ \;
+        $bit[i+1],\dots,bit[j-1] \assign 0$ \;
+        $bit[i] \assign -1$ \;
+        \BlankLine
+        $i \assign j$ \;
+    }
 \end{algorithm}
 
+Základná myšlienka je nahradiť dlhé bloky po sebe idúcich jednotiek za
+1 0 0 ... 0 -1.
+
 \begin{priklad}
-    Postup algoritmu: \\
+    Ukážka behu algoritmu: \\
     \begin{center}
         \begin{tabular}{rrrrr}
             0 1 1 1& 0 1 1 1& 0 1 0 1& 0 0 0 1& 1 1 1 1 \\
