@@ -172,74 +172,142 @@ neskôr).
 Ďalšou úlohou bude k ľubovoľnej interpretácii nad ľubovoľným univerzom
 priradiť Herbrandovskú interpretáciu a zaviesť príslušné tvrdenia a definície.
 
-\paragraph{Príklad} $S=\{ P(x) \lor Q(x). R(f(y)) \}$.  Jedna z možných
-Herbrandovských interpretácií je nasledovná:
-$$ I^* = \{ \neg P(x), \neg Q(a), \neg R(a), \neg P(f(a)), \neg Q(f(a)), \neg
-R(f(a)), \ldots \}$$
-$$ I_2^* = \{ P(a), Q(a), \neg R(a), P(f(a)), Q(f(a)), \neg R(f(a)), \ldots \}$$
+\begin{priklad}
+    \label{prikl:interpretacia}
+    Majme množinu klauzúl $S = \{ P(x),\ Q(y, f(y,a)) \}$.
+    Nech je oblasť interpretácie $D = \{1,2\}$ a interpretujme
+    konštanty, funkčné symboly a predikátové symboly podľa tabuľky
+    \ref{tab:priklad-interpretacia}
 
-\paragraph{Príklad} Majme množinu $S = \{ P(x), Q(y, f(y,a)) \}$. Oblasť
-interpretácie $D = \{1,2\}$.
+    \begin{table}[h]
+        %%% {{{
+        \centering
+        \begin{tabular}{|r||c|c|c|c|c|}
+            \hline
+            symbol & a & f(1,1) & f(1,2) & f(2,1) & f(2,2) \\
+            \hline
+            hodnota & 2 & 1 & 2 & 2 & 1 \\
+            \hline
+        \end{tabular}
+        
+        \medskip
+        \begin{tabular}{|r||c|c|c|c|c|c|}
+            \hline
+            predikát & P(1) & P(2) & Q(1,1) & Q(1,2) & Q(2,1) & Q(2,2) \\
+            \hline
+            hodnota & true & false & false & true & false & true \\
+            \hline
+        \end{tabular}
+        \caption{Interpretácia $I$ z príkladu
+          \ref{prikl:interpretacia}}
+        \label{tab:priklad-interpretacia}
+        %%% }}}
+    \end{table}
 
-\begin{tabular}{|l|c|c|c|c|}
-\hline
-a & f(1,1) & f(1,2) & f(2,1) & f(2,2) \\
-\hline
-2 & 1 & 2 & 2 & 1 \\
-\hline
-\end{tabular}
+    Ideme určiť H-interpretáciu $I^*$, ktorá akýmsi spôsobom bude
+    prislúchať našej interpretácii $I$. Najsôr si určíme bázu:
+    \begin{equation*}
+        A=\{ P(a),\ Q(a,a),\ P(f(a,a)),\ Q(a,f(a,a)),
+            Q(f(a,a), a),\ \ldots \}
+    \end{equation*}
 
-\begin{tabular}{|l|c|c|c|c|c|}
-\hline
-P(1) & P(2) & Q(1,1) & Q(1,2) & Q(2,1) & Q(2,2) \\
-\hline
-T & F & F & T & F & T \\
-\hline
-\end{tabular}
+    Hodnoty pre príslušné predikáty $I^*$ určíme pomocou zadaných tabuliek
+    pre $I$:
 
-$I^*$, H-im ??
-Herbrandovská báza: $$A=\{ P(a), Q(a,a), P(f(a,a)), Q(a,f(a,a)), Q(f(a,a), a,
-\ldots \}$$.
+    \begin{align*}
+        P(a) &= P(2) = false \\
+        Q(a,a) &= Q(2,2) = true\\
+        P(f(a,a)) &= P(f(2,2)) = P(1) =true \\
+        Q(f(a,a),a) &= Q(f(2,2),2) = Q(1,2) =true \\
+        Q(a,f(a,a)) &= Q(1,f(2,2)) = Q(2,1) =false \\
+        Q(f(a,a),f(a,a)) &= Q(f(2,2), f(2,2)) = Q(1,1) =false \\
+    \end{align*}
 
-Hodnoty pre príslušné predikáty určíme pomocou zadaných tabuliek:
-$$
-\begin{array}{lll}
-P(a) &=& P(2) \mbox{neplatí} \\
-Q(a,a) &=& Q(2,2) \mbox{platí} \\
-P(f(a,a)) &=& P(f(2,2)) = P(1) \mbox{platí} \\
-Q(f(a,a),a) &=& Q(f(2,2),2) = Q(1,2) \mbox{platí} \\
-Q(a,f(a,a)) &=& Q(1,f(2,2)) = Q(2,1) \mbox{platí} \\
-Q(f(a,a),f(a,a)) &=& Q(f(2,2), f(2,2)) = Q(1,1) \mbox{neplatí} \\
-\end{array}
-$$
+    Interpretácia $I^*$ je teda
+    \begin{equation*}
+        I^* = \{ \neg P(a),\ Q(a,a),\ P(f(a,a)),\ 
+            \neg Q(a,f(a,a)),\ Q(f(a,a),a),\ \ldots \}
+    \end{equation*}
+\end{priklad}
 
-$$I^* = \{ \neg P(a), Q(a,a), P(f(a,a)), \neg Q(a,f(a,a)), Q(f(a,a),a), \ldots
-\}$$
+\begin{priklad}
+    \label{prikl:interpretacia2}
+    Môže nastať aj iný prípad -- majme množinu klauzúl $S$, ktorá neobsahuje
+    konštantu: $S=\{P(x),\ Q(y,f(y,z)) \}$.
+    Máme danú interpretáciu $I$ s oblasťou $D=\{1,2\}$ popísanú
+    tabuľkou \ref{tab:prikl-interpretacia2}
 
-\par
-Ďalšia vec, čo sa môže stať -- majme množinu klauzúl, ktorá neobsahuje
-konštantu: $S=\{P(x), Q(y,f(y)) \}$. Máme danú interpretáciu $I$ s oblasťou
-$D=\{1,2\}$, oblasti priradím dve interpretácie $I_1^*$ a $I_2^*$, pričom v
-prvej bude $a$ interpretované ako $1$ a v druhej ako $2$.
+    \begin{table}[h]
+        %%% {{{
+        \centering
+        \begin{tabular}{|r||c|c|c|c|}
+            \hline
+            symbol & f(1,1) & f(1,2) & f(2,1) & f(2,2) \\
+            \hline
+            hodnota  & 1 & 2 & 2 & 1 \\
+            \hline
+        \end{tabular}
+        
+        \medskip
+        \begin{tabular}{|r||c|c|c|c|c|c|}
+            \hline
+            predikát & P(1) & P(2) & Q(1,1) & Q(1,2) & Q(2,1) & Q(2,2) \\
+            \hline
+            hodnota & true & false & false & true & false & false \\
+            \hline
+        \end{tabular}
+        \caption{Interpretácia $I$ z príkladu
+          \ref{prikl:interpretacia2}}
+        \label{tab:priklad-interpretacia2}
+        %%% }}}
+    \end{table}
+   
+    Tejto interpretácii budú zodpovedať dve H-interpretácie
+    $I_1^*$ a $I_2^*$, pričom v prvej bude $a$ interpretované ako $1$ 
+    a v druhej ako $2$.
 
-\paragraph{Definícia} Majme interpretáciu $I$, množinu klauzúl $S$ na oblasti
-interpretácií $D$. $I^*$ je H-interpretácia priradená ku $I$, vytvorená
-nasledovne: Nech $h_1, h_2, \ldots h_n$ patria do Herbrandovského univerza $H$,
-$I(h_1) \mapsto d_i \in , i=1 \ldots n$. $P^{(n)}$ patrí do množiny klauzúl $S$.
-Ak $P^{(n)}(d_1, \ldots d_n)$ je splnený a pravdivý v $I$, potom
-$P^{(n)}(h_1,\ldots,h_n)$ je splnený a pravdivý v $I^*$.
+    \begin{align*}
+        I_1^* &= \{ P(a),\ \neg Q(a,a),\ P(f(a,a)),\ \neg Q(a,f(a,a)),\
+            \neg Q(f(a,a),a),\ \dots \} \\
+        I_2^* &= \{ \neg P(a),\ \neg Q(a,a),\ P(f(a,a)),\ \neg Q(a,f(a,a)),\
+            Q(f(a,a),a),\ \dots \}
+    \end{align*}
+\end{priklad}
 
-\paragraph{Lema} Majme interpretáciu $I$ na oblasti $D$. Nech táto interpretácia
-vyhovuje množine klauzúl $S$. Potom ľubovoľná H-interpretácia $I^*$, ktorá je
-priradená (zodpovedá) $I$ taktiež vyhovuje množine klauzúl $S$.
+Teraz si formálne zavedieme, čo to znamená priradiť interpretácii $I$
+zodpovedajúcu H-interpretáciu $I^*$:
 
-\paragraph{Dôkaz} Majme množinu klauzúl $S=\{C_1, C_2, \ldots , C_n\}$. Nech
+\begin{definicia}
+    Majme interpretáciu $I$ pre množinu klauzúl $S$ na oblasti
+    interpretácií $D$. Interpretácii $I$ priradíme zodpovedajúcu
+    H-interpretáciu $I^*$ nasledovne:
+    Nech $h_1, h_2, \ldots, h_n$ sú prvky Herbrandovského univerza
+    $H$.
+    Nech $\forall i$ sa $h_i$ zobrazí v interpretácii $I$ na prvok
+    $d_i$.
+    Zoberme predikát $P^{(n)}$ z množiny klauzúl $S$.
+    Definujeme splniteľnosť (a pravdivosť) predikátu $P$ v $I^*$
+    nasledovne:
+    $P^{(n)}(h_1,\dots,h_n)$ je pravdivý v $I^*$ práve vtedy keď je
+    $P^{(n)}(d_1,\dots,d_n)$ pravdivý v $I$.
+\end{definicia}
+
+\begin{lema}
+    Majme interpretáciu $I$ na oblasti $D$. Nech táto interpretácia
+    vyhovuje množine klauzúl $S$. Potom ľubovoľná H-interpretácia $I^*$,
+    ktorá je priradená (zodpovedá) $I$, taktiež vyhovuje množine klauzúl $S$.
+\end{lema}
+
+\startFIXME
+\begin{dokaz}
+Majme množinu klauzúl $S=\{C^{(1)}, C^{(2)}, \ldots , C^{(n)}\}$. Nech
 klauzula (disjunkcia literálov) $C_i = L_{i_1} \lor L_{i_2} \lor \ldots \lor
 L_{i_{r_i}}$, $i=1,\ldots,n$. Ľubovoľný literál $L_{i_j}$ je tvaru $P^{(n)}(d_1,
 \ldots, d_n)$. Množina klauzúl $C_1 \land C_2 \land \ldots \land C_n$ je
 pravdivá práve vtedy, keď je pravdivá každá klauzula.
 $$I(h_i) = d_i$$
 $$L^*_{i_j}: P^{(n)}(h_1, \ldots, h_n)$$
+\end{dokaz}
 
 \paragraph{Veta} Množina klauzúl $S$ nie je splniteľná práve vtedy, keď $S$ je
 nepravdivá pri všetkých H-interpretáciách $S$. 
