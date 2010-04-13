@@ -258,7 +258,7 @@ priradiť Herbrandovskú interpretáciu a zaviesť príslušné tvrdenia a defin
         \end{tabular}
         \caption{Interpretácia $I$ z príkladu
           \ref{prikl:interpretacia2}}
-        \label{tab:priklad-interpretacia2}
+        \label{tab:prikl-interpretacia2}
         %%% }}}
     \end{table}
    
@@ -274,17 +274,17 @@ priradiť Herbrandovskú interpretáciu a zaviesť príslušné tvrdenia a defin
     \end{align*}
 \end{priklad}
 
-Teraz si formálne zavedieme, čo to znamená priradiť interpretácii $I$
+Teraz si formálne zavedieme, čo to znamená priradiť nejakej interpretácii $I$
 zodpovedajúcu H-interpretáciu $I^*$:
 
-\begin{definicia}
+\begin{definicia}[zodpovedajúca H-interpretácia]
     Majme interpretáciu $I$ pre množinu klauzúl $S$ na oblasti
     interpretácií $D$. Interpretácii $I$ priradíme zodpovedajúcu
     H-interpretáciu $I^*$ nasledovne:
     Nech $h_1, h_2, \ldots, h_n$ sú prvky Herbrandovského univerza
     $H$.
-    Nech $\forall i$ sa $h_i$ zobrazí v interpretácii $I$ na prvok
-    $d_i$.
+    Nech každé $h_i$ sa zobrazí v interpretácii $I$ na prvok
+    $d_i \in D$.
     Zoberme predikát $P^{(n)}$ z množiny klauzúl $S$.
     Definujeme splniteľnosť (a pravdivosť) predikátu $P$ v $I^*$
     nasledovne:
@@ -293,77 +293,114 @@ zodpovedajúcu H-interpretáciu $I^*$:
 \end{definicia}
 
 \begin{lema}
+    \label{lema:h-interpretacia}
     Majme interpretáciu $I$ na oblasti $D$. Nech táto interpretácia
     vyhovuje množine klauzúl $S$. Potom ľubovoľná H-interpretácia $I^*$,
     ktorá je priradená (zodpovedá) $I$, taktiež vyhovuje množine klauzúl $S$.
 \end{lema}
 
-\startFIXME
 \begin{dokaz}
-Majme množinu klauzúl $S=\{C^{(1)}, C^{(2)}, \ldots , C^{(n)}\}$. Nech
-klauzula (disjunkcia literálov) $C_i = L_{i_1} \lor L_{i_2} \lor \ldots \lor
-L_{i_{r_i}}$, $i=1,\ldots,n$. Ľubovoľný literál $L_{i_j}$ je tvaru $P^{(n)}(d_1,
-\ldots, d_n)$. Množina klauzúl $C_1 \land C_2 \land \ldots \land C_n$ je
-pravdivá práve vtedy, keď je pravdivá každá klauzula.
-$$I(h_i) = d_i$$
-$$L^*_{i_j}: P^{(n)}(h_1, \ldots, h_n)$$
+    Majme množinu klauzúl $S=\{C^{(1)}, C^{(2)}, \ldots , C^{(n)}\}$.
+    Nech klauzula $C^{(i)}$ je nasledujúca disjunkcia literálov
+    $C^{(i)} = L^{(i)}_1 \lor L^{(i)}_2 \lor \ldots \lor
+        L^{(i)}_{r_i}$ pre $i=1,\ldots,n$.
+    Ľubovoľný literál $L^{(i)}_j$ je tvaru atomická formula alebo
+    jej negácia. Predpokladajme že interpretácia $I$ na univeze $D$
+    vyhovuje množine klauzúl $S$. Potom musí byť pravdivý aspoň jeden
+    literál v každej klauzule $C^{(i)}$.
+    Lenže pre tieto literály
+    $L^{(i)}_j$ platí
+    $L^{(i)}_j = P^{(n)}(d_1,\dots,d_n)$ je pravdivé v $I$ a z toho
+    dostávame $P^{(n)}(h_1, \dots, h_n)$ je pravdivé v $I^*$.
+    Teda, ak $I$ vyhovuje množine klauzúl $S$, bude jej vyhovovať aj
+    $I^*$.
 \end{dokaz}
 
-\paragraph{Veta} Množina klauzúl $S$ nie je splniteľná práve vtedy, keď $S$ je
-nepravdivá pri všetkých H-interpretáciách $S$. 
+\begin{veta}
+    Množina klauzúl $S$ nie je splniteľná práve vtedy,
+    keď $S$ je nepravdivá pri všetkých H-interpretáciach $S$.
+\end{veta}
 
-\paragraph{Dôkaz} Jedna implikácia (zľava doprava) je očividná:
 
-\subparagraph{Zľava doprava} Nech $S$ nie je splniteľná, potom je nepravdivá pre ľubovoľnú interpretáciu
-na ľubovoľnej oblasti, a teda aj pre ľubovoľnú H-interpretáciu na H-univerze.
+\begin{dokaz}
+    \noindent
+    \begin{itemize}
+    \item[$\Rightarrow:$] Nech množina klauzúl $S$ nie je splniteľná.
+        Potom je nepravdivá pre ľubovoľnú interpretáciu na ľubovoľnej
+        oblasti.
+        Teda aj pre ľubovoľnú H-interpretáciu na H-univerze.
 
-\subparagraph{Obrátená implikácia} Nech množina klauzúl $S$ je nepravdivá pre
-ľubovoľnú H-interpretáciu množiny klauzúl $S$. Pre spor predpokladajme, že
-existuje interpretácia $I$ s oblasťou $D$ pre množinu klauzúl $S$, ktorá
-vyhovuje $S$. Uvažujme $I^*$, ktorá je priradená (zodpovedá) interpretácii pre
-množinu klauzúl $S$. Podľa lemy, ktorú sme dokázali, ak vyhovuje $I$, vyhovuje
-aj $I^*$, čo je spor. $\Box$
+    \item[$\Leftarrow:$] Nech množina klauzúl $S$ je nepravdivá pre
+        ľubovoľnú H-interpretáciu množiny klauzúl $S$.
+        Pre spor predpokladajme, že existuje interpretácia $I$ 
+        s oblasťou $D$ pre množinu klauzúl $S$, ktorá
+        vyhovuje $S$.
+        Uvažujme $I^*$, ktorá je priradená (zodpovedá) interpretácii
+        $I$ pre množinu klauzúl $S$.
+        Podľa lemy \ref{lema:h-interpretacia} ale vieme,
+        že ak vyhovuje $I$, vyhovuje aj $I^*$, čo je spor.
+    \end{itemize}
+\end{dokaz}
 
-\paragraph{Poznámka}
-\begin{enumerate}
-	\item Základná inštancia $C'$ (neobsahuje premenné), $C$ je splniteľná v interpretácii $I$
-	práve vtedy, keď existuje základný literál $L'$:
-	$$ L' \in C'$$
-	$$ C' \cap I \neq \emptyset, L' \in I = \{m_1, m_2, \ldots \} $$
+Podarilo sa nám teda objaviť také univerzum (H-univerzum), pre ktoré
+stačí vyšetriť splniteľnosť množiny klauzúl $S$ na všetkých
+interpretáciach a budeme vedieť povedať (ne)splniteľnosť formuly na
+ľubovoľnej interpretácii v ľubovoľnom univerze. Posunuli sme sa o krok
+bližšie k rozhodovaniu platnosti $S$.
+
+\begin{poznamka}
+    V nasledujúcom texte budeme používať iba H-interpretácie.
+    Preto sa dohodneme (na skrátenie a zjednodušenie zápisu), že
+    ich budeme nazývať iba interpretácie a označovať ako $I$.
+\end{poznamka}
+
+\begin{poznamka}
+    \noindent
+    \begin{enumerate}
+	\item Majme klauzulu (disjunkciu literálov) $C$
+            a nech $C'$ je jej základná inštancia, t.j. 
+            každá premenná bola nahradená prvkom H-univerza.
+            $C'$ je splniteľná v interpretácii $I$
+	    práve vtedy, keď existuje základný literál $L' \in I$,
+            ktorý je splniteľný.
+            Teda $C'$ je splniteľná $\iff$ $C' \intersect I \ne 0$.            
 
 	\item Klauzula $C$ je splnená v interpretácii $I$ $\iff$ každá jej
-	základná inštancia $C$ je splnená v $I$.
+	základná inštancia $C'$ je splnená v $I$.
 
-	\item Klauzula $C$ je odmietnutá (vyvrátená) v $I$ $\iff$ keď existuje
-	aspoň jedna taká základná inštancia $C'$, ktorá je odmietnutá v $I$
-	(vyvrátená).
+	\item Klauzula $C$ je odmietnutá (vyvrátená) v $I$ $\iff$ existuje
+	aspoň jedna taká základná inštancia $C'$, ktorá 
+        nie je splniteľná (teda je vyvrátená) v $I$.
 
-	\item Množina klauzúl $S$ nie je splniteľná v $I$, ak existuje aspoň
-	jedna základná inštancia $C'$ klauzuly $C$, ktorá nie je splniteľná v
-	$I$. $$C \in S$$
-\end{enumerate}
+	\item Množina klauzúl $S$ nie je splniteľná $\iff$ 
+        pre každú interpretáciu $I$ existuje aspoň jedna základná inštancia 
+        $C'$ klauzuly $C\in S$, ktorá nie je splniteľná v $I$.
+    \end{enumerate}
+\end{poznamka}
 
+\begin{priklad}
+    Uvažujme klauzulu $C=\neg P(x) \lor Q(f(x))$ a
+    interpretácie $I_1,I_2,I_3$ definované nasledovne:
+    \begin{align*}
+        I_1 &= \{ \neg P(a),\ \neg Q(a),\ \neg P(f(a)),\ 
+            \neg Q(f(a)),\ \neg P(f(f(a))),\ \neg Q(f(f(a))),\ \ldots \} \\
+        I_2 &= \{ P(a),\ Q(a),\ P(f(a)),\ Q(f(a)),\ P(f(f(a))),\ 
+            Q(f(f(a))),\ \ldots \} \\
+        I_3 &= \{ P(a),\ \neg Q(a),\ P(f(a)),\ \neg Q(f(a)),\ 
+            P(f(f(a))),\ \neg Q(f(f(a))),\ \ldots \} \\
+    \end{align*}
+    Všímajme si klauzulu $C$ a jednotlivé interpretácie:
+    $I_1$ vyhovuje $C$ (inak povedané $C$ je splnená) a zabezpečujú to
+    $\neg P(a),\ \neg P(f(a)),\ \neg P(f(f(a))), \dots$.
+    Podobne, $C$ je splnená v $I_2$ a zabezpečujú to
+    $Q(a),\ Q(f(a)),\ Q(f(f(a))), \dots$. Naopak, $C$ nie je
+    splniteľná v $I_3$.
+\end{priklad}
 
-\paragraph{Príklad} Uvažujme klauzulu $C=\neg P(x) \lor Q(f(x))$ a
-interpretáciu:
-$$
-\begin{array}{lll}
-I_1 &=& \{ \neg P(a), \neg Q(a), \neg P(f(a)), \neg Q(f(a)), \neg P(f(f(a))),
-\neg Q(f(f(a))), \ldots \} \\
-I_2 &=& \{ P(a), Q(a), P(f(a)), Q(f(a)), P(f(f(a))), Q(f(f(a))), \ldots \} \\
-I_3 &=& \{ P(a), \neg Q(a), P(f(a)), \neg Q(f(a)), P(f(f(a))), \neg Q(f(f(a))),
-\ldots \} \\
-\end{array}
-$$
+\begin{priklad}
+    Uvažujme množinu klauzúl $S=\{P(x),\ \neg P(x)\}$ a
+    interpretácie $I_1 = \{ P(x) \}, I_2 = \{ \neg P(x) \}$.
 
-\paragraph{Príklad} Uvažujme množinu klauzúl $S=\{P(x), \neg P(x)\}$ a
-interpretácie:
-$$
-\begin{array}{lll}
-I_1 &=& \{ P(x) \} \\
-I_2 &=& \{ \neg P(x) \} \\
-\end{array}
-$$
-
-Množina nie je splnená ani jednou interpretáciou.
+    Množina $S$ nie je splnená ani jednou interpretáciou.
+\end{priklad}
 

@@ -1,26 +1,39 @@
 \section{Sémantické stromy}
-Splniteľnosť množiny a konštrukcia sémantického stromu budú pre nás ekvivalentné
-pojmy :).
 
-\paragraph{Definícia} $A$ je nejaký atóm (elementárna formula), potom $A$ a
-$\neg A$ nazývame \emph{kontrárna dvojica}.
+Už sme povedali, že Herbrandovské interpretácie sú to pravé orechové,
+čo chceme overovať. Ostáva nám ale vyriešiť problém, ako ich nejakým
+spôsobom postupne preberať. A práve na to nám budú slúžiť sémantické
+stromy.
 
-\par  Ak klauzula obsahuje kontrárnu dvojicu, potom je tautológia.
+\begin{definicia}[Kontrárna dvojica]
+    Majme nejaký (elementárna formulu) $A$. Dvojicu
+    $\langle A, \neg A \rangle$ nazývame kontrárnou dvojicou.
 
-\paragraph{Definícia} Nech $S$ je množina klauzúl, $A$ je Herbrandovské báza pre
-množinu $S$. Pod \emph{sémantickým stromom} pre množinu klauzúl $S$ je dole
-rastúci strom, pričom každej hrane jej pripísaná množina atómov alebo negácií
-atómov (teda vlastne množina literálov) z Herbrandovskej bázy, pričom platí:
-\begin{enumerate}
-	\item Z každého vrchola stromu vychádza konečný počet hrán (označujeme
-	ich $l_1, l_2, \ldots l_n$. Nech $Q_i$ je konjunkcia všetkých literálov
-	pripísaných hrane $l_i$, $i=1,2,\ldots,n$, potom $Q_1 \lor Q_2 \lor
-	\ldots \lor Q_n$ je tautológia.
-	\item Pre každý vrchol $v$ je $I(v)$ zjednotenie všetkých literálov
-	pripísaných hranám vetvy, ktorá vedie do vrcholu $v$. Potom $I(v)$
-	neobsahuje kontrárne dvojice.
-\end{enumerate}
+    Ak klauzula obsahuje kontrárnu dvojicu, potom je tautológia.
+\end{definicia}
 
+\begin{definicia}[Sémantický strom]
+    Nech $S$ je množina klauzúl a $A$ je Herbrandovské báza pre
+    množinu $S$. Pod sémantickým stromom pre množinu klauzúl $S$
+    budeme rozumieť zakorenený dolu rastúci strom
+    v ktorom je každej hrane pripísaná množina atómov alebo negácií
+    atómov (teda vlastne množina literálov) z Herbrandovskej bázy,
+    pričom platí:
+    \begin{enumerate}
+	\item Z každého vrchola stromu vychádza konečný počet hrán.
+            Ooznačme ich ich $l_1, l_2, \ldots l_n$.
+            Nech $Q_i$ je konjunkcia všetkých literálov
+	    pripísaných hrane $l_i$, potom požadujeme aby 
+            $Q_1 \lor Q_2 \lor \ldots \lor Q_n$ bola tautológia.
+
+	\item Označme pre vrchov $v$ symbolom $I(v)$
+            zjednotenie všetkých množín literálov pripísaných hranám cesty,
+            ktorá vedie z koreňa do vrcholu $v$. Potom $I(v)$
+            nesmie obsahovať kontrárne dvojice.
+    \end{enumerate}
+\end{definicia}
+
+\startFIXME
 
 \paragraph{Definícia} Majme $A=\{ A_1, A_2, \ldots A_n \}$ je Herbrandovská báza
 pre množinu $S$. Hovoríme, že sémantický strom prislúchajúci množine klauzúl $S$
