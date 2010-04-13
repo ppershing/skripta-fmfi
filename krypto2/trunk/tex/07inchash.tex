@@ -1,66 +1,81 @@
 \section{Inkrementálne hašovanie}
 
-\subsubsection{Motivácia}
-
-Predstavme si, že máme dlhý dokument (súbor, disk),
-označme ho $m$ a chceme si uchovávať jeho hash. Pri klasickom riešení
+Predstavme si, že máme dlhý dokument (súbor alebo disk),
+označme ho $m$ a chceme si uchovávať jeho hash napríklad kvôli
+integrite alebo autenticite. Pri klasickom riešení
 by sme museli prejsť celý dokument a spočítať jeho 
 hash $H(m)$. Následne keď urobíme čo i len najmenšiu
-zmenu, tak na to, aby sme získali novú hash musíme opäť
-prejsť celý súbor. Toto je náročné na systémové prostriedky.
+zmenu, tak na to, aby sme získali nový hash musíme opäť
+prejsť celý súbor. Toto je náročné na systémové prostriedky
+a veľmi neefektívne. Predstavíme preto niekoľko riešení, ktoré sa
+snažia riešiť tento problém a ukážeme ich nedostatky.
 
 \subsection{Triviálne riešenia}
 
 Môžeme náš dokument rozdeliť na časti (disk na sektory)
 a uchovávať hash každej časti osobitne. V prípade, keď
 $m = m_1 m_2 \dots m_k$, tak hash bude 
-$H(m) = <h(m_1), h(m_2), \dots, h(m_k)>$.
-Toto riešenie má ale oveľa dlhšiu hash.
+$H(m) = \langle h(m_1), h(m_2), \dots, h(m_k) \rangle$.
+Toto riešenie má ale príliš dlhý výsledný hash.
+Takisto, z pohľadu autenticity nie je nič moc, že vieme
+preusporiadavať bloky.
 
-Iné riešenie je použiť Merkleho stromy. Tak si ale preto, aby
-sme mali rýchly update hashe musíme pamätať zloženie celého stromu, čo tiež nie je potešujúce.
+Iné riešenie je použiť Merkleho stromy. Ale aby
+sme mali rýchly update hashe musíme pamätať zloženie celého stromu,
+čo tiež nie je potešujúce.
 
 
 \subsection{Lepšie riešenia}
 
-Zoberme konečnú komutatívnu grupu $(G, \odot)$ (napr. $(2^n, XOR)$).
+Zoberme konečnú komutatívnu grupu $(G, \odot)$ (napríklad $(2^n, \oplus)$).
 Následne predpokladajme, že máme hašovaciu funkciu s oborom hodnôť $G$.
-Rozdeľme dokument na $k$ blokov $m = x_1 x_2 \dots x_k$ Naša hash bude 
-$H(m) = \displaystyle\bigodot_{j=1}^k h(i, x_i)$. 
-Pokiaľ sa blok $x_i$ zmení na $x_i^{'}$, tak nová hash bude:
-$$H(m^{'}) = H(m) \odot h(i, x_i)^{-1} \odot h(i, x_i^{'})$$
+Rozdeľme dokument na $k$ blokov $m = x_1 x_2 \dots x_k$. Náš hash bude 
+\begin{equation*}
+    H(m) = \bigodot_{j=1}^k h(i, x_i)
+\end{equation*}
+Pokiaľ sa blok $x_i$ zmení na $x_i'$, tak nový hash vypočítame
+nasledovne:
+\begin{equation*}
+    H(m') = H(m) \odot h(i, x_i)^{-1} \odot h(i, x_i')
+\end{equation*}
 
 \subsubsection{Súvislosť s problémom vyvažovania}
 
-Dá sa ukázať, že nájsť kolíziu pre incrementálnu hašovaciu
-funkciu používajúcu grupu $G$ je aspoň tak ťažké ako riešiť
+Dá sa ukázať, že nájsť kolíziu pre inkrementálnu hašovaciu
+funkciu nad grupou $G$ je aspoň tak ťažké ako riešiť
 problém vyvažovania (ktorého obťiažnosť závisí hlavne od grupy 
-$G$).
+$G$). Vo všeobecných grupách sa verí, že tento problém je
+NP-ťažký.\footnote{Pozor, nie NP-úplný.}
 
-\begin{definicia}
-Máme zadanú grupu $(G, \odot)$ a postupnosť $a_1, a_2, \dots, a_n$. Našou úlohou
-je nájsť čísla $w_1, w_2, \dots, w_n \in \{-1, 0, 1\}$, kde aspoň jedno z nich
-je nenulové a platí $a_1^{w_1} \odot a_2^{w_2} \odot \dots \odot a_n^{w_n}$.
-Tomuto problému hovoríme problém vyvažovania.
+\begin{definicia}[Problém vyvažovania]
+    Máme zadanú grupu $(G, \odot)$ a postupnosť $a_1, a_2, \dots, a_n$.
+    Našou úlohou je nájsť čísla $w_1, w_2, \dots, w_n \in \{-1, 0, 1\}$,
+    kde aspoň jedno z nich je nenulové a platí 
+    $a_1^{w_1} \odot a_2^{w_2} \odot \dots \odot a_n^{w_n} = e$.
+    Tomuto problému hovoríme problém vyvažovania.
 \end{definicia}
 
 \begin{poznamka}
-Pokiaľ je grupa $G$ komutatívna, tak vlastne hľadáme dve neprázdne disjuktné podmnožiny
-$I, J \subseteq \{1, 2, \dots, n\}$, kde platí $\bigodot_{i\in I} a_i = \bigodot_{j \in J} a_j$.
+    Pokiaľ je grupa $G$ komutatívna, tak vlastne hľadáme
+    dve neprázdne disjuktné podmnožiny
+    $I, J \subseteq \{1, 2, \dots, n\}$, kde platí 
+    $\bigodot_{i\in I} a_i = \bigodot_{j \in J} a_j$.
 \end{poznamka}
 
 \begin{lema}
-Ak vieme v grupe $(G, \odot)$ hľadať kolízie pre inkrementálne hašovacie
-funkcie, tak vieme rovnako efektívne riešiť problém vyvažovania.
+    Ak vieme v grupe $(G, \odot)$ hľadať kolízie pre inkrementálne hašovacie
+    funkcie, tak vieme rovnako efektívne riešiť problém vyvažovania.
 \end{lema}
 
 \begin{dokaz}
-Majme orákulum $A$, ktoré hľadá kolíziu pre inkrementálnu hašovaciu
-funkciu nad grupou $(G, \odot)$. Toto orákulum nám položí $q$ otázok
-typu aká je hodnota $h(i, x_i)$. Na tieto otázky mu odpovieme postupne $a_1, a_2, \dots, a_q$.
-Orákulum podá odpoveď $H(x) = H(y)$, čo je vlastne $\bigodot_{i \in I} a_i = \bigodot_{j \in J} a_j$.
-(Keďže predpokladáme, že funkcia $h$ sa správa ako náhodné orákulum, tak sa na všetky zložky
-$x$ a $y$ musí $A$ opýtať.)
+    Majme orákulum $A$, ktoré hľadá kolíziu pre inkrementálnu hašovaciu
+    funkciu nad grupou $(G, \odot)$. Toto orákulum nám položí $q$ otázok
+    typu ``aká je hodnota $h(i, x_i)$?'' Na tieto otázky mu odpovieme postupne
+    $a_1, a_2, \dots, a_q$.
+    Orákulum podá odpoveď $H(x) = H(y)$, čo je vlastne 
+    $\bigodot_{i \in I} a_i = \bigodot_{j \in J} a_j$.
+    (Keďže predpokladáme, že funkcia $h$ sa správa ako náhodné orákulum,
+    tak sa na všetky zložky $x$ a $y$ musí $A$ opýtať.)
 \end{dokaz}
 
 \subsection{XOR-hash}
