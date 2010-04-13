@@ -203,7 +203,40 @@ strom.
     \label{fig:merkle}
 \end{figure}
 
-\todo{}
+Použitie bude nasledovné: Ako verejný kľúč zverejníme $H_{1,n}$. Toto je
+malá hodnota a preto sa dobre distribuuje. Následne, predpokladajme, že
+chceme použiť na podpisovanie kľúč číslo $x$. Na to, aby sme mohli overiť
+podpis potrebujeme vedieť overiť celú cestu od kľúča $x$ ku koreňu. Toto
+môžeme spraviť nasledovne -- zverejníme hodnotu pre každého súrodenca
+nejakého vrcholu na ceste (týchto súrodencov si označíme ako
+``autentifikačnú cestu'').
+Ak totiž vieme vypočítať hodnotu vrchola na ceste a poznáme
+súrodenca, tak vieme vypočítať hodnotu otca daného vrcholu.
+Teda ak vieme hodnotu $pk_x$ a poznáme hodnoty všetkých súrodencov po ceste ku
+koreňu, vieme postupne vypočítať hodnotu až ku koreňu. Následne stačí
+overiť, či vypočítaná hodnota sedí so zverejnenou hodnotou $H_{1,n}$.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics{img/06/merkle.2.mps}
+    \caption{Autentizačná cesta pre kľúč č.4}
+    \label{fig:merkle}
+\end{figure}
+
+Pri tomto riešení teda pri jednom podpise musíme zverejniť popri podpise aj
+celú autentiazačnú cestu, jej dĺžka je logaritmická od počtu kľúčov, ktoré
+chceme používať. Je teda len na nás, či obetujeme zväčšenie podpisu na to,
+aby sme mohli mať menší verejný kľúč.
+
+Ďalšia zaujímavá otázka je výpočet autentifikačnej cesty. Vo všeobecnosti
+pri veľkom strome totiž vypočítať jednotlivé potrebné hodnoty môže trvať až
+čas úmerný počtu kľúčov. Toto sa dá riešiť na úkor pamäte udržiavaným istej
+predpočítanej množiny vrcholov. Druhá možnosť je, ak chceme používať kľúče
+zaradom v podarí $1,2,\dots,n$, existujú isté algoritmy na iteratívne
+počítanie, kedy z autentifikačnej cesty pre kľúč $k$ vypočítame cestu pre
+kľúč $k+1$ v amortizovanom čase $O(\log n)$, dokonca sa dá vynechať aj
+amortizovanosť, ako sa píše v \cite{merkle_iter}.
+
 Viac o Merkleho stromoch a iných vylepšeniach Lamportovej schémy
 možno nájsť v \cite{merkle}.
 
@@ -288,19 +321,30 @@ $\sigma_1 = x_1 + my_1$, $\sigma_2 = x_2 + my_2$.
 
 Dostali sme 4 rovnice. Máme 4 neznáme. V maticovom tvare dostávame:
 \begin{equation*}
+%%% {{{
     \left ( \begin{matrix}
-                1 & a & 0 & 0 \cr 
-                0 & 0 & 1 & a \cr
-                1 & 0 & m & 0 \cr
+                1 & a & 0 & 0 \\
+                0 & 0 & 1 & a \\
+                1 & 0 & m & 0 \\
                 0 & 1 & 0 & m
-            \end{matrix} \right )
+            \end{matrix}
+    \right )
     \left ( \begin{matrix}
-                x_1 \cr x_2 \cr y_1 \cr y_2
-            \end{matrix} \right )
+                x_1 \\
+                x_2 \\
+                y_1 \\
+                y_2
+            \end{matrix}
+    \right )
     =
     \left ( \begin{matrix} 
-                e_1 \cr e_2 \cr \sigma_1 \cr \sigma_2
-            \end{matrix} \right )
+                e_1 \\
+                e_2 \\
+                \sigma_1\\
+                \sigma_2
+            \end{matrix}
+    \right )
+%%% }}}
 \end{equation*}
 
 Matica sústavy má ale hodnosť $3$. Jedno riešenie už máme (pôvodný
@@ -311,10 +355,10 @@ priestore $Z_q^4$).
 
 Toto dokazuje, že potenciálnych súkromných kľúčov je exponenciálne veľa.
 Na to aby sme ukázali, že útočník má
-šancu na úspech $\frac{1}{q}$ treba ešte ukázať jednu vec.
+šancu na úspech $1/q$ treba ešte ukázať jednu vec.
 Môže totiž nastať patologický prípad, kde veľa súkromných kľúčov
 pri podpise falošnej správy $m^*$ dá rovnaký podpis.
-Teda budeme mať rôzne kľúče $sk^{'}, sk^{''}, \dots$, 
+Teda budeme mať rôzne kľúče $sk^{'}, sk^{''}, \dots$,
 kde $Sig_{sk^{'}}(m^*) = Sig_{sk^{''}}(m^*) = \dots$.
 To, že tento prípad nenastane ukazuje nasledujúca lema.
 
