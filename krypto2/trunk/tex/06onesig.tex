@@ -259,13 +259,13 @@ zovšebecnený Merkleho strom, ktorý umožnuje overovať iba niektoré
 Ak čitateľa zaujala táto problematika, odporúčame prečítať publikáciu
 doc. Martina Staneka \cite{stanek}.
 
-\subsection{Fail/stop podpisové schémy}
+\subsection{Fail-stop podpisové schémy}
 
 Predstavme si, že chceme schému pri ktorej sme (ako podpisovateľ) chránený pred neobmedzene výpočtovo silným
 falšovateľom. Inak povedané, žiadny útočník, nech je akokoľvek silný,
 by nemal z prístupu k môjmu verejnému kľúču byť schopný generovať
 platné podpisy. Toto je samozrejme mierne v rozpore s tým, že máme
-vedieť overiť podpis. Preto budeme požadovať miernejšiu vec -
+vedieť overiť podpis. Preto budeme požadovať miernejšiu vec --
 podpisovateľ bude schopný preukázať, že to nebolo podpísané jeho
 súkromným kľúčom.
 Opäť si predstavíme jednorázovú schému. Útočník v prípade získania
@@ -280,13 +280,15 @@ ako jeho súkromný kľúč a je to schopný preukázať.
 
 Uvažujme grupu $G$, kde $|G| = q$ a $q$ je nejaké (dostatočne veľké) prvočíslo.
 Zoberme generátory $g, h \in G$.
-Súkromný kľúč bude štvorica  $sk = (x_1, x_2, y_1, y_2) \inr Z_q$.
+Súkromný kľúč bude štvorica  
+$sk = \langle x_1, x_2, y_1, y_2 \rangle \inr Z_q^4$.
 Poznamenajme, že narozdiel od ElGamalovej schémy, hodnoty $x,y$ sú
 náhodné a \emph{nezávislé}.
-Verejný kľúč bude dvojica
-$pk = (g^{x_1} h^{x_2}, g^{y_1} h^{y_2}) = (z_1, z_2)$, teda akýmsi
+Verejný kľúč bude štvorica 
+$pk = \langle g,h, g^{x_1} h^{x_2},\ g^{y_1} h^{y_2} \rangle = 
+    \langle g,h,z_1, z_2 \rangle$, teda akýmsi
 spôsobom previažeme obe hodnoty. Algoritmický zápis generovania je vo
-funkcii \ref{funct:genhp}
+funkcii \ref{funct:genhp}.
 
 \begin{function}[h!]
     \caption{GenHP($G$)}
@@ -295,23 +297,25 @@ funkcii \ref{funct:genhp}
     $x_1,x_2,y_1,y_2 \inr G$\;
     $z_1 \assign g^{x_1} h^{x_2}$\;
     $z_2 \assign g^{y_1} h^{y_2}$\;
-    \Return $sk=(g,h,x_1,x_2,y_1,y_2), pk=(g,h,z_1,z_2)$\;
+    \Return $sk=\langle x_1,x_2,y_1,y_2 \rangle,\ 
+        pk=\langle g,h,z_1,z_2 \rangle$\;
 \end{function}
 
 Správu $m$ podpíšeme svojim súkromným kľúčom ako lineárnu kombináciu
-$x_i, y_i, m$ pomocou funkcie \ref{funct:signhp}
+$m,x_i, y_i$ pomocou funkcie \ref{funct:signhp}.
+
 \begin{function}[h!]
     \caption{SignHP($m$)}
     \label{funct:signhp}
     $\sigma_1 \assign x_1 + m y_1$\;
     $\sigma_2 \assign x_2 + m y_2$\;
-    \Return $\sigma=(\sigma_1,\sigma_2)$\;
+    \Return $\sigma=\langle \sigma_1,\sigma_2 \rangle$\;
 \end{function}
 
 Overenie podpisu je jednoduché otestovanie
 rovnosti:
 \begin{function}[h!]
-    \caption{VerifyHP($\sigma,m$)}
+    \caption{VerifyHP($m,\sigma,pk$)}
     \eIf{$g^{\sigma_1} h^{\sigma_2} == z_1 z_2^m$}{
         \Return accept\;
     }{
@@ -322,51 +326,51 @@ rovnosti:
 Teraz si dokážeme niekoľko vlastností tejto schémy.
 
 \begin{lema}
-Pre ľubovoľnú trojicu $pk, m, \sigma$, kde $\sigma = SigHP_{sk}(m)$
-a $sk$ je nejaký vyhovujúci súkromný kľúč
-existuje $q$ rôznych kľúčov $sk^*$, takých že $\sigma = Sig_{sk^*}(m)$.
+    Pre ľubovoľnú trojicu $\langle pk, m, \sigma \rangle$,
+    kde $\sigma = SigHP_{sk}(m)$
+    a $sk$ je nejaký vyhovujúci súkromný kľúč
+    existuje $q$ rôznych kľúčov $sk^*$, takých že $\sigma = Sig_{sk^*}(m)$.
 \end{lema}
 
 \begin{dokaz}
-Nech $h = g^a$, $z_1 = g^{e_1}$ a $z_2 = g^{e_2}$ 
-(neobmedzene silný útočník vie $a, e_1, e_2$ vypočítať).
-Z toho, že $z_1 = g^{x_1} h^{x_2}$ máme rovnicu $e_1 = x_1 + ax_2$.
-Podobne z $z_2 = g^{y_1} h^{y_2}$ dostaneme $e_2 = y_1 + a y_2$.
-A ešte vďaka tomu, že $\sigma$ je podpis správy $m$ máme rovnice
-$\sigma_1 = x_1 + my_1$, $\sigma_2 = x_2 + my_2$. 
+    Nech $h = g^a$, $z_1 = g^{e_1}$ a $z_2 = g^{e_2}$ 
+    (neobmedzene silný útočník vie $a, e_1, e_2$ vypočítať).
+    Z~toho, že $z_1 = g^{x_1} h^{x_2}$ máme rovnicu $e_1 = x_1 + ax_2$.
+    Podobne z rovnice $z_2 = g^{y_1} h^{y_2}$ dostaneme $e_2 = y_1 + a y_2$.
+    A ešte vďaka tomu, že $\sigma$ je podpis správy $m$ máme rovnice
+    $\sigma_1 = x_1 + my_1$, $\sigma_2 = x_2 + my_2$. 
 
-Dostali sme 4 rovnice. Máme 4 neznáme. V maticovom tvare dostávame:
-\begin{equation*}
-%%% {{{
-    \left ( \begin{matrix}
-                1 & a & 0 & 0 \\
-                0 & 0 & 1 & a \\
-                1 & 0 & m & 0 \\
-                0 & 1 & 0 & m
-            \end{matrix}
-    \right )
-    \left ( \begin{matrix}
-                x_1 \\
-                x_2 \\
-                y_1 \\
-                y_2
-            \end{matrix}
-    \right )
-    =
-    \left ( \begin{matrix} 
-                e_1 \\
-                e_2 \\
-                \sigma_1\\
-                \sigma_2
-            \end{matrix}
-    \right )
-%%% }}}
-\end{equation*}
+    Dostali sme 4 rovnice. Máme 4 neznáme. V maticovom tvare dostávame:
+    \begin{equation*}
+    %%% {{{
+        \left ( \begin{matrix}
+                    1 & a & 0 & 0 \\
+                    0 & 0 & 1 & a \\
+                    1 & 0 & m & 0 \\
+                    0 & 1 & 0 & m
+                \end{matrix}
+        \right )
+        \left ( \begin{matrix}
+                    x_1 \\
+                    x_2 \\
+                    y_1 \\
+                    y_2
+                \end{matrix}
+        \right )
+        =
+        \left ( \begin{matrix} 
+                    e_1 \\
+                    e_2 \\
+                    \sigma_1\\
+                    \sigma_2
+                \end{matrix}
+        \right )
+    %%% }}}
+    \end{equation*}
 
-Matica sústavy má ale hodnosť $3$. Jedno riešenie už máme (pôvodný
-súkromný kľúč) a teda sústava má práve $q$ rôznych riešení (sme v
-priestore $Z_q^4$).
-
+    Matica sústavy má ale hodnosť $3$. Jedno riešenie už máme (pôvodný
+    súkromný kľúč) a teda sústava má práve $q$ rôznych riešení (sme v
+    priestore $Z_q^4$).
 \end{dokaz}
 
 Toto dokazuje, že potenciálnych súkromných kľúčov je exponenciálne veľa.
@@ -374,35 +378,46 @@ Na to aby sme ukázali, že útočník má
 šancu na úspech $1/q$ treba ešte ukázať jednu vec.
 Môže totiž nastať patologický prípad, kde veľa súkromných kľúčov
 pri podpise falošnej správy $m^*$ dá rovnaký podpis.
-Teda budeme mať rôzne kľúče $sk^{'}, sk^{''}, \dots$,
-kde $Sig_{sk^{'}}(m^*) = Sig_{sk^{''}}(m^*) = \dots$.
-To, že tento prípad nenastane ukazuje nasledujúca lema.
+Teda budeme mať rôzne kľúče $sk_1, sk_2, \dots, sk_n$,
+kde $Sig_{sk_1}(m^*) = Sig_{sk_2}(m^*) = \dots = Sig_{sk_n}(m^*)$.
+To, že tento prípad nenastane ukazuje nasledujúca lema:
 
 \begin{lema}
-Pre ľubovoľné $pk, m, \sigma, m^*, \sigma^*$, kde $\sigma = Sig_{sk}(m)$, $\sigma^* = Sig_{sk}(m^*)$ a $sk$ vyhovuje $pk$
-existuje maximálne jeden jediný vyhovujúci $sk$.
+    Pre ľubovoľné $\langle pk, m, \sigma, m^*, \sigma^* \rangle$, kde
+    súkromný kľúč $sk$ vyhovuje privátnemu kľúču $pk$ a platí
+    $\sigma = Sig_{sk}(m)$, $\sigma^* = Sig_{sk}(m^*)$ platí,
+    že existuje existuje maximálne jeden takýto kľúč $sk$.
 \end{lema}
 
 \begin{dokaz}
-Prvé 4 rovnice máme rovnaké ako v predchádzajúcej leme. Navyše dostaneme ešte rovnice $x_1 + m^*y_1 = \sigma_1^*$, 
-$x_2 + m^* y_2 = \sigma_2^*$.
-Pokiaľ zostrojíme maticu tejto sústavy bude mať hodnosť $4$ a teda bude mať maximálne jedno riešenie.
+    Prvé 4 rovnice máme rovnaké ako v predchádzajúcej leme.
+    Navyše dostaneme ešte dve rovnice: $x_1 + m^*y_1 = \sigma_1^*$ a
+    $x_2 + m^* y_2 = \sigma_2^*$.
+    Pokiaľ zostrojíme maticu tejto sústavy bude mať hodnosť $4$ 
+    a teda bude mať maximálne jedno riešenie.
 \end{dokaz}
 
 
 Ešte treba vyriešiť otázku ako môže podpisujúci spochybniť podpis 
 a či tomuto spochybneniu môžeme veriť.
-Keďže je to jednorázová schéma, tak podpisujúci v prípade,
-že chce spochybniť podpis, tak stačí ak zverejní vlastný súkromný kľúč.
+Keďže je to jednorázová schéma, podpisujúcemu v prípade,
+že chce spochybniť podpis, stačí ak zverejní vlastný súkromný kľúč.
 V tom prípade vieme overiť, že nesedí s podpisom falošnej správy
-a navyše vyhovuje verejnému kľúču.
+a navyše vyhovuje verejnému kľúču. Toto na druhú stranu
+umožňuje poprieť vlastný podpis, ak máme dostatočne veľkú výpočtovú
+silu.
 
-Ukažeme ešte, že podpisujúci si nevie vymyslieť iný súkromný kľúč
+Ukážeme ešte, že podpisujúci si nevie vymyslieť iný súkromný kľúč
 (samozrejme ak je výpočtovo obmedzený). 
-Nech jeho pôvodný súkromný kľúč je $sk = (x_1, x_2, y_1, y_2)$ a
-chce si pripraviť nový kľúč $sk^{'} = (x_1^{'}, x_2^{'}, y_1^{'}, y_2^{'})$.
-Potom platí $z_1 = g^{x_1} h^{y_1} = g^{x_1^{'}} h^{y_1^{'}}$ z čoho máme 
-$h = g^{(x_1 - x_1^{'})(y_1^{'} - y_1)^{-1}}$.
-A teda vieme zistiť $dlog_g h$.
+Nech jeho pôvodný súkromný kľúč je 
+$sk = \langle x_1, x_2, y_1, y_2 \rangle$ a
+chce si pripraviť nový kľúč
+$sk^{'} = \langle x_1', x_2', y_1', y_2' \rangle$.
+Potom platí $z_1 = g^{x_1} h^{y_1} = g^{x_1'} h^{y_1'}$ z čoho máme 
+$h = g^{(x_1 - x_1')(y_1' - y_1)^{-1}}$.
+A teda vieme zistiť $\dlog_g h$.
 
-%tuna redukciu na dlog stanek robil trochu inac (cez rovnost podpisov), toto sa mi zda byt priamejsie
+\begin{poznamka}
+    Posledná časť bola odprednášaná mierne inak (cez rovnosť
+    podpisov), nám sa ale zdal tento prístup priamejší.
+\end{poznamka}
