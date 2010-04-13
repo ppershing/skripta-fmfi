@@ -124,9 +124,8 @@ p_b^{e_b}$.
 Našou ambíciou je nazbierať čo najviac takýchto závislostí, optimálne
 $b+1$. Ak totiž zlogaritmujeme dané rovnosti, dostaneme sústavu
 lineárnych rovníc.
-\fixme{makro na dlog}
-$a=e_1 dlog_g p_1 + e_2 dlog_g p_2 + \dots + e_b dlog_g p_b \pmod{p-1}$.
-V tejto sústave sú neznáme $dlog_g p_1, dlog_g p_2, \dots, dlog_g p_b$.
+$a=e_1 \dlog_g p_1 + e_2 \dlog_g p_2 + \dots + e_b \dlog_g p_b \pmod{p-1}$.
+V tejto sústave sú neznáme $\dlog_g p_1, \dlog_g p_2, \dots, \dlog_g p_b$.
 
 Ak sme úspešne zvládly tento predvýpočet, môžeme skúšať počítať dlog y
 nasledovne.
@@ -143,7 +142,7 @@ $O(e^{(1+O(1))\sqrt{\log p \log \log p}})$.
 \end{poznamka}
 \begin{poznamka}
     Nech G je podgrupa $Z_p^*$, ktorej veľkost $|G|=q$ je prvočíslo.
-    Ak mame generator $g\in G$, potom výpočet dlog g v G buď pollard rho
-    metodou.
+    Ak mame generator $g\in G$, potom výpočet $\dlog_g x$ v $G$ 
+    realizujeme buď pollard rho metodou.
     \todo{doplnit}
 \end{poznamka}
