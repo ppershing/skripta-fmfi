@@ -240,7 +240,19 @@ amortizovanosť, ako sa píše v \cite{merkle_iter}.
 Viac o Merkleho stromoch a iných vylepšeniach Lamportovej schémy
 možno nájsť v \cite{merkle}.
 
-\subsection{Stanekova schéma}
+\subsection{Využitie Merkleho stromov pri extrakcii textu}
+
+Uvažujme nasledujúci setting -- máme ústavu SR, čo je veľký dokument, ktorý
+sa dá stiahnuť. Samozrejme, existuje verejný podpis tohoto dokumentu, aby
+sme si mohli overiť, že nám niekto nepozmenil výklad niektorých paragrafov.
+To znamená, že keď mám celý dokument, môžem si overiť jeho autentickosť.
+Problém je zrejmý -- dokument je príliš dlhý a celý nás pravdepodobne
+nezaujíma. Nás zaujíma iba nejaký konkrétny zákon alebo paragraf. Lenže na
+to, aby sme mohli overiť, že daný paragraf je naozaj autentický, musíme
+stiahnuť aj zvyšok dokumentu. Toto je samozrejme veľmi neefektívne. Preto
+hľadáme spôsob, akým môžeme efektívne digitálne podpísať dokument a pritom
+umožniť overovanie jednotlivých podčastí (napríklad celé zákony alebo
+paragrafy).
 \todo{}
 
 \subsection{Fail/stop podpisové schémy}
