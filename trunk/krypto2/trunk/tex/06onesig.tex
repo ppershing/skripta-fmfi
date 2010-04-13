@@ -234,8 +234,7 @@ pri veľkom strome totiž vypočítať jednotlivé potrebné hodnoty môže trva
 predpočítanej množiny vrcholov. Druhá možnosť je, ak chceme používať kľúče
 zaradom v podarí $1,2,\dots,n$, existujú isté algoritmy na iteratívne
 počítanie, kedy z autentifikačnej cesty pre kľúč $k$ vypočítame cestu pre
-kľúč $k+1$ v amortizovanom čase $O(\log n)$, dokonca sa dá vynechať aj
-amortizovanosť, ako sa píše v \cite{merkle_iter}.
+kľúč $k+1$ v čase aj pamäti $O(\log n)$, napríklad podľa \cite{merkle_iter}.
 
 Viac o Merkleho stromoch a iných vylepšeniach Lamportovej schémy
 možno nájsť v \cite{merkle}.
@@ -252,8 +251,13 @@ to, aby sme mohli overiť, že daný paragraf je naozaj autentický, musíme
 stiahnuť aj zvyšok dokumentu. Toto je samozrejme veľmi neefektívne. Preto
 hľadáme spôsob, akým môžeme efektívne digitálne podpísať dokument a pritom
 umožniť overovanie jednotlivých podčastí (napríklad celé zákony alebo
-paragrafy).
-\todo{}
+paragrafy). Na druhej strane, nechceme povoliť aby sa dala overiť iba
+nejaká časť zákona. Čo kebyže nám tak niekto úmyselne zatají nejakú
+dôležitú časť na konci. Na takéto účely sa preto konštruuje takzvaný
+zovšebecnený Merkleho strom, ktorý umožnuje overovať iba niektoré
+časti dokumentu.
+Ak čitateľa zaujala táto problematika, odporúčame prečítať publikáciu
+doc. Martina Staneka \cite{stanek}.
 
 \subsection{Fail/stop podpisové schémy}
 
