@@ -1,3 +1,5 @@
+input latexmp;
+
 prologues:=3;
 verbatimtex
     %&latex
@@ -6,7 +8,7 @@ verbatimtex
     \begin{document}
 etex
 
-sbox_width:=1.5cm;
+sbox_width:=2cm;
 sbox_height:=0.7cm;
 sbox_sep:=0.3cm;
 
@@ -20,10 +22,10 @@ round_sbox_offset:=1.2cm;
 %%% {{{ create_pins(nameofbox)
 def create_pins(suffix name)(expr posx, posy)=
     for j=0 upto 3:
-        name.in[j].x = posx - sbox_width/2 + (j+1)*sbox_width/5;
-        name.in[j].y = posy + sbox_height/2;
-        name.out[j].x = posx - sbox_width/2 + (j+1)*sbox_width/5;
-        name.out[j].y = posy - sbox_height/2;
+        name.in[3-j].x = posx - sbox_width/2 + (j+1)*sbox_width/5;
+        name.in[3-j].y = posy + sbox_height/2;
+        name.out[3-j].x = posx - sbox_width/2 + (j+1)*sbox_width/5;
+        name.out[3-j].y = posy - sbox_height/2;
     endfor;
 enddef;
 %%% }}}
@@ -49,7 +51,7 @@ def create_kbox(suffix name)(expr l, posx, posy)=
          cycle;
     label(l, (posx, posy));
     for i:=0 upto 3:
-        create_pins(name.subbyte[i],
+        create_pins(name.subbyte[3-i],
                     posx - kbox_width/2 + sbox_width/2 +
                         i*(sbox_sep+sbox_width),
                     posy);
@@ -60,7 +62,7 @@ enddef;
 %%% {{{ create_sboxes(name,posx,posy)
 def create_sboxes(suffix name)(expr posx, posy)=
     for i:=0 upto 3:
-        create_sbox(name.subbyte[i],
+        create_sbox(name.subbyte[3-i],
                     posx-kbox_width/2 +sbox_width/2+
                         i*(sbox_sep+sbox_width),
                     posy);
@@ -113,6 +115,9 @@ def draw_in_pins(suffix meno)=
         for j:=0 upto 3:
             draw subpath(2,3) of
                 (inout_path(meno,i,j,meno,i,j));
+            k:=i*4+j;
+            label.top(textext("$" & (decimal k) & "$"),
+                        pair_in(meno,i,j)+(0,9));
         endfor;
     endfor;
 enddef;
@@ -165,6 +170,8 @@ enddef;
 
 beginfig(1);
     draw_cipher;
+    pickup pencircle scaled 1.5;
+%    input path1.mp.inc
 endfig;
 
 end
