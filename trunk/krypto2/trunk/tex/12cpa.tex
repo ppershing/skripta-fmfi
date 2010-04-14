@@ -87,7 +87,52 @@ Potom platí: $Pr[D^{F_k} = 1] - Pr[D^f = 1] = Pr[PrivK_{A,\Pi}^{CPA}(n)=1] - Pr
 = \epsilon(n) - negl(n)$, čo je nezanedbateľná šanca na úspech.
 \end{dokaz}
 
+Podobne ako pseudonáhodnú funkciu môžeme definovať pseudonáhodnú permutáciu. Tá nesmie byť rozlíšiteľná od úplne
+náhodnej permutácie. Takúto permutáciu vieme využiť priamo na budovanie symetrických šifier.
+Navyše vieme zadefinovať aj silne pseudonáhodnú permutáciu, kde rozlišovač okrem permutácie dostane prístup aj
+k inverznej permutácii.
 
+\begin{priklad}
+Ako vyrobiť z pseudonáhodnej funkcie pseudonáhodnú permutáciu? Využijeme klasický princíp
+Feistelovskej šifry. Rozdelíme vstup permutácie na dva bloky $L_0, H_0$ a kľuč na podkľúče $k_1, k_2, \dots$ a následne:
+$L_{i+1} = H_{i}, H_{i+1} = L_{i} \oplus F_{k_i}(H_i)$.
+Pokiaľ by sme ako výstup zobrali $L_1, H_1$, tak nedostaneme náhodnú permutáciu, lebo niektoré bity sa len kopírujú.
+Pokiaľ by sme zobrali ako výstup $L_2, H_2$, tak zase máme problém s tým, že pokiaľ znegujeme bit v $L_0$, tak sa presne ten
+istý bit zneguje v $L_2$. Dá sa ukázať, že pokiaľ ale vezmeme $L_3, H_3$ tak máme pseudonáhodnú permutáciu a ak vezmeme $L_4, H_4$
+tak máme silne pseudonáhodnú permutáciu.
+\end{priklad}
 
+\subsection{Bezpečnosť módov blokových šifier}
 
+V tejto časti budeme predpokladať, že samotná šifrovacia transformácia je pseudonáhodná permutácia.
+Ukážeme si, že niektoré módy majú vlastnosť nerozlíšiteľnosti pri CPA a niektoré nie.
 
+\begin{itemize}
+\item ECB mód - nezvnikne pseudonáhodná permutácia, napr. po zašifrovaní textov $(m_0,m_0), (m_0, m_1)$ vieme rozlišovať.
+\item CBC mód - pri použití náhodného inicializačného vektora vznikne pseudonáhodná permutácia.
+\item OFB mód - to isté ako CBC
+\item CTR mód - funguje nasledovne. Zvolíme náhodne inicializačný vektor $IV$. Šifrujeme nasledovne: $C_0 = IV, C_i = P_i \oplus E_k(IV + i)$. Ukážeme, že máme nerozlíšiteľné šifrové texty.
+\end{itemize}
+\begin{veta}
+Ak $E_k$ pri CTR móde je pseudonáhodná permutícia, tak CTR mód má nerozlíšiteľné šifrové texty pri CPA.
+\end{veta}
+\begin{dokaz}
+Opäť najprv ukážeme, že upravená schéma $\tilde{\Pi}$, kde miesto $E_k$ použijeme náhodnú permutáciu $f$
+má nerozlíšiteľné šifrové texty. 
+Predpokladajme, že všetky texty majú najviac $q(n)$ blokov a útočník položí najviac $q(n)$ otázok.
+Označme odpovede na útočníkové otázky ako $c^1, c^2, \dots, c^{q(n)}$. Útočník vie vcelku jasne rozlišovať práve
+vtedy, keď $\exists x\colon |c_0^x - c_0| \leq q(n)$ (čiže vtedy keď sa nám veci vstupujúce do $E_k$ \clqq prekrývajú\crqq).
+Túto situáciu nazvime Overlap.
+Potom šanca útočníka na úspech je:
+$$Pr[X_{\tilde{\Pi}} = 1] = Pr[X_{\tilde{\Pi}} = 1 \land Overlap] + Pr[X_{\tilde{\Pi}} = 1 \land \neg Overlap]$$
+Pričom $Pr[X_{\tilde{\Pi}} = 1 \land Overlap] \leq \displaystyle\sum_{i=1}^{q(n)} \frac{2q(n)}{2^n} = \frac{2q(n)^2}{2^n}$. Voči každej
+otázke máme $2q(n)$ dobrých miest, kde môže začínať naše IV. A máme $q(n)$ otázok.
+Zároveň $Pr[X_{\tilde{\Pi}} = 1 \land \neg Overlap] = \frac{1}{2}$, lebo v tomto prípade opäť nevieme povedať nič.
+A teda celkovo $Pr[X_{\tilde{\Pi}} = 1] \leq \frac{1}{2} + \frac{2q(n)^2}{2^n} = \frac12 + negl(n)$.
+
+Zbytok dôkazu je presne rovnaký ako pri konštrukcii zo pseudonáhodnej funkcie.
+\end{dokaz}
+
+\subsection{CCA odolnosť}
+Ukazuje sa, že pokiaľ chceme mať CCA odolnosť voči útočníkom, tak bežné módy sú nedostačujúce.
+Treba ešte pridať kontrolu integrity správy (aby si útočník nevedel len tak správu vyskladať po častiach).
