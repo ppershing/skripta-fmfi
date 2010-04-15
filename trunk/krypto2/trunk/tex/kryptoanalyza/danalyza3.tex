@@ -1,23 +1,25 @@
-\paragraph{1. kolo:}
-Použijeme differenciu $in= 0400 , out= 0400 $,
+\begin{itemize}
+\item {\bf 1. kolo:}
+Použijeme differenciu $\langle in= 0400 , out= 0400 \rangle $,
 ktorá má pravdepodobnosti po jednotlivých S-boxoch $
 1.0,1.0,0.375,1.0
-$čo spolu dáva pravdepodobnosť 
+$ čo spolu dáva pravdepodobnosť 
 $ 1.0*1.0*0.375*1.0 = 0.375 $
 
-\paragraph{2. kolo:}
-Použijeme differenciu $in= 0400 , out= 0400 $,
+\item {\bf 2. kolo:}
+Použijeme differenciu $\langle in= 0400 , out= 0400 \rangle $,
 ktorá má pravdepodobnosti po jednotlivých S-boxoch $
 1.0,1.0,0.375,1.0
-$čo spolu dáva pravdepodobnosť 
+$ čo spolu dáva pravdepodobnosť 
 $ 1.0*1.0*0.375*1.0 = 0.375 $
 
-\paragraph{3. kolo:}
-Použijeme differenciu $in= 0400 , out= 0c00 $,
+\item {\bf 3. kolo:}
+Použijeme differenciu $\langle in= 0400 , out= 0c00 \rangle $,
 ktorá má pravdepodobnosti po jednotlivých S-boxoch $
 1.0,1.0,0.125,1.0
-$čo spolu dáva pravdepodobnosť 
+$ čo spolu dáva pravdepodobnosť 
 $ 1.0*1.0*0.125*1.0 = 0.125 $
 
-\paragraph{Spolu:}  Máme diferenciu $in= 0400 , out= 0c00 $.
-Celková pravdepodobnosť je $ 0.375*0.375*0.125 ~= 0.0176 $.
+\item {\bf Spolu:}  Máme diferenciu $\langle = plaintext\_diff 0400 , ciphertext\_diff= 0c00 \rangle$.
+Celková pravdepodobnosť je $ 0.375*0.375*0.125 ~= 0.01758 $.
+\end{itemize}
