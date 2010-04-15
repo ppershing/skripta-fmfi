@@ -1,0 +1,23 @@
+\paragraph{1. kolo:}
+Použijeme differenciu $in= 00d0 , out= 0020 $,
+ktorá má pravdepodobnosti po jednotlivých S-boxoch $
+1.0,0.25,1.0,1.0
+$čo spolu dáva pravdepodobnosť 
+$ 1.0*0.25*1.0*1.0 = 0.25 $
+
+\paragraph{2. kolo:}
+Použijeme differenciu $in= 0020 , out= 00a0 $,
+ktorá má pravdepodobnosti po jednotlivých S-boxoch $
+1.0,0.25,1.0,1.0
+$čo spolu dáva pravdepodobnosť 
+$ 1.0*0.25*1.0*1.0 = 0.25 $
+
+\paragraph{3. kolo:}
+Použijeme differenciu $in= 2020 , out= a0a0 $,
+ktorá má pravdepodobnosti po jednotlivých S-boxoch $
+1.0,0.25,1.0,0.25
+$čo spolu dáva pravdepodobnosť 
+$ 1.0*0.25*1.0*0.25 = 0.0625 $
+
+\paragraph{Spolu:}  Máme diferenciu $in= 00d0 , out= a0a0 $.
+Celková pravdepodobnosť je $ 0.25*0.25*0.0625 ~= 0.0039 $.

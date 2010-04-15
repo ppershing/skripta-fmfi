@@ -1,0 +1,40 @@
+\paragraph{1. kolo:}
+Použijeme lineárnu aproximáciu $
+x_{1,9} \oplus x_{1,10} \oplus x_{1,12} \oplus x_{1,15}  \oplus k_{1} 
+ \approx 
+y_{1,10} \oplus y_{1,11} \oplus y_{1,14} \oplus y_{1,15} $,
+ktorá má balancie po jednotlivých S-boxoch $
+0.5,0.5,-0.25,0.25
+$čo podľa piling-up lemy dáva pravdepodobnosť 
+$1/2 + 2^3*( 0.5)*(0.5)*(-0.25)*(0.25 )= 0.375 $
+Balancia je $-0.125$.
+
+\paragraph{2. kolo:}
+Použijeme lineárnu aproximáciu $
+x_{2,10} \oplus x_{2,14} \oplus x_{2,11} \oplus x_{2,15}  \oplus k_{2} 
+ \approx 
+y_{2,8} \oplus y_{2,10} \oplus y_{2,12} \oplus y_{2,14} $,
+ktorá má balancie po jednotlivých S-boxoch $
+0.5,0.5,0.375,0.375
+$čo podľa piling-up lemy dáva pravdepodobnosť 
+$1/2 + 2^3*( 0.5)*(0.5)*(0.375)*(0.375 )= 0.78125 $
+Balancia je $0.28125$.
+
+\paragraph{3. kolo:}
+Použijeme lineárnu aproximáciu $
+x_{3,2} \oplus x_{3,10} \oplus x_{3,3} \oplus x_{3,11}  \oplus k_{3} 
+ \approx 
+y_{3,0} \oplus y_{3,2} \oplus y_{3,8} \oplus y_{3,10} $,
+ktorá má balancie po jednotlivých S-boxoch $
+0.375,0.5,0.375,0.5
+$čo podľa piling-up lemy dáva pravdepodobnosť 
+$1/2 + 2^3*( 0.375)*(0.5)*(0.375)*(0.5 )= 0.78125 $
+Balancia je $0.28125$.
+
+\paragraph{Spolu:}  Máme lineárnu kombináciu $ \Big(
+in_{9} \oplus in_{10} \oplus in_{12} \oplus in_{15}
+\Big) \oplus \Big( k_1 \oplus k_2 \oplus k_3 \oplus 
+key_{0,9} \oplus key_{0,10} \oplus key_{0,12} \oplus key_{0,15} \oplus key_{1,10} \oplus key_{1,11} \oplus key_{1,14} \oplus key_{1,15} \oplus key_{2,2} \oplus key_{2,3} \oplus key_{2,10} \oplus key_{2,11} \oplus key_{3,0} \oplus key_{3,2} \oplus key_{3,8} \oplus key_{3,10} \Big) \approx \Big(
+out_{0} \oplus out_{2} \oplus out_{8} \oplus out_{10}
+\Big) $.
+Podľa piling-up lemy máme balanciu $4* -0.125*0.28125*0.28125 ~= -0.0396 $.
