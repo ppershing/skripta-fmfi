@@ -20,96 +20,188 @@ stromy.
     atómov (teda vlastne množina literálov) z Herbrandovskej bázy,
     pričom platí:
     \begin{enumerate}
-	\item Z každého vrchola stromu vychádza konečný počet hrán.
+        \item Z každého vrchola stromu vychádza konečný počet hrán.
             Ooznačme ich ich $l_1, l_2, \ldots l_n$.
             Nech $Q_i$ je konjunkcia všetkých literálov
-	    pripísaných hrane $l_i$, potom požadujeme aby 
+            pripísaných hrane $l_i$, potom požadujeme aby 
             $Q_1 \lor Q_2 \lor \ldots \lor Q_n$ bola tautológia.
 
-	\item Označme pre vrchov $v$ symbolom $I(v)$
+        \item Označme pre vrchov $v$ symbolom $I(v)$
             zjednotenie všetkých množín literálov pripísaných hranám cesty,
             ktorá vedie z koreňa do vrcholu $v$. Potom $I(v)$
             nesmie obsahovať kontrárne dvojice.
     \end{enumerate}
 \end{definicia}
 
-\startFIXME
+\begin{priklad}
+    \label{prikl:semantic-tree-example1}
+    Uvažujme množinu klauzúl $S = \{P,Q\}$. Potom úplný sémantický strom
+    pre túto množinu môže byzerať napríklad ako na obrázku
+    \ref{fig:semantic-tree-example1}.
 
-\paragraph{Definícia} Majme $A=\{ A_1, A_2, \ldots A_n \}$ je Herbrandovská báza
-pre množinu $S$. Hovoríme, že sémantický strom prislúchajúci množine klauzúl $S$
-je úplný, ak pre každý vrchol $v$ platí, že pre každé $i$ končiace vo vrchole,
-$I(v)$ obsahuje $A_i$ alebo $\neg A_i$ (ale nie obe naraz).
-\todo{check}
+    \begin{figure}[h]
+        \centering
+        \includegraphics{img/09stromy/stromy.11.mps}
+        \caption{Jeden z možných sémantických stromov pre príklad
+                \ref{prikl:semantic-tree-example1}}
+        \label{fig:semantic-tree-example1}
+    \end{figure}
+\end{priklad}
 
-\paragraph{Príklad} $A: \{ P, Q, R \}$, viď obrázok
-\ref{fig-semantic_tree_example}.
-\begin{figure}[h]
-	\caption{Príklad sémantického stromu}
-	\centering\includegraphics{img/xx/2009-03-24.1.mps}
-	\label{fig-semantic_tree_example}
-\end{figure}
+\begin{definicia}
+    Nech $A=\{ A_1, A_2, \ldots A_n \}$ je Herbrandovská báza pre množinu
+    klauzúl $S$.
+    Hovoríme, že sémantický strom prislúchajúci $S$ je úplný,
+    ak pre každý koncový vrchol(list) $v$ platí:
+    $I(v)$ obsahuje $A_i$ alebo\footnote{Toto je exkluzívne alebo. Nemôže
+    totiž platiť, že by obsahovala obe formuly} $\neg A_i$ pre každé $i$.
+\end{definicia}
 
+\begin{priklad}
+    \label{prikl:semantic-tree-example2}
+    K tej istej množine klauzúl môžeme mať viacero sémantických stromov,
+    dokonca aj viacero úplných sémantických stromov.
+    Uvažujme napríklad množinu klauzúl $S$, ktorá H-bázu $A: \{ P, Q, R \}$.
+    Potom 2 úplné sémantické stromy pre túto množinu sú naznačené na
+    obrázku
+    \ref{fig:semantic-tree-example2}.
 
-
-\begin{figure}[h]
-	\centering\includegraphics{img/xx/2009-03-26.1.mps}
-	\caption{Príklad stromu}
-	\label{0326_tree1}
-\end{figure}
-\paragraph{Príklad}
-$S=\{P(x), ... \}$, H-báza je $\{P($ ... \todo{}
-
-\paragraph{Príklad} $S=\{P(x), Q(f(x)) \}$, herbrandovská báza pre množinu
-klauzúl je $\{ P(a), Q(a), P(f(a)), Q(f(a)), \ldots \}$ -- je nekonečná, teda aj
-prislúchajúci sémantický storm je nekonečný (obr. \ref{0326_tree2}). %pic2
-\begin{figure}[h]
-	\centering\includegraphics{img/xx/2009-03-26.2.mps}
-	\caption{Ďalší sémantický strom}
-	\label{0326_tree2}
-\end{figure}
-
-Nech $v$ je vrchol a $I(v)$ je \todo{}. Jednotlivé vetvy sémantického stromu nám
-preberajú všetky interpretácie sémantickej bázy. Nech $I'(v)$ je množina
-základných inštancií odmietnutá (úsek zamieta množinu klauzúl), potom na tomto
-mieste môžeme strom \emph{odrezať}.
-
-\paragraph{Definícia} Vrchol $v$ sémantického stromu pre množinu klauzúl $S$ sa
-nazýva \emph{odmietajúcim}, ak  $I(v)$ odmieta niektorú základú inštanciu
-klauzuly z množiny $S$, no ľubovoľný predchádzajúci vrchol $v'$ ($v'$ predchádza
-$v$), $I(v')$ neodmieta žiadnu základnú inštanciu klauzúl z $S$.
-
-\paragraph{Definícia}  Hovoríme, že sémantický strom $T$ pre množinu klauzúl $S$
-je \emph{uzavretý}, ak každá vetva $T$ končí odmietajúcim vrcholom.
-
-\paragraph{Definícia} Vrchol $v$ sémantického \todo{alebo uzavretého???} stromu
-$T$ pre  množinu klauzúl $S$ nazývame \emph{akceptujúcim}, ak všetky nasledujúce
-vrcholy vrchola $v$ sú odmietajúce.
-
-\paragraph{Príklad} $S= \{ P, Q \lor R, \neg P \lor \neg Q, \neg R \lor \neg P
-\}$. Herbrandovskú báza množinu $S$ vyzerá nasledovne: $\{P, Q, R\}$ (obr.
-\ref{0326_tree3}, \ref{0326_tree_cut}).
-
-\begin{figure}[h]
-	\centering\includegraphics{img/xx/2009-03-26.3.mps}
-	\caption{A ďalší sémantický strom\ldots}
-	\label{0326_tree3}
-\end{figure}
-%pic3+4
-
-\begin{figure}[h]
-	\centering\includegraphics{img/xx/2009-03-26.4.mps}
-	\caption{Orezaný sémantický strom}
-	\label{0326_tree_cut}
-\end{figure}
+    \begin{figure}[h]
+        \centering
+        \subfigure{
+            \includegraphics{img/09stromy/stromy.21.mps}
+        }
+        \subfigure{
+            \includegraphics{img/09stromy/stromy.22.mps}
+        }
+        \caption{Sémantické stromy pre príklad
+                \ref{prikl:semantic-tree-example2}}
+        \label{fig:semantic-tree-example2}
+    \end{figure}
+\end{priklad}
 
 
-\paragraph{Príklad} $S=\{ P(x), P(x) \lor Q(f(x)), \neg Q(f(x)) \}$.
-Herbrandovská báza pre množinu klauzúl $S$ vyzerá: $\{ P(a), Q(a), P(f(a)),
-Q(f(a)), \ldots \}$ (obr. \ref{0326_tree_cut2}). %pic5
+\begin{priklad}
+    \label{prikl:semantic-tree-example3}
+    Veľmi malý strom môžeme dostať v prípade, ak $S=\{P(x),\ P(a)\}$. Vtedy
+    je báza $A:\{P(a)\}$ (nemáme žiadne funkčné symboly a teda si vystačíme
+    s konštantou) a strom vyzerá nasledovne (obr.
+    \ref{fig:semantic-tree-example3}):
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics{img/09stromy/stromy.31.mps}
+        \caption{Jeden z možných sémantických stromov pre príklad
+                \ref{prikl:semantic-tree-example3}}
+        \label{fig:semantic-tree-example3}
+    \end{figure}
+\end{priklad}
+
+\begin{priklad}
+    \label{prikl:semantic-tree-example4}
+    Sémantický strom zďaleka nemusí byť konečný. Uvažujme napríklad množinu
+    klauzúl $S=\{P(x), Q(f(x)) \}$.
+    Vtedy je herbrandovská báza nekonečná: 
+    $\{ P(a),\ Q(a),\ P(f(a)),\ Q(f(a)),\ \ldots \}$.
+    A pretože báza je nekonečná, musí byť nekonečný aj strom, ak chceme aby
+    bol úplný. Jeden taký strom je znázornený na obrázku
+    \ref{fig:semantic-tree-example4}):
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics{img/09stromy/stromy.41.mps}
+        \caption{Nekonečný sémantický strom pre príklad
+                \ref{prikl:semantic-tree-example4}}
+        \label{fig:semantic-tree-example4}
+    \end{figure}
+\end{priklad}
+
+\begin{poznamka}
+    Radi by sme upozornili na istú drobnosť -- definícia úplného stromu má
+    isté problémy v príapde nekonečných stromov, pretože v nich nemáme
+    koncové vrcholy. Preto definíciu upravíme nasledovne:
+    Strom je úplný ak pre každú (nekonečnú) cestu platí, že obsahuje $A_i$
+    pre všetky $i$.
+\end{poznamka}
+
+\begin{poznamka}
+    \noindent
+    \begin{itemize}
+    \item Na úplny sémantický strom sa teda môžeme pozerať ako na organizované
+        preberanie všetkých možných interpretácii.
+    \item Navyše, na množinu $I(v)$ pre vrchol $v$ sa môžeme pozerať ako na
+        čiastočnú interpretáciu (interpretuje len niektoré prvky bázy).
+    \item Už vieme, že množina klauzúl $S$ jue nesplniteľná $\iff$
+        je nepravdivá pre všetky herbrandovské interpretácie. Otázka znie,
+        ako sa to prejaví na sémantickom strome. Vieme, že každá klauzula
+        je konečný objekt. Preto sa musí nájsť nejaká konečná čiastočná
+        interpretácia zamietajúca túto klauzulu.
+
+        V prípade, ak množina základných inštancií $I'(v)$ prvkov $I(v)$
+        je odmietnutá, na tomto mieste môžeme prehľadávanie stromu ukončiť,
+        pretože žiadna interpretácia nevyhovuje. Hovoríme tiež,
+        že na tomto mieste môžeme strom \emph{odrezať}.
+    \end{itemize}
+\end{poznamka}
+
+\begin{definicia}[Odmietajúci vrchol]
+    Vrchol $v$ sémantického stromu pre množinu klauzúl $S$ sa
+    nazýva odmietajúcim, ak  $I(v)$ odmieta niektorú základú inštanciu
+    klauzuly z množiny $S$, no ľubovoľný  $v'$  na ceste z koreňa do $v$
+    neodmieta žiadnu základnú inštanciu klauzúl z $S$.
+\end{definicia}
+
+\begin{definicia}[Uzavretý sémantický strom]
+    Hovoríme, že sémantický strom $T$ pre množinu klauzúl $S$
+    je uzavretý, ak každá vetva $T$ končí odmietajúcim vrcholom.
+\end{definicia}
+
+\begin{definicia}[Akceptujúci vrchol]
+    Vrchol $v$ sémantického stromu $T$ pre  množinu klauzúl $S$ 
+    nazývame akceptujúcim, ak všetky nasledujúce
+    vrcholy vrchola $v$ sú odmietajúce.
+\end{definicia}
+
+\begin{priklad}
+    \label{prikl:semantic-tree-example5}
+    Uavžujme množinu klauzúl
+    $S= \{ P,\ Q \lor R,\ \neg P \lor \neg Q,\ \neg R \lor \neg P \}$.
+    Herbrandovskú báza je $\{P, Q, R\}$. Na obrázku
+    \ref{fig:semantic-tree-example5}.
+
+    \begin{figure}[h]
+        \centering
+        \subfigure[Pôvodný strom]{
+            \includegraphics{img/09stromy/stromy.51.mps}
+        }
+        \subfigure[Strom vzniknutý odrezaním odmietajúcich vrcholov]{
+            \includegraphics{img/09stromy/stromy.52.mps}
+        }
+        \caption{Odrezanie sémantického stromu z príkladu
+                \ref{prikl:semantic-tree-example5}}
+        \label{fig:semantic-tree-example5}
+    \end{figure}
+\end{priklad}
 
 
-\begin{figure}[h]
-	\centering\includegraphics{img/xx/2009-03-26.5.mps}
-	\caption{Ďalší orezaný sémantický strom}
-	\label{0326_tree_cut2}
-\end{figure}
+
+\begin{priklad}
+    \label{prikl:semantic-tree-example6}
+    Uvažujme množinu klauzúl $S=\{ P(x),\ \neg P(x) \lor Q(f(x)),\ \neg Q(f(x)) \}$.\footnote{
+        Na tomto mieste má Toman v poznámkach $P \lor Q(f(x))$ ale na
+        prednáške to opravil}
+    Herbrandovská báza pre množinu klauzúl $S$ je
+    $\{ P(a),\ Q(a),\ P(f(a)),\ Q(f(a)),\ \ldots \}$. Orezaný sémantický
+    strom pre túto množinu klauzúl možno nájsť na obrázku
+    \ref{fig:semantic-tree-example6}.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics{img/09stromy/stromy.61.mps}
+        \caption{Odrezaný sémantický strom z príkladu
+                \ref{prikl:semantic-tree-example6}}
+        \label{fig:semantic-tree-example6}
+    \end{figure}
+\end{priklad}
+
+

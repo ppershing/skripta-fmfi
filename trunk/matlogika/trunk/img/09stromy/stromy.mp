@@ -17,7 +17,7 @@ def nodes_for_level(suffix a)(expr level)=
     endfor;
 enddef;
 
-%%% priklad 1
+%%% priklad 1 - uplny strom na zaciatku
 beginfig(11);
 %%% {{{
     with spacing((20,23)) tree.a(3,2);
@@ -44,7 +44,7 @@ beginfig(11);
 %%% }}}
 endfig;
 
-% priklad 2
+% priklad 2 - dve pomerne velke uplne stromy
 
 beginfig(21);
 %%% {{{
@@ -189,9 +189,26 @@ beginfig(22);
 %%% }}}
 endfig;
 
-% priklad ?
-
+% priklad 3 - trapny strom
 beginfig(31);
+%%% {{{
+    with spacing((50,30)) tree.a(2,2);
+
+    nodes_for_level(a, 0);
+    nodes_for_level(a, 1);
+
+    % level 0->1
+    arrow.lft(.5, btex $P(a)$~ etex)
+        (a[0][0], a[1][0]) a[0][0].c .. a[1][0].c;
+
+    arrow.rt (.5, btex ~$\neg P(a)$ etex)
+        (a[0][0], a[1][1]) a[0][0].c .. a[1][1].c;
+%%% }}}
+endfig;
+
+% priklad 4 - nekonecny uplny strom
+
+beginfig(41);
 %%% {{{
     with spacing((15,30)) tree.t(5,2);
     for i=0 upto 3:
@@ -241,8 +258,8 @@ beginfig(31);
 %%% }}}
 endfig;
 
-% priklad ?
-beginfig(41);
+% priklad 5 - orezavanie stromu
+beginfig(51);
 %%% {{{
     with spacing((20,24)) tree.t(4,2);
     for a=0 upto 3:
@@ -279,7 +296,7 @@ beginfig(41);
 %%% }}}
 endfig;
 
-beginfig(42);
+beginfig(52);
 %%% {{{
     with spacing((20,24)) tree.t(4,2);
     node.t[0][0]("");
@@ -318,8 +335,8 @@ beginfig(42);
 %%% }}}
 endfig;
 
-% priklad ?
-beginfig(51);
+% priklad 6 - dalsi priklad orezavania
+beginfig(61);
 %%% {{{
     with spacing((20,23)) tree.a(3,2);
 
