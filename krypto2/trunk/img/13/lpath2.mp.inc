@@ -8,13 +8,18 @@ draw inout_path(k[1],0,3,s[1],0,3);
 % round 1
 draw inout_path(s[1],0,1,k[2],1,0);
 
+draw inout_path(k[1],0,0,s[1],0,0);
+draw inout_path(k[1],0,2,s[1],0,2);
+draw inout_path(k[1],0,3,s[1],0,3);
 % round 2
 draw inout_path(s[2],1,0,k[3],0,1);
 
+draw inout_path(k[2],1,0,s[2],1,0);
 % round 3
 draw inout_path(s[3],0,0,k[4],0,0);
 draw inout_path(s[3],0,1,k[4],1,0);
 
+draw inout_path(k[3],0,1,s[3],0,1);
 %% final round
 draw inout_path(k[4],0,0,s[4],0,0);
 draw inout_path(k[4],1,0,s[4],1,0);

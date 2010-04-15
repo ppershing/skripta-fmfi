@@ -4,12 +4,15 @@ draw inout_path(k[1],2,2,s[1],2,2);
 % round 1
 draw inout_path(s[1],2,2,k[2],2,2);
 
+draw inout_path(k[1],2,2,s[1],2,2);
 % round 2
 draw inout_path(s[2],2,2,k[3],2,2);
 
+draw inout_path(k[2],2,2,s[2],2,2);
 % round 3
 draw inout_path(s[3],2,2,k[4],2,2);
 
+draw inout_path(k[3],2,2,s[3],2,2);
 %% final round
 draw inout_path(k[4],2,2,s[4],2,2);
 %% final boxes
