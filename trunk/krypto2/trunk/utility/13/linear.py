@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # coding=utf-8
 from cipher import *;
-# {{{ LAT functions
+
 def LAT(inputs, outputs):
     return int(round(sum(map(lambda x:
                     (-1)**(parityOf(x & inputs) ^
@@ -83,9 +83,8 @@ def AnalyzeLinearApproximations(f, linear_combination):
     print >>f, "~= %.4f $." % (reduce(mul, total_balance)*4)
     # }}}
 
-# }}}
-
 def AttackUsingLATHelper(f, linear_combination, keys, iterations):
+    # {{{
     plaintext = [[random.randint(0, 1) for j in range(TOTAL_KEY_SIZE)] 
                         for i in range(iterations)];
     ciphertext = [Cipher(plaintext[i], keys) for i in range(iterations)]
@@ -123,8 +122,10 @@ def AttackUsingLATHelper(f, linear_combination, keys, iterations):
         print >>f, "         %.4f & %s \\\\" % (p, MaskedHex(i, sboxes))
     print >>f, "     \\end{tabular}";
     print >>f, " }"
+    # }}}
 
 def AttackUsingLAT(f, path):
+    # {{{
     key1 = IntToBits(0xfa3f, TOTAL_KEY_SIZE);
     key2 = IntToBits(0x0f39, TOTAL_KEY_SIZE);
     key3 = IntToBits(0x8db3, TOTAL_KEY_SIZE);
@@ -142,3 +143,4 @@ def AttackUsingLAT(f, path):
     AttackUsingLATHelper(f, path, keys, 1000)
 
     print >>f, "\\end{table}"
+    # }}}

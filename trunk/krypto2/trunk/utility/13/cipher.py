@@ -38,10 +38,13 @@ def HalfByteToBits(x):
 
 # {{{ cipher functions
 
-def Sbox(input):
+def Sbox_original(input):
     # povodny Stanokov Sbox, my potrebujeme ale reverzne poradie bitov
     # vstupu a vystupu
-    # transform = [5,9,7,14,0,3,2,1,10,4,13,8,11,12,6,15]
+    transform = [5, 9, 7, 14, 0, 3, 2, 1, 10, 4, 13, 8, 11, 12, 6, 15];
+    return transform[input]
+
+def Sbox(input):
     transform = [10, 5, 0, 13, 14, 11, 4, 6, 9, 2, 12, 3, 7, 1, 8, 15];
     return transform[input]
 
