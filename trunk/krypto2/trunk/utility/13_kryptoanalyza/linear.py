@@ -72,7 +72,7 @@ def AnalyzeLinearApproximations(f, linear_combination):
     print >>f, "Máme lineárnu kombináciu $ \Big("
     print >>f, " \\oplus ".join(["in_{%s}" %x for x in linear_combination[0]])
     print >>f, "\Big) \\oplus \Big( k_1 \\oplus k_2 \\oplus k_3 \\oplus "
-    print >>f, " \\oplus ".join(["key_{%s,%s}" % (r, o) for (r,o) in
+    print >>f, " \\oplus ".join(["key_{%s,%s}" % (r+1, o) for (r,o) in
                 sorted([((r, o) if (r == 0) else (r,ShufflePosition(o)))
                         for (r,o) in sum([map(lambda x: (r,x), linear_combination[r]) for r in range(4)],[])
                 ])]),
