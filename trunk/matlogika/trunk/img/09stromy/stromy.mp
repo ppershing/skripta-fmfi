@@ -3,7 +3,7 @@ input automata;
 prologues:=3;
 
 verbatimtex
-    \documentclass{minimal}
+    \documentclass{article}
     \usepackage[utf8]{inputenc}
     \begin{document}
 etex
@@ -27,10 +27,10 @@ beginfig(11);
     nodes_for_level(a, 2);
 
     % level 0->1
-    arrow.lft(.5, btex $P$ etex)
+    arrow.top(.5, btex $P$ etex)
         (a[0][0], a[1][0]) a[0][0].c .. a[1][0].c;
 
-    arrow.rt (.5, btex $\neg P$ etex)
+    arrow.top(.5, btex $\neg P$ etex)
         (a[0][0], a[1][1]) a[0][0].c .. a[1][1].c;
 
     %level 1->2
@@ -56,10 +56,10 @@ beginfig(21);
     nodes_for_level(a, 3);
 
     % level 0->1
-    arrow.lft(.5, btex $P$ etex)
+    arrow.top(.5, btex $P$ etex)
             (a[0][0], a[1][0]) a[0][0].c .. a[1][0].c;
 
-    arrow.rt (.5, btex $\neg P$ etex)
+    arrow.top(.5, btex $\neg P$ etex)
             (a[0][0], a[1][1]) a[0][0].c .. a[1][1].c;
 
     % level 1->2
@@ -130,13 +130,13 @@ beginfig(22);
 
 
     % level 0->1
-    arrow.lft(.5, btex $P$ etex)
+    arrow.top(.5, btex $P$ etex)
             (a[0][0], a[1][0]) a[0][0].c .. a[1][0].c;
 
     arrow.lft(.5, btex $Q$ etex)
             (a[0][0], a[1][1]) a[0][0].c .. a[1][1].c;
 
-    arrow.rt (.5, btex $\neg P, \neg Q$ etex)
+    arrow.top(.5, btex $\neg P, \neg Q$ etex)
             (a[0][0], a[1][2]) a[0][0].c .. a[1][2].c;
 
     % level 1->2
@@ -193,7 +193,7 @@ endfig;
 
 beginfig(31);
 %%% {{{
-    with spacing((20,24)) tree.t(5,2);
+    with spacing((15,30)) tree.t(5,2);
     for i=0 upto 3:
         for j=0 upto (2**i)-1:
             node.t[i][j]("");
@@ -201,14 +201,14 @@ beginfig(31);
     endfor;
 
     for j=0 upto (2**4)-1:
-        node_hidden.t[4][j]("");
+        node_hidden.t[4][j]("...");
     endfor;
 
     % level 0->1
-    arrow.lft(.5, btex $\neg P(a)$ etex)
+    arrow.top(.5, btex $\neg P(a)$ etex)
             (t[0][0], t[1][0]) t[0][0].c .. t[1][0].c;
 
-    arrow.rt (.5, btex $P(a)$ etex)
+    arrow.top(.5, btex $P(a)$ etex)
             (t[0][0],t[1][1]) t[0][0].c .. t[1][1].c;
 
     % level 1->2
@@ -225,9 +225,9 @@ beginfig(31);
     % level 2->3
     for i=0 upto 7:
         if (i mod 2 = 0):
-            arrow.ulft (.5, btex $\neg P(f(x))$ etex)
+            arrow.lft (.5, btex $\neg P(f(x))$ etex)
         else:
-            arrow.lrt (.5, btex $P(f(x))$ etex)
+            arrow.rt (.5, btex $P(f(x))$ etex)
         fi
         % opat pokracovanie prikazu
         (t[2][i div 2], t[3][i]) t[2][i div 2].c .. t[3][i].c;
@@ -290,11 +290,15 @@ beginfig(42);
     node_hidden.t[3][2](btex $\times$ etex);
     node_hidden.t[3][3](btex $\times$ etex);
 
-    arrow.lft (.5, btex $P$ etex)
+    arrow.top (.5, btex $P$ etex)
             (t[0][0], t[1][0]) t[0][0].c .. t[1][0].c;
 
-    arrow.rt  (.5, btex $\neg P$ etex)
+    arrow.top (.5, btex $\neg P$ etex)
             (t[0][0], t[1][1]) t[0][0].c .. t[1][1].c;
+    label    (btex \small neplatí $\neg P \lor \neg Q$ etex, t[2][0].c + (0,-10));
+    label.lft(btex \small neplatí $\neg P \lor \neg R$ etex, t[3][2].c + (10, -10));
+    label.rt (btex \small neplatí $Q \lor R$ etex, t[3][3].c + (-10, -10));
+    label    (btex \small neplatí $P$ etex, t[1][1].c + (0, -10) );
 
 
 
@@ -325,21 +329,17 @@ beginfig(51);
     node_hidden.t[2][0](btex $\times$ etex);
     node_hidden.t[2][1](btex $\times$ etex);
 
-    arrow.lft(0.5, btex $P(a)$ etex)
+    arrow.top(0.5, btex $P(a)$ etex)
             (t[0][0], t[1][0]) t[0][0].c .. t[1][0].c;
-    label.bot(btex neplatí $\neg P \lor \neg Q$ etex, t[1][0].c);
 
-    arrow.rt(0.5, btex $\neg P(a)$ etex)
+    arrow.top(0.5, btex $\neg P(a)$ etex)
             (t[0][0], t[1][1]) t[0][0].c .. t[1][1].c;
-    label.bot(btex neplatí $\neg P \lor \neg R$ etex, t[1][1].c);
 
     arrow.lft(0.5, btex $Q(f(a))$ etex)
             (t[1][0], t[2][0]) t[1][0].c .. t[2][0].c;
-    label.bot(btex neplatí $Q \lor R$ etex, t[1][0].c);
 
-    arrow.rt(0.5, btex $\neg Q(f(a))$ etex)
+    arrow.rt (0.5, btex $\neg Q(f(a))$ etex)
             (t[1][0], t[2][1]) t[1][0].c .. t[2][1].c;
-    label.bot(btex neplatí $P$ etex, t[1][0].c);
 %%% }}}
 endfig;
 
