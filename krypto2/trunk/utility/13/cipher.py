@@ -98,7 +98,7 @@ def MaskedHex(x, mask):
         if i in mask:
             s = "%x%s" %(x%16,s)
         else:
-            s = "_"+s;
+            s = "\\_"+s;
         x = x/16
     return s
 
