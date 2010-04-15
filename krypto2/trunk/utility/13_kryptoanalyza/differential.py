@@ -7,7 +7,7 @@ def Diferential(d_inputs, d_outputs):
                     for x in range(16)])
 
 def get_dif_color(value):
-    value = max(0.75 -abs(value) / 8.0 ,0);
+    value = max(0.75 -abs(value) / 6.0 ,0);
     return "\\color[rgb]{%f,%f,%f}" % (value,value,value)
 
 def GenerateDifferentialTable(f):
@@ -34,6 +34,7 @@ def GenerateDifferentialTable(f):
 def AnalyzeDifferences(f, linear_combination):
     # {{{
     total_balance = [];
+    print >>f, "\\begin{itemize}"
     for round in range(3):
         inputs = linear_combination[round];
         if (round>0):
@@ -51,28 +52,30 @@ def AnalyzeDifferences(f, linear_combination):
         b = reduce(mul, balance);
         total_balance += [b]
 
-        print >>f, "\paragraph{%d. kolo:}" % (round+1)
-        print >>f, "Použijeme differenciu $in=",
+        print >>f, "\\item {\\bf %d. kolo:}" % (round+1)
+        print >>f, "Použijeme differenciu $\\langle in=",
         print >>f, MaskedHex(BitsToInt(in_array), [0,1,2,3]),
         print >>f, ", out=",
         print >>f, MaskedHex(BitsToInt(out_array), [0,1,2,3]),
-        print >>f, "$,\nktorá má pravdepodobnosti po jednotlivých S-boxoch $"
+        print >>f, "\\rangle $,"
+        print >>f, "ktorá má pravdepodobnosti po jednotlivých S-boxoch $"
         print >>f, ",".join(["%s" % x for x in balance])
-        print >>f, "$čo spolu dáva pravdepodobnosť "
+        print >>f, "$ čo spolu dáva pravdepodobnosť "
         print >>f, "$" ,
         print >>f, "*".join(["%s" %x for x in balance]) ,
         print >>f, "=", b, "$"
         print >>f, ""
-    print >>f, "\paragraph{Spolu:} ",
-    print >>f, "Máme diferenciu $in=",
+    print >>f, "\\item {\\bf Spolu:} ",
+    print >>f, "Máme diferenciu $\\langle = plaintext\\_diff",
     in_array = [(x in linear_combination[0]) for x in range(TOTAL_KEY_SIZE)]
     print >>f, MaskedHex(BitsToInt(in_array), [0,1,2,3]),
-    print >>f, ", out=",
+    print >>f, ", ciphertext\\_diff=",
     print >>f, MaskedHex(BitsToInt(out_array), [0,1,2,3]),
-    print >>f, "$."
+    print >>f, "\\rangle$."
     print >>f, "Celková pravdepodobnosť je $" ,
     print >>f, "*".join(map(lambda x: "%s" %x, total_balance)) ,
-    print >>f, "~= %.4f $." % (reduce(mul, total_balance))
+    print >>f, "~= %.5f $." % (reduce(mul, total_balance))
+    print >>f, "\\end{itemize}"
     # }}}
 
 def AttackUsingDifHelper(f, linear_combination, keys, iterations):

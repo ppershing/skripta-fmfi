@@ -36,6 +36,7 @@ def GenerateLinearApproximationTable(f):
 def AnalyzeLinearApproximations(f, linear_combination):
     # {{{
     total_balance = [];
+    print >>f, "\\begin{itemize}"
     for round in range(3):
         inputs = linear_combination[round];
         if (round>0):
@@ -53,7 +54,7 @@ def AnalyzeLinearApproximations(f, linear_combination):
         b = reduce(mul, balance)*8.0;
         total_balance += [b]
 
-        print >>f, "\paragraph{%d. kolo:}" % (round+1)
+        print >>f, "\\item {\\bf %d. kolo:}" % (round+1)
         print >>f, "Použijeme lineárnu aproximáciu $"
         print >>f, " \\oplus ".join(["x_{%d,%d}" % (round+1,x) for x in  inputs]) ,
         print >>f, " \\oplus k_{%d} "%(round+1) 
@@ -67,7 +68,7 @@ def AnalyzeLinearApproximations(f, linear_combination):
         print >>f, ")=", (0.5 + b), "$"
         print >>f, "Balancia je $%s$." % b
         print >>f, ""
-    print >>f, "\paragraph{Spolu:} ",
+    print >>f, "\\item {\\bf Spolu:} ",
     print >>f, "Máme lineárnu kombináciu $ \Big("
     print >>f, " \\oplus ".join(["in_{%s}" %x for x in linear_combination[0]])
     print >>f, "\Big) \\oplus \Big( k_1 \\oplus k_2 \\oplus k_3 \\oplus "
@@ -81,6 +82,7 @@ def AnalyzeLinearApproximations(f, linear_combination):
     print >>f, "Podľa piling-up lemy máme balanciu $4*" ,
     print >>f, "*".join(map(lambda x: "%s" %x, total_balance)) ,
     print >>f, "~= %.4f $." % (reduce(mul, total_balance)*4)
+    print >>f, "\\end{itemize}"
     # }}}
 
 def AttackUsingLATHelper(f, linear_combination, keys, iterations):

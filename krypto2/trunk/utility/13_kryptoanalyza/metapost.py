@@ -32,7 +32,7 @@ def DrawPath(f, linear_combination):
             print >>f, DrawInoutPath("s", round+1, i,  "k", round+2, o)
         print >>f, ""
         for i in inputs:
-            DrawInoutPath("k", round+1, i, "s", round+1, i);
+            print >>f, DrawInoutPath("k", round+1, i, "s", round+1, i);
 
     print >>f, "%% final round"
     outputs = map(ShufflePosition,linear_combination[3])

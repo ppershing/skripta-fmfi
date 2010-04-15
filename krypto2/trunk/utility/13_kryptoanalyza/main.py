@@ -34,8 +34,7 @@ AnalyzeLinearApproximations(open('lanalyza1.tex', 'w'), lpath1);
 AnalyzeLinearApproximations(open('lanalyza2.tex', 'w'), lpath2);
 DrawPath(open('lpath1.mp.inc', 'w'), lpath1);
 DrawPath(open('lpath2.mp.inc', 'w'), lpath2);
-AttackUsingLAT(open('lattack1.tex', 'w'), lpath1)
-AttackUsingLAT(open('lattack2.tex', 'w'), lpath2)
+
 
 GenerateDifferentialTable(open('dif.tex', 'w'));
 AnalyzeDifferences(open('danalyza1.tex', 'w'), dpath1);
@@ -44,6 +43,17 @@ AnalyzeDifferences(open('danalyza3.tex', 'w'), dpath3);
 DrawPath(open('dpath1.mp.inc', 'w'), dpath1);
 DrawPath(open('dpath2.mp.inc', 'w'), dpath2);
 DrawPath(open('dpath3.mp.inc', 'w'), dpath3);
+
+# below this line are extremely slow computations.
+
+print "Linear attack 1"
+AttackUsingLAT(open('lattack1.tex', 'w'), lpath1)
+print "Linear attack 2"
+AttackUsingLAT(open('lattack2.tex', 'w'), lpath2)
+
+print "Differential attack 1"
 AttackUsingDifferences(open('dattack1.tex', 'w'), dpath1);
+print "Differential attack 2"
 AttackUsingDifferences(open('dattack2.tex', 'w'), dpath2);
+print "Differential attack 3"
 AttackUsingDifferences(open('dattack3.tex', 'w'), dpath3);
