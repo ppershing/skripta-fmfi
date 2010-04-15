@@ -1,7 +1,11 @@
 % vim: set fdm=marker:
 %% Original by Michal Forisek
 
-\restylealgo{boxed} %% nastav styl algorithm2e
+\ifx \@RestyleAlgo \@empty
+    \restylealgo{boxed} %% kompatibilita so starou verziou balika
+\else
+    \RestyleAlgo{boxed} %% nastav styl algorithm2e
+\fi
 
 %% zakladne definicie
 
