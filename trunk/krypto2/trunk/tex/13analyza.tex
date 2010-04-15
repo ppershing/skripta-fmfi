@@ -1,57 +1,76 @@
 \section{Lineárna a diferenciálna kryptoanalýza}
+\todo{pokec o kryptoanalyze}
 
-\begin{figure}[h!]
+\todo{popis sifry}
+\begin{figure}[H]
     \centering
     \includegraphics{img/13/cipher.1.mps}
     \caption{Nákres šifry}
 \end{figure}
 
+\todo{pokec o tabulky}
 \input{tex/kryptoanalyza/lat.tex}
 
-\subsubsection{Príklad 1}
-\begin{figure}[h!]
-    \centering
-    \includegraphics{img/13/lin.1.mps}
-    \caption{Lineárna aproximácia v príklade 1}
-\end{figure}
-\input{tex/kryptoanalyza/lanalyza1.tex}
-\input{tex/kryptoanalyza/lattack1.tex}
+\todo{vseobecny pokec o lamani, defaily v prvom priklade}
+\begin{priklad}
+    \label{prikl:lin1}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.8]{img/13/lin.1.mps}
+        \caption{Lineárna aproximácia v príklade \ref{prikl:lin1}}
+    \end{figure}
+    \input{tex/kryptoanalyza/lanalyza1.tex}
+    \input{tex/kryptoanalyza/lattack1.tex}
+\end{priklad}
 
-\subsubsection{Príklad 2}
-\begin{figure}[h!]
-    \centering
-    \includegraphics{img/13/lin.2.mps}
-    \caption{Lineárna aproximácia v príklade 2}
-\end{figure}
-\input{tex/kryptoanalyza/lanalyza1.tex}
-\input{tex/kryptoanalyza/lattack1.tex}
+\begin{priklad}
+    \label{prikl:lin2}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.8]{img/13/lin.2.mps}
+        \caption{Lineárna aproximácia v príklade \ref{prikl:lin2}}
+    \end{figure}
+    \input{tex/kryptoanalyza/lanalyza2.tex}
+    \input{tex/kryptoanalyza/lattack2.tex}
+\end{priklad}
+
 
 \subsection{Diferenciálna kryptoanalýza}
+\todo{pokec o diferencialnej kryptoanalyze}
 \input{tex/kryptoanalyza/dif.tex}
+\todo{daco o tej tabulke}
+\fixme{pregenerovat tabulku na tmavsie farby}
 
-\subsubsection{Príklad 1}
-\begin{figure}[h!]
-    \centering
-    \includegraphics{img/13/dif.1.mps}
-    \caption{Diferenciálna analýza v príklade 1}
-\end{figure}
-\input{tex/kryptoanalyza/danalyza1.tex}
-\input{tex/kryptoanalyza/dattack1.tex}
 
-\subsubsection{Príklad 2}
-\begin{figure}[h!]
-    \centering
-    \includegraphics{img/13/dif.2.mps}
-    \caption{Diferenciálna analýza v príklade 2}
-\end{figure}
-\input{tex/kryptoanalyza/danalyza2.tex}
-\input{tex/kryptoanalyza/dattack2.tex}
+\begin{priklad}
+    \label{prikl:dif1}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.8]{img/13/dif.1.mps}
+        \caption{Diferenciálna analýza v príklade \ref{prikl:dif1}}
+    \end{figure}
+    \input{tex/kryptoanalyza/danalyza1.tex}
+    \input{tex/kryptoanalyza/dattack1.tex}
+\end{priklad}
 
-\subsubsection{Príklad 3}
-\begin{figure}[h!]
-    \centering
-    \includegraphics{img/13/dif.3.mps}
-    \caption{Diferenciálna analýza v príklade 3}
-\end{figure}
-\input{tex/kryptoanalyza/danalyza3.tex}
-\input{tex/kryptoanalyza/dattack3.tex}
+\begin{priklad}
+    \label{prikl:dif2}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.8]{img/13/dif.2.mps}
+        \caption{Diferenciálna analýza v príklade \ref{prikl:dif2}}
+    \end{figure}
+    \input{tex/kryptoanalyza/danalyza2.tex}
+    \input{tex/kryptoanalyza/dattack2.tex}
+\end{priklad}
+
+\begin{priklad}
+    \label{prikl:dif3}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[scale=0.8]{img/13/dif.3.mps}
+        \caption{Diferenciálna analýza v príklade \ref{prikl:dif3}}
+    \end{figure}
+    \input{tex/kryptoanalyza/danalyza3.tex}
+    \input{tex/kryptoanalyza/dattack3.tex}
+\end{priklad}
