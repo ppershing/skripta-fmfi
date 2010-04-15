@@ -134,7 +134,7 @@ def draw_out_pins(suffix meno)=
 enddef;
 %%% }}}
 
-def draw_cipher=
+def draw_cipher= 
     r:=1;
     % round 1
     create_kbox(k[r], btex $\oplus key_1 $ etex, 0, - r*round_skip);
@@ -168,10 +168,3 @@ def draw_cipher=
     draw_out_pins(k[5]);
 enddef;
 
-beginfig(1);
-    draw_cipher;
-    pickup pencircle scaled 1.5;
-%    input path1.mp.inc
-endfig;
-
-end
