@@ -10,7 +10,7 @@ etex
 
 sbox_width:=2cm;
 sbox_height:=0.7cm;
-sbox_sep:=0.3cm;
+sbox_sep:=0.7cm;
 
 kbox_width:=4*sbox_width + 3*sbox_sep;
 kbox_height:=sbox_height;

@@ -5,7 +5,7 @@ begingroup
     save k;
     save s;
     draw_cipher;
-    pickup pencircle scaled 1.5;
+    pickup pencircle scaled 2;
     input lpath1.mp.inc
 endgroup;
 endfig;
@@ -15,9 +15,9 @@ begingroup
     save k;
     save s;
     draw_cipher;
-    pickup pencircle scaled 1.5;
+    pickup pencircle scaled 2;
     input lpath2.mp.inc
 endgroup;
 endfig;
 
-end
+end;
