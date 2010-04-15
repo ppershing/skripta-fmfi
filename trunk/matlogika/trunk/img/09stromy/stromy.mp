@@ -17,7 +17,9 @@ def nodes_for_level(suffix a)(expr level)=
     endfor;
 enddef;
 
-beginfig(0);
+%%% priklad 1
+beginfig(11);
+%%% {{{
     with spacing((20,23)) tree.a(3,2);
 
     nodes_for_level(a, 0);
@@ -39,10 +41,12 @@ beginfig(0);
         arrow.rt (.5, btex $\neg Q$ etex)
             (a[1][i], a[2][2*i+1]) a[1][i].c .. a[2][2*i+1].c;
     endfor;
-
+%%% }}}
 endfig;
 
-beginfig(100);
+% priklad 2
+
+beginfig(21);
 %%% {{{
     with spacing((20,23)) tree.a(4,2);
 
@@ -98,7 +102,7 @@ beginfig(100);
 %%% }}}
 endfig;
 
-beginfig(1);
+beginfig(22);
 %%% {{{
     with spacing((5,25)) tree.a(4,3);
     node.a[0][0]("");
@@ -185,8 +189,9 @@ beginfig(1);
 %%% }}}
 endfig;
 
+% priklad ?
 
-beginfig(2);
+beginfig(31);
 %%% {{{
     with spacing((20,24)) tree.t(5,2);
     for i=0 upto 3:
@@ -236,7 +241,8 @@ beginfig(2);
 %%% }}}
 endfig;
 
-beginfig(3);
+% priklad ?
+beginfig(41);
 %%% {{{
     with spacing((20,24)) tree.t(4,2);
     for a=0 upto 3:
@@ -273,27 +279,44 @@ beginfig(3);
 %%% }}}
 endfig;
 
-beginfig(4);
+beginfig(42);
+%%% {{{
     with spacing((20,24)) tree.t(4,2);
     node.t[0][0]("");
     node.t[1][0]("");
-    with shape(none) node.t[1][1](btex $\times$ etex);
-    with shape(none) node.t[2][0](btex $\times$ etex);
+    node_hidden.t[1][1](btex $\times$ etex);
+    node_hidden.t[2][0](btex $\times$ etex);
     node.t[2][1]("");
-    with shape(none) node.t[3][2](btex $\times$ etex);
-    with shape(none) node.t[3][3](btex $\times$ etex);
+    node_hidden.t[3][2](btex $\times$ etex);
+    node_hidden.t[3][3](btex $\times$ etex);
 
-    arrow.lft (.5, btex $P$ etex)	(t[0][0],t[1][0]) t[0][0].c..t[1][0].c;
-    arrow.rt  (.5, btex $\neg P$ etex)	(t[0][0],t[1][1]) t[0][0].c..t[1][1].c;
+    arrow.lft (.5, btex $P$ etex)
+            (t[0][0], t[1][0]) t[0][0].c .. t[1][0].c;
 
-    arrow.lft (.5, btex $Q$ etex)	(t[1][0],t[2][0]) t[1][0].c..t[2][0].c;
-    arrow.rt  (.5, btex $\neg Q$ etex)	(t[1][0],t[2][1]) t[1][0].c..t[2][1].c;
-    
-    arrow.lft (.5, btex $R$ etex)	(t[2][1],t[3][2]) t[2][1].c..t[3][2].c;
-    arrow.rt  (.5, btex $\neg R$ etex)	(t[2][1],t[3][3]) t[2][1].c..t[3][3].c;
+    arrow.rt  (.5, btex $\neg P$ etex)
+            (t[0][0], t[1][1]) t[0][0].c .. t[1][1].c;
+
+
+
+    arrow.lft (.5, btex $Q$ etex)
+            (t[1][0], t[2][0]) t[1][0].c .. t[2][0].c;
+
+    arrow.rt  (.5, btex $\neg Q$ etex)
+            (t[1][0], t[2][1]) t[1][0].c .. t[2][1].c;
+
+
+
+    arrow.lft (.5, btex $R$ etex)
+            (t[2][1], t[3][2]) t[2][1].c .. t[3][2].c;
+
+    arrow.rt  (.5, btex $\neg R$ etex)
+            (t[2][1], t[3][3]) t[2][1].c .. t[3][3].c;
+%%% }}}
 endfig;
 
-beginfig(5);
+% priklad ?
+beginfig(51);
+%%% {{{
     with spacing((20,23)) tree.a(3,2);
 
     node.t[0][0]("");
@@ -317,7 +340,7 @@ beginfig(5);
     arrow.rt(0.5, btex $\neg Q(f(a))$ etex)
             (t[1][0], t[2][1]) t[1][0].c .. t[2][1].c;
     label.bot(btex neplatí $P$ etex, t[1][0].c);
+%%% }}}
 endfig;
-
 
 end.
