@@ -1,0 +1,265 @@
+\section{Herbrandova veta}
+\startFIXME
+
+\paragraph{Poznámka} Dirichletov princíp:
+$$T_1:$$
+$$X, Y -- \mbox{konečné množiny}$$
+$$ |X| < |Y| $$
+$$ f: X \rightarrow Y$$
+$$ \exists y \in Y_1\qquad x_1,x_2 \in X, x_1 \neq x_2 \qquad f(x_1) = f(x_2) =
+y$$
+Sporom. Ak by také $x_1$, $x_2$ neexistovali, potom pre každé $x_1, x_2 \in X$,
+$x_1 \neq x_2$ a $f(x_1) \neq f(x_2)$, potom $f$ je injektívne zobrazenie, z
+čoho vyplýva, že $|X| \leq |Y|$.
+$$T_2: $$
+$$ f: X \rightarrow Y,\qquad X\mbox{-- nekonečná}, Y\mbox{ -- konečná} $$
+$$T_2: \exists y\in Y, \qquad y=\{x|x\in X, f(x)=y\}$$
+
+\paragraph{Dôkaz} Nech $|Y|=n$. Množinu $X$ môžeme napísať ako $X=\Cup_{y\in
+Y}A_y$ takých, že ak $y_1\neq y_2$, potom $A_{y_1} \cap A_{y_2} = \emptyset$.
+
+$$ |X| = \left|\Cup_{y\in Y} A_y \right|$$
+
+Nech $k_0$ je maximálna mohutnosť $|A_y|$, $y\in Y$, množina $X$ ale nemá
+konečnú mohutnosť -- spor.
+
+\paragraph{Definícia} Strom chápeme ako usporiadanú dvojicu $(T,\leq)$ -- $T$ a
+relácia, ktorá čiastočne usporadúva $T$:
+\begin{enumerate}
+	\item $T(n)=\{v\in T, v<n\}$ je dobre usporiadaná.
+	\item $T$ má najmenší vrchol (koreň)
+\end{enumerate}
+
+Množina je dobre usporiadaná, ak každá jej neprázdna podmnožina má najmenší
+prvok. $T$ je lineárne usporiadanie -- ľubovoľné dva prvky sú porovnateľné:
+$a \neq b$, $a,b\in T$, pre $\{a, b\}$ musí platiť $a<b$ alebo $a>b$.
+
+\par Ak mám prvky $u$ a $v$, prvok $v$ nasleduje bezprostredne po prvku $u$, ak
+neexistuje $z$ také, že $u < z < v$.
+
+\paragraph{Lema (K\"onig)} (je dôležitá na pochopenie dôkazu Herbrandovej vety)
+Nech každý vrchol stromu s koreňom má konečné vetvenie (t.j. konečný stupeň
+vetvenia) a strom $T$ je nekonečný, tak potom v ňom existuje nekonečne dlhá
+vetva.
+
+\paragraph{Dôkaz} $(T_1,\leq)$, $v \in T$. Označme $A_v = \{ u \in T | v <u
+\}$ -- $A_v$ je množina tých vrcholov, ktoré ležia nad $v$. Majme vrchol $v$ a
+nech $v_1, v_2, \ldots v_n$ sú bezprostrední nasledovníci $v$ (obr.
+\ref{fig:nasledovnici}). $A_v = A_{v_1} \cup A_{v_2} \cup \ldots \cup A_{v_n}
+\cup \{v_1, v_2, \ldots, v_n\}$. $A_v$ je nekonečná. Na základe uvedeného
+tvrdenia aspoň jedna z množín $A_{v_i}$ musí byť nekonečná.
+
+\begin{figure}[h]
+	\centering\includegraphics{img/10/nasledovnici.1.mps}
+	\caption{Nasledovníci $v$}
+	\label{fig:nasledovnici}
+\end{figure}
+
+\par Vyberieme si $x_0$ ako koreň (najmenší vrchol stromu $T$). $A_{x_0} =
+T \backslash \{x_0\}$, $A_{x_0}$ je nekonečná. Vezmime postupne prvky $\{x_0,
+x_1, \ldots , x_n, x_\{n+1\}\}$. Ku každému prvku viem vybrať nasledovný prvok a
+počet nasledovníkov je nekonečný. \todo{lepšia formulácia}
+
+\paragraph{Veta (Herbrandova, variant 1)} Množina klauzúl $S$ nie je splniteľná
+práve vtedy, keď ľubovoľnému úplnému sémantickému stromu pre množinu klauzúl
+$S$ zodpovedá konečný uzavretý sémantický strom, t.j. ľubovoľná vetva úplného
+stromu vedie do odmietajúceho vrchola.
+
+\paragraph{Dôkaz} Predpokladajme, že množina klauzúl $S$ nie je splniteľná, nech
+$T$ je úplný sémantický strom prislúchajúci $S$. $I_V$ je množina všetkých
+literálov pripísaných vetve $V$ stromu $T$. Potom $I_V$ je interpretácia
+množiny klauzúl $S$. Predpokladajme, že $S$ je nesplniteľná (teda nesplniteľná v
+každej interpretácii). To znamená, že existuje nejaká základná inštancia klauzúl
+$C'$ (pre klauzulu $C$), ktorá je v interpretácii $I_V$ odmietnutá. (základná
+inštancia neobsahuje premenná, klauzuly sú konečné objekty). 
+%Je odmietnutá vo vrchole, ktorý je konečne vzdialený od koreňa stromu.
+\par Teraz potrebujeme zabezpečiť, aby strom bol konečný -- to musí, lebo ak by
+existovala nekonečná vetva, bola by to interpretácia, ktorá by neodmietala
+niektorú zo základných inštancií.
+
+\par Obrátená implikácia. Ak množina klauzúl nie je splniteľná, existuje k
+úplnému sémantickému stromu uzavretý konečný sémantický strom. Teraz
+predpokladajme, že k úplnému sémantickému stromu pre množinu klauzúl
+$S$ existuje konečný uzavretý sémantický strom (každá vetva stromu $T$ končí v
+zamietajúcom vrchole), potom interpretácia $I_V$ odmieta každú základnú
+inštanciu.
+
+
+\paragraph{Veta (Herbrandova)}: Množina klauzúl $S$ nie je splniteľná $\iff$ keď
+existuje konečná množina $S'$ základných inštancií klauzúl z $S$, ktorá nie je
+splniteľná. \fixme{}
+
+\paragraph{Dôkaz:} Predpokladajme, že množina klauzúl $S$ nie je splniteľná,
+existuje $T'$ -- konečný uzavretý strom priradený ku stromu $T$.
+
+\paragraph{Obrátene}: Predpoklajme, že existuije konečná $S'$ množina základných
+inštancií klauzúl $S$ nie je splniteľná, $I'$, $S'$. Potom $S$ nie je
+splniteľná, $I$ pre $S$. 
+
+\par
+Interpretácia $I$ obsahuje $I'$, teda keď $I'$ odmieta $S'$, potom $I$ odmieta
+$S$. Každá klauzula je disjunkcia literálov. Ak existuje množina základných
+inštancií, ktorá nie je splniteľná, potom celá množina nie je splniteľná.
+
+
+\paragraph{Príklad} Majme množinu klauzúl $S=\{P(x), \neg P(f(a))\}$. Vezmime
+množinu $S' = \{ P(f(a)), \neg P(f(a))\}$.
+
+\paragraph{Príklad} Majme množinu klauzúl $S=\{\neg P(x) \lor Q(f(x),x),
+P(g(b)), \neg Q(y,z) \}$. Táto množina nie je splniteľná -- opäť vezmime $$S' =
+\{ \neg P(g(b)) \lor Q(f(g(b)), g(b)), P(g(b)), \neg Q(f(g(b)), g(b)) \}$$.
+
+\paragraph{Príklad} Majme množinu klauzúl $S$:
+$$
+\begin{array}{l}
+	\neg P(x,y,u) \lor \neg P(y,z,v) \lor \neg P(x,v,w) \lor P(u,z,w) \\
+	\neg P(x,y,u) \lor \neg P(z,y,v) \lor \neg P(u,z,w) \lor P(x,v,w) \\
+	P(g(x,y),x,y), P(x,h(x,y),y), P(x,y,f(x,y),\neg P(f(v),x,f(x)) \\
+\end{array}
+$$
+\subparagraph{Návod} Zostrojte konečný sémantický strom.
+
+\par Algoritmické metódy na zisťovanie nesplniteľnosti pracovali iba pre menšie
+množiny klauzúl -- problém bol, že $S$ je množina disjunkcií, pokiaľ tam
+dosadíme prvky z univerza, dostaneme konjunktívnu normálnu formu (prípadne
+transformujeme na disjunktívnu normálnu formu a tú preverujeme). Ak máme $10$
+formúl, potrebujeme preverovať $2^{10}$ konjunkcií -- zložitosť exponenciálne
+rastie.
+
+\paragraph{Príklad}
+$$S=\{P(x), \neg P(a)\}, H_0 = \{a\}$$
+$$S'=P(a) \land \neg P(a) = \square$$
+$S$ nie je splniteľná.
+
+\paragraph{Príklad}
+$$S=\{P(a), \neg P(x) \lor Q(f(x)), \neg Q(f(a)) \}, H_0 = \{a\}$$
+$ S_0'=P(a) \land (\neg P(a)\lor Q(f(a))) \land \neg Q(f(a)) = \\
+P(a)\land \neg P(a) \land \neg Q(f(a)) \lor P(a) \land Q(f(a)) \land \neg Q(f(a)) = 
+\\ \square \lor \square = \square$.
+
+\paragraph{Pravidlá}
+Nech $S$ je množina klauzúl.
+
+\subparagraph{Pravidlo tautológie.} Vynecháme z $S$ všetky tautologické klauzuly.
+Množina $S'$, ktorá nám zostane, nie je splniteľná práve vtedy, keď $S$ nie je
+splniteľná.
+
+\subparagraph{Pravidlo jednoliterálnych klauzúl.} Nech $L$ je nejaký literál.
+Vynechajme z $S$ všetky klauzuly, ktoré obsahujú literál $L$. Nech $S'$ sú
+klauzuly, ktoré nám zostanú po vynechaní. Môžu nastať dva prípady:
+
+\begin{enumerate}
+	\item $S' = \emptyset$, tak potom množina klauzúl $S$ je splniteľná --
+	Stačí zobrať model, ktorý obsahuje $L$.
+	\item $S' \neq \emptyset$. Vezmem si literál $\neg L$ a vynechám z
+	množiny $S'$ všetky klauzuly, ktoré obsahujú $\neg L$, pričom dostanem
+	množinu klauzúl $S''$. Ak sa $S'$ nachádza $\neg L$, po vynechaní
+	namiesto nej zostane $\square$.
+\end{enumerate}
+
+$S$ nie je splniteľná $\iff$ $S''$ nie je splniteľná.
+
+\subparagraph{Pravidlo čistých literálov} Literál $L$ základnej klauzuly z $S$
+budeme nazývať \emph{čistým}, ak literál $\neg L$ sa nevyskytuje v žiadnej
+základnej klauzule $S$. Vezmem si z $S$ literál $L$, ktorý je čistý, a
+vynecháme z $S$ všetky základne klauzuly obsahujúce $L$. $S'$ je množina, ktorá
+nám zostala. $S$ nie je splniteľná $\iff$ $S'$ nie je splniteľná.
+
+\subparagraph{Pravidlo rezu} Ak množinu $S$ vieme vyjadriť v tvare $(A_1 \lor L)
+\land \ldots \land (A_m \lor L) \land (B_1 \lor \neg L) \land \ldots \land (B_n
+\lor \neg L) \land R$, pričom v $A_i$, $B_j$, sa $R$, $L$, $\neg L$, $i=1..m$,
+$j=1..n$ už nevyskytujú.
+
+$$S_1 = A_1 \land A_2 \land \ldots \land A_m \land R$$
+$$S_2 = B_1 \land B_2 \land \ldots \land _n \land R$$
+
+$S$ nie je splniteľná $\iff$ $S_1 \lor S_2$ nie je splniteteľná.
+
+\paragraph{Dôkaz}
+\begin{enumerate}
+	\item Keď $S$ nie je splniteľné, tak ani $S_2$ nie je splniteľné --
+	tautológie sú splnené pre ľubovoľné interpretácie. To, čo zostane,
+	hovorí, či množina je alebo nie je splniteľná.
+	\item Zostáva nám $S'$, ktoré vzniklo vynechaním $L$ z $S$. Ak
+	$S'=\emptyset$, každá klauzula z $S$ obsahuje $L$ (je tvaru $L \lor
+	\square$), stačí nám ohodnotenie, kedy $L$ je pravdivé, čo zabezpečí
+	pravdivosť celého výroku. 
+	\par
+	Keď $S'$ nie je prázdna, vytvoríme $S''$ tak,
+	že vynecháme všetky klauzuly obsahujúce $\neg L$. $S'$ nie je splniteľná
+	práve vtedy, keď $S$ nie je splniteľná. Predpokladajme, že $S''$ nie je
+	splniteľná a $S$ je splniteľná. Model $\mathcal{M}$ musí obsahovať $L$ a
+	$S$ platí na $S''$.
+	\todo{???}
+	V konjunktívnej normálnej forme musia byť platné doplnky $\neg L \lor
+	\square$. Potom $S''$ je splniteľná, čo je spor.
+
+	\par Obrátene, nech $S$ nie je splniteľná. Z toho vyplýva, že $S''$ nie
+	je splniteľná. Nech $S''$ je splniteľná. Potom existuje model
+	$\mathcal{M}''$ pre $S''$. Ak tomuto modelu pridám $L$, potom
+	$\mathcal{M}'' \cup L$ je model pre $S$, čo je spor.
+
+	\item Pravidlo čistých literálov -- Máme čistý literál $L$, všetky
+	klauzuly, ktoré ho obsahujú, vyhodíme z $S$ a dostaneme $S'$. $S$ nie je
+	splniteľná práve vtedy, keď $S'$ nie je splniteľná. Predpokladajme, že
+	$S'$ nie je splniteľná, teda pre žiadnu interpretáciu $I'$ neplatí. $S\
+	\subseteq S$. Musí platiť, že $I' \subseteq I$.
+
+	\par Obrátene -- predpokladajme, že $S$ nie je splniteľná. Potom aj $S'$
+	nie je splniteľná. Predpokladajme, že $S'$ je splniteľná. Potom musí mať
+	model $\mathcal{M}'$, ktorý jej vyhovuje. Keď si vytvorím model
+	$\mathcal{M}=\mathcal{M}'\cup L$, potom $\mathcal{M}$ je modelom v $S$.
+
+	\item Pravidlo rezu. Mám množinu $S$, popísaným spôsobom som zostrojil
+	$S_1$ a $S_2$. Chceme ukázať, že $S$ nie je splniteľná $\iff$ $S_1 \lor
+	S_2$. Predpokladajme, že $S$ je splniteľná. Potom $S_1 \lor S_2$ je
+	splniteľná, teda aspoň jeden člen disjunkcie je splniteľný. Keď pridám
+	modelu $S_1$ negované $B$, dostávam model pre $S$. Taktiež, keď je
+	splnená $S_2$, má nejaký model $\mathcal{M_2}$. Keď k nemu pridám $B$,
+	dostávam model pre $S$.
+
+	\par Obrátene, predpokladajme, že $S_1$ alebo $S_2$ nie je splniteľná. Z
+	toho vyplýva, že $S$ nie je splniteľná. Pre spor predpokladajme, že $S$
+	je splniteľná. Pozrime sa, ako vyzerá $S$ -- všetky konjunktívne členy
+	musia byť splnené a teda buď platí $\neg L$ alebo $L$. Vždy dospievam do
+	sporu.
+\end{enumerate}
+
+\paragraph{Záver} Najvšeobecnejšie je pravidlo rezu, ktoré pokrýva aj všetky
+ostatné prípady.
+
+\paragraph{Príklad} Majmne množinu $S=(P \lor Q \lor \neg R) \land (P \lor \neg
+Q) \land \neg P \land R \land U$. Ukážte, že množina klauzúl nie je splniteľná.
+Použijeme pravidlo 2 s $\neg P$. Dostávam $Q\land\neg R) \land \neg  \land R
+\land U$. Na túto množinu klauzúl použijem pravidlo 2 s $\neg Q$. Dostávam $\neg
+R \land R \land U$, čo je $\square \land U \square$.
+
+
+
+
+\paragraph{Príklad} (7) $S=(P \lor Q) \land \neg Q \land ( \neg P \lor Q \lor \neg
+R)$. Ukážte, že množina klauzúl $S$ je splniteľná.
+\par Pravidlo 2 s $\neg Q$: $(P \lor Q) \land ( \neg P \lor Q \lor \neg R)$ \\
+$P \land (\neg P \lor \neg R)$ \\
+$(P \land \neg P) \lor (P \land \neg R)$ (distributívnosť) \\
+$P \land \neg L, I=\{P,\neg Q, \neg R\}$
+
+\paragraph{Príklad} (8) $S=(P\lor \neg Q) \land (\neg P \lor Q) \land (Q \lor
+\neg R) \land (\neg Q \lor \neg R)$. Zistite, či množina je alebo nie je
+splniteľná.
+\par vytvoríme si mnonžiny podľa pravidla 4: \\
+$$(P\land \neg Q) \land (Q \lor \neg R)  \land (\neg Q \lor \neg R)$$
+$$(\neg P \lor Q) \land (Q \lor \neg R) \land (\neg Q \lor \neg R)$$
+
+\par
+$$S_1 = \neg Q \land (Q \lor \neg R) \land (\neg Q \lor \neg R)$$
+$$S_2 = Q \land (Q \lor \neg R) \land (\neg Q \lor \neg R)$$
+
+($S_1$ a $S_2$ sú množiny rezu)
+Na množiny môžem použiť pravidlo 2 -- s $Q$ a $\neg Q$. Dostávam $\neg R \lor
+R$, čo je splniteľná klauzula.
+
+\paragraph{Príklad} (9) $S=(P \lor Q) \land (P \lor \neg Q) \land (R \lor Q)
+\land (R \lor \neg Q)$. $P$ je čistý literál; použijeme pravidlo 3:
+$S': (R \lor Q) \land (R \lor \neg Q)$. \\
+$\fbox{P,R}$ \\
