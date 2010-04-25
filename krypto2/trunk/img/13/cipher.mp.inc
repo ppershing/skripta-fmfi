@@ -17,7 +17,7 @@ kbox_height:=sbox_height;
 pin_length:=0.3cm;
 
 round_skip:=4cm;
-round_sbox_offset:=1.2cm;
+round_sbox_offset:=1.5cm;
 
 %%% {{{ create_pins(nameofbox)
 def create_pins(suffix name)(expr posx, posy)=
@@ -129,6 +129,9 @@ def draw_out_pins(suffix meno)=
         for j:=0 upto 3:
             draw subpath(0,1) of
                 (inout_path(meno,i,j,meno,i,j));
+            k:=i*4+j;
+            label.bot(textext("$" & (decimal k) & "$"),
+                        pair_out(meno,i,j)+(0,-9));
         endfor;
     endfor;
 enddef;
