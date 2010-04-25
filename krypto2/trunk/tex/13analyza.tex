@@ -12,34 +12,147 @@
 \input{tex/kryptoanalyza/lat.tex}
 
 \todo{vseobecny pokec o lamani, defaily v prvom priklade}
+
+
 \begin{priklad}
     \label{prikl:lin1}
+
+    Aby sme neostali iba pri teoretických obkecoch, ukážeme si
+    prakticky ako vyzerá a dopadne kryptoanalýza. Uvažujme najskôr
+    lineárnu kombináciu vstupných bitov $9,10,12,15$ a výstupných
+    bitov $0,2,8,10$. Presnejšie ktoré lineárne kombinácie budeme
+    uvažovať po ceste si čitateľ môže pozrieť na obrázku
+    \ref{prikl:lin1}. Nateraz nás bude zaujímať hlavne to, že na
+    vstupe aj na výstupe máme relatívne malý počet použitých S-boxov.
+    Tým pádom vie byť kryptoanalýza úspešná (lebo nám stačí preveriť
+    kľúče na malej kombinácii výstupov).
+
+    Pre každý S-box si vypočítame balanciu pravdepodobnosti, ktorú
+    očakávame. Môžeme si všimnúť napríklad, že špeciálne pre S-boxy,
+    ktoré nemajú vyznačený žiadny pin je táto balancia 0.5 pretože je
+    100\%-ná pravdepodobnosť, že $0 = 0$ (Lineárna kombinácia vstupov
+    sa rovná lineárnej kombinácii výstupov).
+
+    Následne budeme dávať tieto pravdepodobnosti dokopy. Aby sme to
+    mohli spraviť, budeme uvažovať, že tieto pravdepodobnosti sú
+    nezávislé. Toto je síce evidentne nepravdivý predpoklad, ale
+    výrazne zjednodušuje analýzu. Môžeme totiž použiť piling-up lemu
+    na skladanie týchto pravdepodobností (teda, v našom prípade skôr
+    balancií). Takto získame pre každý round šifry (s výnimkou
+    posledného) balanciu príslušnej
+    lineárnej kombinácie. Opäť použijeme piling-up lemu a môžeme
+    vypočítať balanciu lineárnej kombinácie vstupu a výstupu z
+    predposledného kola šifry. No a tento výstup budeme štatisticky
+    testovať pre rôzne kľúče a kľúč, ktorý bude najbližšie k
+    vypočítanej hodnote budeme považovať za správny.\footnote{V
+    skutočnosti to nie je také jednoduché, hlavne, ak výsledky analýzy
+    nie sú veľme jednoznačné. Vtedy by sme mohli určiť pravdepodobnosti
+    pre jednotlivé časti kľúča a následne vyskúšať bruteforce attack
+    v poradí podľa klesajúcej pravdepodobnosti celého kľúča.}
+
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.8]{img/13/lin.1.mps}
         \caption{Lineárna aproximácia v príklade \ref{prikl:lin1}}
     \end{figure}
+
+
+    Teoretická analýza je teda nasledovná:
     \input{tex/kryptoanalyza/lanalyza1.tex}
+
+    Po teoretickej stránke máme teda útok zvládnutý. Ešte ostáva
+    ukázať, ako to funguje v praxi. Zašifrovali sme sadu náhodných
+    textov tým istým náhodným kľúčom a následne sme skúšali hádať časť
+    podkľúča $key_5$. Algoritmus bol jednoduchý -- pre každý možný
+    kľúč (resp. tú časť kľúča, o ktorej máme šancu niečo zistiť, v
+    našom prípade sboxy so vstupmi 0-3, 8-11) sme pomocou všetkých
+    otvorených a šifrových textov vypočítali pravdepodobnosť (a teda
+    aj balanciu) pre daný kľúč. Následne sme ako kľúč zvolili ten,
+    ktorý mal najväčšiu balanciu v absolútnej hodnote. V tabuľke
+    \todo{ref} sú ukázané výsledky na sade 1000 dvojíc otvoreného a
+    šifrového textu.
     \input{tex/kryptoanalyza/lattack1.tex}
 \end{priklad}
 
 \begin{priklad}
     \label{prikl:lin2}
+    V druhom príklade sme si zvolili inú lineárnu aproximáciu. Toto
+    nás môže doviesť k inej časti kľúča, ktorý by sme chceli zlomiť.
+    Samozrejme, hľadanie vhodnej lineárnej aproximácie je veľmi
+    netriviálna (a iba na ňom stojí celá táto kryptoanalýza). V našom
+    prípade sme opäť našli veľmi jednoduchú (t.j. málo použitých
+    ciest) kombináciu.
     \begin{figure}[H]
         \centering
         \includegraphics[scale=0.8]{img/13/lin.2.mps}
         \caption{Lineárna aproximácia v príklade \ref{prikl:lin2}}
     \end{figure}
+    Opäť si najskôr teoreticky analyzujeme situáciu. Tak ako v
+    predchádzajúcom prípade, aj teraz budeme uvažovať, že jednotlivé
+    pravdepodobnosti sú úplne nezávislé.
     \input{tex/kryptoanalyza/lanalyza2.tex}
+
+    Čo sa týka praktických výsledkov, dajú sa nájsť v tabuľke
+    \todo{ref}. Môžeme si všimnúť, že hlavne v prvom prípade je
+    výsledok pomerne nejednoznačný. Na úspešnú kryptoanalýzu by bolo
+    preto potrebné mať zrejme viac údajov, alebo, na druhej strane,
+    previesť spomínanú variantu bruteforce útoku s preberaním
+    pravdepodobnejších kľúčov $key_5$ skôr. Za zmienku navyše stojí,
+    že okrem časti kľúča $key_5$ vieme touto metódou získať ja
+    lineárnu kombináciu (xor) niektorých bitov kľúčov $key_1, \dots,
+    key_4$. Môžeme sa totiž pozrieť na to, či daná balancia vyšla
+    kladná alebo záporná a rozhodnúť sa, či to vychádza ako očakávaná
+    balancia alebo presne naopak.
+
     \input{tex/kryptoanalyza/lattack2.tex}
 \end{priklad}
 
 
 \subsection{Diferenciálna kryptoanalýza}
-\todo{pokec o diferencialnej kryptoanalyze}
+Princíp diferenciálnej kryptoanalýzy je veľmi príbuzný 
+už preberanej lineárnej analýzy. Opäť budeme analyzovať
+štatistické odchýlky šifry od náhodného zobrazenia.
+Tentoraz všal nebudeme uvažovať lineárnu analýzu vstupov,
+ale niečo zložitejšie. Ak si vezmeme 2 otvorené texty, ktoré sa líšia
+na niektorých pozíciach, bude nás zaujímať, ako sa budú líšiť na
+niektorých výstupných pozíciach. V prípade, že máme iba zoznam
+otvorených a šifrových textov, môže to spôsobovať problémy, pretože
+nie je jednoduché nájsť vhodnú dvojicu otvorených textov.
+Preto sa tento útok zvyčajne vyskytuje v podobe CPA, t.j. útočník si
+môže voliť otvorené texty a používať svoju obeť ako orákulum na
+šifrové texty. Praktickými aspektami tohoto útoku sa nebudeme veľmi
+zaoberať, je však evidentné, že presvedčiť svoju obeť zašifrovať
+tisícky náhodných otvorených textov nemusí byť práve najjednoduchšie.
+
+Vráťme sa ale späť ku kryptoanalýze. Podobne ako minule, aj teraz si
+spravíme tabuľku, ktorá bude popisovať jeden S-box. 
+Riadky tabuľky budú reprezentovať diferenciu (xor) medzi vstupmi do
+S-boxu, stĺpce budú reprezentovať diferenciu medzi výstupmi. Každé
+políčko tabuľky bude obsahovať počet tých vstupov pre S-box, pre ktorý
+je diferencia medzi jeho výstupom a výstupom zmeneným podľa vstupnej
+diferencie práve výstupná diferencia. Inak povedané
+\begin{equation*}
+    table[d_{in},d_{out}] = \sum_{x=0}^{max\_input-1}
+        \left[Sbox(x) \oplus Sbox(x \oplus d_{in}) == d_{out}\right]
+\end{equation*}
+Pre náš S-box sa dajú nájsť konkrétne hodnoty v tabuľke \ref{tab:dif}
 \input{tex/kryptoanalyza/dif.tex}
-\todo{daco o tej tabulke}
-\fixme{pregenerovat tabulku na tmavsie farby}
+
+Môžeme si všimnúť niekoľko vlastností tabuľky.
+Prvou je, že $table[0,0]=16$, čo je pochopiteľné -- ak uvažujeme dva
+rovnaké otvorené texty, šifrové texty budú tiež rovnaké bez ohľadu na
+otvorený text. Ďalej, súčet v riadku je vždy 16, čo je opäť triviálne
+nahliadnuteľné. Trochu menej triviálne je to isté pozorovanie o
+stĺpcoch tabuľky -- v tomto prípade môžeme argumentovať napríklad tým,
+že sa na celú situáciu budeme pozerať z opačnej strany (vymeníme
+otvorené a šifrové texty) a naša šifra bude pôvodná dešifrovacia funkcia.
+
+Každé políčko tabuľky nám narozdiel od lineárnej kryptoanalýzy
+neukazuje balanciu pravdepodobnosti ale priamo pravdepodobnosť. Teda,
+presnejšie povedané, políčko vydelené počtom všetkých možných vstupov
+pre S-box.
+Tieto pravdepodobnosti budeme opäť uvažovať, že sú nezávislé a teda
+ich budeme môcť beztrestne násobiť.
 
 
 \begin{priklad}
