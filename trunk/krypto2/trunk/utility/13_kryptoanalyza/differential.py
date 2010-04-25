@@ -12,7 +12,7 @@ def get_dif_color(value):
 
 def GenerateDifferentialTable(f):
     # {{{
-    print >>f, "\\begin{table}[htp]"
+    print >>f, "\\begin{table}[H]"
     print >>f, "\\begin{tabular}{" + 17*"r|" + "}"
     for i in range(16):
         print >>f, "&{\\bf %2d}" % i
@@ -25,8 +25,8 @@ def GenerateDifferentialTable(f):
                                      Diferential(i,j))
         print >>f, "\\\\ \hline"
     print >>f, "\\end{tabular}"
-    print >>f, "\\caption{Lineárna aproximačná tabuľka pre S-box}";
-    print >>f, "\\label{tab:lat}"
+    print >>f, "\\caption{Diferenčná tabuľka pre S-box}";
+    print >>f, "\\label{tab:dif}"
     print >>f, "\\end{table}"
     # }}}
 
@@ -55,21 +55,22 @@ def AnalyzeDifferences(f, linear_combination):
         print >>f, "\\item {\\bf %d. kolo:}" % (round+1)
         print >>f, "Použijeme differenciu $\\langle in=",
         print >>f, MaskedHex(BitsToInt(in_array), [0,1,2,3]),
-        print >>f, ", out=",
+        print >>f, ",\ out=",
         print >>f, MaskedHex(BitsToInt(out_array), [0,1,2,3]),
         print >>f, "\\rangle $,"
         print >>f, "ktorá má pravdepodobnosti po jednotlivých S-boxoch $"
-        print >>f, ",".join(["%s" % x for x in balance])
+        print >>f, ",\ ".join(["%s" % x for x in balance])
         print >>f, "$ čo spolu dáva pravdepodobnosť "
         print >>f, "$" ,
         print >>f, "*".join(["%s" %x for x in balance]) ,
         print >>f, "=", b, "$"
         print >>f, ""
     print >>f, "\\item {\\bf Spolu:} ",
-    print >>f, "Máme diferenciu $\\langle = plaintext\\_diff",
+    print >>f, "Máme diferenciu $\\langle d_{plaintext},\ ",
+    print >>f, "d_{ciphertext} \\rangle = \\langle",
     in_array = [(x in linear_combination[0]) for x in range(TOTAL_KEY_SIZE)]
     print >>f, MaskedHex(BitsToInt(in_array), [0,1,2,3]),
-    print >>f, ", ciphertext\\_diff=",
+    print >>f, ",\ ",
     print >>f, MaskedHex(BitsToInt(out_array), [0,1,2,3]),
     print >>f, "\\rangle$."
     print >>f, "Celková pravdepodobnosť je $" ,

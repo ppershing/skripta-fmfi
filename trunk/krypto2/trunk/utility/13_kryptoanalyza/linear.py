@@ -15,7 +15,7 @@ def get_LAT_color(value):
 
 def GenerateLinearApproximationTable(f):
     # {{{
-    print >>f, "\\begin{table}[htp]"
+    print >>f, "\\begin{table}[H]"
     print >>f, "\\begin{tabular}{" + 17*"r|" + "}"
     for i in range(16):
         print >>f, "&{\\bf %2d}" % i
@@ -55,30 +55,49 @@ def AnalyzeLinearApproximations(f, linear_combination):
         total_balance += [b]
 
         print >>f, "\\item {\\bf %d. kolo:}" % (round+1)
-        print >>f, "Použijeme lineárnu aproximáciu $"
-        print >>f, " \\oplus ".join(["x_{%d,%d}" % (round+1,x) for x in  inputs]) ,
-        print >>f, " \\oplus k_{%d} "%(round+1) 
-        print >>f, " \\approx " 
-        print >>f, " \\oplus ".join(["y_{%d,%d}" % (round+1,x) for x in outputs]),
-        print >>f, "$,\nktorá má balancie po jednotlivých S-boxoch $"
-        print >>f, ",".join(["%s" % x for x in balance])
-        print >>f, "$čo podľa piling-up lemy dáva pravdepodobnosť "
+        print >>f, "Použijeme lineárnu aproximáciu"
+        print >>f, "\\begin{equation*}"
+        print >>f, "(",
+        print >>f, " \\oplus ".join(["x_{%d,%d}" % (round+1,x)
+                                    for x in  inputs]) ,
+        print >>f, " ) \n \\oplus (",
+        print >>f, " \\oplus ".join(["key_{%d,%d}" %(round+1,x)
+                                    for x in inputs]),
+        print >>f, ") \n \\approx (",
+        print >>f, " \\oplus ".join(["y_{%d,%d}" % (round+1,x)
+                                    for x in outputs]),
+        print >>f, ")"
+        print >>f, "\\end{equation*}"
+        print >>f, "ktorá má balancie po jednotlivých S-boxoch $"
+        print >>f, ",\ ".join(["%s" % x for x in balance])
+        print >>f, "$ čo podľa piling-up lemy dáva pravdepodobnosť "
         print >>f, "$1/2 + 2^3*(" ,
         print >>f, ")*(".join(["%s" %x for x in balance]) ,
-        print >>f, ")=", (0.5 + b), "$"
-        print >>f, "Balancia je $%s$." % b
+        print >>f, ")=", (0.5 + b), "$. "
+        print >>f, "Výsledná balancia je $%s$." % b
         print >>f, ""
     print >>f, "\\item {\\bf Spolu:} ",
-    print >>f, "Máme lineárnu kombináciu $ \Big("
-    print >>f, " \\oplus ".join(["in_{%s}" %x for x in linear_combination[0]])
-    print >>f, "\Big) \\oplus \Big( k_1 \\oplus k_2 \\oplus k_3 \\oplus "
-    print >>f, " \\oplus ".join(["key_{%s,%s}" % (r+1, o) for (r,o) in
-                sorted([((r, o) if (r == 0) else (r,ShufflePosition(o)))
-                        for (r,o) in sum([map(lambda x: (r,x), linear_combination[r]) for r in range(4)],[])
-                ])]),
-    print >>f, "\Big) \\approx \Big("
-    print >>f, " \\oplus ".join(map(lambda x: "out_{%s}" % x, linear_combination[3]))
-    print >>f, "\Big) $."
+    print >>f, "Máme lineárnu kombináciu "
+    print >>f, "\\begin{equation*}"
+    print >>f, "\\begin{split}"
+    print >>f, "(",
+    print >>f, " \\oplus ".join(["in_{%s}" %x for x in linear_combination[0]]),
+    print >>f, ")"
+    for r in range(3):
+        print >>f, " & \\\\\n \\phantom{x} \\oplus (",
+        print >>f, " \\oplus ".join(["key_{%s,%s}" % (r+1, o) for o in
+                sorted([(o if (r == 0) else ShufflePosition(o))
+                        for o in linear_combination[r] ])]),
+        print >>f, ")"
+    print >>f, " & \\approx  ("
+    print >>f, " \\oplus ".join([ "key_{%s,%s}" % (4,o) for o in
+                sorted(map(ShufflePosition,linear_combination[3]))])
+    print >>f, " ) \\\\\n & \\phantom{\\approx} \\oplus ("
+    print >>f, " \\oplus ".join(map(lambda x: "out_{%s}" % x,
+                    linear_combination[3]))
+    print >>f, ")",
+    print >>f, "\\end{split}"
+    print >>f, "\\end{equation*}"
     print >>f, "Podľa piling-up lemy máme balanciu $4*" ,
     print >>f, "*".join(map(lambda x: "%s" %x, total_balance)) ,
     print >>f, "~= %.4f $." % (reduce(mul, total_balance)*4)
