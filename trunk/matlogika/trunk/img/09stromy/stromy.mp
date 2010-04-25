@@ -28,18 +28,18 @@ beginfig(11);
 
     % level 0->1
     arrow.top(.5, btex $P$ etex)
-        (a[0][0], a[1][0]) a[0][0].c .. a[1][0].c;
+        (a[0][0], a[1][0]) a[0][0].c -- a[1][0].c;
 
     arrow.top(.5, btex $\neg P$ etex)
-        (a[0][0], a[1][1]) a[0][0].c .. a[1][1].c;
+        (a[0][0], a[1][1]) a[0][0].c -- a[1][1].c;
 
     %level 1->2
     for i = 0 upto 1:
         arrow.lft(.5, btex $Q$ etex)
-            (a[1][i], a[2][2*i]) a[1][i].c .. a[2][2*i].c;
+            (a[1][i], a[2][2*i]) a[1][i].c -- a[2][2*i].c;
 
         arrow.rt (.5, btex $\neg Q$ etex)
-            (a[1][i], a[2][2*i+1]) a[1][i].c .. a[2][2*i+1].c;
+            (a[1][i], a[2][2*i+1]) a[1][i].c -- a[2][2*i+1].c;
     endfor;
 %%% }}}
 endfig;
@@ -57,48 +57,48 @@ beginfig(21);
 
     % level 0->1
     arrow.top(.5, btex $P$ etex)
-            (a[0][0], a[1][0]) a[0][0].c .. a[1][0].c;
+            (a[0][0], a[1][0]) a[0][0].c -- a[1][0].c;
 
     arrow.top(.5, btex $\neg P$ etex)
-            (a[0][0], a[1][1]) a[0][0].c .. a[1][1].c;
+            (a[0][0], a[1][1]) a[0][0].c -- a[1][1].c;
 
     % level 1->2
     arrow.lft(.5, btex $Q$ etex)
-            (a[1][0], a[2][0]) a[1][0].c .. a[2][0].c;
+            (a[1][0], a[2][0]) a[1][0].c -- a[2][0].c;
 
     arrow.rt (.5, btex $\neg Q$ etex)
-            (a[1][0], a[2][1]) a[1][0].c .. a[2][1].c;
+            (a[1][0], a[2][1]) a[1][0].c -- a[2][1].c;
 
     arrow.lft(.5, btex $Q$ etex)
-            (a[1][1], a[2][2]) a[1][1].c .. a[2][2].c;
+            (a[1][1], a[2][2]) a[1][1].c -- a[2][2].c;
 
     arrow.rt (.5, btex $\neg Q$ etex)
-            (a[1][1], a[2][3]) a[1][1].c .. a[2][3].c;
+            (a[1][1], a[2][3]) a[1][1].c -- a[2][3].c;
 
     % level 2->3
     arrow.lft(.5, btex $R$ etex)
-            (a[2][0], a[3][0]) a[2][0].c .. a[3][0].c;
+            (a[2][0], a[3][0]) a[2][0].c -- a[3][0].c;
 
     arrow.rt (.5, btex $\neg R$ etex)
-            (a[2][0], a[3][1]) a[2][0].c .. a[3][1].c;
+            (a[2][0], a[3][1]) a[2][0].c -- a[3][1].c;
 
     arrow.lft(.5, btex $R$ etex)
-            (a[2][1], a[3][2]) a[2][1].c .. a[3][2].c;
+            (a[2][1], a[3][2]) a[2][1].c -- a[3][2].c;
 
     arrow.rt (.5, btex $\neg R$ etex)
-            (a[2][1], a[3][3]) a[2][1].c .. a[3][3].c;
+            (a[2][1], a[3][3]) a[2][1].c -- a[3][3].c;
 
     arrow.lft(.5, btex $R$ etex)
-            (a[2][2], a[3][4]) a[2][2].c .. a[3][4].c;
+            (a[2][2], a[3][4]) a[2][2].c -- a[3][4].c;
 
     arrow.rt (.5, btex $\neg R$ etex)
-            (a[2][2], a[3][5]) a[2][2].c .. a[3][5].c;
+            (a[2][2], a[3][5]) a[2][2].c -- a[3][5].c;
 
     arrow.lft(.5, btex $R$ etex)
-            (a[2][3], a[3][6]) a[2][3].c .. a[3][6].c;
+            (a[2][3], a[3][6]) a[2][3].c -- a[3][6].c;
 
     arrow.rt (.5, btex $\neg R$ etex)
-            (a[2][3], a[3][7]) a[2][3].c .. a[3][7].c;
+            (a[2][3], a[3][7]) a[2][3].c -- a[3][7].c;
 %%% }}}
 endfig;
 
@@ -131,61 +131,61 @@ beginfig(22);
 
     % level 0->1
     arrow.top(.5, btex $P$ etex)
-            (a[0][0], a[1][0]) a[0][0].c .. a[1][0].c;
+            (a[0][0], a[1][0]) a[0][0].c -- a[1][0].c;
 
     arrow.lft(.5, btex $Q$ etex)
-            (a[0][0], a[1][1]) a[0][0].c .. a[1][1].c;
+            (a[0][0], a[1][1]) a[0][0].c -- a[1][1].c;
 
     arrow.top(.5, btex $\neg P, \neg Q$ etex)
-            (a[0][0], a[1][2]) a[0][0].c .. a[1][2].c;
+            (a[0][0], a[1][2]) a[0][0].c -- a[1][2].c;
 
     % level 1->2
 
     % lava cast
     arrow.lft (.5, btex $Q$ etex)
-            (a[1][0], a[2][0]) a[1][0].c .. a[2][0].c;
+            (a[1][0], a[2][0]) a[1][0].c -- a[2][0].c;
 
     arrow.lft (.5, btex $R$ etex)
-            (a[1][0], a[2][1]) a[1][0].c .. a[2][1].c;
+            (a[1][0], a[2][1]) a[1][0].c -- a[2][1].c;
 
     arrow.rt (.5, btex $\neg Q, \neg R$ etex)
-            (a[1][0], a[2][2]) a[1][0].c .. a[2][2].c;
+            (a[1][0], a[2][2]) a[1][0].c -- a[2][2].c;
     % stredna cast
     arrow.lft (.5, btex $P$ etex)
-            (a[1][1], a[2][3]) a[1][1].c .. a[2][3].c;
+            (a[1][1], a[2][3]) a[1][1].c -- a[2][3].c;
 
     arrow.rt (.5, btex $\neg P$ etex)
-            (a[1][1], a[2][5]) a[1][1].c .. a[2][5].c;
+            (a[1][1], a[2][5]) a[1][1].c -- a[2][5].c;
     % prava cast
     arrow.lft (.5, btex $R$ etex)
-            (a[1][2], a[2][6]) a[1][2].c .. a[2][6].c;
+            (a[1][2], a[2][6]) a[1][2].c -- a[2][6].c;
 
     arrow.rt (.5, btex $\neg R$ etex)
-            (a[1][2], a[2][8]) a[1][2].c .. a[2][8].c;
+            (a[1][2], a[2][8]) a[1][2].c -- a[2][8].c;
 
     % level 2->3
     % lava 1
     arrow.lft (.5, btex $R$ etex)
-            (a[2][0], a[3][0]) a[2][0].c .. a[3][0].c;
+            (a[2][0], a[3][0]) a[2][0].c -- a[3][0].c;
 
     arrow.rt (.5, btex $\neg R$ etex)
-            (a[2][0], a[3][2]) a[2][0].c .. a[3][2].c;
+            (a[2][0], a[3][2]) a[2][0].c -- a[3][2].c;
     % lava 2
     arrow.lft (.5, btex $Q$ etex)
-            (a[2][1], a[3][3]) a[2][1].c .. a[3][3].c;
+            (a[2][1], a[3][3]) a[2][1].c -- a[3][3].c;
 
     arrow.rt (.5, btex $\neg Q$ etex)
-            (a[2][1], a[3][5]) a[2][1].c .. a[3][5].c;
+            (a[2][1], a[3][5]) a[2][1].c -- a[3][5].c;
     % stredna 1
     arrow.lft (.5, btex $R$ etex)
-            (a[2][3], a[3][9]) a[2][3].c .. a[3][9].c;
+            (a[2][3], a[3][9]) a[2][3].c -- a[3][9].c;
     arrow.rt (.5, btex $\neg R$ etex)
-            (a[2][3], a[3][11]) a[2][3].c .. a[3][11].c;
+            (a[2][3], a[3][11]) a[2][3].c -- a[3][11].c;
     % stredna 2
     arrow.lft (.5, btex $R$ etex)
-            (a[2][5], a[3][15]) a[2][5].c .. a[3][15].c;
+            (a[2][5], a[3][15]) a[2][5].c -- a[3][15].c;
     arrow.rt (.5, btex $\neg R$ etex)
-            (a[2][5], a[3][17]) a[2][5].c .. a[3][17].c;
+            (a[2][5], a[3][17]) a[2][5].c -- a[3][17].c;
 %%% }}}
 endfig;
 
@@ -199,10 +199,10 @@ beginfig(31);
 
     % level 0->1
     arrow.lft(.5, btex $P(a)$~ etex)
-        (a[0][0], a[1][0]) a[0][0].c .. a[1][0].c;
+        (a[0][0], a[1][0]) a[0][0].c -- a[1][0].c;
 
     arrow.rt (.5, btex ~$\neg P(a)$ etex)
-        (a[0][0], a[1][1]) a[0][0].c .. a[1][1].c;
+        (a[0][0], a[1][1]) a[0][0].c -- a[1][1].c;
 %%% }}}
 endfig;
 
@@ -218,15 +218,15 @@ beginfig(41);
     endfor;
 
     for j=0 upto (2**4)-1:
-        node_hidden.t[4][j]("...");
+        node_hidden.t[4][j]("--.");
     endfor;
 
     % level 0->1
     arrow.top(.5, btex $\neg P(a)$ etex)
-            (t[0][0], t[1][0]) t[0][0].c .. t[1][0].c;
+            (t[0][0], t[1][0]) t[0][0].c -- t[1][0].c;
 
     arrow.top(.5, btex $P(a)$ etex)
-            (t[0][0],t[1][1]) t[0][0].c .. t[1][1].c;
+            (t[0][0],t[1][1]) t[0][0].c -- t[1][1].c;
 
     % level 1->2
     for i=0 upto 3:
@@ -236,7 +236,7 @@ beginfig(41);
             arrow.rt (.5, btex $Q(f(a))$ etex)
         fi
         % poznamka - toto je zvysok tych arrow prikazov
-        (t[1][i div 2], t[2][i]) t[1][i div 2].c .. t[2][i].c;
+        (t[1][i div 2], t[2][i]) t[1][i div 2].c -- t[2][i].c;
     endfor;
 
     % level 2->3
@@ -247,13 +247,13 @@ beginfig(41);
             arrow.rt (.5, btex $P(f(x))$ etex)
         fi
         % opat pokracovanie prikazu
-        (t[2][i div 2], t[3][i]) t[2][i div 2].c .. t[3][i].c;
+        (t[2][i div 2], t[3][i]) t[2][i div 2].c -- t[3][i].c;
     endfor;
 
     % level 3- ->
     for i=0 upto 15:
         arrow_dash(.5, btex etex)
-            (t[3][i div 2], t[4][i]) t[3][i div 2].c .. t[4][i].c;
+            (t[3][i div 2], t[4][i]) t[3][i div 2].c -- t[4][i].c;
     endfor;
 %%% }}}
 endfig;
@@ -270,9 +270,9 @@ beginfig(51);
 
     % level 0->1
     arrow.lft(.5, btex $\neg P$ etex)
-            (t[0][0], t[1][0]) t[0][0].c .. t[1][0].c;
+            (t[0][0], t[1][0]) t[0][0].c -- t[1][0].c;
     arrow.rt (.5, btex $P$ etex)
-            (t[0][0], t[1][1]) t[0][0].c .. t[1][1].c;
+            (t[0][0], t[1][1]) t[0][0].c -- t[1][1].c;
 
     % level 1->2
     for i=0 upto 3:
@@ -281,7 +281,7 @@ beginfig(51);
         else:
             arrow.rt (.5, btex $Q$ etex)
         fi
-        (t[1][i div 2],t[2][i]) t[1][i div 2].c..t[2][i].c;
+        (t[1][i div 2],t[2][i]) t[1][i div 2].c--t[2][i].c;
     endfor;
 
     % level 2->3
@@ -291,7 +291,7 @@ beginfig(51);
         else:
             arrow.rt (.5, btex $R$ etex)
         fi
-        (t[2][i div 2],t[3][i]) t[2][i div 2].c..t[3][i].c;
+        (t[2][i div 2],t[3][i]) t[2][i div 2].c--t[3][i].c;
     endfor;
 %%% }}}
 endfig;
@@ -308,10 +308,10 @@ beginfig(52);
     node_hidden.t[3][3](btex $\times$ etex);
 
     arrow.top (.5, btex $P$ etex)
-            (t[0][0], t[1][0]) t[0][0].c .. t[1][0].c;
+            (t[0][0], t[1][0]) t[0][0].c -- t[1][0].c;
 
     arrow.top (.5, btex $\neg P$ etex)
-            (t[0][0], t[1][1]) t[0][0].c .. t[1][1].c;
+            (t[0][0], t[1][1]) t[0][0].c -- t[1][1].c;
     label    (btex \small neplatí $\neg P \lor \neg Q$ etex, t[2][0].c + (0,-10));
     label.lft(btex \small neplatí $\neg P \lor \neg R$ etex, t[3][2].c + (10, -10));
     label.rt (btex \small neplatí $Q \lor R$ etex, t[3][3].c + (-10, -10));
@@ -320,18 +320,18 @@ beginfig(52);
 
 
     arrow.lft (.5, btex $Q$ etex)
-            (t[1][0], t[2][0]) t[1][0].c .. t[2][0].c;
+            (t[1][0], t[2][0]) t[1][0].c -- t[2][0].c;
 
     arrow.rt  (.5, btex $\neg Q$ etex)
-            (t[1][0], t[2][1]) t[1][0].c .. t[2][1].c;
+            (t[1][0], t[2][1]) t[1][0].c -- t[2][1].c;
 
 
 
     arrow.lft (.5, btex $R$ etex)
-            (t[2][1], t[3][2]) t[2][1].c .. t[3][2].c;
+            (t[2][1], t[3][2]) t[2][1].c -- t[3][2].c;
 
     arrow.rt  (.5, btex $\neg R$ etex)
-            (t[2][1], t[3][3]) t[2][1].c .. t[3][3].c;
+            (t[2][1], t[3][3]) t[2][1].c -- t[3][3].c;
 %%% }}}
 endfig;
 
@@ -347,16 +347,16 @@ beginfig(61);
     node_hidden.t[2][1](btex $\times$ etex);
 
     arrow.top(0.5, btex $P(a)$ etex)
-            (t[0][0], t[1][0]) t[0][0].c .. t[1][0].c;
+            (t[0][0], t[1][0]) t[0][0].c -- t[1][0].c;
 
     arrow.top(0.5, btex $\neg P(a)$ etex)
-            (t[0][0], t[1][1]) t[0][0].c .. t[1][1].c;
+            (t[0][0], t[1][1]) t[0][0].c -- t[1][1].c;
 
     arrow.lft(0.5, btex $Q(f(a))$ etex)
-            (t[1][0], t[2][0]) t[1][0].c .. t[2][0].c;
+            (t[1][0], t[2][0]) t[1][0].c -- t[2][0].c;
 
     arrow.rt (0.5, btex $\neg Q(f(a))$ etex)
-            (t[1][0], t[2][1]) t[1][0].c .. t[2][1].c;
+            (t[1][0], t[2][1]) t[1][0].c -- t[2][1].c;
 %%% }}}
 endfig;
 
