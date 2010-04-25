@@ -9,24 +9,19 @@ verbatimtex
 etex
 
 % settings for some global parameters
-size := 10;
+size := 15;
 
 beginfig(1);
-	u:=1cm;
-	label.bot(btex $v$ etex, (0,0));
-	
-	draw (0,0)..(-1u,1u);
-	label.top(btex $v_1$ etex, (-1u,1u));
-	
-	draw (0,0)..(-0.5u,1u);
-	label.top(btex $v_2$ etex, (-0.5u,1u));
+        with spacing((10,40)) tree.a(2,4);
+        node.a[0][0](btex $v$ etex);
 
-	
-	label.top(btex $\cdots$ etex, (0.25u,1u));
-
-	draw (0,0)..(1u,1u);
-	label.top(btex $v_n$ etex, (1u,1u));
-
+        node.a[1][0](btex $v_1$ etex);
+        node.a[1][1](btex $v_2$ etex);
+        node_hidden.a[1][2](btex $\dots$ etex);
+        node.a[1][3](btex $v_n$ etex);
+        arrow(0.5, "") (a[0][0], a[1][0]) a[0][0].c -- a[1][0].c;
+        arrow(0.5, "") (a[0][0], a[1][1]) a[0][0].c -- a[1][1].c;
+        arrow(0.5, "") (a[0][0], a[1][3]) a[0][0].c -- a[1][3].c;
 endfig;
 
 end.
