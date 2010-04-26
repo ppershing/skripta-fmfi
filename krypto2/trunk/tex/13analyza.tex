@@ -3,11 +3,17 @@
 Vitajte v dnešnej časti telenovely Krypto II. V minulom dieli sme
 hovorili o odolnosti symetrických šifier. Dnešný diel sa pozrie na
 tematiku z opačnej strany -- ukážeme si snáď prvé známe útoky na DES,
-ktoré boli efektívnejšie ako bruteforce útok.
+ktoré boli efektívnejšie ako bruteforce útok. Tieto útoky došli v
+90-tych rokoch, no NSA neskôr priznala, že už v 70-tych rokoch vedela
+o možnosti útokov týmto spôsobom a prebo bola DES šifra navrhnutá tak,
+aby boli dané útoku čo najmenej možné.
 
 Ako už názov napovedá, budeme sa najskôr baviť o lineárnej
 kryptoanalýze. Ešte predtým si ale potrebujeme upresniť šifrový
 algoritmus, na ktorom budeme demonštrovať základné princípy útoku.
+Budeme uvažovať blokovú šifru s rovnakou dĺžkou kľúča ako šifrovaného
+textu, teda funkciu $E:\{0,1\}^n \times \{0,1\}^n \mapsto \{0,1\}^n$.
+
 Väčšina moderných šifier pracuje v krokoch -- kolách.
 My si jednotlivé kolá rozdelíme na 3 fázy. Prvou bude pričítanie
 kľúča.
@@ -77,24 +83,56 @@ $in_{a_1},in_{a_2},\dots,in_{a_n}$ a výstupné bity
 $out_{k,b_1},out_{k,b_2},\dots,out_{k,b_m}$ kde $k$ je šifrovací kľúč.
 
 Očakávaná pravdepodobnosť, že pre náhodný kľúč $k$ bude platiť
-\begin{equation*}
+\begin{equation}
+    \label{eq:lin_approx}
     \bigoplus_{i=1}^n in_{a_i} == \bigoplus_{j=1}^{m} out_{k,b_j}
-\end{equation*}
+\end{equation}
 je v prípade náhodného orákula presne $1/2$. Cieľom kryptoanalýzy bude
 preto nájsť takú lineárnu kombináciu vstupov, pre ktorú je táto
-pravdepodobnosť čím viac rôzna od $1/2$. V prvom rade, mali by sme si
+pravdepodobnosť čím viac rôzna od $1/2$. Vtedy totiž túto nerovnováhu
+dokážeme využiť v náš prospech a dokážeme efektívnejsie lámať kľúče.
+Na tento útok bude stačiť, ak si nazhromaždíme dostatočne veľký počet
+dvojíc $\langle plaintext, ciphertext \rangle$.
+
+V prvom rade, mali by sme si
 uvedomiť, že nám stačí skúmať S-boxy. Ostatné časti šifry sú totiž
 lineárne. Ďalej urobíme predpoklad, že dané S-boxy sú nezávislé. To
 nám umožní sústrediť sa na analýzu jedného S-boxu a následne budeme
 vedieť skladať pravdepodobnosti pre celú šifru.
 
 Základom analýzy jedného S-boxu je takzvaná lineárna aproximačná
-tabuľka.
+tabuľka, v ktorej si zobrazíme lineárne závislosti medzi vstupmi a
+výstupmi S-boxu.
+Hodnota políčka tejto tabuľky bude označovať balanciu,
+koľko sme mali v rovnici \ref{eq:lin_approx} zhôd verzus počet nezhôd.
+Matematicky by sa to dalo zapísať ako
+\begin{equation*}
+    table[lin_{in},lin_{out}] = \sum_{x \in \{0,1\}^n} (-1)^{
+        x \cdot lin_{in} \oplus S(x) \cdot lin_{out}}
+\end{equation*}
+kde operáciou $\cdot$ sme označili skalárny súčin keď sa pozrieme na
+argumenty ako na postupnosti bitov.
 
-\todo{pokec o tabulky}
+Lineárna aproximačná tabuľka pre náš S-box je zobrazená v tabuľke
+\ref{tab:lat}.
+
 \input{tex/kryptoanalyza/lat.tex}
+Za povšimnutia stoja niektoré vlastnosti tabuľky. Prvou je
+$table[0,0] = 16$, čo je očakávané. Ak totiž nevyberieme žiadne bity,
+tak očakávame $0==0$ so 100\%-tnou pravdepodobnosťou.
+Naopak, všetky políčka $[x,y]$, pre ktoré $table[x,y]=0$ budú
+nepoužiteľné v našej analýze. Vtedy je totiž počet zhôd a nezhôd
+rovnaký a teda pravdepodobnosť je presne $1/2$. Našim cieľom bude
+pozbierať vhodné lineárne aproximácie pre S-boxy a poskladať z nich
+lineárnu kombináciu pre celú šifru okrem posledného kola.
+Túto kombináciu následne použijeme na štatistické testovanie
+vhodnosti jednotlivých šifrovacích kľúčov posledného kola. Presnejšie
+si to popíšeme v príkladoch, teraz sa budeme venovať leme na skladanie
+pravdepodobností.
 
-\todo{vseobecny pokec o lamani, defaily v prvom priklade}
+\todo{suvis tabulky s pravdepodobnostami}
+\begin{lema}[Piling-up lema]
+\end{lema}
 
 
 \begin{priklad}
