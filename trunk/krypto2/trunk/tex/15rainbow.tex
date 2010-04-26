@@ -1,1 +1,15 @@
 \section{Dúhové tabuľky}
+
+Hacker Ivan Ivanovič získal prístup k zašifrovanému heslu šéfa FBI. Bolo uskladnené v tvare
+$H(password)$, kde $H$ je nejaká hašovacia funkcia. Rozhodol sa ho prelomiť.
+Postupne vygeneroval všetky heslá dĺžky 1, potom dĺžky 2, \dots. Keďže heslo malo $n$ bitov, tak
+mu to zabralo nakoniec čas $O(2^n)$, čo bol asi rok, takže mu to nakoniec bolo nanič, lebo heslo bolo dávno iné.
+ Ale pamäť neuvyužil skoro vôbec. Sklamaný svojím neúspechom sa rozhodol, že si 
+predráta zahašovanú hodnotu hesla, pre všetky rôzne heslá do dĺžky $n$. Dúfal, že
+keď následne uloví nejaké heslo, tak ho rozšifruje skoro hneď.  Tak sa pustil do rátania.
+Čoskoro zaplnil prvý disk svojou tabuľkou. Tak si kúpil ďalších 10. A potom ďalších 100.
+A takto čoskoro vykúpil disky z celého Ruska, ale stále nemal uložené všetko čo treba.
+Pozorný čitateľ si isto všimol, že keď dostaneme na nejaké heslo na rozbitie, tak čas
+bude $O(1)$, ale pamäť máme $O(2^n)$. Prirodzená otázka znie, že keďže nechcem dopadnúť ako Ivan, tak
+či neexistuje niečo medzi týmito hodnotami (obetujeme trochu času, aby sme mohli zabrať menej pamäte).
+Ukazuje sa, že áno. Ako na to sa dozviete v ďalšom texte.
