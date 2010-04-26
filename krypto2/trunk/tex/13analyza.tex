@@ -1,12 +1,95 @@
 \section{Lineárna a diferenciálna kryptoanalýza}
-\todo{pokec o kryptoanalyze}
 
-\todo{popis sifry}
-\begin{figure}[H]
+Vitajte v dnešnej časti telenovely Krypto II. V minulom dieli sme
+hovorili o odolnosti symetrických šifier. Dnešný diel sa pozrie na
+tematiku z opačnej strany -- ukážeme si snáď prvé známe útoky na DES,
+ktoré boli efektívnejšie ako bruteforce útok.
+
+Ako už názov napovedá, budeme sa najskôr baviť o lineárnej
+kryptoanalýze. Ešte predtým si ale potrebujeme upresniť šifrový
+algoritmus, na ktorom budeme demonštrovať základné princípy útoku.
+Väčšina moderných šifier pracuje v krokoch -- kolách.
+My si jednotlivé kolá rozdelíme na 3 fázy. Prvou bude pričítanie
+kľúča.
+Druhá fáza je takzvaná substitúcia, kedy sa číslo na vstupe substitujuje
+nejakou bijektívnou funkciou na iné číslo.
+Tretia fáza bude ``shuffle'' kedy sa len popermutujú jednotlivé bity.
+Tento princíp si môžeme predstaviť ako plošný obvod -- pričítanie
+kľúča budú realizovať operácie xor po jednotlivých bitoch.
+Substitúcia bude čierna skrinka, nazveme ju S-box. No a permutácia
+bitov bude len poprepájanie jednotlivých vývodov nie priamo, ale nejak
+popermutovane. V naších príkladoch budeme používať šifru, ktorá je
+znázornená na obrázku \ref{fig:cipher}.
+
+\begin{figure}[h]
     \centering
-    \includegraphics{img/13/cipher.1.mps}
+    \includegraphics[scale=0.7]{img/13/cipher.1.mps}
+    \label{fig:cipher}
     \caption{Nákres šifry}
 \end{figure}
+
+Čo sa týka operácie ``shuffle'', je jednoduchá a symetrická, konkrétne
+bity prvého S-boxu pošle na najnižšie bity S-boxov ďalšieho kola,
+bity druhého S-boxu pošle na druhé najnižšie bity S-boxov ďalšieho
+kola atď. Špeciálne v poslednom kole vynechávame shuffle, pretože je
+to zbytočné -- z hľadiska bezpečnosti nič nepridá a šifrovací
+algoritmus je rýchlejší bez tejto operácie. Na definovanie celej šifry
+nám ešte ostáva popísať substitučnú čiernu skrinku.
+S-box (substitučný box) sme si zvolili nasledovne:
+\begin{equation*}
+    Sbox:[0,1,2,\dots,15] \mapsto
+    [10, 5, 0, 13, 14, 11, 4, 6, 9, 2, 12, 3, 7, 1, 8, 15]
+\end{equation*}
+
+\begin{poznamka}
+    Naša šifra je zhodná so šifrou prezentovanou na prednáške až na
+    jeden drobný detail. Rozhodli sme sa číslovať bity na vstupe
+    sprava doľava narozdiel od prednášky. Dôvod je totiž ten, že bity
+    S-boxy sú číslované sprava doľava a pôvodne to spôsobovalo chaos
+    keďže boli číslované opačným smerom ako biry vstupu. Táto
+    transformácia sa ale nezaobišla bez následkov. Aby sme zachovali
+    obrázky (a tiež lineárne kombinácie, ktoré potrebujeme), museli
+    sme zmeniť funkciu Sboxu (vymeniť jej poradie bitov).
+    Pôvodný Sbox z prednášky je
+    \begin{equation*}
+    SboxOrig:[0,1,2,\dots,15] \mapsto
+    [5, 9, 7, 14, 0, 3, 2, 1, 10, 4, 13, 8, 11, 12, 6, 15]
+    \end{equation*}
+\end{poznamka}
+
+Šifra šifruje naraz 16 bitov otvoreného textu a 
+veľkosť kľúča k šifre je $5*16=80\unit{bitov}$.
+Toto sa samo o sebe zdá ako pomerne odolné voči generickému útoku
+hrubou silou. Na druhej strane, počet rôznych otvorených textov je iba
+65536, čo nie je zrovna veľmi bezpečné. Šifra by sa ale ľahko dala
+rozšíriť o ďalšie bity veľmi podobnou konštrukciou.
+
+Keď sme si už predstavili šifru, na ktorú budeme v zvyšku tejto
+kapitoly útočiť, bolo by načase predstaviť si aj našich bojovníkov,
+ktorí majú ambíciu jej to rozdať.
+
+\subsection{Lineárna kryptoanalýza}
+
+V lineárnej kryptoanalýze sa budeme snažiť nájsť štatistické odchýlky
+správania sa šifry, v tomto prípade pri lineárnej kombinácii vstupov a
+výstupov. Presnejšie povedané, uvažujme vstupné bity
+$in_{a_1},in_{a_2},\dots,in_{a_n}$ a výstupné bity
+$out_{k,b_1},out_{k,b_2},\dots,out_{k,b_m}$ kde $k$ je šifrovací kľúč.
+
+Očakávaná pravdepodobnosť, že pre náhodný kľúč $k$ bude platiť
+\begin{equation*}
+    \bigoplus_{i=1}^n in_{a_i} == \bigoplus_{j=1}^{m} out_{k,b_j}
+\end{equation*}
+je v prípade náhodného orákula presne $1/2$. Cieľom kryptoanalýzy bude
+preto nájsť takú lineárnu kombináciu vstupov, pre ktorú je táto
+pravdepodobnosť čím viac rôzna od $1/2$. V prvom rade, mali by sme si
+uvedomiť, že nám stačí skúmať S-boxy. Ostatné časti šifry sú totiž
+lineárne. Ďalej urobíme predpoklad, že dané S-boxy sú nezávislé. To
+nám umožní sústrediť sa na analýzu jedného S-boxu a následne budeme
+vedieť skladať pravdepodobnosti pre celú šifru.
+
+Základom analýzy jedného S-boxu je takzvaná lineárna aproximačná
+tabuľka.
 
 \todo{pokec o tabulky}
 \input{tex/kryptoanalyza/lat.tex}
@@ -52,7 +135,7 @@
 
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.8]{img/13/lin.1.mps}
+        \includegraphics[scale=0.7]{img/13/lin.1.mps}
         \caption{Lineárna aproximácia v príklade \ref{prikl:lin1}}
     \end{figure}
 
@@ -84,7 +167,7 @@
     ciest) kombináciu.
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.8]{img/13/lin.2.mps}
+        \includegraphics[scale=0.7]{img/13/lin.2.mps}
         \caption{Lineárna aproximácia v príklade \ref{prikl:lin2}}
     \end{figure}
     Opäť si najskôr teoreticky analyzujeme situáciu. Tak ako v
@@ -159,7 +242,7 @@ ich budeme môcť beztrestne násobiť.
     \label{prikl:dif1}
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.8]{img/13/dif.1.mps}
+        \includegraphics[scale=0.7]{img/13/dif.1.mps}
         \caption{Diferenciálna analýza v príklade \ref{prikl:dif1}}
     \end{figure}
     \input{tex/kryptoanalyza/danalyza1.tex}
@@ -170,7 +253,7 @@ ich budeme môcť beztrestne násobiť.
     \label{prikl:dif2}
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.8]{img/13/dif.2.mps}
+        \includegraphics[scale=0.7]{img/13/dif.2.mps}
         \caption{Diferenciálna analýza v príklade \ref{prikl:dif2}}
     \end{figure}
     \input{tex/kryptoanalyza/danalyza2.tex}
@@ -181,7 +264,7 @@ ich budeme môcť beztrestne násobiť.
     \label{prikl:dif3}
     \begin{figure}[H]
         \centering
-        \includegraphics[scale=0.8]{img/13/dif.3.mps}
+        \includegraphics[scale=0.7]{img/13/dif.3.mps}
         \caption{Diferenciálna analýza v príklade \ref{prikl:dif3}}
     \end{figure}
     \input{tex/kryptoanalyza/danalyza3.tex}
