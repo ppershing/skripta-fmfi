@@ -1,5 +1,9 @@
 \section{Dúhové tabuľky}
 
+\begin{poznamka}
+Túto kapitolu písal USAmec z vlastných znalostí a zdrojov nezávisle od prednášky docenta Staneka.
+\end{poznamka}
+
 Hacker Ivan Ivanovič získal prístup k zašifrovanému heslu šéfa FBI.
 Bolo uskladnené v tvare $H(password)$, kde $H$ je nejaká hašovacia funkcia.
 Ako správny hacker sa ho rozhodol prelomiť a získať tak prístup
@@ -29,7 +33,7 @@ Prirodzená otázka znie (ak nechceme dopadnúť ako Ivan),
 Ukazuje sa, že áno. Ako na to sa dozviete v ďalšom texte.
 
 \subsection{Jednoduchý time-memory tradeoff}
-
+Toto riešenie navrhol pôvodne Martin Hellman.
 Uvažujme dvojice $(x_i, H(x_i))$.
 Našim cieľom je ich uskladniť tak, aby sme si nemuseli
 pamätať každú hodnotu z každej dvojice. 
@@ -156,6 +160,80 @@ $Pr[uspech] = \Theta\left(\frac{mt}{N}\right)$.
 Preto keď použijeme $m=t=\sqrt[3]{N}$ dostaneme približne 
 $Pr[uspech] = \frac{0.8}{\sqrt[3]{N}}$.
 Toto je v bežnej situácii dosť nanič, ale zase nič nám nebráni
-použiť viacero tabuliek (napr. $n = \sqrt[3]{N}$).
+použiť viacero tabuliek (napr. $n = \sqrt[3]{N}$). 
+Samozrejme každá tabuľka potrebuje inú redukčnú funkciu, aby boli rozdielné.
 Potom bude šanca na úspech približne
 $1 - (1 - \frac{1}{\sqrt[3]{N}})^{\sqrt[3]{N}} = 1-e^{-1} \doteq 70\%$.
+
+Čo sa týka zložitosti, tak pamäťové nároky sú $O(mn) = O(\sqrt[3]{N^2})$. Časové nároky
+sú $O(tn) = O(\sqrt[3](N^2)$, keďže v každej tabuľke musíme spraviť $t$ krokov (tuná trochu zavádzame,
+keďže ignorujeme čas strávený na falošných poplachoch). Nie je to síce ideálny tradeoff, kde
+súčin časovej a pamäťovej zložitosti bude $O(N)$, ale stále lepšie ako triviálne extrémne riešenia.
+
+\subsection{Tabuľky s vyznačnými bodmi}
+Pôvodná Hellmanova verzia má jednu dosť podstatnú chybu. Môžu nám vzniknúť napríklad takéto reťaze:
+$x_0, x_1, x_2, \dots, x_t$ a $x_1, x_2, \dots, x_t, x_{t+1}$ (posunuté o 1 prvok). 
+Takýmto neserióznym situáciam by sme chceli zabrániť. Preto našu reťaz neukončíme po $t$ prvkoch, ale
+vtedy, keď prvok bude niečím vyznačný (napr. bude končiť na $k$ núl). Toto vylepšenie navrhol Rivest.
+Vďaka tomu, keď 2 reťaze skolidujú, tak kolíziu vieme dosť jasne detekovať, keďže skončia v rovnakom bode.
+Navyše očakávaná dĺzka reťaze je $2^k$, takže pokiaľ sme napr. po $10 \cdot 2^k$ krokoch nenašli koniec, tak si môžeme
+povedať, že reťaz zahodíme, lebo sa môžno cyklíme.
+Ďalšou výhodou je, že pri výhľadavaní nemusíme pozerať do uloženej tabuľky v každom kroku, ale iba keď nájdeme význačný bod.
+
+Na druhej strane analýza tohoto typu tabuliek je veľmi nepríjemná vec, preto sa jej nebudeme venovať. 
+Asymdotické výsledky sú ale rovnaké ako pri predchadzajúcom type tabuliek ($\sqrt[3]{N}$ tabuliek s $\sqrt[3]{N}$
+reťazami a význačný bod by mal mať $lg \sqrt[3]{N}$ núl na konci).
+
+\subsection{Rainbow tabuľky}
+V tomto type tabuliek opäť chceme rozumne riešiť kolízie. Skúsime to spraviť tak,
+aby keď 2 reťaze skolidovali, tak skolidujú na rovnakom mieste (vďaka tomu nebudú posunuté
+a môžeme detekovať kolíziu). 
+Zoberme si sadu redukčných funkcií $R_1, R_2, \dots, R_{t-1}$ A v každom kroku odvodenia reťaze použijeme inú.
+Dostaneme nasledovnú reťaz:
+\begin{equation*}
+x_{10} \toa{H} H(x_{10}) \toa{R_1} x_{11} \toa{H} H(x_{11}) \toa{R_2} x_{12} \toa{H} \dots \toa{R_{t-1}} x_{1, t-1} \toa{H} H(x_{1,t-1})
+\end{equation*}
+
+Takýchto reťazí si opäť zostavíme $m$. Ako bude prebiehať vyhľadávanie? 
+Už nemôžeme použiť bežnú iteráciu typu $R(H(x))$, keďže máme rôzne redukčné funkcie.
+Takže budeme postupne tipovať, že v ktorom stĺpci je naše heslo. Najprv si tipneme $t-1$
+stĺpec. V tomto prípade stačí pozrieť rovno na konce a ak tam máme vstup, tak sa pozrieme odzačiatku.
+Pokiaľ si chceme tipnúť, že naše heslo v stĺpci $j$, tak najprv spravíme $H(R_{t-1}(H(R_{t-2}(\dots H(R_j(x))\dots))))$, aby
+sme sa dostali na koniec reťaze a potom ak sme našli zhodu, tak môžeme hľadať odzačiatku.
+Pokiaľ zanedbáme čas prehľadávania tabuľky koncov, tak máme celkový čas hľadania $O(t^2)$. 
+
+To na prvý pohľad vyzerá celkom zle, ale ukáže sa, že si môžeme dovoliť oveľa viac riadkov v tabuľke.
+
+Poďme sa pozrieť na vlastnosti tejto tabuľky. Keďže používame každú chvíľu inú redukčnú funkciu, tak sa nám
+reťaze určite nezacyklia. Navyše pokiaľ nastane kolízia typu $x_{i,a} = x_{j,b}$, kde $a\neq b$, tak sa nám
+reťaze zhodli iba na tomto mieste a pokračujú nezávisle. Samozrejme pokiaľ nastane prípad $x_{i,a} = x_{j,a}$, tak
+zbytok reťazí máme zhodný. Ale tento prípad vieme ľahko detekovať podľa toho, že koncové body sú zhodné.
+
+A teraz zostáva ešte úloha spočítať šancu na úspech.
+Pozrieme sa na to z trochu iného uhla pohľadu. Pre každý stĺpec si spočítame koľko tam máme rôznych bodov.
+A potom len spočítame šancu, že zadaná hodnota sa nachádza aspoň v 1 stĺpci. Toto si môžeme dovoliť, keďže
+kolízie v rôznych stĺpcoch nás vôbec netrápia. 
+Označme $m_i$ ako počet rôznych hodnôt v $i$ stĺpci.
+Čo sa týka hodnôt $x_{10}, x_{20}, \dots, x_{m0}$, tak tam vieme vygenerovať $m$ rôznych hodnôt.
+Takže $m_0 = m$. Ešte určíme $m_{i+1}$ z $m_i$.
+
+Máme $N$ priehradok, $m_i$ náhodných hodov. Počet zaplnených priehradok bude $m_{i+1}$. 
+Dá sa ukázať, že:
+\begin{equation*}
+m_{i+1} = N \left ( 1 - (1 - \frac{1}{N})^{m_i} \right ) \approx N e^{-\frac{m_i}{N}}
+\end{equation*}
+
+A teraz ešte spočítať šancu na to, že vstup sa nachádza aspoň v 1 stĺpci:
+\begin{equation*}
+Pr[uspech] = 1 - \prod_0^{t-1} \left (1 - \frac{m_i}{N} \right)
+\end{equation*}
+
+Po analýze tohoto výsledku zistíme, že si môžeme dovoliť
+$t \approx \sqrt[3]{N}$ a $m \approx \sqrt[3]{N^2}$. A šanca na úspech bude približne $70\%$.
+Tu nám tiež samozrejme nikto nebráni použiť viac tabuliek na zvýšenie šancí.
+
+\begin{poznamka}
+Spomínali sme tu možnosť zahadzovať reťaze pokiaľ skolidujú. Bohužiaľ ukazuje sa, že
+generovanie takejto tabuľky by bolo príliš náročné. Uvedomme si, že by nám zostalo
+$m_{t-1}$ reťazí (toľko máme presne rôznych koncov). A toto bude dosť žalostne málo.
+\end{poznamka}
