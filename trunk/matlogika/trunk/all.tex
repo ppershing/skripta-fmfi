@@ -49,82 +49,136 @@ C   &=& C_1' \lor C_2'	\\
 $$
 $C_1$ a $C_2$ sú pravdivé a klauzula $C$ je logickým dôsledkom $C_1$ a $C_2$.
 
-\paragraph{Poznámka} Ak $C_1$, $C_2$ sú jednotkové klauzuly, potom musia tvoriť
-kontrárnu dvojicu $C_1: L$, $C_2: \neg L$ a rezolventou je prázdna klauzula --
-$C: \square$
+\stopFIXME
 
+\begin{poznamka}
+    Nech $C_1$, $C_2$ sú jednotkové klauzuly. Ak $C_1,C_2$ majú
+    rezolventu, potom musia tvoriť kontrárnu dvojicu $L, \neg L$
+    a rezolventou je prázdna klauzula $C \equiv \eps$.
+\end{poznamka}
 
-\paragraph{Definícia} Nech $S$ je množina klauzúl.
-\emph{Rezolvenčným odvodením} $C$ z množiny $S$, nazývame konečnú
-postupnosť klauzúl $C_1, C_2, \ldots, C_n (C)$ takú, že pre každé $i=1..n$ platí
-$C_i$ je buď z $S$ alebo $C_i$ je rezolventa niektorých klauzúl $C_j$, $C_k$,
-$j, k < i$.
+Našim cieľom bude zovše obecniť predchádzajúcu poznámku do
+nasledujúceho variantu: Nech $S$ je množina klauzúl. Potom $S$ je
+nesplniteľná práve vtedy keď z nej vieme nejakým spôsobom pomocou
+rezolvent získať prázdnu klauzulu.
+Teraz si to formálne rozpíšeme.
 
-\par Ak $C$ je prázdna klauzula, takémuto odvodeniu hovoríme \emph{zamietniue
-odvodenia} a množina klauzúl $S$ nie je splniteľná.
+\begin{definicia}[Rezolvenčné pravidlo]
+    Nech $S$ je množina klauzúl.
+    Rezolvenčným odvodením klauzuly $C$ z množiny klauzúl $S$
+    nazývame konečnú postupnosť klauzúl $C_1, C_2, \ldots, C_n \equiv C$ takú,
+    že pre každé $i \in \{1,2,\dots,n\}$ platí:
+    $C_i$ je buď z $S$ alebo $C_i$ je rezolventa niektorých klauzúl
+    $C_j, C_k$ pre $j, k < i$.
 
-\paragraph{Poznámka} Ak mám množinu $S$ a klauzulu $C$, hovoríme, že $C$ môžem
-získať z $S$, ak existuje odvodenie $S, C_1, \ldots C_m (C)$.
+    Ak $C$ je prázdna klauzula, potom takémuto odvodeniu hovoríme 
+    zamietnutie odvodenia alebo tiež dôkaz nesplniteľnosti $S$.
+\end{definicia}
 
-\paragraph{Príklad} 
-\begin{enumerate} 
-	\item $ \neg P \lor Q $
-	\item $ \neg Q $
-	\item $ P $
-	\item $ \neg P $
-\end{enumerate}
-Použitím 3 a 4 dostávame prázdnu klauzulu, teda množina klauzúl $S$ nie je
-splniteľná.
+\begin{definicia}
+    Majme množinu klauzúl $S$ a klauzulu $C$.
+    Hovoríme, že $C$ môžeme získať z $S$,
+    ak existuje (rezolvenčné) odvodenie $C_1, \dots, C_m$ z množiny $S$ také, že
+    $C_m \equiv C$.
+\end{definicia}
 
-\paragraph{Príklad}
-S:
-\begin{enumerate}
-	\item $ P \lor Q $
-	\item $ \neg P \lor Q $
-	\item $ P \lor \neg Q $
-	\item $ \neg P \lor \neg Q $
-	\item $ Q $
-	\item $ P $
-\end{enumerate}
+\begin{priklad}
+    Uvažujme množinu klauzúl $S=\{\neg P \lor Q,\ \neg Q,\ P\}$.
+    Uvažujme nasledujúce rezolvenčné odvodenie
+    \begin{itemize} 
+	\item[1:] $ \neg P \lor Q $  -- z $S$
+	\item[2:] $ \neg Q $ -- z $S$
+	\item[3:] $ \neg P $ -- pravidlo rezolventy na 1,2
+	\item[4:] $ P $ -- z $S$.
+        \item[5:] $\eps$ -- pravidlo rezolventy na 3,4
+    \end{itemize}
+    Dostali sme prázdnu klauzulu a teda množina klauzúl $S$ nie je
+    splniteľná.
+\end{priklad}
 
-%\begin{verbatim}
-%                     0
-%		    / \
-%		   /   \
-%		  Q  neg Q
-%		 /\       /\
-%		/  \     /  \
-%	       /    \   /    \
-%	      P  neg P P    neg P
-%	      (listy su jednotlive vyroky)
-%\end{verbatim}
-%
-\begin{figure}[h]
-	%\centering\includegraphics{img/xx/2009-04-02.1.mps}
-        \fixme{tunak ma byt nejaky obrazok}
-	\caption{Výrazy}
-\end{figure}
+\begin{priklad}
+    \label{prikl:rezolvencne_odvodenie}
+    Nech $S=\{P \lor Q,\ \neg P \lor Q,\ 
+            P \lor \neg Q,\ \neg P \lor \neg Q\}$.
+    Opäť vieme dokázať nesplniteľnosť množiny klauzúl $S$:
 
-$\neg A \lor V, A \lor C \provable B \lor C$
-$$A \implies B, \neg A \implies C \provable \neg B \implies C$$
-\begin{enumerate}
-	\item $$\provable (A \implies B) \implies (\neg B \implies \neg A)$$
-	\item $$ \provable (\neg B  \implies \neg A) \implies ((\neg A \implies C)
-	\implies (\neg B \implies C))$$
-\end{enumerate}
-$$ A \implies B, \neg C \implies C \provable \neg V \implies C$$
-$$ A, A\implies B \provable B$$
+    \begin{itemize}
+	\item[1:] $P \lor Q$ -- z $S$
+	\item[2:] $\neg P \lor Q$ -- z $S$
+	\item[3:] $P \lor \neg Q$ -- z $S$
+	\item[4:] $\neg P \lor \neg Q$ -- z $S$
+	\item[5:] $Q$ -- rezolventa 1,2
+	\item[6:] $\neg Q$ -- rezolventa 3,4
+        \item[7:] $\eps$ -- rezolventa 5,6
+    \end{itemize}
 
-$$A \lor \square, \neg A \lor B \provable$$
-Pravidlo \emph{modus ponens} a pravidlo rezolventy sú ekvivalentné.
+    K tomuto odvodeniu môžeme navyše nakresliť aj jeho strom (obr.
+    \ref{fig:strom_odvodenia}.
 
-\paragraph{Príklad}
-$$C_1: P(x) \lor Q(x)$$
-$$C_2: \neg P(f(x)) \lor R(x)$$
+    \begin{figure}[h]
+	\centering\includegraphics{img/11/odvodenie.1.mps}
+	\caption{Strom rezolvenčného odvodenia z príkladu 
+            \ref{prikl:rezolvencne_odvodenie}}
+        \label{fig:strom_odvodenia}
+    \end{figure}
+\end{priklad}
 
+\begin{poznamka}
+    Pravidlom rezolventy smerujeme k tomu, že sa snažíme získať
+    prázdnu klauzulu. Dôležité je, že je to silné pravidlo,
+    t.j., že ak je množina $S$ nie je splniteľná, vieme prázdnu
+    klauzulu naozaj odvodiť iba pomocou tohoto pravidla. Na začiatok
+    začneme ekvivalenciou pravidla rezolventy a pravidla modus ponens.
+\end{poznamka}
 
+\begin{lema}
+    Pravidlo modus ponens je ekvivalentné s pravidlom rezolventy.
+\end{lema}
+
+\begin{dokaz}
+    Najskôr si ukážeme, že pomocou MP vieme dokázať pravidlo rezolventy:
+    Chceme ukázať $A \implies B, \neg A \implies C \provable \neg B
+    \implies C$.
+    Postupujme nasledovne:
+    \begin{itemize}
+        \item[1.] $\provable (A \implies B) \implies (\neg B \implies
+                \neg A)$ -- tvrdenie z výrokovej logiky
+        \item[2.] $A \implies B \provable A \implies B$
+        \item[3.] $A \implies B \provable \neg B \implies \neg A$ --
+                MP 1,2
+        \item[4.] $\provable (\neg B \implies A) \implies
+            ((\neg A \implies C) \implies (\neg B \implies C))$ --
+                tvrdenie z výrokovej logiky
+        \item[5.] $A \implies B \provable
+            (\neg A \implies C) \implies (\neg B \implies C)$ -- MP
+            3,4
+        \item[6.] $\neg A \implies C \implies \neg A \implies C$
+        \item[7.] $A \implies B, \neg A \implies C \provable
+            \neg B \implies C$ -- MP 5,6
+    \end{itemize}
+    Poznamenajme pritom, že obidve využité tvrdenia výrokovej logiky
+    sa dajú dokázať z axióm iba pomocou pravidla modus ponens.
+
+    Naopak, uvažujme, že chceme pravidlo MP simulovať pomocou pravidla
+    rezolventy. Teda chceme ukázať $A, A\implies B \provable B$.
+    Použijeme nasledujúci trik.
+    \begin{itemize}
+        \item[1.] $A \equiv A \lor \eps$
+        \item[2.] $A \implies B \equiv \neg A \lor B$
+        \item[3.] $A \lor \eps, \neg A \lor B \provable \eps \lor B$
+            -- použime pravidlo rezolventy na ekvivalentné zápisy
+            formúl $A, A\implies B$
+        \item[4.] $B \equiv \eps \lor B$ a teda
+        \item[5.] $A,A\implies B \provable B$.
+    \end{itemize}
+\end{dokaz}
 
 \section{Substitúcia a unifikácia}
+\startFIXME
+
+Vo výrokovej logike nebol problém hľadať kontrárne dvojice.
+Zložitejšia situácia ale nastáva v prípade predikátovej logiky
+prvého rádu. A práve tomu sa budeme venovať v tejto kapitole.
 
 $$
 \begin{array}{ll}
