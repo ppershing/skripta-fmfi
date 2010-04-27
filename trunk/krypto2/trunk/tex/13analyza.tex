@@ -76,9 +76,11 @@ ktorí majú ambíciu jej to rozdať.
 
 \subsection{Lineárna kryptoanalýza}
 
-V lineárnej kryptoanalýze sa budeme snažiť nájsť štatistické odchýlky
-správania sa šifry, v tomto prípade pri lineárnej kombinácii vstupov a
-výstupov. Presnejšie povedané, uvažujme vstupné bity
+Všeobecne pri kryptoanalýze sa budeme snažiť nájsť štatistické odchýlky
+správania sa šifry od náhodnej funkcie.
+V tomto konkrétnom prípade to budú štatistické odchýlky
+pre lineárnej kombináciu vstupov a výstupov.
+Presnejšie povedané, uvažujme vstupné bity
 $in_{a_1},in_{a_2},\dots,in_{a_n}$ a výstupné bity
 $out_{k,b_1},out_{k,b_2},\dots,out_{k,b_m}$ kde $k$ je šifrovací kľúč.
 
@@ -110,8 +112,11 @@ Matematicky by sa to dalo zapísať ako
     table[lin_{in},lin_{out}] = \sum_{x \in \{0,1\}^n} (-1)^{
         x \cdot lin_{in} \oplus S(x) \cdot lin_{out}}
 \end{equation*}
-kde operáciou $\cdot$ sme označili skalárny súčin keď sa pozrieme na
-argumenty ako na postupnosti bitov.
+kde pod $lin_{in},lin_{out}$ sme označili vektory znamenajúce
+prítomnosť jednotlivých vstupov/výstupov v lineárnej kombinácii
+a operáciou $\cdot$ sme označili skalárny súčin keď sa pozrieme na
+argumenty ako na postupnosti bitov. Poznamenajme, že tento skalárny
+súčin je tiež v poli $Z_2$.
 
 Lineárna aproximačná tabuľka pre náš S-box je zobrazená v tabuľke
 \ref{tab:lat}.
