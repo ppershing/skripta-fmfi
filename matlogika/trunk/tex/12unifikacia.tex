@@ -1,0 +1,231 @@
+\section{Substitúcia a unifikácia}
+\startFIXME
+
+Vo výrokovej logike nebol problém hľadať kontrárne dvojice.
+Zložitejšia situácia ale nastáva v prípade predikátovej logiky
+prvého rádu. A práve tomu sa budeme venovať v tejto kapitole.
+
+$$
+\begin{array}{ll}
+C_1  = P(x) \lor Q(x),& C_2 = \neg P(f(x)) \lor R(x)\\
+C_1:  x \cdot f(a),&  C_2 \cdot : a\\
+C_1':  P(f(x)) \lor Q(f(a)),& C_2':\neg P(f(a)) \lor R(a)\\
+\end{array}
+$$
+
+Teraz môžeme definovať rezolventu; bude to $Q(f(a)) \lor R(a)$. Mohli by sme
+postupovať aj takto:
+
+$$
+\begin{array}{ll}
+C_1: & x: f(x) \\
+C_1^*: & P(f(x)) \lor Q(f(x)) \\
+C_2: & \neg P(f(x)) \lor R(x)\\
+ & P(f(x))\\
+ & \neg P(f(x)))\\
+C_3: & Q(f(x)) \neg R(x)\\
+\end{array}
+$$
+
+Formulu $C_3$ nazývam rezolventou pre klauzulu $C_1$ a $C_2$. Zmyslom
+substitúcie a unifikácie je umožniť operácie, na ktoré sme boli zvyknutí vo
+výrokovej logike -- tu bude situácia technicky náročnejšia.
+
+\paragraph{Definícia} Pod \emph{substitúciou} rozumieme konečnú množinu tvaru:
+$\{t_1/v_1, \ldots, t_n/v_n\}$, kde každé $v_i$ je premenná a všetky $v_i,
+i=1..n$ sú navzájom rôzne. Každý term $t_i, i=1..n$ je rôzny od $v_i, i=1..n$.
+ak $t_1, \ldots, t_n$ sú základné inštancie (teda termy bez premenných), tak
+substitúciu nazývame \emph{základná substitúcia}. Ak množina je prázdna, tak
+substitúciu budeme označovať $\varepsilon$. Na označovanie substitúcií budeme
+používať grécke písmená.
+
+\paragraph{Príklad} $\{ f(z)/x; y/z\}$, $\{ a/x, g(y)/y, f(g(y))/z\}$.
+
+\paragraph{Definícia} Nech $\theta$ je ľubovoľná substitúcia a $E$ je nejaký
+výraz. Nech $\theta = \{ t_1/v_1, \ldots t_n/v_n\}$. Potom $E\theta$ označuje
+výraz, ktorý vznikne tak, že súčasne vo výraze $E$ nahradíme premennú $v_i$
+termom $t_i, i=1..n$.
+
+\paragraph{Príklad} Majme $\theta=\{a/x, f(b)/y, c/z\}$, $E = P(x, y, z)$. Potom
+$E\theta = P(P(a, f(b), c)$.
+
+\par Ďalšia operácia, ktorú budeme potrebovať, je operácia skladania
+substitúcií.
+
+\paragraph{Definícia} Majme $\theta = \{t_1/x_1, \ldots t_n/x_n\}$ a $\lambda =
+\{ u_1/y_1, \ldots u_m/y_m \}$. Zloženie (kompozícia) substitúcií, označíme
+$\theta \circ \lambda$:
+$$\{t_1 \lambda/x_1, \ldots t_n \lambda/x_n, u_1/y_1m \ldots u_m/y_m \}$$ také,
+že vyradí všetky členy $t_i\lambda/x_i$, pre ktoré platí, že $t_i \lambda = x_1$,
+všetky $u_i/y_1$, pre ktoré $y_i \in \{x_1, x_2, \ldots x_n\}$.
+
+\paragraph{Príklad} 
+$$\theta \{t_1/x_1, t_2/x_2\} = \{ f(y)/x, z/y\}$$
+$$\lambda = \{ u_1/y_1, u_2/y_2, u_3/y_3\} = \{ a/x, b/y, y/z\}$$
+
+$$ \theta \circ \lambda = \{ t_1 \lambda / x_1, t_2\lambda/x_2, u_1/y_1,
+u_2/y_2, u_3/y_3\} = \\ 
+\{ f(b)x, y/y, a/x, b/y, y/z\}$$
+$$ \theta \circ \lambda = \{ f(b)/x, y/z\}$$
+
+\paragraph{Úloha} Dokážte, že skladanie substitúcií je asociatávna operácia.
+Tiež dokážte, že $\varepsilon \circ \theta = \theta \circ \varepsilon$.
+\par Zoberieme $\theta, \lambda, \mu$, potom platí $ \theta \circ(\lambda \circ
+\mu) = (\theta \circ \lambda) \circ \mu$.
+
+\paragraph{Definícia} Substitúciu $\theta$ nazveme \emph{unifikátorom} pre
+množinu výrazov $E_1, E_2, \ldots, E_n$, ak platí $E_1\theta = E_2\theta =
+\cdots = E_n\theta$. Množinu nazveme \emph{unifikovateľnou}, ak pre ňu existuje
+unifikátor.
+
+\paragraph{Príklad} Majme množinu $\{ P(a,y), P(x,f(b)\}$, $\theta = \{a/x,
+f(b)/y\}$ -- unifikátor pre túto množinu. 
+
+\paragraph{Definícia} Majme množinu výrazov $\{ E_1, E_2, \ldots, E_n\}$,
+$\theta$ je ľubovoľný unifikátor pre množinu uvedených výrazov. Unifikátor
+$\sigma$ pre množinu výrazov $\{E_1, E_2, \ldots, E_n\}$ nazveme
+\emph{najvšeobecnejší unifikátor}, ak pre $\theta$ platí $\theta = \sigma \circ
+\lambda$, kde $\lambda$ je vhodná substitúcia.
+
+\par Uvažujme výrazy $P(a)$, $P(x)$ Pozerajme sa na ne ako na konečnú
+postupnosť symbolov -- odlišujú sa akurát v treťom symbole. Toto je prvá
+diferencia. Vo všeobecnosti môže byť týchto výrazov $n$.
+
+\paragraph{Definácia} Nech $W$ je neprázdna množina výrazov. \emph{Diferenčnú
+množinu}
+pre množinu výrazov $W$ dostávame tak, že na prvú pozíciu (zľava) vypíšem všetky
+tie výrazy, ktoré sa líšia. 
+
+\paragraph{Príklad} Majme množinu $W = \{P(x,\underline{f(y,z)},
+P(x,\underline{a}), P(x,\underline{g(h(k(x)))}) \}$
+Diferenčnou množinou bude $D= \{ f(y,z), a, f(h(k(x)))\}$. 
+
+\subsection{Unifikačný algoritmus}
+
+Kroky:
+\begin{enumerate}
+	\item $k=0, W_0 = W, \sigma_0 = \Sigma$
+	\item Ak $W_k$ je jednotková klauzula, algortimus zakončí svoju činnosť
+	$\sigma_k$ je najvšeobecnejší unifikátor. V opačnom prípade nájdeme $D_k$
+	(diferenčnú množinu) pre $W_k$.
+	\item Ak existujú také premenné $v_k$ a $t_k$ v $D_k$, že $v_k$ je
+	premenná, ktorá sa nevyskytuje v $t_k$, tak prejdeme ku kroku 4. V
+	opačnom prípade algoritmus zakončuje svoji činnosť. Množina $W$ nie je
+	unifikovateľná.
+	\item Nech $W_{k+1} = W_k \{t_k/v_k\}$, $\sigma_{k+1} = \sigma_k \circ
+	\{t_k/v_k\}$ ($W_{k+1} = W_k \sigma_{k+1}$)
+
+	\item Vypíšeme hodnoty pre $k+1$ a prejdeme ku kroku 2.
+\end{enumerate}
+
+
+Ak je množina unifikovateľná, vždy existuje najvšeobecnejší unifikátor.
+
+\paragraph{Príklad}
+Nájdite najvšeobecnejší unifikátor pre množinu: $$W=\{ P(a,x,f(g(y))),
+P(z,f(z),f(u)), \}$$
+
+\begin{enumerate}
+	\item $\sigma_0 = \varepsilon, W_0 = W$. Pretože $W_0$ nie je jednotková
+	klauzula, $\sigma_0$ nie je najvšeobecnejší unifikátor.
+	\item Musíme zostrojiť diferenčnú množinu $D_0 = \{a, z\}$. Existuje
+	premenná $v_0 = z$, ktorá nie je obsiahnutá v terme $t$. $t_0 = a$.
+	\item $$\sigma_1 = \sigma_0 \circ \{ t_0/v_0 \} = \epsilon \{a/z\} =
+	\{a/z\}$$ $W_1 = W_0\{ t_0/v_0 \} = \{P(a,x,f(g(y)),
+	P(z,f(z),f(u))\}\{a/z\} =  \\
+	= \{P(a,x,f(g(y))), P(a, f(a), f(u))\}$
+
+	\item $W_1$ nie je jednotková klauzula. Zostrojíme diferenčnú množinu
+	$D_1$ pre $W_1$. $D_1 = \{x_1, f(a)\}$
+
+	\item Z $D_1$ dostávame $v_1 = x$ a $t_1 = f(a)$.
+	\item $$\sigma_2 = \sigma_1 \circ \{ t_1/v_1\}= \{a/z\} \circ \{ f(a)/x\}
+	= \{a/z, f(a)/z \}$$
+	$ W_2 = W_1 \{t_1/v_1\} = \{P(a,x,f(g(y))), P(a,f(a),f(u)\} \{ f(a)/x
+	\} = \\
+	= \{ P(a,f(a), f(g(y))), P(a,f(a), f(u), \}$. $W_2$ opäť nie je
+	jednotková klauzula -- musíme vytvoriť diferenčnú množinu.
+
+	\item $W_2$ nie je jednotková klauzula -- vytvárame diferenčnú množinu
+	$D_2$ pre $W_2$. $D_2 = \{ g(y), u \}$. $v_2 = u$, $t_2 = g(y)$.
+
+	\item $$\sigma_3 = \sigma_2 \circ \{t_2/v_2\} = \{a/z, f(a)/x\} \circ
+	\{g(y)/u\}$$.
+	$W_3 = W_2 \{ t_x/v_2\} = \{ P(a,f(a), f(g(y))), P(a,f(a),
+	f(u))\}\{g(y)/u\} = \\
+	= \{ P(a, f(a), f(g(y))), f(a, f(a), f(g(y)) \}$.
+	$W_3$ je jednotková klauzula.
+	$$ \sigma_3 = \{ a/z, f(a)/x, g(y)/u\}$$. $\sigma_3$ je najvšeobecnejší
+	unifikátor pre množinu klauzúl $W$.
+\end{enumerate}
+
+\paragraph{Príklad}
+
+\paragraph{Príklad} Zistitte, či je unifikovateľná množina $W=\{Q(f(x),g(x)),
+Q(y,y)\}..$
+
+
+	$$y\circ \sigma_0 \varepsilon \qquad \mbox{a} \qquad W_0 = W$$
+$W_0$ nie je jednotková klauzula. Nájdeme diferenčnú množinu $D_0$ pre $W_0$:
+$$D_0 = \{ f(a)/y \}$$
+$$v_0, t_0 = f(a)$$
+
+Nech $\sigma_1 = \sigma_0 \circ \{ t_1/\sigma_0\} = \varepsilon \circ  \{
+f(a)y\}$
+
+$W_1 = W_0 \{ t_0/\sigma_0\} = \{ Q(f(x),g(x)), Q(f(a),f(a))\}$
+
+$W_1$ nie je jednotková klauzula, zostrojujeme $D_1$, diferenčnú množinu
+pre $W_1$.
+
+
+$$D_1 = \{ g(x), f(a)\}$$ nemáme prvok, ktorý by bol premennou. Algoritmus
+ukončí svoju činnosť a $W$ nie je unifikovateľná.
+
+\par Pri zisťovaní unifikovateľnosti vždy vytvárame množiny $W$ tvaru:
+$$W\sigma_0, W\sigma_1, \ldots, W\sigma_k, \ldots$$, pričom v každom kroku sa
+zmenší počet premenných o 1. Po konečnom počte krokov sa musí zastaviť.
+
+
+\paragraph{Veta (unifikačná):} Ak $W$ je konečná neprádzna unifikačná množina
+výrazov, tak unifikačný algoritmus vždy zakončuje svoju činnosť na druhom kroku
+a posledné $\sigma_k$ bude najvšeobecnejší unifikátor.
+
+\paragraph{Dôkaz:} $W$ je unifikovateľná množina, $\Theta$ označuje jej
+ľubovoľný unifikátor. Indukciou ukážeme, že pre každé $k$ existuje taká
+substitácia $\lambda_k$, že $\Theta = \sigma_k \circ \lambda_k$
+
+\subparagraph{Báza indukcie} Nech $k = 0$. Máme ukázať, že $\Theta = \sigma_0
+\circ \lambda_0$. V tomto prípade $\sigma_0 = \varepsilon$ a $\lambda_0 =
+\Theta$.
+
+\subparagraph{Indukčný krok} Indukčný predpoklad: $\Theta = \sigma_k \circ
+\lambda_k$ $(0 \leq k \leq n)$. $W_n = W\sigma_n$. Ak $W_n$ je jednotková
+klauzula, tak algoritmus zakončuje svoju činnosť na druhom kroku a $\sigma_n$ je
+najvšeobecnejší unifikátor pre $W$. 
+\par Nech $W_n$ nie je jednotková množina. Potom hľadám diferenčnú množinu $D_n
+$ pre množinu $W_n$. Keď $D_n$ je diferenčná množina pre $W_n$, tak vo $W_n$
+musí existovať premenná -- označme ju $v_n$. Ďalej nech $t_n$ je ľubovoľný výraz
+z $D_n$ rôzny od $v_n$.
+
+$$\Theta = \sigma_n \circ \lambda_n$$ 
+$\Theta$ je unifikátor. Diferenčnú množinu $D_n$ unifikuje substitúcia
+$\lambda_n$. $v_n \lambda_n = t_n \lambda_n$.
+
+\par Ak by premenná $v_n$ bola obsiahnutá v $t_n$. Predpokladali sme, že $v_n$ a
+$t_n$ sú rôzne a teda $v_n$ sa nemôže vyskytovať v $t_n$.
+
+\par Prejdeme ku kroku 4 -- množine $W\sigma_{n+1}$ (množina $W_{n+1}$). Platí,
+že $\sigma_{n+1} = \sigma-n \circ \{ t_n/v_n \}$. $\Theta = \sigma_{n+1} \circ
+\lambda-{n+1}$.
+
+\par Nech $\lambda_{n+1} = \lambda_n - \{t_n\lambda_n/v_n\}$. 
+
+$$t_n\lambda_{n+1} = t_n (\lambda_n - \{t_n\lambda_n / v_n\}) -  t_n\lambda_n$$
+$$\{ t_n / v_n\} \circ \lambda_{n-1} = \{t_n \lambda_{n+1}\}/v_n \cup
+\lambda_{n+1} = \{t_n\lambda_n /v_n\} \cup \lambda_{n+1} = \{t_n\lambda_n/v_n\}
+\cup \{ \lambda_n - \{ t_n\lambda_n/v_n\} = ??? \{ t_n/v_n \} \circ
+\lambda_{n+1} = \lambda_n$$
+
+$$\Theta = \sigma_n \circ \lambda_n$$.
+
