@@ -1,0 +1,175 @@
+\section{Metóda rezolvent pre výrokovú logiku}
+\startFIXME
+
+\paragraph{Definícia} Majme $C_1$ a $C_2$ -- ľubovoľné klauzuly, $L_1$ je
+literál z $C_1$ a je kontrárny literálu $L_2$, ktorý sa vyskytuje v $C_2$. Ak z
+$C_1$ vynecháme $L_1$ a z $C_2$ vynecháme $L_2$. Ak z tých častí, ktoré
+zostávajú, zostrojíme disjunkciu $C_1 \lor C_2$, táto sa nazýva
+\emph{rezolventa} $C_1$ a $C_2$.
+
+\paragraph{Príklad}
+$$
+\begin{array}{ll}
+C_1: P \lor R, & C_2: \neg P \lor Q \\
+P \in C_1 & C_1': R \\
+P \in C_2 & C_2': Q \\
+\end{array}
+$$
+
+\paragraph{Príklad}
+$$C_1: \neg P \lor Q\lor R$$
+$$C_2: \neg Q \lor S$$
+Kontrárna dvojica $\neg Q$, $Q$; rezolventa je teda:
+$$C_1, C_2: \neg P \lor R \lor S$$
+
+\paragraph{Príklad}
+
+$$C_1: \neg P \lor Q$$
+$$C_2: \neg P \lor R$$
+
+\paragraph{Veta} Nech $C_1$ a $C_2$ sú klauzuly, $C$ je rezolventa klauzúl
+$C_1$, $C_2$. Potom $C$ je logickým dôsledkom klauzúl $C_1$ a $C_2$
+$$A_1, A_2, \ldots, A_n, B$$
+$$
+\begin{array}{ll}
+A_1 \land A_2 \land \ldots \land A_n \implies B & \equiv 1	\\
+\provable A_1 \land A_2 \land \ldots \land A_n \implies B & \\
+A_1 \land A_2 \land \ldots \land A_n \land \neg B & \equiv 0	\\
+\end{array}
+$$
+\paragraph{Dôkaz} $C_1$, $C_2$, $C$
+
+
+$$
+\begin{array}{lll}
+C_1 &= &L \lor C_1' \\
+C_2 &=& \neg L \lor C_2' \\
+C   &=& C_1' \lor C_2'	\\
+\end{array}
+$$
+$C_1$ a $C_2$ sú pravdivé a klauzula $C$ je logickým dôsledkom $C_1$ a $C_2$.
+
+\stopFIXME
+
+\begin{poznamka}
+    Nech $C_1$, $C_2$ sú jednotkové klauzuly. Ak $C_1,C_2$ majú
+    rezolventu, potom musia tvoriť kontrárnu dvojicu $L, \neg L$
+    a rezolventou je prázdna klauzula $C \equiv \eps$.
+\end{poznamka}
+
+Našim cieľom bude zovše obecniť predchádzajúcu poznámku do
+nasledujúceho variantu: Nech $S$ je množina klauzúl. Potom $S$ je
+nesplniteľná práve vtedy keď z nej vieme nejakým spôsobom pomocou
+rezolvent získať prázdnu klauzulu.
+Teraz si to formálne rozpíšeme.
+
+\begin{definicia}[Rezolvenčné pravidlo]
+    Nech $S$ je množina klauzúl.
+    Rezolvenčným odvodením klauzuly $C$ z množiny klauzúl $S$
+    nazývame konečnú postupnosť klauzúl $C_1, C_2, \ldots, C_n \equiv C$ takú,
+    že pre každé $i \in \{1,2,\dots,n\}$ platí:
+    $C_i$ je buď z $S$ alebo $C_i$ je rezolventa niektorých klauzúl
+    $C_j, C_k$ pre $j, k < i$.
+
+    Ak $C$ je prázdna klauzula, potom takémuto odvodeniu hovoríme 
+    zamietnutie odvodenia alebo tiež dôkaz nesplniteľnosti $S$.
+\end{definicia}
+
+\begin{definicia}
+    Majme množinu klauzúl $S$ a klauzulu $C$.
+    Hovoríme, že $C$ môžeme získať z $S$,
+    ak existuje (rezolvenčné) odvodenie $C_1, \dots, C_m$ z množiny $S$ také, že
+    $C_m \equiv C$.
+\end{definicia}
+
+\begin{priklad}
+    Uvažujme množinu klauzúl $S=\{\neg P \lor Q,\ \neg Q,\ P\}$.
+    Uvažujme nasledujúce rezolvenčné odvodenie
+    \begin{itemize} 
+	\item[1:] $ \neg P \lor Q $  -- z $S$
+	\item[2:] $ \neg Q $ -- z $S$
+	\item[3:] $ \neg P $ -- pravidlo rezolventy na 1,2
+	\item[4:] $ P $ -- z $S$.
+        \item[5:] $\eps$ -- pravidlo rezolventy na 3,4
+    \end{itemize}
+    Dostali sme prázdnu klauzulu a teda množina klauzúl $S$ nie je
+    splniteľná.
+\end{priklad}
+
+\begin{priklad}
+    \label{prikl:rezolvencne_odvodenie}
+    Nech $S=\{P \lor Q,\ \neg P \lor Q,\ 
+            P \lor \neg Q,\ \neg P \lor \neg Q\}$.
+    Opäť vieme dokázať nesplniteľnosť množiny klauzúl $S$:
+
+    \begin{itemize}
+	\item[1:] $P \lor Q$ -- z $S$
+	\item[2:] $\neg P \lor Q$ -- z $S$
+	\item[3:] $P \lor \neg Q$ -- z $S$
+	\item[4:] $\neg P \lor \neg Q$ -- z $S$
+	\item[5:] $Q$ -- rezolventa 1,2
+	\item[6:] $\neg Q$ -- rezolventa 3,4
+        \item[7:] $\eps$ -- rezolventa 5,6
+    \end{itemize}
+
+    K tomuto odvodeniu môžeme navyše nakresliť aj jeho strom (obr.
+    \ref{fig:strom_odvodenia}.
+
+    \begin{figure}[h]
+	\centering\includegraphics{img/11/odvodenie.1.mps}
+	\caption{Strom rezolvenčného odvodenia z príkladu 
+            \ref{prikl:rezolvencne_odvodenie}}
+        \label{fig:strom_odvodenia}
+    \end{figure}
+\end{priklad}
+
+\begin{poznamka}
+    Pravidlom rezolventy smerujeme k tomu, že sa snažíme získať
+    prázdnu klauzulu. Dôležité je, že je to silné pravidlo,
+    t.j., že ak je množina $S$ nie je splniteľná, vieme prázdnu
+    klauzulu naozaj odvodiť iba pomocou tohoto pravidla. Na začiatok
+    začneme ekvivalenciou pravidla rezolventy a pravidla modus ponens.
+\end{poznamka}
+
+\begin{lema}
+    Pravidlo modus ponens je ekvivalentné s pravidlom rezolventy.
+\end{lema}
+
+\begin{dokaz}
+    Najskôr si ukážeme, že pomocou MP vieme dokázať pravidlo rezolventy:
+    Chceme ukázať $A \implies B, \neg A \implies C \provable \neg B
+    \implies C$.
+    Postupujme nasledovne:
+    \begin{itemize}
+        \item[1.] $\provable (A \implies B) \implies (\neg B \implies
+                \neg A)$ -- tvrdenie z výrokovej logiky
+        \item[2.] $A \implies B \provable A \implies B$
+        \item[3.] $A \implies B \provable \neg B \implies \neg A$ --
+                MP 1,2
+        \item[4.] $\provable (\neg B \implies A) \implies
+            ((\neg A \implies C) \implies (\neg B \implies C))$ --
+                tvrdenie z výrokovej logiky
+        \item[5.] $A \implies B \provable
+            (\neg A \implies C) \implies (\neg B \implies C)$ -- MP
+            3,4
+        \item[6.] $\neg A \implies C \implies \neg A \implies C$
+        \item[7.] $A \implies B, \neg A \implies C \provable
+            \neg B \implies C$ -- MP 5,6
+    \end{itemize}
+    Poznamenajme pritom, že obidve využité tvrdenia výrokovej logiky
+    sa dajú dokázať z axióm iba pomocou pravidla modus ponens.
+
+    Naopak, uvažujme, že chceme pravidlo MP simulovať pomocou pravidla
+    rezolventy. Teda chceme ukázať $A, A\implies B \provable B$.
+    Použijeme nasledujúci trik.
+    \begin{itemize}
+        \item[1.] $A \equiv A \lor \eps$
+        \item[2.] $A \implies B \equiv \neg A \lor B$
+        \item[3.] $A \lor \eps, \neg A \lor B \provable \eps \lor B$
+            -- použime pravidlo rezolventy na ekvivalentné zápisy
+            formúl $A, A\implies B$
+        \item[4.] $B \equiv \eps \lor B$ a teda
+        \item[5.] $A,A\implies B \provable B$.
+    \end{itemize}
+\end{dokaz}
+
