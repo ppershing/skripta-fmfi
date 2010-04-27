@@ -10,6 +10,73 @@ keď následne uloví nejaké heslo, tak ho rozšifruje skoro hneď.  Tak sa pus
 Čoskoro zaplnil prvý disk svojou tabuľkou. Tak si kúpil ďalších 10. A potom ďalších 100.
 A takto čoskoro vykúpil disky z celého Ruska, ale stále nemal uložené všetko čo treba.
 Pozorný čitateľ si isto všimol, že keď dostaneme na nejaké heslo na rozbitie, tak čas
-bude $O(1)$, ale pamäť máme $O(2^n)$. Prirodzená otázka znie, že keďže nechcem dopadnúť ako Ivan, tak
+bude $O(1)$, ale pamäť máme $O(2^n)$. Prirodzená otázka znie, keďže nechceme dopadnúť ako Ivan, tak
 či neexistuje niečo medzi týmito hodnotami (obetujeme trochu času, aby sme mohli zabrať menej pamäte).
 Ukazuje sa, že áno. Ako na to sa dozviete v ďalšom texte.
+
+\subsection{Jednoduchý time-memory tradeoff}
+Máme nejaké dvojice $(x_i, H(x_i))$. Našim cieľom je ich uskladniť tak, aby sme si nemuseli
+pamätať každú hodnotu z každej dvojice. 
+Zatiaľ ale máme len funkciu, čo nám z hodnoty $x$ vyrobí $H(x)$. Chcelo by to ešte funkciu, ktorá
+z hodnoty $H(x)$ vyrobí $y$, ktorú môžeme opäť hašovať. Toto môže byť veľmi jednoduchá funkcia (napríklad keď chceme hesla iba
+z písmen malej abecedy, tak môžeme hash zapísať v sústave so základom 26), ktorá
+zobrazí množinu haší na množinu hesiel (alebo iných pôvodných hodnôt). Označme ju $R$ (ako redukčná funkcia).
+Následne vieme vyrobiť nasledovnú reťaz:
+$$x_{10} \toa{H} H(x_{10}) \toa{R} x_{11} \toa{H} H(x_{11}) \toa{R} \dots \toa{R} x_{1,t-1} \toa{H} H(x_{1,t-1})$$ 
+
+Alebo si ich rovno vyrobme $m$:
+$$\dots$$
+$$x_{m0} \toa{H} H(x_{m0}) \toa{R} x_{m1} \toa{H} H(x_{m1}) \toa{R} \dots \toa{R} x_{m,t-1} \toa{H} H(x_{m,t-1})$$ 
+
+To ako zvoliť vhodné $m, t$ si ukážeme neskôr.
+
+A z každej reťaze si zapamätáme jej začiatok a koniec, teda dvojice:\\ 
+$(x_{10}, H(x_{1,t-1})), (x_{2,0}, H(x_{2,t-1})), \dots, (x_{m,0}, H(x_{m,t-1}))$.
+A následne ich utriedime podľa koncov (aby sme podľa nich vedeli rýchlo nájsť patričný začiatok).
+
+Teraz nám príde otázka: \clqq Nájdi $y$ také, že $H(y)=h$.\crqq. Najprv sa pozrieme, či priamo $h$ je medzi koncami.
+Ak áno, tak zoberieme začiatok $z_0$ a postupne počítame $z_{i+1} = R(H(z_i))$. A pozrieme sa, či hodnota $z_{t-1}$ je vyhovujúca.
+Ak áno, máme výsledok. Ak nie máme falošný poplach.
+Potom $h$ upravíme na $H(R(h))$ a opäť sa pozrieme do tabuľky koncov. A opakujeme ten istý postup akurát sa pozeráme na hodnotu $z_{t-2}$.
+A takto opäť posúvame hodnotu $h$ a skúšame.
+
+Samozrejme môže sa stať, že vôbec vhodnú hodnoty nenájdeme. Predtým než ale spočítame šancu na úspech sa pozrime
+na niektoré vlastnosti takejto tabuľky. To, čo určite môže nastať sú kolízie medzi reťazami. Dokonca aj také tie nepríjené, keď napr:
+$x_{27} = x_{42}$. Tieto ani nevieme detekovať podľa zhodnosti koncov reťazcov. Navyše môže nastať aj situácia kedy sa nám reťaz
+zacyklí. 
+
+Teraz poďme spočítať pravdepodobnosť úspechu. Nech máme $N$ rôznych môžných haší a predpokladajme, že
+funkcia $R(H(\cdot))$ sa správa ako náhodné orákulum. Potom šanca na úspech je:
+$Pr[uspech] = \frac{E}{X}$, kde $E$ je počet všetkých haší čo tabuľka pokrýva. Zjavne $E \leq mt$.
+Ale tento odhad je dosť voľný a pri rozumne veľkých hodnotách je $E$ o dosť menšie ako $mt$. 
+Poďme spraviť nejaký odhad zdola. Spočítame očakávanú hodnotu $E$.
+$$E = \displaystyle\sum_{i=1}^m \displaystyle\sum_{j=0}^{t-1} [x_{ij} ~\text{je nové}] = 
+\displaystyle\sum_{i=1}^m \displaystyle\sum_{j=0}^{t-1} Pr[x_{ij} ~\text{je nové}] $$
+
+Spočítať presne šancu nato, že $x_{ij}$ je nový prvok (teda predtým sme ho nemali) je dosť netriviálne,
+už len preto, lebo to napríklad zavisí aj od toho, či $x_{i,j-1}$ je nové. Ešte si ako $X_{ij}$ označíme $x_{ij} ~\text{je nové}$.
+Preto spravíme dolný odhad:
+$Pr[X_{ij}] \geq Pr[X_{i0}\land X_{i1} \land \dots \land X_{ij}]$.
+Na tento výraz poštveme podmienenú pravdepodobnosť:
+$$Pr[X_{i0} \land X_{i1} \land \dots \land X_{ij}] = 
+Pr[X_{ij} | X_{i0} \land X_{i1} \land \dots \land X_{i,j-1} ]
+Pr[X_{i0} \land X_{i1} \land \dots \land X_{i,j-1} ]$$
+A toto zopakujeme patričný počet krát a máme:
+$$Pr[X_{i0} \land X_{i1} \land \dots \land X_{ij}] = Pr[X_{i0}] Pr[X_{i1} | X_{i0}] Pr[X_{i2} | X_{i0} \land X_{i1}] \dots
+Pr[X_{ij} | X_{i0} \land X_{i1} \land \dots \land X_{i,j-1}]$$
+
+A teraz môžeme povedať, že $Pr[X_{ij} | X_{i0} \land X_{i1} \land \dots \land X_{i,j-1}] = \frac{N - (i-1)t - j}{N}$
+(teraz už fakt vyberáme náhodnú hodnotu z $N - (i-1)t - j$ voľných). 
+
+A toto keďže celé dáme dokopy tak máme:
+$$Pr[uspech] \geq \frac{\displaystyle\sum_{i=1}^m \displaystyle\sum_{j=0}^{t-1} \frac{N - (i-1)t}{N} \frac{N - (i-1)t - 1}{N} \dots \frac{N - (i-1)t - j}{N}}{N}$$
+
+Aby sme tam nemali taký odpudivý výraz, tak si to ešte trochu odhadneme:
+$$Pr[uspech] \geq \frac{\displaystyle\sum_{i=1}^m \displaystyle\sum_{j=0}^{t-1} \left ( \frac{N - it}{N} \right )^{j+1}}{N}$$
+
+Dá sa ukázať, že keď pokiaľ tlačíme $mt^2$ nad $N$, tak už veľa nezískame (väčšina sčítancov bude veľmi malých).
+Naopak pokiaľ $mt^2 \ll N$, tak zase sa dá ukázať, že každy sčítanec je dosť blízko $1$ a teda $Pr[uspech] = \Theta\left(\frac{mt}{N}\right)$.
+
+Preto keď použijeme $m=t=\sqrt[3]{N}$ dostaneme približne $Pr[uspech] = \frac{0.8}{\sqrt[3]{N}}$. Toto je v bežnej situácii
+dosť nanič, ale zase nič nám nebráni použiť viacero tabuliek (napr. $n = \sqrt[3]{N}$). Potom bude šanca na úspech približne
+$1 - (1 - \frac{1}{\sqrt[3]{N}})^{\sqrt[3]{N}} = 1-e^{-1} \doteq 70\%$.
