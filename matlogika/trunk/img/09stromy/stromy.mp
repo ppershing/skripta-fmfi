@@ -218,7 +218,7 @@ beginfig(41);
     endfor;
 
     for j=0 upto (2**4)-1:
-        node_hidden.t[4][j]("--.");
+        node_hidden.t[4][j]("...");
     endfor;
 
     % level 0->1
