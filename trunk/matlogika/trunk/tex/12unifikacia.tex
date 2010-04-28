@@ -34,50 +34,105 @@ rezolventy.
     Na označovanie substitúcií budeme používať grécke písmená.
     Špeciálne, prázdnu substitúciu označíme ako $\eps$.
 \end{poznamka}
-\startFIXME
 
-\paragraph{Príklad} $\{ f(z)/x; y/z\}$, $\{ a/x, g(y)/y, f(g(y))/z\}$.
+\begin{priklad}
+    Jedna substitúcia môže byť napr.
+    $\alpha = \{ f(z)/x,\ y/z\}$, teda $x$ nahrádzame za $f(z)$ a
+    $z$ za $y$.
+    Ďalšia môže byť $\beta = \{ a/x,\ g(y)/y,\ f(g(y))/z\}$.
+\end{priklad}
 
-\paragraph{Definícia} Nech $\theta$ je ľubovoľná substitúcia a $E$ je nejaký
-výraz. Nech $\theta = \{ t_1/v_1, \ldots t_n/v_n\}$. Potom $E\theta$ označuje
-výraz, ktorý vznikne tak, že súčasne vo výraze $E$ nahradíme premennú $v_i$
-termom $t_i, i=1..n$.
+\begin{definicia}
+    Nech $\theta$ je ľubovoľná substitúcia a $E$ je nejaký výraz.
+    Nech $\theta = \{ t_1/v_1, \dots, t_n/v_n\}$.
+    Potom $E\theta$ označuje výraz, ktorý vznikne tak,
+    že súčasne vo výraze $E$ nahradíme každý výskyt premenej $v_i$ termom $t_i$
+    pre $i \in \{1,\dots,n\}$.
+\end{definicia}
 
-\paragraph{Príklad} Majme $\theta=\{a/x, f(b)/y, c/z\}$, $E = P(x, y, z)$. Potom
-$E\theta = P(P(a, f(b), c)$.
+\begin{priklad}
+    Majme substitúciu $\theta=\{a/x,\ f(b)/y,\ c/z\}$
+    a výraz $E = P(x, y, z)$.
+    Potom $E\theta = P(a, f(b), c)$.
+\end{priklad}
 
-\par Ďalšia operácia, ktorú budeme potrebovať, je operácia skladania
+\medskip
+\noindent
+Ďalšia operácia, ktorú budeme potrebovať, je operácia skladania
 substitúcií.
 
-\paragraph{Definícia} Majme $\theta = \{t_1/x_1, \ldots t_n/x_n\}$ a $\lambda =
-\{ u_1/y_1, \ldots u_m/y_m \}$. Zloženie (kompozícia) substitúcií, označíme
-$\theta \circ \lambda$:
-$$\{t_1 \lambda/x_1, \ldots t_n \lambda/x_n, u_1/y_1m \ldots u_m/y_m \}$$ také,
-že vyradí všetky členy $t_i\lambda/x_i$, pre ktoré platí, že $t_i \lambda = x_1$,
-všetky $u_i/y_1$, pre ktoré $y_i \in \{x_1, x_2, \ldots x_n\}$.
+\begin{definicia}[kompozícia substitúcii]
+    Majme substitúciu $\theta = \{t_1/x_1, \ldots t_n/x_n\}$ a
+    $\lambda = \{ u_1/y_1, \ldots u_m/y_m \}$.
+    Zloženie (kompozícia) $\theta \circ \lambda$ substitúcií
+    $\theta,\lambda$ je definovaná ako množina
+    \begin{equation*}
+        \{t_1 \lambda/x_1, \dots, t_n \lambda/x_n, u_1/y_1m \dots u_m/y_m \}
+    \end{equation*}
+    z ktorej navyše vyradíme vyradíme všetky členy $t_i\lambda/x_i$,
+    pre ktoré platí, že $t_i \lambda = x_i$ (aby sme nesubstituovali
+    identititami)
+    a tiež vyradíme všetky $u_i/y_i$,
+    pre ktoré $y_i \in \{x_1, x_2, \dots, x_n\}$ (lebo by sme mali
+    predefinovanie správania sa substitúcie na $x_i$).
+\end{definicia}
 
-\paragraph{Príklad} 
-$$\theta \{t_1/x_1, t_2/x_2\} = \{ f(y)/x, z/y\}$$
-$$\lambda = \{ u_1/y_1, u_2/y_2, u_3/y_3\} = \{ a/x, b/y, y/z\}$$
+\begin{poznamka}
+    Kompozícia $\theta \circ \lambda$ sa správa rovnako ako postupné
+    aplikovanie $\theta, \lambda$. Čiže
+    $E(\theta \circ \lambda) = (E\theta)\lambda$.
+\end{poznamka}
 
-$$ \theta \circ \lambda = \{ t_1 \lambda / x_1, t_2\lambda/x_2, u_1/y_1,
-u_2/y_2, u_3/y_3\} = \\ 
-\{ f(b)x, y/y, a/x, b/y, y/z\}$$
-$$ \theta \circ \lambda = \{ f(b)/x, y/z\}$$
+\begin{priklad}
+    Majme substitúcie
+    \begin{align*}
+        \theta = \{t_1/x_1,\ t_2/x_2\} = \{ f(y)/x,\ z/y\} \\
+        \lambda = \{u_1/y_1,\ u_2/y_2,\ u_3/y_3\} = \{ a/x,\ b/y,\ y/z\}
+    \end{align*}
+    Potom
+    \begin{equation*}
+    \begin{split}
+        \theta \circ \lambda &= 
+            \{ t_1 \lambda / x_1,\ t_2\lambda/x_2,\
+            u_1/y_1,\ u_2/y_2,\ u_3/y_3\} - \{\dots\} \\ 
+        &= \{f(b)/x,\ y/y,\ a/x,\ b/y,\ y/z\} - \{y/y,\ a/x,\ b/y\} \\
+        &= \{f(b)/x,\ y/z\}
+    \end{split}
+    \end{equation*}
+\end{priklad}
 
-\paragraph{Úloha} Dokážte, že skladanie substitúcií je asociatávna operácia.
-Tiež dokážte, že $\varepsilon \circ \theta = \theta \circ \varepsilon$.
-\par Zoberieme $\theta, \lambda, \mu$, potom platí $ \theta \circ(\lambda \circ
-\mu) = (\theta \circ \lambda) \circ \mu$.
+\begin{poznamka}
+    Skladanie substitúcií je asociatávna operácia, teda ak zoberieme 
+    $\theta, \lambda, \mu$, potom platí 
+    $\theta \circ(\lambda \circ \mu) = (\theta \circ \lambda) \circ \mu$.
 
-\paragraph{Definícia} Substitúciu $\theta$ nazveme \emph{unifikátorom} pre
-množinu výrazov $E_1, E_2, \ldots, E_n$, ak platí $E_1\theta = E_2\theta =
-\cdots = E_n\theta$. Množinu nazveme \emph{unifikovateľnou}, ak pre ňu existuje
-unifikátor.
+    Tiež platí, že $\varepsilon \circ \theta = \theta = 
+            \theta \circ \varepsilon$.
+    To znamená, že množina substitúcii s operáciou skladanie je
+    pologrupa (monoid) s jednotkou.
+\end{poznamka}
 
-\paragraph{Príklad} Majme množinu $\{ P(a,y), P(x,f(b)\}$, $\theta = \{a/x,
-f(b)/y\}$ -- unifikátor pre túto množinu. 
+\begin{definicia}[unifikátor]
+    Substitúciu $\theta$ nazveme unifikátorom pre
+    množinu výrazov $E_1, E_2, \dots, E_n$,
+    ak platí $E_1\theta = E_2\theta = \cdots = E_n\theta$.
+    Množinu nazveme unifikovateľnou, ak pre ňu existuje
+    unifikátor, ktorý je zjednocuje.
+\end{definicia}
 
+\begin{priklad}
+    Majme množinu $\{P(a,y),\ P(x,f(b)\}$.
+    Potom jeden z možných unifikátorov je napríklad
+    $\theta = \{a/x,\ f(b)/y\}$.
+\end{priklad}
+
+\begin{poznamka}
+    Nie každá množina má unifikátor. Naopak, množina môže mať aj
+    viacej unifikátorov. Vtedy má medzi nimi význačné miesto takzvaný
+    najvšeobecnejší unifikátor.
+\end{poznamka}
+
+\startFIXME
 \paragraph{Definícia} Majme množinu výrazov $\{ E_1, E_2, \ldots, E_n\}$,
 $\theta$ je ľubovoľný unifikátor pre množinu uvedených výrazov. Unifikátor
 $\sigma$ pre množinu výrazov $\{E_1, E_2, \ldots, E_n\}$ nazveme
