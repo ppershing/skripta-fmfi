@@ -1,6 +1,7 @@
 \section{Herbrandova veta}
 
 \begin{lema}[Dirichletov princíp]
+%%% {{{
     Nech $X,Y$ sú konečné množiny. Ak platí
     $|X| > |Y|$, potom pre každé zobrazenie
     $F:X \mapsto Y$ platí
@@ -16,16 +17,20 @@
             \textit{množina }\{ x\in X: f(x)=y \}
             \textit{ je nekonečná}
     \end{equation*}
+%%% }}}    
 \end{lema}
 \begin{dokaz}
+%%% {{{
     Dôkaz sa robí sporom. V prvom prípade dostaneme, že ak tvrdenie
     neplatí, $f$ by mala byť injektívna, čo je ale spor s
     mohutnosťami. V druhom prípade $X$ vieme rozložiť na niekoľko
     tried ekvivalencie podľa hodnoty $f(x)$ a nutne aspoň jedna z nich
     musí byť nekonečná.
+%%% }}}
 \end{dokaz}
 
 \begin{definicia}[usporiadanie stromu]
+%%% {{{
     Náš sémantický strom budeme chápať ako usporiadanú dvojicu 
     $(T,\le)$ kde $T$ je množina vrcholov a $\le$ je relácia,
     ktorá čiastočne usporadúva $T$.
@@ -40,6 +45,7 @@
 
     Ak máme prvky $u$ a $v$, hovoríme, že prvok $v$ nasleduje
     bezprostredne po prvku $u$, ak neexistuje $z$ také, že $u < z < v$.
+%%% }}}
 \end{definicia}
 
 \begin{lema}[K\"onig] 
@@ -49,6 +55,7 @@
 \end{lema}
 
 \begin{dokaz} 
+%%% {{{
     Uvažujme strom $(T_1,\leq)$ a vrchol $v \in T$.
     Označme množinu tých vrcholov, ktoré ležia pod $v$, teda
     $A_v = \{ u \in T | v <u \}$.
@@ -75,6 +82,7 @@
     \dots
     Viem teda zostrojiť nekonečnú postupnosť nasledovníkov koreňa a
     teda v strome existuje nekonečne dlhá cesta z koreňa.
+%%% }}}    
 \end{dokaz}
 
 Po krátkej príprave sa môžeme pustiť do hlavnej časti, ktorá nás
@@ -89,6 +97,7 @@ variantoch.
 \end{veta}
 
 \begin{dokaz}
+%%% {{{
     \noindent
     \begin{itemize}
     \item[$\Rightarrow:$] Predpokladajme, že množina klauzúl $S$
@@ -116,6 +125,7 @@ variantoch.
         Nuž ale potom evidentne musí byť $S$ odmietnutá v každej
         interpretácii a teda nie je splniteľná.
     \end{itemize}
+%%% }}}
 \end{dokaz}
 
 \begin{veta}[Herbrandova 2]
@@ -125,6 +135,7 @@ variantoch.
 \end{veta}
 
 \begin{dokaz}
+%%% {{{
     \noindent
     \begin{itemize}
     \item[$\Rightarrow:$] Predpokladajme, že množina klauzúl $S$
@@ -145,6 +156,7 @@ variantoch.
         Interpretácia $I$ obsahuje $I'$, teda keď $I'$ odmieta $S'$,
         potom $I$ odmieta $S$ a teda $S$ je nesplniteľná.
     \end{itemize}
+%%% }}}
 \end{dokaz}
 
 \begin{priklad}
@@ -166,6 +178,7 @@ variantoch.
 \end{priklad}
 
 \begin{priklad}
+%%% {{{
     Uvažujme množinu klauzúl $S$:
     \begin{equation*}
     \begin{split}
@@ -197,6 +210,7 @@ variantoch.
                 &\big\}
     \end{split}
     \end{equation*}
+%%% }}}
 \end{priklad}
 
 \begin{poznamka}[Gilmore, 1960]
@@ -249,10 +263,16 @@ najsilnejšie takzvané pravidlo rezu, pomocou ktorého sa dajú simulovať
 aj ostatné pravidlá.
 
 \subsubsection{Pravidlo tautológie} 
-Nech $S$ je množina klauzúl
+Nech $S$ je množina klauzúl.
 Vynechajme z $S$ všetky tautologické klauzuly.
 Množina $S'$, ktorá nám zostane, nie je splniteľná práve vtedy,
 keď $S$ nie je splniteľná.
+
+\begin{dokaz}
+    Keď $S$ nie je splniteľné, tak ani $S'$ nie je splniteľné --
+    tautológie sú splnené pre ľubovoľné interpretácie.
+    To, čo zostane, hovorí, či množina je alebo nie je splniteľná.
+\end{dokaz}
 
 \subsubsection{Pravidlo jednoliterálnych klauzúl}
 Nech $S$ je množina klauzúl $L$ je nejaká jednoliterálová klauzula.
@@ -264,86 +284,109 @@ Môžu nastať dva prípady:
         stačí zobrať model, ktorý obsahuje $L$.
 
     \item $S' \neq \emptyset$. Vezmem si literál $\neg L$ a vynechám z
-        množiny $S'$ všetky klauzuly, ktoré obsahujú $\neg L$
+        z každej klauzuly, ktorá obsahujú $\neg L$ literál $\neg L$.%
+        \footnote{Pozor, prechod od $S$ k $S'$ je principiálny iný ako
+            prechod od $S'$ ku $S''$.}
         Dostanem tak množinu klauzúl $S''$.
         Ak sa $S'$ nachádza $\neg L$, po vynechaní
         $\neg L$ dostaneme $\eps$.
-        Tvrdíme teda, že $S''$ nie je splniteľná
+        Tvrdíme, že $S''$ nie je splniteľná
         $\iff$ $S$ nie je splniteľná.
-        \fixme{preco?}
 \end{enumerate}
+
+\begin{dokaz}
+%%% {{{
+    Máme $S'$, ktoré vzniklo vynechaním klauzúl obsahujúcich $L$ z $S$.
+    Ak $S'=\emptyset$, každá klauzula z $S$ obsahuje $L$ 
+    (je tvaru $L \lor \square$).
+    Stačí nám ohodnotenie, kedy $L$ je pravdivé, čo zabezpečí
+    pravdivosť celého výroku. 
+
+    Keď $S'$ nie je prázdna, vytvoríme $S''$.,
+    Ideme ukázať, že $S''$ nie je splniteľná práve vtedy,
+    keď $S$ nie je splniteľná.
+
+    \begin{itemize}
+    \item[$\Rightarrow:$] Budeme dokazovať sporom.
+        Predpokladajme, že $S''$ nie je splniteľná a $S$ je splniteľná.
+        Model existuje model $\mathcal{M}$ a tento musí obsahovať $L$.
+        Lenže tým pádom v množine klauzúl $S''$ sú zbytky po vyhodení
+        $\neg L$ splnené $\then$ $S''$ je splniteľná -- spor.
+
+    \item[$\Leftarrow:$] Opačnú implikáciu budeme opäť dokazovať sporom.
+        Nech $S''$ je splniteľná. Potom existuje model
+        $\mathcal{M}''$ pre $S''$. Ak tomuto modelu pridám $L$, potom
+        $\mathcal{M}'' \cup L$ je model pre $S$, čo je spor.
+    \end{itemize}
+%% }}}    
+\end{dokaz}
+\subsubsection{Pravidlo čistých literálov}
+
+\begin{definicia}[čistý literál]
+    Literál $L$ základnej klauzuly z $S$ budeme nazývať čistým,
+    ak literál $\neg L$ sa nevyskytuje v žiadnej základnej klauzule $S$.
+\end{definicia}
+
+\noindent
+Teraz môžeme sformulovať pravidlo: \\
+Vezmime si z $S$ literál $L$, ktorý je čistý
+a vynechajme z $S$ všetky základné inštancie klauzúl obsahujúce $L$.
+Množinu, ktorá nám ostala označme ako $S'$.
+Tvrdíme, že $S$ nie je splniteľná $\iff$ $S'$ nie je splniteľná.
+
+
+\begin{dokaz}
+%%% {{{
+    $S$ nie je splniteľná $\iff$ $S'$ nie je splniteľná.
+    \begin{itemize}
+    \item[$\Rightarrow:$] Budeme dokazovať sporom.
+        Predpokladajme, že $S$ nie je splniteľná.
+        ale $S'$ splniteľná je. Potom musí mať
+        model $\mathcal{M}'$, ktorý jej vyhovuje a neobsahuje
+        $L, \neg L$.  Keď si vytvorím model $\mathcal{M}=\mathcal{M}'\cup L$,
+        potom $\mathcal{M}$ je modelom pre $S$. Čiže
+        $S$ je splniteľná a to je spor.
+
+    \item[$\Leftarrow:$] Predpokladajme, že
+        $S'$ nie je splniteľná. Platí $S' \subseteq S$ a teda
+        triviálne nie je splniteľná ani $S$.
+    \end{itemize}
+%%% }}}    
+\end{dokaz}
+
+\subsubsection{Pravidlo rezu}
+Predpokladame, že množinu $S$ vieme vyjadriť v tvare
+\begin{equation*}
+    (A_1 \lor L) \land \ldots \land (A_m \lor L) \land 
+    (B_1 \lor \neg L) \land \ldots \land (B_n \lor \neg L) \land R
+\end{equation*}
+pričom $A_i, B_i$ neobsahujú $L$ ani $\neg L$.
+Označme si množiny
+\begin{align*}
+    S_1 &= A_1 \land A_2 \land \ldots \land A_m \land R \\
+    S_2 &= B_1 \land B_2 \land \ldots \land B_n \land R
+\end{align*}
+Tieto množiny budeme tiež nazývať množiny rezu.
+Tvrdíme, že $S$ nie je splniteľná $\iff$ $S_1 \lor S_2$ nie je
+splniteteľná, čo je to isté ako že $S_1,S_2$ nie sú splniteľné.
 
 \startFIXME
 
-\subsubsection{Pravidlo čistých literálov}
-Literál $L$ základnej klauzuly z $S$ budeme nazývať \emph{čistým},
-ak literál $\neg L$ sa nevyskytuje v žiadnej základnej klauzule $S$.
-Vezmem si z $S$ literál $L$, ktorý je čistý, a
-vynecháme z $S$ všetky základne klauzuly obsahujúce $L$.
-$S'$ je množina, ktorá nám zostala.
-$S$ nie je splniteľná $\iff$ $S'$ nie je splniteľná.
+\begin{dokaz}
+    Pravidlo rezu. Mám množinu $S$, popísaným spôsobom som zostrojil
+    $S_1$ a $S_2$. Chceme ukázať, že $S$ nie je splniteľná $\iff$ $S_1 \lor
+    S_2$. Predpokladajme, že $S$ je splniteľná. Potom $S_1 \lor S_2$ je
+    splniteľná, teda aspoň jeden člen disjunkcie je splniteľný. Keď pridám
+    modelu $S_1$ negované $B$, dostávam model pre $S$. Taktiež, keď je
+    splnená $S_2$, má nejaký model $\mathcal{M_2}$. Keď k nemu pridám $B$,
+    dostávam model pre $S$.
 
-\subaubsection{Pravidlo rezu}
-Ak množinu $S$ vieme vyjadriť v tvare
-$(A_1 \lor L) \land \ldots \land (A_m \lor L) \land 
- (B_1 \lor \neg L) \land \ldots \land (B_n \lor \neg L) \land R$,
-pričom v $A_i$, $B_j$, sa $R$, $L$, $\neg L$, $i=1..m$,
-$j=1..n$ už nevyskytujú.
-
-$$S_1 = A_1 \land A_2 \land \ldots \land A_m \land R$$
-$$S_2 = B_1 \land B_2 \land \ldots \land _n \land R$$
-
-$S$ nie je splniteľná $\iff$ $S_1 \lor S_2$ nie je splniteteľná.
-
-\paragraph{Dôkaz}
-\begin{enumerate}
-	\item Keď $S$ nie je splniteľné, tak ani $S_2$ nie je splniteľné --
-	tautológie sú splnené pre ľubovoľné interpretácie. To, čo zostane,
-	hovorí, či množina je alebo nie je splniteľná.
-	\item Zostáva nám $S'$, ktoré vzniklo vynechaním $L$ z $S$. Ak
-	$S'=\emptyset$, každá klauzula z $S$ obsahuje $L$ (je tvaru $L \lor
-	\square$), stačí nám ohodnotenie, kedy $L$ je pravdivé, čo zabezpečí
-	pravdivosť celého výroku. 
-	\par
-	Keď $S'$ nie je prázdna, vytvoríme $S''$ tak,
-	že vynecháme všetky klauzuly obsahujúce $\neg L$. $S'$ nie je splniteľná
-	práve vtedy, keď $S$ nie je splniteľná. Predpokladajme, že $S''$ nie je
-	splniteľná a $S$ je splniteľná. Model $\mathcal{M}$ musí obsahovať $L$ a
-	$S$ platí na $S''$.
-	\todo{???}
-	V konjunktívnej normálnej forme musia byť platné doplnky $\neg L \lor
-	\square$. Potom $S''$ je splniteľná, čo je spor.
-
-	\par Obrátene, nech $S$ nie je splniteľná. Z toho vyplýva, že $S''$ nie
-	je splniteľná. Nech $S''$ je splniteľná. Potom existuje model
-	$\mathcal{M}''$ pre $S''$. Ak tomuto modelu pridám $L$, potom
-	$\mathcal{M}'' \cup L$ je model pre $S$, čo je spor.
-
-	\item Pravidlo čistých literálov -- Máme čistý literál $L$, všetky
-	klauzuly, ktoré ho obsahujú, vyhodíme z $S$ a dostaneme $S'$. $S$ nie je
-	splniteľná práve vtedy, keď $S'$ nie je splniteľná. Predpokladajme, že
-	$S'$ nie je splniteľná, teda pre žiadnu interpretáciu $I'$ neplatí. $S\
-	\subseteq S$. Musí platiť, že $I' \subseteq I$.
-
-	\par Obrátene -- predpokladajme, že $S$ nie je splniteľná. Potom aj $S'$
-	nie je splniteľná. Predpokladajme, že $S'$ je splniteľná. Potom musí mať
-	model $\mathcal{M}'$, ktorý jej vyhovuje. Keď si vytvorím model
-	$\mathcal{M}=\mathcal{M}'\cup L$, potom $\mathcal{M}$ je modelom v $S$.
-
-	\item Pravidlo rezu. Mám množinu $S$, popísaným spôsobom som zostrojil
-	$S_1$ a $S_2$. Chceme ukázať, že $S$ nie je splniteľná $\iff$ $S_1 \lor
-	S_2$. Predpokladajme, že $S$ je splniteľná. Potom $S_1 \lor S_2$ je
-	splniteľná, teda aspoň jeden člen disjunkcie je splniteľný. Keď pridám
-	modelu $S_1$ negované $B$, dostávam model pre $S$. Taktiež, keď je
-	splnená $S_2$, má nejaký model $\mathcal{M_2}$. Keď k nemu pridám $B$,
-	dostávam model pre $S$.
-
-	\par Obrátene, predpokladajme, že $S_1$ alebo $S_2$ nie je splniteľná. Z
-	toho vyplýva, že $S$ nie je splniteľná. Pre spor predpokladajme, že $S$
-	je splniteľná. Pozrime sa, ako vyzerá $S$ -- všetky konjunktívne členy
-	musia byť splnené a teda buď platí $\neg L$ alebo $L$. Vždy dospievam do
-	sporu.
-\end{enumerate}
+    \par Obrátene, predpokladajme, že $S_1$ alebo $S_2$ nie je splniteľná. Z
+    toho vyplýva, že $S$ nie je splniteľná. Pre spor predpokladajme, že $S$
+    je splniteľná. Pozrime sa, ako vyzerá $S$ -- všetky konjunktívne členy
+    musia byť splnené a teda buď platí $\neg L$ alebo $L$. Vždy dospievam do
+    sporu.
+\end{dokaz}
 
 \paragraph{Záver} Najvšeobecnejšie je pravidlo rezu, ktoré pokrýva aj všetky
 ostatné prípady.
