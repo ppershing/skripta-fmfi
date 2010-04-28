@@ -1,173 +1,293 @@
 \section{Herbrandova veta}
+
+\begin{lema}[Dirichletov princíp]
+    Nech $X,Y$ sú konečné množiny. Ak platí
+    $|X| > |Y|$, potom pre každé zobrazenie
+    $F:X \mapsto Y$ platí
+    \begin{equation*}
+        \exists y \in Y:
+            \exists x_1,x_2 \in X:
+                x_1 \ne x_2 \land f(x_1)=y=f(x_2)
+    \end{equation*}
+    Tvrdenie možno rozšíriť aj na prípad, že $X$ je nekonečná.
+    Vtedy platí
+    \begin{equation*}
+        \exists y\in Y:
+            \textit{množina }\{ x\in X: f(x)=y \}
+            \textit{ je nekonečná}
+    \end{equation*}
+\end{lema}
+\begin{dokaz}
+    Dôkaz sa robí sporom. V prvom prípade dostaneme, že ak tvrdenie
+    neplatí, $f$ by mala byť injektívna, čo je ale spor s
+    mohutnosťami. V druhom prípade $X$ vieme rozložiť na niekoľko
+    tried ekvivalencie podľa hodnoty $f(x)$ a nutne aspoň jedna z nich
+    musí byť nekonečná.
+\end{dokaz}
+
+\begin{definicia}[usporiadanie stromu]
+    Náš sémantický strom budeme chápať ako usporiadanú dvojicu 
+    $(T,\le)$ kde $T$ je množina vrcholov a $\le$ je relácia,
+    ktorá čiastočne usporadúva $T$.
+    Požadujeme, aby platilo
+
+    \begin{enumerate}
+	\item $T(u)=\{v\in T, v<u\}$ je dobre usporiadaná 
+            (každá jej neprázdna podmnožina má najmenší prvok).
+
+	\item $T$ má najmenší vrchol (koreň)
+    \end{enumerate}
+
+    Ak máme prvky $u$ a $v$, hovoríme, že prvok $v$ nasleduje
+    bezprostredne po prvku $u$, ak neexistuje $z$ také, že $u < z < v$.
+\end{definicia}
+
+\begin{lema}[K\"onig] 
+    Nech každý vrchol stromu s koreňom má konečné vetvenie
+    (t.j. konečný stupeň vetvenia) a strom $T$ je nekonečný.
+    Potom v ňom existuje nekonečne dlhá vetva.
+\end{lema}
+
+\begin{dokaz} 
+    Uvažujme strom $(T_1,\leq)$ a vrchol $v \in T$.
+    Označme množinu tých vrcholov, ktoré ležia pod $v$, teda
+    $A_v = \{ u \in T | v <u \}$.
+    Nech $v_1, v_2, \dots, v_n$ sú bezprostrední nasledovníci vrchola $v$ (obr.
+    \ref{fig:nasledovnici}). 
+    \begin{figure}[h]
+        \centering\includegraphics{img/10/nasledovnici.1.mps}
+        \caption{Nasledovníci $v$}
+        \label{fig:nasledovnici}
+    \end{figure}
+    Potom platí
+    \begin{equation*}
+        A_v = A_{v_1} \cup A_{v_2} \cup \ldots \cup A_{v_n}
+        \cup \{v_1, v_2, \ldots, v_n\}
+    \end{equation*}
+    Predpokladáme, že $A_v$ je nekonečná.
+    Na základe dirichletovho princípu potom jedna z množín $A_{v_i}$
+    musí byť nekonečná.
+
+    Vybereme si $x_0$ ako koreň (najmenší vrchol stromu $T$). 
+    $A_{x_0} = T \backslash \{x_0\}$ a teda $A_{x_0}$ je nekonečná.
+    Teraz viem ale nájsť pre $x_0$ nasledovníka $x_1$, pre ktorý
+    $A_{x_1}$ je nekonečné. A pre ten vieme nájsť nasledovníka $x_2$
+    \dots
+    Viem teda zostrojiť nekonečnú postupnosť nasledovníkov koreňa a
+    teda v strome existuje nekonečne dlhá cesta z koreňa.
+\end{dokaz}
+
+Po krátkej príprave sa môžeme pustiť do hlavnej časti, ktorá nás
+zaujíma. Budeme si formulovať Herbrandovu vetu, tradične v dvoch
+variantoch.
+
+\begin{veta}[Herbrandova 1]
+    Množina klauzúl $S$ nie je splniteľná práve vtedy,
+    keď ľubovoľnému úplnému sémantickému stromu pre množinu klauzúl
+    $S$ zodpovedá konečný uzavretý sémantický strom,
+    t.j. ľubovoľná vetva úplného stromu vedie do odmietajúceho vrchola.
+\end{veta}
+
+\begin{dokaz}
+    \noindent
+    \begin{itemize}
+    \item[$\Rightarrow:$] Predpokladajme, že množina klauzúl $S$
+        nie je splniteľná (nie je splniťeľná pre ľubovoľnú
+        H-interpretáciu).
+        Nech $T$ je úplný sémantický strom prislúchajúci množine $S$.
+        Označme ako $I_V$ množina všetkých literálov
+        pripísaných vetve $V$ stromu $T$.
+        Potom $I_V$ možno chápať ako interpretáciu množiny klauzúl $S$.
+
+        Predpokladajme, že $S$ je nesplniteľná
+        (teda nesplniteľná v každej interpretácii).
+        To znamená, že pre klauzulu $C$ existuje nejaká
+        základná inštancia $C'$, ktorá je v interpretácii $I_V$ odmietnutá.
+
+        Ešte potrebujeme zabezpečiť, aby strom bol konečný.
+        To ale musí byť, lebo ak by existovala nekonečná vetva,
+        bola by to interpretácia, ktorá by neodmietala niektorú zo 
+        základných inštancií.
+
+    \item[$\Leftarrow:$] Teraz predpokladáme,
+        že k úplnému sémantickému stromu pre množinu klauzúl $S$
+        existuje konečný uzavretý sémantický strom.
+        Teda každá vetva stromu $T$ končí v zamietajúcom vrchole.
+        Nuž ale potom evidentne musí byť $S$ odmietnutá v každej
+        interpretácii a teda nie je splniteľná.
+    \end{itemize}
+\end{dokaz}
+
+\begin{veta}[Herbrandova 2]
+    Množina klauzúl $S$ nie je splniteľná $\iff$
+    existuje konečná podmnožina $S'$ základných inštancií klauzúl z $S$,
+    ktorá nie je splniteľná.
+\end{veta}
+
+\begin{dokaz}
+    \noindent
+    \begin{itemize}
+    \item[$\Rightarrow:$] Predpokladajme, že množina klauzúl $S$
+        nie je splniteľná. Na základe variantu 1 Herbrandovej vety
+        platí, že ku každému úplnému sémantickému stromu $T$ pre
+        množinu klauzúl $S$ existuje uzavretý konečný sémantický
+        strom $T'$. Ak teraz zoberieme množinu základných inštancií
+        klauzúl z $T'$, dostávame konečnú množinu $S' \subseteq S$,
+        ktorá tiež nie je splniteľná.
+
+    \item[$\Leftarrow:$] Predpoklajme, že existuje
+        konečná množina $S'$ základných inštancií klauzúl $S$,
+        ktorá nie je splniteľná.
+        Vezmime si $I$ interpretáciu $S$.
+        Nech $I'$ je ``zúženie'' interpretácie $I$ na $S'$.
+        Z nesplniteľnosťi $S'$ vyplýva, že $I'$ odmieta $S'$.
+
+        Interpretácia $I$ obsahuje $I'$, teda keď $I'$ odmieta $S'$,
+        potom $I$ odmieta $S$ a teda $S$ je nesplniteľná.
+    \end{itemize}
+\end{dokaz}
+
+\begin{priklad}
+    Majme množinu klauzúl $S=\{P(x),\ \neg P(f(a))\}$.
+    Chceme ukázať, že $S$ nie je splniteľná.
+    Na základe 2. Herbrandovej vety stačí nájsť konečnú podmnožinu
+    základných inštancií klauzúl, ktorá nie je splniteľná.
+    Takáto množina je napríklad $S' = \{ P(f(a)),\ \neg P(f(a))\}$.
+\end{priklad}
+
+\begin{priklad}
+    Majme množinu klauzúl $S=\{\neg P(x) \lor Q(f(x),x),\
+        P(g(b)),\ \neg Q(y,z) \}$.
+    Táto množina nie je splniteľná -- vezmime napríklad
+    \begin{equation*}
+        S' = \{ \neg P(g(b)) \lor Q(f(g(b)), g(b)),\ P(g(b)),\ 
+                \neg Q(f(g(b)), g(b)) \}
+    \end{equation*}
+\end{priklad}
+
+\begin{priklad}
+    Uvažujme množinu klauzúl $S$:
+    \begin{equation*}
+    \begin{split}
+        S = \big\{& \neg P(x,y,u) \lor \neg P(y,z,v) \lor 
+                    \neg P(x,v,w) \lor P(u,z,w), \\
+	         & \neg P(x,y,u) \lor \neg P(z,y,v) \lor
+                    \neg P(u,z,w) \lor P(x,v,w), \\
+	         & P(g(x,y),x,y), \\
+                 & P(x,h(x,y),y), \\
+                 & P(x,y,f(x,y), \\
+                 & \neg P(k(v),x,k(x)) \\
+                 & \big\}
+    \end{split}
+    \end{equation*}
+    Chceme ukázať, že $S$ nie je splniteľná. Návod je napríklad
+    takýto: Zostrojme si konečný uzavretý sémantický strom pre $S$
+    a potom vypíšme základné inštancie klauzúl pripísaných jednotlivým
+    \fixme{cestám} tohoto stromu.
+    Možné riešenie je tak napríklad
+    \begin{equation*}
+    \begin{split}
+        S' = \big\{& P(a,h(a,a),a), \\
+                   & P(g(a,k(h(a,a))),a,k(h(a,a))),\\
+                   & \neg P(k(h(a,a)),h(a,a),k(h(a,a))),\\
+                   & \neg P(g(a,k(h(a,a))),a,k(h(a,a))) \lor
+                    \neg P(a,h(a,a),a) \lor \\ & \phantom{\lor}
+                    \neg P(g(a,k(h(a,a))),a,k(h(a,a))) \lor
+                    P(k(h(a,a)),h(a,a),k(h(a,a))) \\
+                &\big\}
+    \end{split}
+    \end{equation*}
+\end{priklad}
+
+\begin{poznamka}[Gilmore, 1960]
+    Nech $S_1',S_2',\dots$ sú možiny základných inštancií klauzúl z
+    $S$. Gilmore vymyslel spôsob, ako generovať postupne
+    $S_1',S_2',\dots$ a aj spôsob, ako overovať ich nesplniteľnosť.
+    Problém bol, že algoritmické metódy na zisťovanie nesplniteľnosti
+    pracovali iba pre menšie množiny klauzúl.
+    $S_i'$ bola totiž konjunkcia základných inštancií klauzúl z $S$.
+    Lenže $S$ je množina disjunkcií a dostaneme teda
+    konjunktívnu normálnu formu. Túto formu bolo treba upraviť na
+    disjunktívnu normálnu formu, pretože potom sa mohla optimalizovať
+    metódami výrokovej logiky. Následne metóda vyhadzovala z DNF
+    kontrárne dvojice.
+    Pre veľa klauzúl krátkej dĺžky to znamenalo preberanie veľkého
+    počtu možností.
+    Ak máme $10$ klauzúl každá dĺžky 2 literály,
+    potrebujeme preverovať $2^{10}$ prípadov -- zložitosť exponenciálne
+    rastie.
+\end{poznamka}
+
+\begin{priklad}
+    Majme množinu klauzúl $S=\{P(x),\ \neg P(a)\}$ a
+    univerzum nech je $H_0 = \{a\}$.
+    Ak zoberieme $S'=\{P(a), \neg P(a)\}$,
+    máme $S_0' = P(a) \land \neg P(a)$, čo sa dá upraviť na $\eps$ a
+    teda $S$ nie je splniteľná.
+\end{priklad}
+
+
+\begin{priklad}
+    Majme $S=\{P(a),\ \neg P(x) \lor Q(f(x)),\ \neg Q(f(a)) \}$ a
+    univerzum $H_0 = \{a\}$.
+    Dokázať nesplniteľnost množiny $S$ možno nasledovne:
+    \begin{equation*}
+    \begin{split}
+        S_0' &=P(a)\land [\neg P(a)\lor Q(f(a))] \land \neg Q(f(a)) \\
+             &=[P(a)\land \neg P(a) \land \neg Q(f(a))] \lor 
+               [P(a) \land Q(f(a)) \land \neg Q(f(a))] \\
+             &= \eps \lor \eps = \eps
+    \end{split}
+    \end{equation*}
+\end{priklad}
+
+\subsection{Dokazovacie pravidlá}
+
+Zaviedli ich Martin Davis a Hilary Putnam ako súčasť ich algoritmu na
+automatické dokazovanie formúl. Z pravidiel ktoré si uvedieme bude
+najsilnejšie takzvané pravidlo rezu, pomocou ktorého sa dajú simulovať
+aj ostatné pravidlá.
+
+\subsubsection{Pravidlo tautológie} 
+Nech $S$ je množina klauzúl
+Vynechajme z $S$ všetky tautologické klauzuly.
+Množina $S'$, ktorá nám zostane, nie je splniteľná práve vtedy,
+keď $S$ nie je splniteľná.
+
+\subsubsection{Pravidlo jednoliterálnych klauzúl}
+Nech $S$ je množina klauzúl $L$ je nejaká jednoliterálová klauzula.
+Vynechajme z $S$ všetky klauzuly, ktoré obsahujú literál $L$.
+Nech $S'$ sú klauzuly, ktoré nám zostanú po vynechaní.
+Môžu nastať dva prípady:
+\begin{enumerate}
+    \item $S' = \emptyset$. Potom množina klauzúl $S$ je splniteľná --
+        stačí zobrať model, ktorý obsahuje $L$.
+
+    \item $S' \neq \emptyset$. Vezmem si literál $\neg L$ a vynechám z
+        množiny $S'$ všetky klauzuly, ktoré obsahujú $\neg L$
+        Dostanem tak množinu klauzúl $S''$.
+        Ak sa $S'$ nachádza $\neg L$, po vynechaní
+        $\neg L$ dostaneme $\eps$.
+        Tvrdíme teda, že $S''$ nie je splniteľná
+        $\iff$ $S$ nie je splniteľná.
+        \fixme{preco?}
+\end{enumerate}
+
 \startFIXME
 
-\paragraph{Poznámka} Dirichletov princíp:
-$$T_1:$$
-$$X, Y -- \mbox{konečné množiny}$$
-$$ |X| < |Y| $$
-$$ f: X \rightarrow Y$$
-$$ \exists y \in Y_1\qquad x_1,x_2 \in X, x_1 \neq x_2 \qquad f(x_1) = f(x_2) =
-y$$
-Sporom. Ak by také $x_1$, $x_2$ neexistovali, potom pre každé $x_1, x_2 \in X$,
-$x_1 \neq x_2$ a $f(x_1) \neq f(x_2)$, potom $f$ je injektívne zobrazenie, z
-čoho vyplýva, že $|X| \leq |Y|$.
-$$T_2: $$
-$$ f: X \rightarrow Y,\qquad X\mbox{-- nekonečná}, Y\mbox{ -- konečná} $$
-$$T_2: \exists y\in Y, \qquad y=\{x|x\in X, f(x)=y\}$$
+\subsubsection{Pravidlo čistých literálov}
+Literál $L$ základnej klauzuly z $S$ budeme nazývať \emph{čistým},
+ak literál $\neg L$ sa nevyskytuje v žiadnej základnej klauzule $S$.
+Vezmem si z $S$ literál $L$, ktorý je čistý, a
+vynecháme z $S$ všetky základne klauzuly obsahujúce $L$.
+$S'$ je množina, ktorá nám zostala.
+$S$ nie je splniteľná $\iff$ $S'$ nie je splniteľná.
 
-\paragraph{Dôkaz} Nech $|Y|=n$. Množinu $X$ môžeme napísať ako $X=\Cup_{y\in
-Y}A_y$ takých, že ak $y_1\neq y_2$, potom $A_{y_1} \cap A_{y_2} = \emptyset$.
-
-$$ |X| = \left|\Cup_{y\in Y} A_y \right|$$
-
-Nech $k_0$ je maximálna mohutnosť $|A_y|$, $y\in Y$, množina $X$ ale nemá
-konečnú mohutnosť -- spor.
-
-\paragraph{Definícia} Strom chápeme ako usporiadanú dvojicu $(T,\leq)$ -- $T$ a
-relácia, ktorá čiastočne usporadúva $T$:
-\begin{enumerate}
-	\item $T(n)=\{v\in T, v<n\}$ je dobre usporiadaná.
-	\item $T$ má najmenší vrchol (koreň)
-\end{enumerate}
-
-Množina je dobre usporiadaná, ak každá jej neprázdna podmnožina má najmenší
-prvok. $T$ je lineárne usporiadanie -- ľubovoľné dva prvky sú porovnateľné:
-$a \neq b$, $a,b\in T$, pre $\{a, b\}$ musí platiť $a<b$ alebo $a>b$.
-
-\par Ak mám prvky $u$ a $v$, prvok $v$ nasleduje bezprostredne po prvku $u$, ak
-neexistuje $z$ také, že $u < z < v$.
-
-\paragraph{Lema (K\"onig)} (je dôležitá na pochopenie dôkazu Herbrandovej vety)
-Nech každý vrchol stromu s koreňom má konečné vetvenie (t.j. konečný stupeň
-vetvenia) a strom $T$ je nekonečný, tak potom v ňom existuje nekonečne dlhá
-vetva.
-
-\paragraph{Dôkaz} $(T_1,\leq)$, $v \in T$. Označme $A_v = \{ u \in T | v <u
-\}$ -- $A_v$ je množina tých vrcholov, ktoré ležia nad $v$. Majme vrchol $v$ a
-nech $v_1, v_2, \ldots v_n$ sú bezprostrední nasledovníci $v$ (obr.
-\ref{fig:nasledovnici}). $A_v = A_{v_1} \cup A_{v_2} \cup \ldots \cup A_{v_n}
-\cup \{v_1, v_2, \ldots, v_n\}$. $A_v$ je nekonečná. Na základe uvedeného
-tvrdenia aspoň jedna z množín $A_{v_i}$ musí byť nekonečná.
-
-\begin{figure}[h]
-	\centering\includegraphics{img/10/nasledovnici.1.mps}
-	\caption{Nasledovníci $v$}
-	\label{fig:nasledovnici}
-\end{figure}
-
-\par Vyberieme si $x_0$ ako koreň (najmenší vrchol stromu $T$). $A_{x_0} =
-T \backslash \{x_0\}$, $A_{x_0}$ je nekonečná. Vezmime postupne prvky $\{x_0,
-x_1, \ldots , x_n, x_\{n+1\}\}$. Ku každému prvku viem vybrať nasledovný prvok a
-počet nasledovníkov je nekonečný. \todo{lepšia formulácia}
-
-\paragraph{Veta (Herbrandova, variant 1)} Množina klauzúl $S$ nie je splniteľná
-práve vtedy, keď ľubovoľnému úplnému sémantickému stromu pre množinu klauzúl
-$S$ zodpovedá konečný uzavretý sémantický strom, t.j. ľubovoľná vetva úplného
-stromu vedie do odmietajúceho vrchola.
-
-\paragraph{Dôkaz} Predpokladajme, že množina klauzúl $S$ nie je splniteľná, nech
-$T$ je úplný sémantický strom prislúchajúci $S$. $I_V$ je množina všetkých
-literálov pripísaných vetve $V$ stromu $T$. Potom $I_V$ je interpretácia
-množiny klauzúl $S$. Predpokladajme, že $S$ je nesplniteľná (teda nesplniteľná v
-každej interpretácii). To znamená, že existuje nejaká základná inštancia klauzúl
-$C'$ (pre klauzulu $C$), ktorá je v interpretácii $I_V$ odmietnutá. (základná
-inštancia neobsahuje premenná, klauzuly sú konečné objekty). 
-%Je odmietnutá vo vrchole, ktorý je konečne vzdialený od koreňa stromu.
-\par Teraz potrebujeme zabezpečiť, aby strom bol konečný -- to musí, lebo ak by
-existovala nekonečná vetva, bola by to interpretácia, ktorá by neodmietala
-niektorú zo základných inštancií.
-
-\par Obrátená implikácia. Ak množina klauzúl nie je splniteľná, existuje k
-úplnému sémantickému stromu uzavretý konečný sémantický strom. Teraz
-predpokladajme, že k úplnému sémantickému stromu pre množinu klauzúl
-$S$ existuje konečný uzavretý sémantický strom (každá vetva stromu $T$ končí v
-zamietajúcom vrchole), potom interpretácia $I_V$ odmieta každú základnú
-inštanciu.
-
-
-\paragraph{Veta (Herbrandova)}: Množina klauzúl $S$ nie je splniteľná $\iff$ keď
-existuje konečná množina $S'$ základných inštancií klauzúl z $S$, ktorá nie je
-splniteľná. \fixme{}
-
-\paragraph{Dôkaz:} Predpokladajme, že množina klauzúl $S$ nie je splniteľná,
-existuje $T'$ -- konečný uzavretý strom priradený ku stromu $T$.
-
-\paragraph{Obrátene}: Predpoklajme, že existuije konečná $S'$ množina základných
-inštancií klauzúl $S$ nie je splniteľná, $I'$, $S'$. Potom $S$ nie je
-splniteľná, $I$ pre $S$. 
-
-\par
-Interpretácia $I$ obsahuje $I'$, teda keď $I'$ odmieta $S'$, potom $I$ odmieta
-$S$. Každá klauzula je disjunkcia literálov. Ak existuje množina základných
-inštancií, ktorá nie je splniteľná, potom celá množina nie je splniteľná.
-
-
-\paragraph{Príklad} Majme množinu klauzúl $S=\{P(x), \neg P(f(a))\}$. Vezmime
-množinu $S' = \{ P(f(a)), \neg P(f(a))\}$.
-
-\paragraph{Príklad} Majme množinu klauzúl $S=\{\neg P(x) \lor Q(f(x),x),
-P(g(b)), \neg Q(y,z) \}$. Táto množina nie je splniteľná -- opäť vezmime $$S' =
-\{ \neg P(g(b)) \lor Q(f(g(b)), g(b)), P(g(b)), \neg Q(f(g(b)), g(b)) \}$$.
-
-\paragraph{Príklad} Majme množinu klauzúl $S$:
-$$
-\begin{array}{l}
-	\neg P(x,y,u) \lor \neg P(y,z,v) \lor \neg P(x,v,w) \lor P(u,z,w) \\
-	\neg P(x,y,u) \lor \neg P(z,y,v) \lor \neg P(u,z,w) \lor P(x,v,w) \\
-	P(g(x,y),x,y), P(x,h(x,y),y), P(x,y,f(x,y),\neg P(f(v),x,f(x)) \\
-\end{array}
-$$
-\subparagraph{Návod} Zostrojte konečný sémantický strom.
-
-\par Algoritmické metódy na zisťovanie nesplniteľnosti pracovali iba pre menšie
-množiny klauzúl -- problém bol, že $S$ je množina disjunkcií, pokiaľ tam
-dosadíme prvky z univerza, dostaneme konjunktívnu normálnu formu (prípadne
-transformujeme na disjunktívnu normálnu formu a tú preverujeme). Ak máme $10$
-formúl, potrebujeme preverovať $2^{10}$ konjunkcií -- zložitosť exponenciálne
-rastie.
-
-\paragraph{Príklad}
-$$S=\{P(x), \neg P(a)\}, H_0 = \{a\}$$
-$$S'=P(a) \land \neg P(a) = \square$$
-$S$ nie je splniteľná.
-
-\paragraph{Príklad}
-$$S=\{P(a), \neg P(x) \lor Q(f(x)), \neg Q(f(a)) \}, H_0 = \{a\}$$
-$ S_0'=P(a) \land (\neg P(a)\lor Q(f(a))) \land \neg Q(f(a)) = \\
-P(a)\land \neg P(a) \land \neg Q(f(a)) \lor P(a) \land Q(f(a)) \land \neg Q(f(a)) = 
-\\ \square \lor \square = \square$.
-
-\paragraph{Pravidlá}
-Nech $S$ je množina klauzúl.
-
-\subparagraph{Pravidlo tautológie.} Vynecháme z $S$ všetky tautologické klauzuly.
-Množina $S'$, ktorá nám zostane, nie je splniteľná práve vtedy, keď $S$ nie je
-splniteľná.
-
-\subparagraph{Pravidlo jednoliterálnych klauzúl.} Nech $L$ je nejaký literál.
-Vynechajme z $S$ všetky klauzuly, ktoré obsahujú literál $L$. Nech $S'$ sú
-klauzuly, ktoré nám zostanú po vynechaní. Môžu nastať dva prípady:
-
-\begin{enumerate}
-	\item $S' = \emptyset$, tak potom množina klauzúl $S$ je splniteľná --
-	Stačí zobrať model, ktorý obsahuje $L$.
-	\item $S' \neq \emptyset$. Vezmem si literál $\neg L$ a vynechám z
-	množiny $S'$ všetky klauzuly, ktoré obsahujú $\neg L$, pričom dostanem
-	množinu klauzúl $S''$. Ak sa $S'$ nachádza $\neg L$, po vynechaní
-	namiesto nej zostane $\square$.
-\end{enumerate}
-
-$S$ nie je splniteľná $\iff$ $S''$ nie je splniteľná.
-
-\subparagraph{Pravidlo čistých literálov} Literál $L$ základnej klauzuly z $S$
-budeme nazývať \emph{čistým}, ak literál $\neg L$ sa nevyskytuje v žiadnej
-základnej klauzule $S$. Vezmem si z $S$ literál $L$, ktorý je čistý, a
-vynecháme z $S$ všetky základne klauzuly obsahujúce $L$. $S'$ je množina, ktorá
-nám zostala. $S$ nie je splniteľná $\iff$ $S'$ nie je splniteľná.
-
-\subparagraph{Pravidlo rezu} Ak množinu $S$ vieme vyjadriť v tvare $(A_1 \lor L)
-\land \ldots \land (A_m \lor L) \land (B_1 \lor \neg L) \land \ldots \land (B_n
-\lor \neg L) \land R$, pričom v $A_i$, $B_j$, sa $R$, $L$, $\neg L$, $i=1..m$,
+\subaubsection{Pravidlo rezu}
+Ak množinu $S$ vieme vyjadriť v tvare
+$(A_1 \lor L) \land \ldots \land (A_m \lor L) \land 
+ (B_1 \lor \neg L) \land \ldots \land (B_n \lor \neg L) \land R$,
+pričom v $A_i$, $B_j$, sa $R$, $L$, $\neg L$, $i=1..m$,
 $j=1..n$ už nevyskytujú.
 
 $$S_1 = A_1 \land A_2 \land \ldots \land A_m \land R$$
