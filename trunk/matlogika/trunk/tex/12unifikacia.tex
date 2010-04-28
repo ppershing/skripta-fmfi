@@ -1,43 +1,40 @@
 \section{Substitúcia a unifikácia}
-\startFIXME
 
 Vo výrokovej logike nebol problém hľadať kontrárne dvojice.
 Zložitejšia situácia ale nastáva v prípade predikátovej logiky
 prvého rádu. A práve tomu sa budeme venovať v tejto kapitole.
+Uvažujme napríklad dve klauzuly
+$C_1=P(x) \lor Q(x), C_2 = \neg P(f(x)) \lor R(x)$.
+V nich neexistuje žiadna kontrárna dvojica. Ak však nahradím premennú
+$x$ za $f(a)$ v prvej klauzule a za $a$ v druhej,
+dostaneme základné inštancie
+$C_1'=P(f(a)) \lor Q(f(a)), C_2'=\neg P(f(a)) \lor R(a)$.
+Teraz môžeme definovať rezolventu; bude to $Q(f(a)) \lor R(a)$.
+Mohli by sme postupovať aj všeobecnejšie -- nahraďme $x$ za $f(x)$ v
+prvej klauzule a dostávame
+$ C_1^*= P(f(x)) \lor Q(f(x)), C_2^*= \neg P(f(x)) \lor R(x)$.
 
-$$
-\begin{array}{ll}
-C_1  = P(x) \lor Q(x),& C_2 = \neg P(f(x)) \lor R(x)\\
-C_1:  x \cdot f(a),&  C_2 \cdot : a\\
-C_1':  P(f(x)) \lor Q(f(a)),& C_2':\neg P(f(a)) \lor R(a)\\
-\end{array}
-$$
+Rezolventa potom bude $C^*= Q(f(x)) \lor R(x)$.
+Vidíme teda, že sme získali 2 rôzne rezolventy, jednu viac všeobecnú
+ako druhú. No a práve v ďalšom texte si formálne zadefinuujeme toto
+dosadzovanie hodnôt a popíšeme spôsob, ako hľadať najvšeobecnejšie
+rezolventy.
 
-Teraz môžeme definovať rezolventu; bude to $Q(f(a)) \lor R(a)$. Mohli by sme
-postupovať aj takto:
+\begin{definicia}[Substitúcia]
+    Pod substitúciou rozumieme konečnú množinu tvaru:
+    $\{t_1/v_1, \ldots, t_n/v_n\}$, kde každé $v_i$ je premenná a všetky
+    $v_i$ sú navzájom rôzne ($i \in\{1,\dots,n\}$).
+    Ďalej požadujeme, že pre každé $i$ je term  $t_i$ rôzny od $v_i$.
 
-$$
-\begin{array}{ll}
-C_1: & x: f(x) \\
-C_1^*: & P(f(x)) \lor Q(f(x)) \\
-C_2: & \neg P(f(x)) \lor R(x)\\
- & P(f(x))\\
- & \neg P(f(x)))\\
-C_3: & Q(f(x)) \neg R(x)\\
-\end{array}
-$$
+    Ak $t_1, \ldots, t_n$ sú základné inštancie (teda termy bez premenných),
+    tak substitúciu nazývame tiež základná substitúcia.
+\end{definicia}
 
-Formulu $C_3$ nazývam rezolventou pre klauzulu $C_1$ a $C_2$. Zmyslom
-substitúcie a unifikácie je umožniť operácie, na ktoré sme boli zvyknutí vo
-výrokovej logike -- tu bude situácia technicky náročnejšia.
-
-\paragraph{Definícia} Pod \emph{substitúciou} rozumieme konečnú množinu tvaru:
-$\{t_1/v_1, \ldots, t_n/v_n\}$, kde každé $v_i$ je premenná a všetky $v_i,
-i=1..n$ sú navzájom rôzne. Každý term $t_i, i=1..n$ je rôzny od $v_i, i=1..n$.
-ak $t_1, \ldots, t_n$ sú základné inštancie (teda termy bez premenných), tak
-substitúciu nazývame \emph{základná substitúcia}. Ak množina je prázdna, tak
-substitúciu budeme označovať $\varepsilon$. Na označovanie substitúcií budeme
-používať grécke písmená.
+\begin{poznamka}
+    Na označovanie substitúcií budeme používať grécke písmená.
+    Špeciálne, prázdnu substitúciu označíme ako $\eps$.
+\end{poznamka}
+\startFIXME
 
 \paragraph{Príklad} $\{ f(z)/x; y/z\}$, $\{ a/x, g(y)/y, f(g(y))/z\}$.
 
