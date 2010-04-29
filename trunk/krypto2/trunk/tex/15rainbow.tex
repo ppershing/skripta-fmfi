@@ -1,7 +1,8 @@
 \section{Dúhové tabuľky}
 
 \begin{poznamka}
-Túto kapitolu písal USAmec z vlastných znalostí a zdrojov nezávisle od prednášky docenta Staneka.
+    Túto kapitolu písal USAmec z vlastných znalostí a zdrojov
+    nezávisle od prednášky docenta Staneka.
 \end{poznamka}
 
 Hacker Ivan Ivanovič získal prístup k zašifrovanému heslu šéfa FBI.
@@ -9,14 +10,15 @@ Bolo uskladnené v tvare $H(password)$, kde $H$ je nejaká hašovacia funkcia.
 Ako správny hacker sa ho rozhodol prelomiť a získať tak prístup
 ku všetkým možným i nemožným tajným údajom.
 Postupne vygeneroval všetky heslá dĺžky 1, potom dĺžky 2, \dots a
-zahashoval ich.
-Keďže heslo malo $n$ bitov, tak mu to zabralo nakoniec čas $O(2^n)$,
+zahešoval ich.
+Ak predpokladáme, že heslo malo $n$ bitov,
+tak mu to zabralo nakoniec čas $O(2^n)$,
 čo bol asi rok. Nakoniec mu ale bolo nanič, lebo pôvodné heslo bolo už
 dávno zmenené.
 
 Ale pamäť neuvyužil skoro vôbec.
 Sklamaný svojím neúspechom sa rozhodol, že túto chybu napraví.
-Rozhodol sa teda predrátať si zahašovanú hodnotu hesla
+Rozhodol sa teda predrátať si zahešovanú hodnotu hesla
 pre všetky rôzne heslá do dĺžky $n$ v nádeji,
 že keď následne uloví nejaké heslo, tak ho rozšifruje skoro hneď.
 
@@ -25,7 +27,7 @@ Tak si kúpil ďalších 10. A potom ďalších 100. A ďalšie a ďalšie.
 Takto čoskoro vykúpil disky z celého Ruska
 a stále nemal uložené všetko čo treba.
 
-Pozorný čitateľ si isto všimol, že keď dostaneme na nejaké heslo na rozbitie,
+Pozorný čitateľ si isto všimol, že keď dostaneme nejaké heslo na rozbitie,
 tak čas bude $O(1)$, ale pamäť máme $O(2^n)$.
 Prirodzená otázka znie (ak nechceme dopadnúť ako Ivan),
 či neexistuje nejaký kompromis medzi týmito dvoma extrémami
@@ -33,8 +35,9 @@ Prirodzená otázka znie (ak nechceme dopadnúť ako Ivan),
 Ukazuje sa, že áno. Ako na to sa dozviete v ďalšom texte.
 
 \subsection{Jednoduchý time-memory tradeoff}
+
 Toto riešenie navrhol pôvodne Martin Hellman.
-Uvažujme dvojice $(x_i, H(x_i))$.
+Uvažujme dvojice $\langle x_i, H(x_i) \rangle$.
 Našim cieľom je ich uskladniť tak, aby sme si nemuseli
 pamätať každú hodnotu z každej dvojice. 
 Základná myšlienka bude zostrojiť niečo ako ``reťaz'' hodnôt, ktorá
@@ -43,12 +46,14 @@ hodnotu.
 
 Zatiaľ ale máme len funkciu, ktorá nám z hodnoty $x$ vyrobí $H(x)$.
 Chcelo by to ešte funkciu, ktorá z hodnoty $H(x)$ vyrobí $y$,
-ktorú môžeme opäť hašovať.
-Toto môže byť veľmi jednoduchá funkcia (napríklad keď chceme heslá iba
-z písmen malej abecedy, tak môžeme hash zapísať v sústave so základom 26),
+ktoré môžeme opäť hašovať.
+Toto môže byť veľmi jednoduchá funkcia,
 ktorá zobrazí množinu hashov na množinu hesiel (alebo iných pôvodných hodnôt).
-Označme ju $R$ (ako redukčná funkcia).
-Následne vieme vyrobiť nasledovnú reťaz:
+Napríklad keď chceme iba heslá z písmen malej anglickej abecedy,
+môžeme hash zapísať v sústave so základom 26 a dostaneme tak nového
+kandidáta na heslo.
+Označme túto funkciu ako $R$ (redukčná funkcia).
+Pomocou nej a pôvodnej hashovacej funkcie vieme vyrobiť nasledovnú reťaz:
 \begin{equation*}
     x_{1,0} \toa{H} H(x_{1,0}) \toa{R} 
     x_{1,1} \toa{H} H(x_{1,1}) \toa{R} \dots \toa{R} 
@@ -65,7 +70,6 @@ Jedna reťaz nám ale nebude stačiť a preto si ich vyrobíme rovno $m$.
 \end{equation*}
 
 To ako zvoliť vhodné $m, t$ si ukážeme neskôr.
-
 Dôležité je, že z každej reťaze si zapamätáme jej začiatok a koniec,
 teda dvojice
 $\langle x_{j,0}, H(x_{j,t-1})\rangle$ pre $j \in \{1,\dots,m\}$.
@@ -73,7 +77,7 @@ Tieto dvojice následne utriedime podľa koncov,
 aby sme podľa nich vedeli rýchlo nájsť patričný začiatok.
 
 \medskip
-Teraz nám príde otázka: \clqq Nájdi $y$ také, že $H(y)=h$.\crqq
+Teraz, keď nám príde otázka \quoteme{Nájdi $y$ také, že $H(y)=h$}.
 Najprv sa pozrieme, či priamo nie je $h$ medzi koncami.
 Ak áno, tak zoberieme začiatok $z_0$ a postupne počítame hodnoty
 $z_{i+1} = R(H(z_i))$.
@@ -96,26 +100,25 @@ Navyše môže nastať aj situácia kedy sa nám reťaz zacyklí.
 Teraz poďme spočítať pravdepodobnosť úspechu.
 Nech máme $N$ rôznych môžných hashov a predpokladajme, že
 funkcia $R(H(\cdot))$ sa správa ako náhodné orákulum.
-Potom šanca na úspech je $Pr[uspech] = \frac{E}{X}$,
-kde $E$ je počet všetkých haší čo tabuľka pokrýva.
+Potom šanca na úspech je $Pr[uspech] = \frac{C}{X}$,
+kde $C$ je počet všetkých haší čo tabuľka pokrýva.
 Zjavne $E \leq mt$.
-Ale tento odhad je dosť voľný a pri rozumne veľkých hodnotách je $E$ 
+Ale tento odhad je dosť voľný a pri rozumne veľkých hodnotách je $C$ 
 o dosť menšie ako $mt$. 
 Poďme spraviť nejaký odhad zdola.
-Spočítame očakávanú hodnotu $E$.
-\fixme{Pr?}
-\begin{equation*}
-    E = \sum_{i=1}^m \sum_{j=0}^{t-1} [x_{i,j} ~\text{je nové}] = 
-        \sum_{i=1}^m \sum_{j=0}^{t-1} Pr[x_{i,j} ~\text{je nové}] 
-\end{equation*}
+Spočítame očakávanú hodnotu $E(C)$.
+\begin{align*}
+    C &= \sum_{i=1}^m \sum_{j=0}^{t-1} [x_{i,j} ~\text{je nové}] \\
+    E(C) &=\sum_{i=1}^m \sum_{j=0}^{t-1} Pr[x_{i,j} ~\text{je nové}] 
+\end{align*}
 
 Spočítať presne šancu nato, že $x_{i,j}$ je nový prvok 
 (teda predtým sme ho nemali) je dosť netriviálne,
 už len preto, lebo to napríklad zavisí aj od toho, či $x_{i,j-1}$ je nové.
-Ešte si ako $X_{ij}$ označíme $x_{ij} ~\text{je nové}$.
-Preto spravíme dolný odhad:
-$Pr[X_{i,j}] \geq Pr[X_{i,0}\land X_{i,1} \land \dots \land X_{i,j}]$.
-Na tento výraz poštveme podmienenú pravdepodobnosť:
+Ešte si ako $X_{i,j}$ označíme \quoteme{$x_{i,j} ~\text{je nové}$}.
+Teraz spravíme dolný odhad 
+$Pr[X_{i,j}] \geq Pr[X_{i,0}\land X_{i,1} \land \dots \land X_{i,j}]$
+a na tento výraz poštveme podmienenú pravdepodobnosť:
 \begin{equation*}
     Pr[X_{i,0} \land X_{i,1} \land \dots \land X_{i,j}] = 
     Pr[X_{i,j} | X_{i,0} \land X_{i,1} \land \dots \land X_{i,j-1} ]
@@ -124,18 +127,21 @@ Na tento výraz poštveme podmienenú pravdepodobnosť:
 \end{equation*}
 A toto zopakujeme patričný počet krát a máme:
 \begin{equation*}
-    Pr[X_{i,0} \land X_{i,1} \land \dots \land X_{i,j}] =
-    Pr[X_{i,0}] \cdot Pr[X_{i,1} | X_{i,0}] 
-    \cdot Pr[X_{i,2} | X_{i,0} \land X_{i,1}] \dots
-    Pr[X_{i,j} | X_{i,0} \land X_{i,1} \land \dots \land X_{i,j-1}]
+\begin{split}
+    Pr[X_{i,0} \land X_{i,1} \land \dots \land X_{i,j}] =&    
+    Pr[X_{i,0}] \cdot Pr[X_{i,1} | X_{i,0}] \cdot 
+        Pr[X_{i,2} | X_{i,0} \land X_{i,1}] \cdot \\ 
+        & \ldots \cdot
+        Pr[X_{i,j} | X_{i,0} \land X_{i,1} \land \dots \land X_{i,j-1}]
+\end{split}    
 \end{equation*}
 
 A teraz môžeme povedať, že
 $Pr[X_{i,j} | X_{i,0} \land X_{i,1} \land \dots \land X_{i,j-1}] =
     \frac{N - (i-1)t - j}{N}$
-(teraz už fakt vyberáme náhodnú hodnotu z $N - (i-1)t - j$ voľných). 
+(teraz už vyberáme náhodnú hodnotu z $N - (i-1)t - j$ voľných). 
 
-A toto keďže celé dáme dokopy tak máme:
+Keď toto celé dáme dokopy, máme:
 \begin{equation*}
     Pr[uspech] \geq \frac{\displaystyle
         \sum_{i=1}^m \sum_{j=0}^{t-1}
@@ -144,11 +150,14 @@ A toto keďže celé dáme dokopy tak máme:
         }{N}
 \end{equation*}
 
-Aby sme tam nemali taký odpudivý výraz, tak si to ešte trochu odhadneme:
+Aby sme tam nemali taký odpudivý výraz,
+tak spravíme ďalší odhad zdola:
 \begin{equation*}
-    Pr[uspech] \geq \frac{\displaystyle
+    Pr[uspech] \geq \frac{1}{N}
         \sum_{i=1}^m \sum_{j=0}^{t-1} \left ( \frac{N - it}{N} \right )^{j+1}
-        }{N}
+        =
+        \sum_{i=1}^m  \frac{N-i t}{N} \left(1 -
+        \left(\frac{N-it}{N}\right)^t\right)
 \end{equation*}
 
 Dá sa ukázať, že keď pokiaľ tlačíme $mt^2$ nad $N$, tak už veľa nezískame
@@ -157,84 +166,164 @@ Naopak pokiaľ $mt^2 \ll N$, tak zase sa dá ukázať,
 že každy sčítanec je dosť blízko $1$ a teda 
 $Pr[uspech] = \Theta\left(\frac{mt}{N}\right)$.
 
-Preto keď použijeme $m=t=\sqrt[3]{N}$ dostaneme približne 
-$Pr[uspech] = \frac{0.8}{\sqrt[3]{N}}$.
+Dobré hodnoty sú preto napríklad $m=t=\sqrt[3]{N}$,
+kedy dostaneme (po numerickom výpočte) približne 
+$Pr[uspech] \approx \frac{0.8}{\sqrt[3]{N}}$.
 Toto je v bežnej situácii dosť nanič, ale zase nič nám nebráni
-použiť viacero tabuliek (napr. $n = \sqrt[3]{N}$). 
-Samozrejme každá tabuľka potrebuje inú redukčnú funkciu, aby boli rozdielné.
+použiť viacero tabuliek (napr. $n = 4 \sqrt[3]{N}$). 
+Samozrejme každá tabuľka potrebuje inú redukčnú funkciu, aby boli
+rozdielne.
 Potom bude šanca na úspech približne
-$1 - (1 - \frac{1}{\sqrt[3]{N}})^{\sqrt[3]{N}} = 1-e^{-1} \doteq 70\%$.
+$1 - (1 - \frac{0.8}{\sqrt[3]{N}})^{4 \sqrt[3]{N}} 
+  \approx 1-e^{-0.8*4} \approx 96\%$.
 
-Čo sa týka zložitosti, tak pamäťové nároky sú $O(mn) = O(\sqrt[3]{N^2})$. Časové nároky
-sú $O(tn) = O(\sqrt[3](N^2)$, keďže v každej tabuľke musíme spraviť $t$ krokov (tuná trochu zavádzame,
-keďže ignorujeme čas strávený na falošných poplachoch). Nie je to síce ideálny tradeoff, kde
-súčin časovej a pamäťovej zložitosti bude $O(N)$, ale stále lepšie ako triviálne extrémne riešenia.
+Čo sa týka zložitosti, tak pamäťové nároky sú $O(mn) = O(\sqrt[3]{N^2})$.
+Časové nároky sú $O(tn) = O(\sqrt[3]{N^2})$,
+keďže v každej tabuľke musíme spraviť $t$ krokov 
+(tuná trochu zavádzame, keďže ignorujeme čas strávený na falošných poplachoch).
+Nie je to síce ideálny tradeoff, kde súčin časovej a pamäťovej zložitosti 
+by bol $O(N)$, ale stále lepšie ako triviálne extrémne riešenia.
 
 \subsection{Tabuľky s vyznačnými bodmi}
-Pôvodná Hellmanova verzia má jednu dosť podstatnú chybu. Môžu nám vzniknúť napríklad takéto reťaze:
-$x_0, x_1, x_2, \dots, x_t$ a $x_1, x_2, \dots, x_t, x_{t+1}$ (posunuté o 1 prvok). 
-Takýmto neserióznym situáciam by sme chceli zabrániť. Preto našu reťaz neukončíme po $t$ prvkoch, ale
-vtedy, keď prvok bude niečím vyznačný (napr. bude končiť na $k$ núl). Toto vylepšenie navrhol Rivest.
-Vďaka tomu, keď 2 reťaze skolidujú, tak kolíziu vieme dosť jasne detekovať, keďže skončia v rovnakom bode.
-Navyše očakávaná dĺzka reťaze je $2^k$, takže pokiaľ sme napr. po $10 \cdot 2^k$ krokoch nenašli koniec, tak si môžeme
-povedať, že reťaz zahodíme, lebo sa môžno cyklíme.
-Ďalšou výhodou je, že pri výhľadavaní nemusíme pozerať do uloženej tabuľky v každom kroku, ale iba keď nájdeme význačný bod.
 
-Na druhej strane analýza tohoto typu tabuliek je veľmi nepríjemná vec, preto sa jej nebudeme venovať. 
-Asymdotické výsledky sú ale rovnaké ako pri predchadzajúcom type tabuliek ($\sqrt[3]{N}$ tabuliek s $\sqrt[3]{N}$
-reťazami a význačný bod by mal mať $lg \sqrt[3]{N}$ núl na konci).
+Pôvodná Hellmanova verzia má jednu dosť podstatnú chybu.
+Môžu nám vzniknúť napríklad takéto reťaze:
+$x_0, x_1, x_2, \dots, x_t$ a $x_1, x_2, \dots, x_t, x_{t+1}$ 
+(posunuté o 1 prvok). 
+Takýmto neserióznym situáciam by sme chceli zabrániť.
+Možné vylepšenie navrhol Rivest:
+Skúsme napríklad reťaz neukončiť po $t$ prvkoch,
+ale vtedy, keď prvok bude niečím vyznačný, napríklad bude končiť na
+$k$ núl.
+Vďaka tomu vieme, že keď dve reťaze skolidujú,
+tak kolíziu vieme dosť jasne detekovať, pretože skončia v rovnakom bode.
+Navyše očakávaná dĺzka reťaze je $2^k$,
+takže pokiaľ sme napríklad po $10 \cdot 2^k$ krokoch nenašli koniec,
+môžeme si povedať, že reťaz zahodíme, lebo sa možno cyklíme.
+Ďalšou výhodou je, že pri výhľadavaní nemusíme pozerať do uloženej tabuľky
+v každom kroku, ale iba keď nájdeme význačný bod.
+
+Na druhej strane analýza tohoto typu tabuliek je veľmi nepríjemná vec,
+preto sa jej nebudeme venovať. 
+Asympotické výsledky sú ale rovnaké ako pri predchadzajúcom type tabuliek
+-- $\sqrt[3]{N}$ tabuliek s $\sqrt[3]{N}$
+reťazami a význačný bod by mal mať $\lg \sqrt[3]{N}$ núl na konci.
 
 \subsection{Rainbow tabuľky}
-V tomto type tabuliek opäť chceme rozumne riešiť kolízie. Skúsime to spraviť tak,
-aby keď 2 reťaze skolidovali, tak skolidujú na rovnakom mieste (vďaka tomu nebudú posunuté
+Budeme pokračovať vo vylepšovaní.
+Opäť chceme rozumne riešiť kolízie.
+Skúsime to spraviť tak, aby keď dve reťaze skolidovali,
+tak skolidujú na rovnakom mieste (vďaka tomu nebudú posunuté
 a môžeme detekovať kolíziu). 
-Zoberme si sadu redukčných funkcií $R_1, R_2, \dots, R_{t-1}$ A v každom kroku odvodenia reťaze použijeme inú.
+Zoberme si sadu redukčných funkcií $R_1, R_2, \dots, R_{t-1}$.
+A v každom kroku odvodenia reťaze použijeme inú.
 Dostaneme nasledovnú reťaz:
 \begin{equation*}
-x_{10} \toa{H} H(x_{10}) \toa{R_1} x_{11} \toa{H} H(x_{11}) \toa{R_2} x_{12} \toa{H} \dots \toa{R_{t-1}} x_{1, t-1} \toa{H} H(x_{1,t-1})
+    x_{1,0} \toa{H} H(x_{1,0}) \toa{R_1}
+    x_{1,1} \toa{H} H(x_{1,1}) \toa{R_2}
+    x_{1,2} \toa{H} \dots \toa{R_{t-1}}
+    x_{1, t-1} \toa{H} H(x_{1,t-1})
 \end{equation*}
 
+\begin{poznamka}
+    Ak by sme namiesto šípok $R_1,R_2,R_3,\dots$ použili rôzne farby,
+    dostaneme peknú farebnú reťaz. Teraz už iba stačí voliť farby dúhy
+    a vieme odkiaľ vznikol názov :-).
+\end{poznamka}
+
 Takýchto reťazí si opäť zostavíme $m$. Ako bude prebiehať vyhľadávanie? 
-Už nemôžeme použiť bežnú iteráciu typu $R(H(x))$, keďže máme rôzne redukčné funkcie.
-Takže budeme postupne tipovať, že v ktorom stĺpci je naše heslo. Najprv si tipneme $t-1$
-stĺpec. V tomto prípade stačí pozrieť rovno na konce a ak tam máme vstup, tak sa pozrieme odzačiatku.
-Pokiaľ si chceme tipnúť, že naše heslo v stĺpci $j$, tak najprv spravíme $H(R_{t-1}(H(R_{t-2}(\dots H(R_j(x))\dots))))$, aby
-sme sa dostali na koniec reťaze a potom ak sme našli zhodu, tak môžeme hľadať odzačiatku.
-Pokiaľ zanedbáme čas prehľadávania tabuľky koncov, tak máme celkový čas hľadania $O(t^2)$. 
+Už nemôžeme použiť bežnú iteráciu typu $R(H(x))$,
+keďže máme rôzne redukčné funkcie.
+Takže budeme postupne skúšať hľadať stĺpec, v ktorom je naše heslo.
+Ako prvý skúsime stĺpec $t-1$.
+V tomto prípade stačí pozrieť rovno na konce reťazí.
+Ak tam máme hľadaný hash, tak sa dopracujeme k heslu od začiatku
+reťaze.
+Pokiaľ si chceme vyskúšať, či naše heslo nie je v stĺpci $j$,
+tak najprv spravíme $H(R_{t-1}(H(R_{t-2}(\dots H(R_j(x))\dots))))$,
+aby sme sa dostali na koniec reťaze a potom, ak sme našli zhodu,
+môžeme hľadať odzačiatku.
+Pokiaľ zanedbáme čas prehľadávania tabuľky koncov,
+tak máme celkový čas hľadania $O(t^2)$. 
 
-To na prvý pohľad vyzerá celkom zle, ale ukáže sa, že si môžeme dovoliť oveľa viac riadkov v tabuľke.
+To na prvý pohľad vyzerá celkom zle, ale ukáže sa,
+že si môžeme dovoliť oveľa viac riadkov v tabuľke.
 
-Poďme sa pozrieť na vlastnosti tejto tabuľky. Keďže používame každú chvíľu inú redukčnú funkciu, tak sa nám
-reťaze určite nezacyklia. Navyše pokiaľ nastane kolízia typu $x_{i,a} = x_{j,b}$, kde $a\neq b$, tak sa nám
-reťaze zhodli iba na tomto mieste a pokračujú nezávisle. Samozrejme pokiaľ nastane prípad $x_{i,a} = x_{j,a}$, tak
-zbytok reťazí máme zhodný. Ale tento prípad vieme ľahko detekovať podľa toho, že koncové body sú zhodné.
+Poďme sa pozrieť na vlastnosti tejto tabuľky.
+Keďže používame každú chvíľu inú redukčnú funkciu, tak sa nám
+reťaze určite nezacyklia. Navyše pokiaľ nastane kolízia typu 
+$x_{i,a} = x_{j,b}$, kde $a\neq b$, tak sa nám
+reťaze zhodli iba na tomto mieste a pokračujú nezávisle.
+Samozrejme pokiaľ nastane prípad $x_{i,a} = x_{j,a}$, tak
+zbytok reťazí máme zhodný. Ale tento prípad vieme ľahko detekovať podľa toho,
+že koncové body sú zhodné.
 
 A teraz zostáva ešte úloha spočítať šancu na úspech.
-Pozrieme sa na to z trochu iného uhla pohľadu. Pre každý stĺpec si spočítame koľko tam máme rôznych bodov.
-A potom len spočítame šancu, že zadaná hodnota sa nachádza aspoň v 1 stĺpci. Toto si môžeme dovoliť, keďže
+Pozrieme sa na to z trochu iného uhla pohľadu.
+Pre každý stĺpec si spočítame koľko tam máme rôznych bodov.
+A potom len spočítame šancu, že zadaná hodnota sa nachádza aspoň v
+jedom stĺpci.
+Toto si môžeme dovoliť, keďže
 kolízie v rôznych stĺpcoch nás vôbec netrápia. 
 Označme $m_i$ ako počet rôznych hodnôt v $i$ stĺpci.
-Čo sa týka hodnôt $x_{10}, x_{20}, \dots, x_{m0}$, tak tam vieme vygenerovať $m$ rôznych hodnôt.
+Čo sa týka hodnôt $x_{1,0}, x_{2,0}, \dots, x_{m,0}$,
+tak tam vieme vygenerovať $m$ rôznych hodnôt.
 Takže $m_0 = m$. Ešte určíme $m_{i+1}$ z $m_i$.
 
-Máme $N$ priehradok, $m_i$ náhodných hodov. Počet zaplnených priehradok bude $m_{i+1}$. 
+Máme $N$ priehradok a $m_i$ náhodných hodov.
+Počet zaplnených priehradok bude $m_{i+1}$. 
 Dá sa ukázať, že:
 \begin{equation*}
-m_{i+1} = N \left ( 1 - (1 - \frac{1}{N})^{m_i} \right ) \approx N e^{-\frac{m_i}{N}}
+    m_{i+1} = N \left ( 1 - \left(1 - \frac{1}{N}\right)^{m_i} \right ) 
+        \approx N e^{-\frac{m_i}{N}}
 \end{equation*}
 
 A teraz ešte spočítať šancu na to, že vstup sa nachádza aspoň v 1 stĺpci:
 \begin{equation*}
-Pr[uspech] = 1 - \prod_0^{t-1} \left (1 - \frac{m_i}{N} \right)
+    Pr[uspech] = 1 - \prod_{i=0}^{t-1} \left (1 - \frac{m_i}{N} \right)
 \end{equation*}
 
 Po analýze tohoto výsledku zistíme, že si môžeme dovoliť
-$t \approx \sqrt[3]{N}$ a $m \approx \sqrt[3]{N^2}$. A šanca na úspech bude približne $70\%$.
-Tu nám tiež samozrejme nikto nebráni použiť viac tabuliek na zvýšenie šancí.
+$t \approx \sqrt[3]{N}$ a $m \approx \sqrt[3]{N^2}$.
+Dolný odhad šance na úspech je pre $N=2^{60}$ približne $50\%$.
+Tu nám samozrejme opäť nikto nebráni použiť viac tabuliek na zvýšenie šancí.
 
 \begin{poznamka}
-Spomínali sme tu možnosť zahadzovať reťaze pokiaľ skolidujú. Výpočet šance na úspech by
-bol jednoduchý (každý stĺpec by mal rovnako veľa prvkov). A navyše vieme vypočítať aj koľko
-reťazí by nám ostalo po vyhodení kolidujúcich. Bude to presne $m_{t-1}$ 
-(toľko máme presne rôznych koncov).
+    Spomínali sme tu možnosť zahadzovať reťaze pokiaľ skolidujú.
+    Výpočet šance na úspech by bol jednoduchý 
+    (každý stĺpec by mal rovnako veľa prvkov).
+    A navyše vieme vypočítať aj koľko reťazí by nám ostalo 
+    po vyhodení kolidujúcich.
+    Bude to presne $m_{t-1}$ (toľko máme presne rôznych koncov).
 \end{poznamka}
+
+\subsection{Možná obrana}
+
+Existuje viacero spôsobov, ako zabrániť útoku pomocou dúhových
+tabuliek. Prvá z nich je používanie soli (salt-u). Ide o to, že spolu
+s heslom sa zahashuje aj náhodná hodnota uložená v databáze. Táto
+hodnota je iná pre každého užívateľa a tým pádom vieme zabrániť
+masovému zlomeniu viacerých hesiel (a napríklad ako bonus máme aj
+nemožnosť overiť zdohu dvoch hesiel). Na to, aby bol salt použiteľný,
+musí ale byť dostatočne veľký. Napríklad, staré verzie operačného
+systému Unix používali iba 12-bitový salt. To znamená, že útočník si
+namiesto jednej tabuľky vygeneroval 4096 tabuliek a bol za vodou.
+Odporúčaná veľkosť saltu sa dnes pohybuje niekde od 48 po 128 bitov.
+
+Iná možnosť je úmyselné spomalenie výpočtu hash hodnoty. Napríklad,
+keď máme salt a heslo, namiesto jedného výpočtu hash hodnoty ju
+niekoľkokrát potočíme -- vždy vypočítame hash zreťazenia predchádzajúcej
+hodnoty, soli a hesla. Ak spravíme takto napríklad 1000 iterácii, pre
+užívateľa to bude mať stále nebadateľný efekt, pre útočníka to ale
+bude znamenať 1000 krát väčšie výpočtové nároky.
+
+Nakoniec si ešte uveďme príklad, že dúhové tabuľky nie sú iba
+teoretický nástroj. Staršie verzie operačného systému Windows
+používali hashovaciu funkciu zvanú LM hash (od Lan Manager hash).
+Problém s jej bezpečnosťou bol hlavne v znakovej sade -- napríklad
+malé písmená sa automaticky konvertovali na veľké, čím sa efektívne
+redukovala veľkosť abecedy. Ďalej, heslá dlhšie ako 7 znakov sa
+rozdelili na dve 7-znakové bloky a každý sa zahashoval osobitne.
+Na LM hash v súčasnosti existujú rainbow tabuľky, ktoré (pri veľkosti
+DVD) umožnujú zlomiť všetky heslá kratšie ako 15
+znakov\footnote{Dlhšie heslá sa hashujú iným spôsobom} za pár minút.
