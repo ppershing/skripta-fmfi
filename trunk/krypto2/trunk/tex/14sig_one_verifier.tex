@@ -1,1 +1,120 @@
 \section{Podpisové schémy s určeným overovateľom}
+
+V tejto kapitole sa budeme baviť o podpisových schémach, ktoré fungujú
+tak trochu podobne ako zero knowledge dôkazy -- chceli by sme vedieť
+podpísať správu špeciálne pre jedného overovateľa. Navyše, úplne
+ideálne by bolo, ak by nikto iný okrem neho nebol schopný overiť náš
+podpis a dokonca aby overovateľ nebol schopný dokázať niekomu inému,
+že sme to podpísali my.
+
+Pretože myšlienka určeného overovateľa (designated verifier) je veľmi
+blízka zero knowledge dôkazom, budú aj definície veľmi podobné.
+
+\begin{definicia}[Designated verifier]
+    Uvažujme dve komunikujúce strany -- Alicu $A$ a Boba $B$. Nech
+    $P(A,B)$ je protokol pre Alicu na presvedčenie
+    Boba o pravdivosti nejakého výroku $\Omega$. Môžeme hovoriť, že
+    Bob je určený overovateľ, ak vie produkovať komunikácie, ktorých
+    distribúcia je identická s distrubúciou komunikácii protokolu
+    $P(A,B)$.
+\end{definicia}
+
+Niekedy ale ani táto situácia nestačí. Predstavme si Evu, ktorá sa
+snaží zistiť niečo viac o podpise. Ak je presvedčená, že
+\begin{enumerate}
+    \item Bob sa zdá byť čestný, je nepravdepodobné, že by on
+    vygeneroval falošný podpis.
+
+    \item Ak je Eva predvedčená, že Bob ešte nevidel daný podpis, je
+    tiež evidentné, že podpisovať musela Alica.
+\end{enumerate}
+
+V tomto prípade môžeme zaviesť striktnejšie predpoklady.
+
+\begin{definicia}[Strong designated verifier]
+    Nech $P(A,B)$ je porokol pre Alicu a Boba na ukázanie pravdivosti
+    nejakého výroku $\Omega$. Hovoríme, že $P(A,B)$ je protokol so
+    silne určeným overovateľom, ak ktokoľvek vie produkovať
+    komunikácie, ktoré sú nerozlíšiteľné od komunikácii protokolu
+    $P(A,B)$ pre všetkých s výnikou Boba (pretože Bob musí byť schopný
+    overiť pravosť podpisu).
+\end{definicia}
+
+Samozrejme, celú túto definíciu môžeme zaviesť aj omnoho formálnejšie,
+ako sme robili pri ostatných podpisových schémach
+
+\begin{definicia}[Designated verifier signature scheme]
+    Nech $M$ je priestor všetkých možných správ (štandardne
+    $M=\{0,1\}^*$). Podpisová schéma s určeným overovateľom je
+    štvorica algoritmov
+    $\langle Gen, Sig, Verify, Simulate \rangle$ polynomiálnych
+    algoritmov kde
+    \begin{itemize}
+        \item $Gen(1^n)$ je pravdepodobnostný algoritmus ktorý zo
+            vstupu $1^n$ vyrobí štvoricu kľúčov
+            $\langle pk_A,sk_A,pk_B,sk_B \rangle$.
+            Štandardne sa kľúče pre $A$ a $B$ generujú nezávisle a
+            preto je možné tento algoritmus rozdeliť na dva rôzne
+            algoritmy (resp. dvakrát ten istý algoritmus).
+
+        \item $Sig(m,sk_A,pk_B)$ je pravdepodobnostný algoritmus,
+            ktorý na vstupe dostane správu, privátny kľúč Alice a
+            verejný kľúč Boba a na výstupe vegeneruje podpis $\sigma$
+            správy $m$.
+
+        \item $Verify(m,\sigma,sk_B,pk_A)$ je deterministický
+            algoritmus, ktorý zo správy, jej podpisu, verejného kľúča
+            Alice a súkromného kľúča Boba vie rozhodnúť, či bol podpis
+            $\sigma$ správy $m$ podpísaný Alicou a určený pre Boba.
+            Algoritmus vypíše na vstup jeden bit $b$, ktorý je 1 práve
+            vtedy, ak bol podpis korektný.
+
+        \item $Simulate(m,pk_A,sk_B)$ je pravdepodobnostný algoritmus
+            produkujúci podpisy nerozlíšiteľné od podpisov algoritmu
+            $Sig(m,sk_A,pk_B)$.
+            V prípade, že uvažujeme silnú verziu schémy, $Simulate$ na
+            vstupe nedostáva $sk_B$ ale $pk_B$.
+    \end{itemize}
+    Navyše, pre každú štvoricu $\langle pk_A,sk_A,pk_B,sk_B \rangle$
+    vygenerovaný algoritmom $Gen(1^n)$ a pre každú správu $m\in M$
+    musí platiť
+    \begin{equation*}
+        Verify(m, Sig(m,sk_A,pk_B),sk_B,pk_A)=1
+    \end{equation*}
+\end{definicia}
+
+Formálne si teraz môžeme definovať experiment na testovanie, či naša
+podpisová schéma $\Pi$ je podpisová schému s určeným overovateľom.
+Budeme na to používať algoritmus
+\ref{proc:ind-dv}, skrátene IND-DV, ktorý bude fungovať v roli
+rozlišovateľa.
+
+\begin{procedure}[H]
+    \caption{Indistinguishable-DesignatedVerifier($D,\Pi,n$)}
+    \label{proc:ind-dv}
+    $\langle pk_A,sk_A,pk_B,sk_B \rangle \assign Gen_{\Pi}(1^n)$ \;
+    $m \inr M$ \;
+    $b \inr \{0,1\}$ \;
+    \eIf{$b==0$}{$O \assign Sig_\Pi(m,sk_A,pk_B)$}
+        {$O \assign Simulate_\Pi(m,pk_A,sk_B)$}
+    spusť algoritmus $D$ s prístupom ku oráklu $O$. Výsledok nech je
+    $b'$ \;
+    \Return $b==b'$\;
+\end{procedure}
+
+Teraz môžeme hovoriť, že schéma má vlastnost určeného overovateľa, ak
+pre každého polynomiálneho rozlišovateľa platí
+\begin{equation*}
+    Pr[IND-DV(D,\Pi,n)=1] \le \frac{1}{2} + negl(n)
+\end{equation*}
+
+Čitateľ si iste sám vie zobšeobecniť dané definície aj na silnejšiu
+verziu schémy.
+
+\subsection{Schéma od pánov Saeednia, Kremer a Markowitch}
+\todo{}
+
+\todo{co sme mali dalej, potrebujem k tomu zosit s poznamkami}
+
+
+
