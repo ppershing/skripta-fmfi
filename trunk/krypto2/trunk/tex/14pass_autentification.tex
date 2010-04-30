@@ -1,0 +1,68 @@
+\section{Autentizačné protokoly s heslami}
+
+Predstavme si veľmi klasickú situáciu. Použivateľ $A$ sa chce pripojiť
+na server $S$ , čo obnáša samozrejme potvrdenie vlastnej identity.
+V dnešnom svete je asi najbežnejšie overenie identity cez kombináciu
+uživateľského mena a hesla $P$. A následne počas tohoto overenia
+by sme chceli aj vygenerovať kľúč pre šifrovanie dáť počas nasledovnej
+komunikácie (session key $K$).
+
+Pokiaľ ale navrhneme protokol zle narážame na jeden problém. Priestor
+hesiel, ktoré sa bežne používajú je dosť malý. Na ten sa dá dosť úspešne
+útočiť, či už úplným preberaním alebo slovníkovým útokom (keďže veľa použivateľov
+má heslá, ktoré sú zmysluplné slová). Demonštrujme si to na jednoduchom
+príklade protokolu:
+\begin{enumerate}
+\item $A \to S\colon A$ - uživateľ povie svoje meno
+\item $S \to A\colon E_p(K)$ - server pomocou hesla zašifruje session key
+\item $A \to S\colon E_k(msg)$ - uživateľ zašifruje vopred dohodnutú správu, aby ukázal, že dostal správny kľúč
+\end{enumerate}
+
+Tento protokol má niekoľko problémov. Okrem toho, že je náchýlný
+na útok opakovaním, tak po zachytení druhej a tretej správy vieme úspešne útočiť
+preberaním všetkých hesiel, keďže pre každé heslo, vieme povedať, či je správne alebo nie.
+
+\subsection{EKE protokol}
+
+Trochu lepším prístupom je EKE (Encrypted key exchange) protokol vymyslený 
+v roku 1992. Má viacero variantov. Jednou z nich je napríklad DHEKE:
+
+\begin{enumerate}
+\item $A\to S\colon A, E_p(g^x)$
+\item $S\to A\colon E_p(g^y), E_K(N_S)$, kde $K = g^{xy}$
+\item $A\to S\colon E_K(N_A, N_S)$
+\item $S\to A\colon E_K(N_A)$
+\end{enumerate}
+
+Čiže v podstate prebehne DH algoritmus, ktorý je ale šifrovaný heslom a navyše
+si uživateľ a server vymenia príležitostné slová.
+Iné varianty EKE môžu fungovať bez výmeny príležitostných slov prípadne využijú asymetrické
+šifrovanie ($A\to S\colon A, E_p(pk_a)$; $S\to A\colon E_p(E_{pk_a}(K))$).
+
+Tento protokol sa zdá byť bezpečný, keďže útočník po odposluchu sekvencie nie je schopný
+robiť slovníkový útok. A šifrovanie heslom navyše zabraňuje man-in-the-middle útoku.
+
+Ale je tu niekoľko problémov. Jednak $pk_a$, resp. $g^x$ musia byť úplne náhodne.
+Napríklad verejný kľúč RSA $(n,e)$ je úplne nevhodný, keďže v ňom platí, že $e$ je nepárne
+a nesúdeliteľný s $n$. Z tejto znalosti vie útočník po vyskúšaní všetkých hesiel približne polovicu vylúčiť.
+Pokiaľ odpočuje viac konverzácií, tak sa časom dostane k správnemu heslu. Tomuto sa hovorí partitioning attack.
+Podobná situácia je pri $g^x \pmod m$, kde niektoré hodnoty nemôžeme vôbec dostať a toto vie útočník
+rozoznať.
+
+A navyše je tu ďalší problém. Server musí udržiavať hesla v otvorenej podobe, čo má dosť
+veľké bezpečnostné problémy.
+
+Tento problém sa snaží riešiť Augmented EKE protokol (A-EKE). Zoberme si funkciu, ktorá
+nám z hesla vygeneruje kľúče pre asymetrické šifrovanie: $(sk_a, pk_a) = f(P)$. 
+Server si uloží iba hodnotu $pk_a$. Navyše požadujeme, aby sa dalo šifrovať aj pomocou
+$sk_a$, aj pomocou $pk_a$ (chceme obojsmernú schému ako je napr. RSA). Nasledne vieme v protokole
+nahradiť šifrovanie pomocou hesla šifrovaním pomocou asymetrickej šifry nasledovne:
+\begin{enumerate}
+\item $A\to S\colon A, E_{sk_a}(g^x)$
+\item $S\to A\colon E_{pk_a}(g_y), E_K(N_S)$ (server pozná len $pk_a$, $A$ vie dešifrovať aj pomocou $sk_a$)
+\item $A\to S\colon E_K(N_S, N_A)$
+\item $S\to A\colon E_K(N_A)$
+\item $A\to S\colon E_K(E_{sk_a}(K))$ - tento krok je tu navyše, slúži nato, aby útočník pokiaľ získa $pk_a$ sa nevedel vložiť do komunikácie
+\end{enumerate}
+
+\todo{SRP}
