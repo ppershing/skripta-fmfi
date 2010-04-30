@@ -35,6 +35,12 @@ rezolventy.
     Špeciálne, prázdnu substitúciu označíme ako $\eps$.
 \end{poznamka}
 
+\begin{poznamka}
+    Je dôležité si všimnúť, že poradie prvkov v definícii substitúcie je
+    čisto antiintuitívne -- človek by očakával ``premenná/výraz ktorým ju
+    máme nahradiť'' a nie ``výraz/premenná''.
+\end{poznamka}
+
 \begin{priklad}
     Jedna substitúcia môže byť napr.
     $\alpha = \{ f(z)/x,\ y/z\}$, teda $x$ nahrádzame za $f(z)$ a
@@ -132,42 +138,109 @@ substitúcií.
     najvšeobecnejší unifikátor.
 \end{poznamka}
 
-\startFIXME
-\paragraph{Definícia} Majme množinu výrazov $\{ E_1, E_2, \ldots, E_n\}$,
-$\theta$ je ľubovoľný unifikátor pre množinu uvedených výrazov. Unifikátor
-$\sigma$ pre množinu výrazov $\{E_1, E_2, \ldots, E_n\}$ nazveme
-\emph{najvšeobecnejší unifikátor}, ak pre $\theta$ platí $\theta = \sigma \circ
-\lambda$, kde $\lambda$ je vhodná substitúcia.
+\begin{definicia}[Najvšeobecnejší unifikátor]
+    Majme množinu výrazov $S=\{ E_1, E_2, \ldots, E_n\}$.
+    Unifikátor $\sigma$ pre množinu výrazov $S$ nazveme 
+    najvšeobecnejší unifikátor, ak pre ľubovoľnú unifikátor $\theta$
+    množiny $S$ platí, že existuje substitúcia 
+    $\lambda_{\theta}$ taká, že $\theta = \sigma \circ \lambda_{\theta}$.
+\end{definicia}
 
-\par Uvažujme výrazy $P(a)$, $P(x)$ Pozerajme sa na ne ako na konečnú
-postupnosť symbolov -- odlišujú sa akurát v treťom symbole. Toto je prvá
-diferencia. Vo všeobecnosti môže byť týchto výrazov $n$.
+\medskip
+Pri hľadaní unifikátorov budeme pozerať na rozdiely vo výrazoch.
+Uvažujme napríklad výrazy $P(a)$, $P(x)$.
+Pozerajme sa na ne ako na konečnú postupnosť symbolov -- 
+odlišujú sa akurát v treťom symbole. Toto je prvá odlišnosť/diferencia.
+Vo všeobecnosti môže byť týchto výrazov viacej a preto si zadefinujeme
+diferenú množinu.
 
-\paragraph{Definácia} Nech $W$ je neprázdna množina výrazov. \emph{Diferenčnú
-množinu}
-pre množinu výrazov $W$ dostávame tak, že na prvú pozíciu (zľava) vypíšem všetky
-tie výrazy, ktoré sa líšia. 
+\begin{definicia}[Diferenčná množina]
+Nech $W$ je neprázdna množina výrazov.
+Diferenčnú množinu pre množinu výrazov $W$ dostávame tak, 
+že na výrazy sa pozrieme ako na postupnosti symbolov, nájdeme prvú pozíciu
+(zľava), na ktorej sa líšia a tieto rozdielne výrazy vypíšeme.
+\end{definicia}
 
-\paragraph{Príklad} Majme množinu $W = \{P(x,\underline{f(y,z)},
-P(x,\underline{a}), P(x,\underline{g(h(k(x)))}) \}$
-Diferenčnou množinou bude $D= \{ f(y,z), a, f(h(k(x)))\}$. 
+\begin{poznamka}[Nebolo na prednáške]
+    Iný (a podľa mňa lepší) pohľad na to, ako získať diferenčnú množinu je
+    pozrieť sa na stromy daných výrazov a začať ich naraz rekurzívne
+    prehľadávať zľava doprava až narazíme na vrchol, ktorý je v niektorom
+    výraze iný. Vtedy do diferenčnej množiny zoberieme podstromy daných
+    vrcholov.
+\end{poznamka}
+
+\begin{priklad}
+    \label{prikl:dif1}
+    Majme množinu $W = \{P(x,f(y,z),\ P(x,a),\ P(x,g(h(k(x))))\}$.
+    Nájdeme prvý pozíciu na ktorej sa líšia:
+    $\{P(x,\underline{f(y,z)},\ P(x,\underline{a}),\
+    P(x,\underline{g(h(k(x)))}) \}$.
+    Diferenčnou množinou bude množina líšiacich sa podvýrazov, teda
+    $D= \{ f(y,z),\ a,\ f(h(k(x)))\}$. Jej grafická konštrukcia je na
+    obrázku \ref{fig:dif1}.
+    \begin{figure}[h]
+        \subfigure[$P(x,f(y,z))$]{
+            \includegraphics{img/12/diferencia.1.mps}
+        }
+        \subfigure[$P(x,a)$]{
+            \includegraphics{img/12/diferencia.2.mps}
+        }
+        \subfigure[$P(x,g(h(k(x))))$]{
+            \includegraphics{img/12/diferencia.3.mps}
+        }
+
+        \caption{Ukážka diferenčnej množiny z príkladu \ref{prikl:dif1}}
+        \label{fig:dif1}
+    \end{figure}
+\end{priklad}
+
+\begin{priklad}[nebol na prednáške]
+    \label{prikl:dif2}
+    Uvažujme $W=\{P(a,f(a),f(g(y))),\ P(a,f(a),f(u))\}$.
+    Diferenčná množina je $D=\{g(y),u\}$ a grafické znázornenie je na
+    obrázku \ref{fig:dif2}.
+    \begin{figure}[h]
+        \subfigure[$P(a,f(a),f(g(y)))$]{
+            \includegraphics{img/12/diferencia.11.mps}
+        }
+        \subfigure[$P(a,f(a),f(u))$]{
+            \includegraphics{img/12/diferencia.12.mps}
+        }
+
+        \caption{Ukážka diferenčnej množiny z príkladu \ref{prikl:dif2}}
+        \label{fig:dif2}
+    \end{figure}
+\end{priklad}
+
+\begin{poznamka}
+    Ďo diferenčnej množiny zakaždým vyberáme iba jednu (prvú) nezhodu.
+    Napríklad pre $W=\{P(x,y,z),\ P(y,f(a),g(x,y))\}$ je diferenčná množina
+    iba $D=\{x,y\}$.
+\end{poznamka}
 
 \subsection{Unifikačný algoritmus}
+\startFIXME
 
-Kroky:
+Teraz si ukážeme jeden z algoritmov používaných na unifikáciu množiny. Bude
+dookola opakovať nasledujúce kroky:
 \begin{enumerate}
-	\item $k=0, W_0 = W, \sigma_0 = \Sigma$
-	\item Ak $W_k$ je jednotková klauzula, algortimus zakončí svoju činnosť
-	$\sigma_k$ je najvšeobecnejší unifikátor. V opačnom prípade nájdeme $D_k$
-	(diferenčnú množinu) pre $W_k$.
-	\item Ak existujú také premenné $v_k$ a $t_k$ v $D_k$, že $v_k$ je
-	premenná, ktorá sa nevyskytuje v $t_k$, tak prejdeme ku kroku 4. V
-	opačnom prípade algoritmus zakončuje svoji činnosť. Množina $W$ nie je
-	unifikovateľná.
-	\item Nech $W_{k+1} = W_k \{t_k/v_k\}$, $\sigma_{k+1} = \sigma_k \circ
-	\{t_k/v_k\}$ ($W_{k+1} = W_k \sigma_{k+1}$)
+    \item na začiatku polož kolo $k=0$, množinu na unifikovanie 
+        $W_0 = W$ a počiatočnú substitúciu  $\sigma_0 = \eps$.
 
-	\item Vypíšeme hodnoty pre $k+1$ a prejdeme ku kroku 2.
+    \item Ak $W_k$ obsahuje jedinú klauzulu, algortimus zakončí svoju činnosť
+        a $\sigma_k$ je najvšeobecnejší unifikátor.
+        V opačnom prípade nájdeme diferenčnú množinu $D_k$ pre $W_k$.
+
+    \item Ak existujú také elementy $v_k,t_k \in D_k$, že $v_k$ je
+        premenná, ktorá sa nevyskytuje v $t_k$, tak pokračujeme ďalším
+        krokom.
+        V opačnom prípade algoritmus zakončuje svoji činnosť
+        s výsledkom, že množina $W$ nie je unifikovateľná.
+
+    \item Nech $W_{k+1} = W_k \{t_k/v_k\}$, $\sigma_{k+1} = \sigma_k \circ
+    \{t_k/v_k\}$ ($W_{k+1} = W_k \sigma_{k+1}$)
+
+    \item Vypíšeme hodnoty pre $k+1$ a prejdeme ku kroku 2.
 \end{enumerate}
 
 
