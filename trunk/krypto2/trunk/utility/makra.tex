@@ -1,11 +1,11 @@
 % vim: set fdm=marker:
 %% Original by Michal Forisek
 
-\ifx \@RestyleAlgo \@empty
-    \restylealgo{boxed} %% kompatibilita so starou verziou balika
-\else
-    \RestyleAlgo{boxed} %% nastav styl algorithm2e
+\ifx \RestyleAlgo \undefined
+    \def\RestyleAlgo#1{\restylealgo{#1}}
 \fi
+
+\RestyleAlgo{boxed} %% nastav styl algorithm2e
 
 %% zakladne definicie
 \newcommand{\quoteme}[1]{\clqq#1\crqq}
