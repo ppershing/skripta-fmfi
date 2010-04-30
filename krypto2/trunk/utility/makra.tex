@@ -4,11 +4,11 @@
 \ifx \@RestyleAlgo \@empty
     \restylealgo{boxed} %% kompatibilita so starou verziou balika
 \else
-    \restylealgo{boxed} %% nastav styl algorithm2e
+    \RestyleAlgo{boxed} %% nastav styl algorithm2e
 \fi
 
 %% zakladne definicie
-
+\newcommand{\quoteme}[1]{\clqq#1\crqq}
 \def\todo#1{[{\color{red} TODO:} {\bf  #1}]}
 \def\fixme#1{[{\color{red} FIXME:} {\bf  #1}]}
 \def\verify#1{\todo{verify: #1}}
