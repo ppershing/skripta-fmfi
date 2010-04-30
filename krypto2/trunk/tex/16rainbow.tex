@@ -36,7 +36,7 @@ Ukazuje sa, že áno. Ako na to sa dozviete v ďalšom texte.
 
 \subsection{Jednoduchý time-memory tradeoff}
 
-Toto riešenie navrhol pôvodne Martin Hellman.
+Toto riešenie navrhol pôvodne Martin Hellman (\cite{hellman1980}).
 Uvažujme dvojice $\langle x_i, H(x_i) \rangle$.
 Našim cieľom je ich uskladniť tak, aby sme si nemuseli
 pamätať každú hodnotu z každej dvojice. 
@@ -215,20 +215,19 @@ Opäť chceme rozumne riešiť kolízie.
 Skúsime to spraviť tak, aby keď dve reťaze skolidovali,
 tak skolidujú na rovnakom mieste (vďaka tomu nebudú posunuté
 a môžeme detekovať kolíziu). 
-Zoberme si sadu redukčných funkcií $R_1, R_2, \dots, R_{t-1}$.
+Toto riešenie navrhol Oechslin (\cite{Oechslin2003Making}).
+Zoberme si sadu redukčných funkcií ${\color{red}R_1}, {\color{blue}R_2}, \dots, {\color{green}R_{t-1}}$.
 A v každom kroku odvodenia reťaze použijeme inú.
 Dostaneme nasledovnú reťaz:
 \begin{equation*}
-    x_{1,0} \toa{H} H(x_{1,0}) \toa{R_1}
-    x_{1,1} \toa{H} H(x_{1,1}) \toa{R_2}
-    x_{1,2} \toa{H} \dots \toa{R_{t-1}}
+    x_{1,0} \toa{H} H(x_{1,0}) {\color{red} \toa{R_1} }
+    x_{1,1} \toa{H} H(x_{1,1}) {\color{blue} \toa{R_2} }
+    x_{1,2} \toa{H} \dots {\color{green} \toa{R_{t-1}} }
     x_{1, t-1} \toa{H} H(x_{1,t-1})
 \end{equation*}
 
 \begin{poznamka}
-    Ak by sme namiesto šípok $R_1,R_2,R_3,\dots$ použili rôzne farby,
-    dostaneme peknú farebnú reťaz. Teraz už iba stačí voliť farby dúhy
-    a vieme odkiaľ vznikol názov :-).
+	Dúfam, že teraz každý chápe odkiaľ sa vzal názov dúhové tabuľky :)
 \end{poznamka}
 
 Takýchto reťazí si opäť zostavíme $m$. Ako bude prebiehať vyhľadávanie? 
