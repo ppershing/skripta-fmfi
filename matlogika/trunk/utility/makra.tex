@@ -8,6 +8,10 @@
     \vtop{\vskip-1ex \hbox{#1} \vskip 1ex }
 }
 
+\def\itemMath#1{
+    \raisebox{-\abovedisplayshortskip}{\parbox{0.75\linewidth}{#1}}
+}
+
 \renewcommand{\implies}{\rightarrow}
 \newcommand{\then}{\Rightarrow}
 \newcommand{\notmodels}{\nvDash}
