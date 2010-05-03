@@ -111,10 +111,169 @@ pre každého polynomiálneho rozlišovateľa platí
 Čitateľ si iste sám vie zobšeobecniť dané definície aj na silnejšiu
 verziu schémy.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Schéma od pánov Saeednia, Kremer a Markowitch}
 \todo{}
+\cite{designated_verifier}
 
 \todo{co sme mali dalej, potrebujem k tomu zosit s poznamkami}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Yang, Liao}
+Táto podpisová schéma patrí medzi horúce novinky, pôvodný článok
+\cite{designated_verifier2}
+je z Mája 2010 (ale vyskytla sa aj jeho podoba zo Septembra 2009).
+Vo svojej podstate je podobná predchádzajúcej.
+Uvažujme opäť, že Alica chce poslať Bobovi podpísanú správu.
+Protokol je založený na Diffie-Hellmanovom probléme a má podobnú nosnú
+myšlienku ako DH výmena kľúča.
+Navyše, schéma je navrhnutá tak, aby bola možná extrakcia správy.
+
+Uvažujme prvočísla $p,q$ také, že $q | p-1$. 
+Máme grupu $Z_p^*$.
+K tejto grupe vygenerujeme generátor $g$ jej podgrupy, ktorá má $q$
+prvkov. Uvažujme ďalej haskovaciu funkciu $H$, o ktorej predpokladáme,
+že je odolná voči kolíziam a s výstupom do $Z_q$. Taktiež, o správe
+$m$ predpokladajme, že jej veľkosť je $\log_2 p - \log_2 q$
+bitov.\footnote{V originálnom článku sa uvádza $m\in Z_q$,
+    náš prístup je však vhodnejší pre svoju názornosť a všeobecnosť}
+Toto obmedzenie na veľkosť zavádzame, pretože budeme chcieť, aby
+$m||t$ sa zmestilo do $Z_p^*$ kde $t \in Z_q$.
+
+\begin{poznamka}
+    Je evidentné, že podpísaná správa nemôže byť veľmi veľká.
+    Štandardne však môžeme uvažovať, že
+    pokiaľ nechceme možnosť extrakcie správy, 
+    môžeme podpisovať iba hash správy a nie celú správu.
+\end{poznamka}
+
+Generácia kľčov je štandardná:
+\begin{procedure}
+    \caption{GenYangLiao($p,q,g$)}
+    $x \inr Z_q$\;
+    $y \assign g^x \pmod{p}$\;
+    \Return $sk=x,\ pk=y$\;
+\end{procedure}
 
 
+Podpis budeme generovať nasledovne:
+\begin{procedure}
+    \caption{SignYangLiao()}
+    $t \inr Z_q^*$\;
+    $s \assign H(m||t)$\;    
+    $r \assign (m||t) \cdot y_B^{x_A \cdot s} \pmod{p}$\; 
+    \Return $\sigma=\langle r, s \rangle$\;
+\end{procedure}
+
+Na overovanie použijeme súkromné a verejné kľúče presne obrátene,
+keďže platí $y_B^{x_A} = y_A^{x_B}$.
+
+\begin{procedure}
+    \caption{VerifyYangLiao()}
+    $m'||t \assign r \cdot y_A^{-x_B\cdot s} \pmod{p}$\;
+    \If{$(s \ne H(m||t))$}{
+        Reject\;
+    }
+    Accept\;
+\end{procedure}
+
+Nato, aby sme tvrdili, že schéma je designated verifier nám treba
+dokázať tieto 3 vlastnosti
+\begin{enumerate}
+    \item Schéma je bezpečná, teda korektný podpis pre Boba vie
+        vyrobiť iba Alica.
+
+    \item Podpis vie overiť len Bob \fixme{toto v clanku neni a myslim
+        ze to implikuje strong designated verifier}
+
+    \item Bob vie simulovať podpisy a teda nemôže byť schopný nikoho
+        presvedčiť o tom, že správu podpísala Alica.
+\end{enumerate}
+
+
+\begin{lema}
+    Prezentovaná schéma je bezpečná.
+\end{lema}
+\begin{dokaz}
+    \todo{}
+\end{dokaz}
+
+\begin{lema}
+    Overiť pravdivosť podpisu vie jedine Bob.
+\end{lema}
+\begin{dokaz}
+    \fixme{}
+\end{dokaz}
+
+\begin{lema}
+    Prezentovaná schéma je designed verifier schéma.
+\end{lema}
+\begin{dokaz}
+    Ako dôkaz ukážeme, že Bob vie generovať platné podpisy na
+    nerozoznanie od skutočných. Prvou časťou je simulačný algoritmus
+    -- procedúra \ref{proc:simyang}
+    \begin{procedure}
+        \caption{SimulateYangLiao()}
+        \label{proc:simyang}
+        $t' \inr Z_q^*$\;
+        $s' \assign H(m||t')$\;
+        $r' \assign (m||t') \cdot y_A^{x_B \cdot s} \pmod{p}$\; 
+        \Return $\sigma'=\langle r',s' \rangle$\;
+    \end{procedure}
+
+    Malo by byť evidentné, že simulačný algoritmus generuje iba platné
+    podpisy, nakoľko $y_A^{x_B} = y_B^{x_A}$.
+    Otázkou teda ostáva, či sedia aj pravdepodobnostné
+    distribúcie vygenerovaných podpisov. Ak hej, tak môžeme prehlásiť,
+    že schéma je designated verifier.
+    Uvažujme, že
+    $\overline{\sigma}=\langle \overline{r}, \overline{s} \rangle$ 
+    je správa, ktorá je
+    náhodne vybraná spomedzi všetkých platných podpisov.
+    Uvažujme najskôr podpis $\sigma = \langle r,s \rangle$ od Alice.
+    Platí
+    \begin{equation*}
+        Pr[\langle r,s \rangle = 
+            \langle \overline{r}, \overline{s} \rangle] =
+        Pr\left[ \left.
+            \begin{array}{l}
+            H(m||t) = \overline{s} \quad \land \\ 
+            (m||t) \cdot y_B^{x_A \cdot s} = \overline{r}
+            \end{array} \right| t \inr Z_q^*
+        \right] = Pr[t = \overline{t} | t \inr Z_q^*] = \frac{1}{q-1}
+    \end{equation*}
+    Bolo by dobré vysvetliť predposlednú rovnosť, keďže nie je úplne
+    transparentná. K podpisu $\overline{\sigma}$ existuje
+    $\overline{t}$, podľa ktorého bol podpis zostrojený.
+    Uvažujme, že $t \ne \overline{t}$. 
+    Ak $H(m||t) \ne H(m||\overline{t})$, podpisy sú určite rôzne,
+    pretože $s \ne \overline{s}$. Naopak, v nepravdepodobnom prípade,
+    že nastane kolízia a $s = \overline{s}$, muselo by platiť
+    $(m||t) \cdot y_B^{x_A \cdot s} = (m||t') \cdot y_B^{x_A \cdot s}
+    \pmod{p}$, čo ale implikuje $(m||t) = (m||t') \pmod{p}$.
+    Posledná rovnosť ale určite nemôže nastať, pokiaľ platí, 
+    že zreťazenie $m||t$ nemá viac bitov ako číslo $p$.
+    To sme ale na začiatku zakázali. Preto jediná možnosť,
+    kedy sa podpisy $\sigma,\overline{\sigma}$ rovnajú je ak 
+    $t=\overline{t}$.
+     
+    Podobne ako sme vypočítali pravdepodobnosť zhody podpisu Alice s
+    náhodnou korektnou správou,
+    vieme vypočítať aj pravdepodobnosť pre zhodu simulovanej
+    správy s náhodnou korektnou správou a vyjde presne rovnako, $1/(q-1)$.
+    Tým pádom je ale schéma perfect\footnote{Inak povedané,
+        s rovnakými pravdepodobnosťami. Tak isto sme to značili aj pri
+        bezznalostných dôkazoch} designated verifier.
+\end{dokaz}
+
+Autori článku tvrdia, že daná schéma je silná schéma s určeným
+overovateľom. Žiaľ, dôkaz tohoto tvrdenia sa im zdal byť natoľko evidentný, 
+že ho z článku vynechali.
+
+\begin{poznamka}
+    Ak sa čitateľovi nepozdáva GDH problém, pretože sa mu zdá byť
+    príliš silný, môže si prečítať o modifikácii Yang-Liaovej schémy,
+    ktorej pri dôkaze bezpečnosti stačí obyčajný DH. Článok tiež
+    obsahuje pekné zhrnutie pojmov z oblasti určeného overovateľa.
+    Takže, enjoy \cite{designated_verifier_stanek}.
+\end{poznamka}
