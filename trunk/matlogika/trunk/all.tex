@@ -1,43 +1,71 @@
 \section {Metóda rezolvent pre logiku 1. rádu}
+
+\begin{definicia}[Spojenie]
+    Nech $C$ je klauzula, ktorá obsahuje dva alebo viac literálov 
+    (a tie pozostávajú z rovnakého predikátu len s inými parametrami).
+    Ak tieto literály majú najvšeobecnejší unifikátor $\sigma$, 
+    tak $C\sigma$ sa nazývame spojením $C$. 
+    
+    Ak $C\sigma$ je jednotková klauzula, tak $C\sigma$ nazývame tiež
+    jednotkovým spojením $C$.
+\end{definicia}
+
+\begin{priklad}
+    Uvažujme klauzulu $C$, ktorá vyzerá nasledovne: 
+    $C = \{ P(x) \lor P(f(y)) \lor \neg Q(x)\}$. Zoberme literály
+    $P(x)$ a $P(f(y))$. Ich najvšeobecnejší unifikátor je
+    $\sigma=\{ f(y) / x \}$. Potom spojenie je 
+    $C\sigma = \{P(f(y)) \lor \neg Q(x) \}$.
+\end{priklad}
+
+\begin{definicia}[binárna rezolventa]
+    Nech $C_1$ a $C_2$ sú dve klauzuly (budeme ich nazývať predpoklady), 
+    ktoré nemajú spoločné premenné. Nech $L_1 \in C_1$ a $L_2 \in C_2$ 
+    sú dva literály. Ak $L_1$ a $\neg L_2$ majú 
+    najvšeobecnejší unifikátor $\sigma$, tak výraz
+    \begin{equation*}
+        (C_1\sigma - L_1\sigma) \union (C_2\sigma - L_2\sigma)
+    \end{equation*}
+    sa nazýva binárnou rezolventou.\footnote{Za pozornosť stojí fakt, že
+    vo všeobecnosti $(C\sigma - L\sigma) \ne (C-L)\sigma$.} 
+    Literály $L_1$ a $L_2$ môžeme vynechať a nazývame ich nadbytočné.
+\end{definicia}
+
+\begin{priklad}
+    Majme $C_1 = P(x) \lor Q(x)$ a $C_2 = \neg P(a) \lor R(x)$, 
+    čo budú predpoklady. Na to, aby sme mohli previesť operáciu
+    binárnej rezolventy, musíme najskôr premenovať premenné v druhom
+    výraze, aby boli rôzne od tých v prvom. Máme teda
+    $C_2' = \neg P(a) \lor R(y)$.
+
+    Uvažujme teraz klauzuly $L_1 = P(x)$ a $L_2 = \neg P(a)$.
+    Ich najvšeobecnejší unifikátor je $\sigma = \{a/x\}$.
+
+    Binárna rezolventa $C_1$ a $C_2$ je
+    \begin{equation*}
+    \begin{split}
+        (C_1\sigma - L_1\sigma) \union (C_2\sigma - L_2\sigma) 
+        &= (\{P(a),\ Q(a))\} - \{P(a)\}) \union
+            (\{\neg P(a),\ R(y)\}-\{\neg P(a)\}) \\
+        &= Q(a)\lor R(y)
+    \end{split}
+    \end{equation*}
+    Nadbytočné literály sú $P(x), \neg P(a)$.
+\end{priklad}
+
+\begin{definicia}[Rezolventa logiky 1. rádu] 
+    Rezolventou z predpokladov $C_1$ a $C_2$ definujeme ako jednu z
+    nasledujúcich binárnych rezolvent:
+    \begin{enumerate}
+        \item Binárna rezolventa $C_1$ a $C_2$
+        \item Binárna rezolventa $C_1$ a spojenia $C_2$
+        \item Binárna rezolventa spojenia $C_1$ a $C_2$
+        \item Binárna rezolventa spojenia $C_1$ a spojenia $C_2$
+    \end{enumerate}
+\end{definicia}
+
 \startFIXME
 
-\paragraph{Definícia:} Nech $C$ je klauzula; ak dva alebo viac literálov (s
-rovnakým znakom predikátu) Majú najvšeobecnejší unifikátor $\sigma$, tak
-$C\sigma$ sa nazýva \emph{spojením $C$}. Ak $C\sigma$ je jednotková klauzula,
-tak $C\sigma$ nazývame \emph{jednotkovým spojením $C$}.
-
-
-\paragraph{Príklad} Uvažujme klauzulu $C$, ktorá vyzerá nasledovne: $C = \{ P(x)
-\lor P(f(y)) \lor \neg Q(x)\}$. 
-
-\paragraph{Definícia:} Nech $C_1$ a $C_2$ sú klauzuly (nazývame ich
-predpoklady), ktoré nemajú spoločné premenné. Nech $L_1 \in C_1$ a $L_2 \in
-C_2$ sú dva literály . Ak $L_1$ a $\neg L_1$ majú najvšeobecnejší unifikátor
-$\sigma$, tak:
-$$(C_1\sigma - L_1\sigma) \lor (C_2\sigma - L_2\sigma)$$
-
-sa nazýva binárnou rezolventou ..... $C_1$ a $C_2$. Literály $L_1$ a $L_2$ nazývame
-nadbytočné a môžu sa odstrániť.
-
-\paragraph{Príklad} $C_1 = p(x) \lor Q(x), C_2 = \neg P(x) \lor R(x)$, $C_1$,
-$C_2$ -- predpoklady. $C_2 = \neg P(a) \lor R(y)$.
-
-$$L_1 = P(x), L_2 = \neg P(x)$$
-$$\neg L_2 = P(x)$$
-$$L_1, \neg L_2, \sigma = \{a/x\}$$
-
-Binárna rezolventa $C_1$ a $C_2$ $(C_1\sigma - L_1\sigma) \lor (C_2\sigma -
-L_2\sigma) = (\{P(a),Q(a))\} - \{P(a)\}) \lor (\{\neg P(a),R(y)(\}-\{\neg
-P(a)\}) = \{Q(a)\lor R(y)\}$
-
-\paragraph{Definícia} Rezolventou z predpokladov $C_1$ a $C_2$ je jedna z
-nasledujúcich rezolvent:
-\begin{enumerate}
-	\item Binárna rezolventa $C_1$ a$C_2$
-	\item Binárna rezolventa $C_1$ a spojenia $C_2$
-	\item Binárna rezolventa spojenia $C_1$ a $C_2$
-	\item Binárna rezolventa spojenia $C_1$ a spojenia $C_2$
-\end{enumerate}
 
 \paragraph{Príklad} $$C_1 = P(x) \lor P(f(y))\lor Rg(y))$$
 $$ C_2 = \neg P(f(g(a)) \lor Q(b)$$
