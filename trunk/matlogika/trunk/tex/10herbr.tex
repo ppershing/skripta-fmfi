@@ -298,7 +298,7 @@ Môžu nastať dva prípady:
 %%% {{{
     Máme $S'$, ktoré vzniklo vynechaním klauzúl obsahujúcich $L$ z $S$.
     Ak $S'=\emptyset$, každá klauzula z $S$ obsahuje $L$ 
-    (je tvaru $L \lor \square$).
+    (je tvaru $L \lor \eps$).
     Stačí nám ohodnotenie, kedy $L$ je pravdivé, čo zabezpečí
     pravdivosť celého výroku. 
 
@@ -357,7 +357,7 @@ Tvrdíme, že $S$ nie je splniteľná $\iff$ $S'$ nie je splniteľná.
 \subsubsection{Pravidlo rezu}
 Predpokladame, že množinu $S$ vieme vyjadriť v tvare
 \begin{equation*}
-    (A_1 \lor L) \land \ldots \land (A_m \lor L) \land 
+    (A_1 \lor L) \land \ldots \land (A_m \lor L) \quad \land \quad
     (B_1 \lor \neg L) \land \ldots \land (B_n \lor \neg L) \land R
 \end{equation*}
 pričom $A_i, B_i$ neobsahujú $L$ ani $\neg L$.
@@ -370,59 +370,137 @@ Tieto množiny budeme tiež nazývať množiny rezu.
 Tvrdíme, že $S$ nie je splniteľná $\iff$ $S_1 \lor S_2$ nie je
 splniteteľná, čo je to isté ako že $S_1,S_2$ nie sú splniteľné.
 
-\startFIXME
-
 \begin{dokaz}
-    Pravidlo rezu. Mám množinu $S$, popísaným spôsobom som zostrojil
-    $S_1$ a $S_2$. Chceme ukázať, že $S$ nie je splniteľná $\iff$ $S_1 \lor
-    S_2$. Predpokladajme, že $S$ je splniteľná. Potom $S_1 \lor S_2$ je
-    splniteľná, teda aspoň jeden člen disjunkcie je splniteľný. Keď pridám
-    modelu $S_1$ negované $B$, dostávam model pre $S$. Taktiež, keď je
-    splnená $S_2$, má nejaký model $\mathcal{M_2}$. Keď k nemu pridám $B$,
-    dostávam model pre $S$.
+    %%% {{{
+    \begin{itemize}
+    \item[$\Rightarrow:$] Dokazujme sporom.
+        Nech $S_1 \lor S_2$ je splniteľná, 
+        teda aspoň jeden člen disjunkcie je splniteľný.
+        Bunv nech je splniteľná množina $S_1$. Teda, máme pre ňu model
+        $\mathcal{M}_1$. Keď pridáme modelu $\mathcal{M}_1$ 
+        klauzulu $\neg L$, dostávame model pre $S$.
 
-    \par Obrátene, predpokladajme, že $S_1$ alebo $S_2$ nie je splniteľná. Z
-    toho vyplýva, že $S$ nie je splniteľná. Pre spor predpokladajme, že $S$
-    je splniteľná. Pozrime sa, ako vyzerá $S$ -- všetky konjunktívne členy
-    musia byť splnené a teda buď platí $\neg L$ alebo $L$. Vždy dospievam do
-    sporu.
+    \item[$\Leftarrow:$] Pre spor predpokladajme, že $S$ je splniteľná.
+        $S$ má tým pádom model, označme ho $\mathcal{M}$.
+        Model $\mathcal{M}$ obsahuje buď $L$ alebo $\neg L$.
+        Ak obsahuje $L$, $\mathcal{M}$ vyhovuje $S_2$. Naopak, ak
+        obsahuje $\neg L$, model $\mathcal{M}$ vyhovuje
+        $S_1$.\footnote{Na prednáške boli vymenené $S_1,S_2$. Som si
+        však takmer istý, že správny dôkaz je tento.}
+    \end{itemize}
+    %%% }}}
 \end{dokaz}
 
-\paragraph{Záver} Najvšeobecnejšie je pravidlo rezu, ktoré pokrýva aj všetky
-ostatné prípady.
 
-\paragraph{Príklad} Majmne množinu $S=(P \lor Q \lor \neg R) \land (P \lor \neg
-Q) \land \neg P \land R \land U$. Ukážte, že množina klauzúl nie je splniteľná.
-Použijeme pravidlo 2 s $\neg P$. Dostávam $Q\land\neg R) \land \neg  \land R
-\land U$. Na túto množinu klauzúl použijem pravidlo 2 s $\neg Q$. Dostávam $\neg
-R \land R \land U$, čo je $\square \land U \square$.
+\begin{definicia}[prázdna klauzula]
+    Označme prázdnu nesplniteľnú klauzulu ako $\eps$.\footnote{Na
+    prednáške prezentované ako $\square$.}
+    Ďalej, označme prázdnu splniteľnú klauzulu ako $\neg
+    \eps$.\footnote{Na prednáške vôbec nebolo, ale hodí sa.}
+    Potom platí
+    \begin{align*}
+        \equiv \eps \lor A &\equiv A \\
+        \neg \eps \land A &\equiv A \\
+        \eps \land \dots &\equiv false \\
+        \neg \eps \lor \dots &\equiv true
+    \end{align*}
+\end{definicia}
 
+\begin{priklad}
+    Majme množinu $S$ vyjadrenú v tvare
+    $S=(P \lor Q \lor \neg R) \land (P \lor \neg Q) 
+        \land \neg P \land R \land U$.
+    Ukážeme, že množina klauzúl nie je splniteľná.
 
+    \begin{itemize}
+    \item $S=(P \lor Q \lor \neg R) \land (P \lor \neg Q) 
+            \land \neg P \land R \land U$.
 
+    \item $(Q \lor \neg R) \land  \neg Q \land R \land U$ -- použili
+        sme pravidlo jednoliterálových klauzúl (PJK) pre $\neg P$.
 
-\paragraph{Príklad} (7) $S=(P \lor Q) \land \neg Q \land ( \neg P \lor Q \lor \neg
-R)$. Ukážte, že množina klauzúl $S$ je splniteľná.
-\par Pravidlo 2 s $\neg Q$: $(P \lor Q) \land ( \neg P \lor Q \lor \neg R)$ \\
-$P \land (\neg P \lor \neg R)$ \\
-$(P \land \neg P) \lor (P \land \neg R)$ (distributívnosť) \\
-$P \land \neg L, I=\{P,\neg Q, \neg R\}$
+    \item $\neg R \land R \land U$ -- použili
+        sme PJK pre $\neg Q$.
 
-\paragraph{Príklad} (8) $S=(P\lor \neg Q) \land (\neg P \lor Q) \land (Q \lor
-\neg R) \land (\neg Q \lor \neg R)$. Zistite, či množina je alebo nie je
-splniteľná.
-\par vytvoríme si mnonžiny podľa pravidla 4: \\
-$$(P\land \neg Q) \land (Q \lor \neg R)  \land (\neg Q \lor \neg R)$$
-$$(\neg P \lor Q) \land (Q \lor \neg R) \land (\neg Q \lor \neg R)$$
+    \item $\eps \land U$ -- použili
+        sme PJK pre $R$. Je dôležité,
+        že klauzulu $\neg R = \eps \lor \neg R$ 
+        sme ale nemohli škrtnúť úplne, ostalo nám po nej $\eps$.
 
-\par
-$$S_1 = \neg Q \land (Q \lor \neg R) \land (\neg Q \lor \neg R)$$
-$$S_2 = Q \land (Q \lor \neg R) \land (\neg Q \lor \neg R)$$
+    \item $\eps \land \dots$ je vždy nesplniteľné a teda $S$ nie je
+        splniteľná
+    \end{itemize}
+\end{priklad}
 
-($S_1$ a $S_2$ sú množiny rezu)
-Na množiny môžem použiť pravidlo 2 -- s $Q$ a $\neg Q$. Dostávam $\neg R \lor
-R$, čo je splniteľná klauzula.
+\begin{priklad}
+    Uvažujme $S=(P \lor Q) \land \neg Q \land ( \neg P \lor Q \lor \neg R)$.
+    Ukážte, že množina klauzúl $S$ je splniteľná.
 
-\paragraph{Príklad} (9) $S=(P \lor Q) \land (P \lor \neg Q) \land (R \lor Q)
-\land (R \lor \neg Q)$. $P$ je čistý literál; použijeme pravidlo 3:
-$S': (R \lor Q) \land (R \lor \neg Q)$. \\
-$\fbox{P,R}$ \\
+    \begin{itemize}
+    \item $S=(P \lor Q) \land \neg Q \land ( \neg P \lor Q \lor \neg R)$.
+    \item $P \land (\neg P \lor \neg R)$ -- PJK pre $\neg Q$.
+    \item $\neg R$ -- PJK pre $P$.
+    \item Uvažujme interpretáciu $I=\{P,\neg Q,\neg R\}$. S je
+        splniťeľná pri interpretácii $I$.
+    \end{itemize}
+\end{priklad}
+
+\begin{priklad}
+    Nech je $S=(P \lor Q) \land (P \lor \neg Q) \land
+        (R \lor Q) \land (R \lor \neg Q)$.
+    Ukážte, že $S$ je splniteľná.
+
+    \begin{itemize}
+    \item $S=(P \lor Q) \land (P \lor \neg Q) \land
+            (R \lor Q) \land (R \lor \neg Q)$.
+    
+    \item $(R \lor Q) \land (R \lor \neg Q)$ -- pravidlo čistých
+    literálov pre $P$
+
+    \item $\neg \eps$ -- PČL pre $R$. Je dôležité si všimnúť, že nám
+        ostalo splniteľné $\neg \eps$ a nie $\eps$.
+    \item Pre interpretáciu $I=\{R,P\}$ je množina $S$ splnená.
+    \end{itemize}
+\end{priklad}
+
+\begin{priklad}
+    Uvažujme $S=(P \lor \neg Q) \land (\neg P \lor Q) \land 
+                (Q \lor \neg R) \land (\neg Q \lor \neg R)$.
+    Zistite, či množina je alebo nie je splniteľná.
+
+    \begin{itemize}
+    \item vytvoríme si mnonžiny podľa pravidla rezu:
+        \begin{align*}
+            (P\land \neg Q) \land (Q \lor \neg R)  \land 
+            (\neg Q \lor \neg R) \\
+            (\neg P \lor Q) \land (Q \lor \neg R) \land 
+            (\neg Q \lor \neg R)
+        \end{align*}
+        A dostávame množiny rezu
+        \begin{align*}
+            S_1 &= \neg Q \land (Q \lor \neg R) \land 
+                (\neg Q \lor \neg R)\\
+            S_2 &= Q \land (Q \lor \neg R) \land 
+                (\neg Q \lor \neg R)
+        \end{align*}
+
+    \item Na množinu $S_1$ použijeme PJK s literálom $\neg Q$ a
+        dostávame $\neg R \land \neg R$.
+    \item Podobne, ak na množinu $S_2$ použijeme PJK s $Q$, opäť
+        dostávame $\neg R \land \neg R$.
+    \item $\neg R \land \neg R$ je splniteľná a preto je celá
+        množina $S$ splniteľná.
+    \end{itemize}
+\end{priklad}
+
+\begin{priklad}
+    Majme $S=(P \lor Q) \land (P \lor \neg Q) \land 
+        (R \lor Q) \land (R \lor \neg Q)$. 
+    
+    \begin{itemize}
+    \item $P$ je čistý literál, použijeme PČL:
+        $(R \lor Q) \land (R \lor \neg Q)$.
+    \item $R$ je čistý literál a dostávame prázdny splniteľný výraz 
+        $\neg \eps$
+    \end{itemize}
+\end{priklad}
