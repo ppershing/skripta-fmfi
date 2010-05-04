@@ -1,55 +1,49 @@
 \section{Metóda rezolvent pre výrokovú logiku}
-\startFIXME
 
-\paragraph{Definícia} Majme $C_1$ a $C_2$ -- ľubovoľné klauzuly, $L_1$ je
-literál z $C_1$ a je kontrárny literálu $L_2$, ktorý sa vyskytuje v $C_2$. Ak z
-$C_1$ vynecháme $L_1$ a z $C_2$ vynecháme $L_2$. Ak z tých častí, ktoré
-zostávajú, zostrojíme disjunkciu $C_1 \lor C_2$, táto sa nazýva
-\emph{rezolventa} $C_1$ a $C_2$.
+\begin{definicia}[Rezolventa]
+    Nech $C_1$ a $C_2$ sú ľubovoľné klauzuly, 
+    $L_1$ je literál z $C_1$, $L_2$ je literál z $C_2$ a literály $L_1,L_2$
+    sú navzájom kontrátne. Vynechajme $L_1$ z $C_1$ a $L_2$ z $C_2$,
+    dostaneme tak klauzuly $C_1', C_2'$.
+    Disjunkciu $C_1' \lor C_2'$ nazveme rezolventou klauzúl $C_1$ a $C_2$.
+\end{definicia}
 
-\paragraph{Príklad}
-$$
-\begin{array}{ll}
-C_1: P \lor R, & C_2: \neg P \lor Q \\
-P \in C_1 & C_1': R \\
-P \in C_2 & C_2': Q \\
-\end{array}
-$$
+\begin{priklad}
+    Majme $C_1 = P \lor R$ a $C_2 = \neg P \lor Q$. Uvažujme kontrárnu dvojicu
+    $P,\neg P$. Potom $C_1' = R$, $C_2'=Q$. Rezolventa je $R \lor Q$.
+\end{priklad}
 
-\paragraph{Príklad}
-$$C_1: \neg P \lor Q\lor R$$
-$$C_2: \neg Q \lor S$$
-Kontrárna dvojica $\neg Q$, $Q$; rezolventa je teda:
-$$C_1, C_2: \neg P \lor R \lor S$$
+\begin{priklad}
+    Majme $C_1= \neg P \lor Q\lor R$, $C_2 = \neg Q \lor S$.
+    Kontrárna dvojica je $\neg Q$, $Q$ a rezolventa $\neg P \lor R \lor S$.
+\end{priklad}
 
-\paragraph{Príklad}
+\begin{priklad}
+    Majme klauzuly $C_1: \neg P \lor Q$ a  $C_2: \neg P \lor R$.
+    Tieto klauzuly nemajú rezolventu.
+\end{priklad}
 
-$$C_1: \neg P \lor Q$$
-$$C_2: \neg P \lor R$$
+\begin{veta}
+    Nech $C_1$ a $C_2$ sú klauzuly a nech $C$ je ich rezolventa.
+    Potom $C$ je logickým dôsledkom klauzúl $C_1$ a $C_2$.
+\end{veta}
+\begin{dokaz}
+    Nech $C_1 = L \lor C_1'$, $C_2 = \neg L \lor C_2'$ a 
+    $C = C_1' \lor C_2'$.
+    Máme ukázať, že z pravdivosti $C_1, C_2$ vyplýva pravdivosť $C$.
 
-\paragraph{Veta} Nech $C_1$ a $C_2$ sú klauzuly, $C$ je rezolventa klauzúl
-$C_1$, $C_2$. Potom $C$ je logickým dôsledkom klauzúl $C_1$ a $C_2$
-$$A_1, A_2, \ldots, A_n, B$$
-$$
-\begin{array}{ll}
-A_1 \land A_2 \land \ldots \land A_n \implies B & \equiv 1	\\
-\provable A_1 \land A_2 \land \ldots \land A_n \implies B & \\
-A_1 \land A_2 \land \ldots \land A_n \land \neg B & \equiv 0	\\
-\end{array}
-$$
-\paragraph{Dôkaz} $C_1$, $C_2$, $C$
+    Uvažujme interpretáciu $I$ takú, že $C_1$ a $C_2$ sú v nej pravdivé.
+    Rozoberieme si 2 možnosti:
+    \begin{itemize}
+    \item $L$ nie je pravdivý literál v $I$.
+        Potom musí platiť, že $C_1'$ je pravdivý v $I$. Tým pádom je ale aj
+        $C$ pravdivé v $I$.
 
-
-$$
-\begin{array}{lll}
-C_1 &= &L \lor C_1' \\
-C_2 &=& \neg L \lor C_2' \\
-C   &=& C_1' \lor C_2'	\\
-\end{array}
-$$
-$C_1$ a $C_2$ sú pravdivé a klauzula $C$ je logickým dôsledkom $C_1$ a $C_2$.
-
-\stopFIXME
+    \item $\neg L$ nie je pravdivý literál v $I$.
+        Potom evidentne $C_2'$ je pravdivý v $I$. A zo toho vyplýva, že aj
+        $C$ je pravdivé v $I$.
+    \end{itemize}
+\end{dokaz}
 
 \begin{poznamka}
     Nech $C_1$, $C_2$ sú jednotkové klauzuly. Ak $C_1,C_2$ majú
