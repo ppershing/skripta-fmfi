@@ -4,27 +4,29 @@ Vo výrokovej logike nebol problém hľadať kontrárne dvojice.
 Zložitejšia situácia ale nastáva v prípade predikátovej logiky
 prvého rádu. A práve tomu sa budeme venovať v tejto kapitole.
 Uvažujme napríklad dve klauzuly
-$C_1=P(x) \lor Q(x), C_2 = \neg P(f(x)) \lor R(x)$.
+$C_1=P(x) \lor Q(x)$, $C_2 = \neg P(f(x)) \lor R(x)$.
 V nich neexistuje žiadna kontrárna dvojica. Ak však nahradím premennú
-$x$ za $f(a)$ v prvej klauzule a za $a$ v druhej,
+$x$ za term $f(a)$ v prvej klauzule a za term $a$ v druhej klauzule,
 dostaneme základné inštancie
-$C_1'=P(f(a)) \lor Q(f(a)), C_2'=\neg P(f(a)) \lor R(a)$.
+$C_1'=P(f(a)) \lor Q(f(a))$, $C_2'=\neg P(f(a)) \lor R(a)$.
 Teraz môžeme definovať rezolventu; bude to $Q(f(a)) \lor R(a)$.
 Mohli by sme postupovať aj všeobecnejšie -- nahraďme $x$ za $f(x)$ v
 prvej klauzule a dostávame
-$ C_1^*= P(f(x)) \lor Q(f(x)), C_2^*= \neg P(f(x)) \lor R(x)$.
+$ C_1^*= P(f(x)) \lor Q(f(x))$, $C_2^*= \neg P(f(x)) \lor R(x)$.
 
 Rezolventa potom bude $C^*= Q(f(x)) \lor R(x)$.
 Vidíme teda, že sme získali 2 rôzne rezolventy, jednu viac všeobecnú
-ako druhú. No a práve v ďalšom texte si formálne zadefinuujeme toto
+ako druhú. No a práve v ďalšom texte si formálne zadefinujeme toto
 dosadzovanie hodnôt a popíšeme spôsob, ako hľadať najvšeobecnejšie
 rezolventy.
 
 \begin{definicia}[Substitúcia]
     Pod substitúciou rozumieme konečnú množinu tvaru:
-    $\{t_1/v_1, \ldots, t_n/v_n\}$, kde každé $v_i$ je premenná a všetky
-    $v_i$ sú navzájom rôzne ($i \in\{1,\dots,n\}$).
-    Ďalej požadujeme, že pre každé $i$ je term  $t_i$ rôzny od $v_i$.
+    $\{t_1/v_1, \ldots, t_n/v_n\}$, kde každé $v_i$ je premenná a
+    $t_i$ je term.
+    Ďalej požadujeme, aby všetky
+    $v_i$ boli navzájom rôzne ($i \in\{1,\dots,n\}$)
+    a aby term $t_i$ bol rôzny od $v_i$.
 
     Ak $t_1, \ldots, t_n$ sú základné inštancie (teda termy bez premenných),
     tak substitúciu nazývame tiež základná substitúcia.
@@ -53,7 +55,7 @@ rezolventy.
     Nech $\theta = \{ t_1/v_1, \dots, t_n/v_n\}$.
     Potom $E\theta$ označuje výraz, ktorý vznikne tak,
     že súčasne vo výraze $E$ nahradíme každý výskyt premenej $v_i$ termom $t_i$
-    pre $i \in \{1,\dots,n\}$.
+    pre $i \in \{1,\dots,n\}$. Takýto výraz nazveme inštanciou $E$.
 \end{definicia}
 
 \begin{priklad}
@@ -225,7 +227,7 @@ Diferenčnú množinu pre množinu výrazov $W$ dostávame tak,
 \end{priklad}
 
 \begin{poznamka}
-    Ďo diferenčnej množiny zakaždým vyberáme iba jednu (prvú) nezhodu.
+    Do diferenčnej množiny zakaždým vyberáme iba jednu (prvú) nezhodu.
     Napríklad pre $W=\{P(x,y,z),\ P(y,f(a),g(x,y))\}$ je diferenčná množina
     iba $D=\{x,y\}$.
 \end{poznamka}
@@ -378,8 +380,10 @@ dookola opakovať nasledujúce kroky:
 
 \begin{dokaz}
     Nech $W$ je unifikovateľná množina a nech $\Theta$ označuje jej
-    ľubovoľný unifikátor. Indukciou ukážeme, že pre každé $k$ 
-    počas výpočtu programu existuje
+    ľubovoľný unifikátor.
+    Označme si počet kôl algoritmu ako $n$.
+    
+    Indukciou ukážeme, že pre každé kolo $k$ počas výpočtu programu existuje
     taká substitácia $\lambda_k$, že $\Theta = \sigma_k \circ \lambda_k$.
 
     \begin{itemize}
@@ -387,36 +391,63 @@ dookola opakovať nasledujúce kroky:
     $\lambda_0$, pre ktorú platí $\Theta = \sigma_0 \circ \lambda_0$.
     V tomto prípade $\sigma_0 = \varepsilon$ a teda $\lambda_0 = \Theta$.
 
-\startFIXME
+    \item Indukčný krok: Predpokladáme, že existuje $\lambda_k$, 
+        pre ktoré platí $\Theta = \sigma_k \circ \lambda_k$.
+        Pozrime sa na množinu $W_{k+1}= W\sigma_{k+1}$.
 
-    \item Indukčný krok: Indukčný predpoklad: $\Theta = \sigma_k \circ
-\lambda_k$ $(0 \leq k \leq n)$. $W_n = W\sigma_n$. Ak $W_n$ je jednotková
-klauzula, tak algoritmus zakončuje svoju činnosť na druhom kroku a $\sigma_n$ je
-najvšeobecnejší unifikátor pre $W$. 
-\par Nech $W_n$ nie je jednotková množina. Potom hľadám diferenčnú množinu $D_n
-$ pre množinu $W_n$. Keď $D_n$ je diferenčná množina pre $W_n$, tak vo $W_n$
-musí existovať premenná -- označme ju $v_n$. Ďalej nech $t_n$ je ľubovoľný výraz
-z $D_n$ rôzny od $v_n$.
+        Ak $W_k$ je jednotková klauzula, tak algoritmus zakončuje 
+        svoju činnosť na druhom kroku a $\sigma_k$ je
+        najvšeobecnejší unifikátor pre $W$. 
 
-$$\Theta = \sigma_n \circ \lambda_n$$ 
-$\Theta$ je unifikátor. Diferenčnú množinu $D_n$ unifikuje substitúcia
-$\lambda_n$. $v_n \lambda_n = t_n \lambda_n$.
+        Nech teda $W_k$ nie je jednotková množina.
+        Potom hľadáme diferenčnú množinu $D_k$ pre množinu $W_k$. 
+        $D_k$ je diferenčná množina pre $W_k$ a 
+        vo $W_k$ musí existovať premenná -- označme ju $v_k$. 
+        Ďalej musí existovať term $t_k$ rôzny od $v_k$.
+        Ak by toto neplatilo, tak množina by nemohla byť
+        unifikovateľná.\footnote{Náhľad prečo: Vieme, že
+            $\Theta = \sigma_k \circ \lambda_k$ a pre $\lambda_k$ musí
+            nutne unifikovať diferenčnú množinu $D_k$. Tým pádom aspoň
+            jedna z ``jednotkových substitúcii'' v $\lambda_k$ musí
+            obsahovať elementy z $D_k$.
+        }
 
-\par Ak by premenná $v_n$ bola obsiahnutá v $t_n$. Predpokladali sme, že $v_n$ a
-$t_n$ sú rôzne a teda $v_n$ sa nemôže vyskytovať v $t_n$.
+        Vieme, že diferenčnú množinu $D_k$ unifikuje substitúcia $\lambda_k$.
+        Teda $v_k \lambda_k = t_k \lambda_k$.
 
-\par Prejdeme ku kroku 4 -- množine $W\sigma_{n+1}$ (množina $W_{n+1}$). Platí,
-že $\sigma_{n+1} = \sigma-n \circ \{ t_n/v_n \}$. $\Theta = \sigma_{n+1} \circ
-\lambda-{n+1}$.
+        Ďalej budeme potrebovať, že $v_k$ nie je obsiahnuté v $t_k$.
+        Ak by totiž premenná $v_k$ bola obsiahnutá v $t_k$, dôjdeme k sporu.
+        Platilo by aj ``$v_k \lambda_k$ je obsiahnutá v 
+        $t_k \lambda_k$''. Lenže vieme, že tam platí rovnosť a preto by
+        musela platiť aj rovnosť $v_k=t_k$. Spor.
 
-\par Nech $\lambda_{n+1} = \lambda_n - \{t_n\lambda_n/v_n\}$. 
+        Vypočítame $\sigma_{k+1}=\sigma_k \circ \{t_k/v_k\}$.
+        Potrebovali by sme nájsť $\lambda_{k+1}$. Môžeme si ho
+        napríklad ``tipnúť'' ako 
+        $\lambda_{k+1} = \lambda_k - \{t_k\lambda_k/v_k\}$. 
 
-$$t_n\lambda_{n+1} = t_n (\lambda_n - \{t_n\lambda_n / v_n\}) -  t_n\lambda_n$$
-$$\{ t_n / v_n\} \circ \lambda_{n-1} = \{t_n \lambda_{n+1}\}/v_n \cup
-\lambda_{n+1} = \{t_n\lambda_n /v_n\} \cup \lambda_{n+1} = \{t_n\lambda_n/v_n\}
-\cup \{ \lambda_n - \{ t_n\lambda_n/v_n\} = ??? \{ t_n/v_n \} \circ
-\lambda_{n+1} = \lambda_n$$
+        Pretože $v_k$ sa nevyskytuje v $t_k$, platí
+        \begin{equation*}
+            t_k \lambda_{k+1} = t_k (\lambda_k - \{t_k\lambda_k / v_k\}) 
+            =t_k \lambda_k
+        \end{equation*}
+        A teda dostávame
+        \begin{equation*}
+        \begin{split}
+            \{ t_k / v_k\} \circ \lambda_{k+1} &= 
+            \{t_k \lambda_{k+1}/v_k \} \union \lambda_{k+1} \\
+            & = \{t_k \lambda_k/v_k \} \union \lambda_{k+1} \\
+            & = \{t_k \lambda_k/v_k\} \union 
+                ( \lambda_k - \{ t_k\lambda_k/v_k\}) \\ 
+            &= \lambda_k
+        \end{split}
+        \end{equation*}
 
-$$\Theta = \sigma_n \circ \lambda_n$$.
+        Výsledok je teda, že 
+        $\lambda_{k} = \{ t_k / v_k \} \circ \lambda_{k+1}$,
+        čiže $\Theta = \sigma_k \circ \lambda_k
+            = \sigma_k \circ \{t_k/v_k\} \circ \lambda_{k+1}
+            = \sigma_{k+1} \circ \lambda_{k+1}$. A to sme chceli
+            ukázať.
     \end{itemize}
 \end{dokaz}
