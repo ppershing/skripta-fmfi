@@ -52,12 +52,12 @@ V tomto prípade môžeme zaviesť striktnejšie predpoklady.
 
 \begin{poznamka}
     Z predchádzajúcej definície je evidentné, že nikto okrem Boba nesmie
-    vedieť overiť pravdivosť podpisu, inak by vedel odlíšiť nafingovanú správu od
-    niekoho iného od správy od Alice.
+    vedieť overiť pravdivosť podpisu,
+    inak by vedel odlíšiť nafingovanú správu od správy od Alice.
 \end{poznamka}
 
 Samozrejme, celú túto definíciu môžeme zaviesť aj omnoho formálnejšie,
-ako sme robili pri ostatných podpisových schémach
+ako sme robili pri ostatných podpisových schémach.
 
 \begin{definicia}[Designated verifier signature scheme]
     Nech $M$ je priestor všetkých možných správ (štandardne
@@ -119,7 +119,7 @@ rozlišovateľa.
 \end{procedure}
 
 Teraz môžeme hovoriť, že schéma má vlastnost určeného overovateľa, ak
-pre každého polynomiálneho rozlišovateľa platí
+pre každého polynomiálneho rozlišovateľa $D$ platí
 \begin{equation*}
     Pr[IND-DV(D,\Pi,n)=1] \le \frac{1}{2} + negl(n)
 \end{equation*}
@@ -127,10 +127,62 @@ pre každého polynomiálneho rozlišovateľa platí
 Čitateľ si iste sám vie zobšeobecniť dané definície aj na silnejšiu
 verziu schémy.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Schéma od pánov Saeednia, Kremer a Markowitch}
-\todo{}
-\cite{designated_verifier}
+\subsection{Schéma od Saeednia, Kremera a Markowitcha}
+
+Schéma je prebratá z článku \cite{designated_verifier}.
+Na začiatok by sme si mohli popísať, aké spoločné parametre budú
+zdieľať účastníci schémy. Bude to niečo podobné ako pri DSA podpisoch.
+
+Uvažujme dve veľké prvočísla $p,q$ také, že $q | p-1$. 
+Prvočíslo $p$ nám určuje grupu $Z_p^*$.
+K tejto grupe vygenerujeme generátor $g$ jej podgrupy, ktorá má $q$
+prvkov. Uvažujme ďalej hashovaciu funkciu $H$, o ktorej predpokladáme,
+že je odolná voči kolíziam a s výstupom do $Z_q$.
+
+Každý užívateľ si sám zvolí svoj súkromný kľúč $sk=x \inr Z_q$ a
+zverejní svoj verejný kľúč $pk=y=g^{x} \pmod{p}$.
+
+Potom, ako máme všetky náležitosti pripravené, Alica môže podpísať
+správu určenú pre Boba nasledovne:
+\begin{procedure}
+    \caption{SignSKM($m$)}
+    
+    $k \inr Z_q$\;
+    $t \inr Z_q^*$\;
+    $c \assign y_B^k \mod{p}$\;
+    $r \assign H(m, c)$\;
+    $s \assign k \cdot t^{-1} - r \cdot x_A \mod{q}$\;
+    \Return $\sigma=\langle r,s,t\rangle$\;
+\end{procedure}
+
+Ak bude teraz Bob overovať podpis, stačí mu overiť podmienku
+\begin{equation*}
+    H(m, (g^s y_A^r)^{t \cdot x_B} \mod{p}) == r
+\end{equation*}
+% (g^s y_A^r)^{t x_B} =
+% g^{k x_B - r t x_A x_B + r t x_A x_B} = y_B^k
+
+\begin{poznamka}
+    Vidíme, že vďaka previazanosti Bobovho súkromného kľúča v overovacej
+    rovnici by mal byť schopný overiť správu len on.
+    Formálny dôkaz však nepotrebujeme (táto vlastnosť nás u obyčajnej
+    schémy s určeným overovateľom netrápi) a ani autori dôkaz
+    neuvádzajú.
+\end{poznamka}
+
+Aby sme ukázali, že schéma je s určeným overovateľom, musíme ukázať,
+že Bob vie simulovať podpis. Simulačný algoritmus môže byť napríklad
+tento:
+\begin{procedure}
+    \caption{SimulateSKM()}
+    $r' \inr Z_q^*$\;
+    $s' \inr Z_q^*$\;
+    $c \assign g^{s'} y_A^{r'}$\;
+    $r \assign H(m,c)$\;
+    $s \assign s' r r'^{-1} \pmod{q}$\;
+    $t \assign x_A r' r^{-1} \pmod{q}$\;
+    \Return $\langle r,s,t \rangle$\;
+\end{procedure}
 
 \todo{co sme mali dalej, potrebujem k tomu zosit s poznamkami}
 
@@ -140,17 +192,11 @@ Táto podpisová schéma patrí medzi horúce novinky, pôvodný článok
 \cite{designated_verifier2}
 je z Mája 2010 (ale vyskytla sa aj jeho podoba zo Septembra 2009).
 Vo svojej podstate je podobná predchádzajúcej.
+Máme ale pridanú hodnotu -- schéma je navrhnutá tak, 
+aby bola možná extrakcia správy.
 Uvažujme opäť, že Alica chce poslať Bobovi podpísanú správu.
-Protokol je založený na Diffie-Hellmanovom probléme a má podobnú nosnú
-myšlienku ako DH výmena kľúča.
-Navyše, schéma je navrhnutá tak, aby bola možná extrakcia správy.
 
-Uvažujme prvočísla $p,q$ také, že $q | p-1$. 
-Máme grupu $Z_p^*$.
-K tejto grupe vygenerujeme generátor $g$ jej podgrupy, ktorá má $q$
-prvkov. Uvažujme ďalej haskovaciu funkciu $H$, o ktorej predpokladáme,
-že je odolná voči kolíziam a s výstupom do $Z_q$. Taktiež, o správe
-$m$ predpokladajme, že jej veľkosť je $\log_2 p - \log_2 q$
+O správe $m$ predpokladajme, že jej veľkosť je $\log_2 p - \log_2 q$
 bitov.\footnote{V originálnom článku sa uvádza $m\in Z_q$,
     náš prístup je však vhodnejší pre svoju názornosť a všeobecnosť}
 Toto obmedzenie na veľkosť zavádzame, pretože budeme chcieť, aby
@@ -161,6 +207,8 @@ $m||t$ sa zmestilo do $Z_p^*$ kde $t \in Z_q$.
     Štandardne však môžeme uvažovať, že
     pokiaľ nechceme možnosť extrakcie správy, 
     môžeme podpisovať iba hash správy a nie celú správu.
+    V tomto prípade ale treba dať pozor, pretože daná zmena môže
+    zmeniť správnosť nasledujúcich dôkazov.
 \end{poznamka}
 
 Generácia kľčov je štandardná:
@@ -199,9 +247,6 @@ dokázať tieto 3 vlastnosti
     \item Schéma je bezpečná, teda korektný podpis pre Boba vie
         vyrobiť iba Alica.
 
-    \item Podpis vie overiť len Bob \fixme{toto v clanku neni a myslim
-        ze to implikuje strong designated verifier}
-
     \item Bob vie simulovať podpisy a teda nemôže byť schopný nikoho
         presvedčiť o tom, že správu podpísala Alica.
 \end{enumerate}
@@ -212,13 +257,6 @@ dokázať tieto 3 vlastnosti
 \end{lema}
 \begin{dokaz}
     \todo{}
-\end{dokaz}
-
-\begin{lema}
-    Overiť pravdivosť podpisu vie jedine Bob.
-\end{lema}
-\begin{dokaz}
-    \fixme{}
 \end{dokaz}
 
 \begin{lema}
@@ -284,7 +322,8 @@ dokázať tieto 3 vlastnosti
 
 Autori článku tvrdia, že daná schéma je silná schéma s určeným
 overovateľom. Žiaľ, dôkaz tohoto tvrdenia sa im zdal byť natoľko evidentný, 
-že ho z článku vynechali.
+že ho z článku vynechali a pre istotu ani nenapísali simulovanie
+podpisovania iba z verejných kľúčov.
 
 \begin{poznamka}
     Ak sa čitateľovi nepozdáva GDH problém, pretože sa mu zdá byť
