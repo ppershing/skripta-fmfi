@@ -1,16 +1,16 @@
 \section{Podpisové schémy s určeným overovateľom}
 
 V tejto kapitole sa budeme baviť o podpisových schémach, ktoré fungujú
-tak trochu podobne ako zero knowledge dôkazy -- chceli by sme vedieť
+tak trochu podobne ako bezznalostné dôkazy -- chceli by sme vedieť
 podpísať správu špeciálne pre jedného overovateľa. Navyše, úplne
 ideálne by bolo, ak by nikto iný okrem neho nebol schopný overiť náš
 podpis a dokonca aby overovateľ nebol schopný dokázať niekomu inému,
 že sme to podpísali my.
 
 Pretože myšlienka určeného overovateľa (designated verifier) je veľmi
-blízka zero knowledge dôkazom, budú aj definície veľmi podobné.
+blízka bezznalostným dôkazom, budú aj definície veľmi podobné.
 
-\begin{definicia}[Designated verifier]
+\begin{definicia}[Schéma s určeným overovateľom]
     Uvažujme dve komunikujúce strany -- Alicu $A$ a Boba $B$. Nech
     $P(A,B)$ je protokol pre Alicu na presvedčenie
     Boba o pravdivosti nejakého výroku $\Omega$. Môžeme hovoriť, že
@@ -18,6 +18,16 @@ blízka zero knowledge dôkazom, budú aj definície veľmi podobné.
     distribúcia je identická s distrubúciou komunikácii protokolu
     $P(A,B)$.
 \end{definicia}
+
+\begin{poznamka}
+    Pre schémy s určeným overovateľom nemusí nutne platiť to, čo sme si
+    povedali na začiatku, teda že nikto iný okrem Boba nevie overiť podpis.
+    Túto vlastnosť budú mať až silné schémy s určeným overovateľom.
+    V štandardnej schéme bude stačiť, že Alica dokáže Bobovi výrok
+    \quoteme{Platí $\Omega$ (podpísala som správu) alebo som Bob}.
+    Inak povedané, ktokoľvek iný nebude presvedčený, či správu naozaj
+    podpísala Alica alebo ju nafingoval Bob.
+\end{poznamka}
 
 Niekedy ale ani táto situácia nestačí. Predstavme si Evu, ktorá sa
 snaží zistiť niečo viac o podpise. Ak je presvedčená, že
@@ -31,14 +41,20 @@ snaží zistiť niečo viac o podpise. Ak je presvedčená, že
 
 V tomto prípade môžeme zaviesť striktnejšie predpoklady.
 
-\begin{definicia}[Strong designated verifier]
-    Nech $P(A,B)$ je porokol pre Alicu a Boba na ukázanie pravdivosti
+\begin{definicia}[Silná schéma s určeným overovateľom]
+    Nech $P(A,B)$ je protokol pre Alicu a Boba na ukázanie pravdivosti
     nejakého výroku $\Omega$. Hovoríme, že $P(A,B)$ je protokol so
     silne určeným overovateľom, ak ktokoľvek vie produkovať
     komunikácie, ktoré sú nerozlíšiteľné od komunikácii protokolu
     $P(A,B)$ pre všetkých s výnikou Boba (pretože Bob musí byť schopný
-    overiť pravosť podpisu).
+    overiť pravosť podpisu). \fixme{a bob vioe generovat falosne podpisy}
 \end{definicia}
+
+\begin{poznamka}
+    Z predchádzajúcej definície je evidentné, že nikto okrem Boba nesmie
+    vedieť overiť pravdivosť podpisu, inak by vedel odlíšiť nafingovanú správu od
+    niekoho iného od správy od Alice.
+\end{poznamka}
 
 Samozrejme, celú túto definíciu môžeme zaviesť aj omnoho formálnejšie,
 ako sme robili pri ostatných podpisových schémach
