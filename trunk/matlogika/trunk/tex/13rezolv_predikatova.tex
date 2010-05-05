@@ -1,6 +1,7 @@
 \section {Metóda rezolvent pre logiku 1. rádu}
 
 \begin{definicia}[Spojenie]
+%%% {{{
     Nech $C$ je klauzula, ktorá obsahuje dva alebo viac literálov 
     (a tie pozostávajú z rovnakého predikátu len s inými parametrami).
     Ak tieto literály majú najvšeobecnejší unifikátor $\sigma$, 
@@ -8,6 +9,7 @@
     
     Ak $C\sigma$ je jednotková klauzula, tak $C\sigma$ nazývame tiež
     jednotkovým spojením $C$.
+%%% }}}
 \end{definicia}
 
 \begin{priklad}
@@ -19,6 +21,7 @@
 \end{priklad}
 
 \begin{definicia}[binárna rezolventa]
+%%% {{{
     Nech $C_1$ a $C_2$ sú dve klauzuly (budeme ich nazývať predpoklady), 
     ktoré nemajú spoločné premenné. Nech $L_1 \in C_1$ a $L_2 \in C_2$ 
     sú dva literály. Ak $L_1$ a $\neg L_2$ majú 
@@ -29,6 +32,7 @@
     sa nazýva binárnou rezolventou.\footnote{Za pozornosť stojí fakt, že
     vo všeobecnosti $(C\sigma - L\sigma) \ne (C-L)\sigma$.} 
     Literály $L_1$ a $L_2$ môžeme vynechať a nazývame ich nadbytočné.
+%%% }}}
 \end{definicia}
 
 \begin{priklad}
@@ -54,6 +58,7 @@
 \end{priklad}
 
 \begin{definicia}[Rezolventa logiky 1. rádu] 
+%%% {{{
     Rezolventou z predpokladov $C_1$ a $C_2$ definujeme ako jednu z
     nasledujúcich binárnych rezolvent:
     \begin{enumerate}
@@ -62,138 +67,241 @@
         \item Binárna rezolventa spojenia $C_1$ a $C_2$
         \item Binárna rezolventa spojenia $C_1$ a spojenia $C_2$
     \end{enumerate}
+%%% }}}
 \end{definicia}
 
+\begin{priklad}
+    Uvažujme $C_1 = P(x) \lor P(f(y))\lor R(g(y))$,
+             $C_2 = \neg P(f(g(a)) \lor Q(b)$.
+
+    Spojenie $C_1$ vyzerá je $C_1': P(f(y)) \lor R(g(y))$.
+    Binárna rezolventa $C_1'$ a $C_2$ a tým pádom rezolventa $C_1,C_2$
+    bude $R(g(g(a))) \lor Q(b)$.
+\end{priklad}
+
+Ešte predtým, než sa plne vrhneme do dokazovania úplnosti metódy
+rezolvent, uvedieme si príklady na osvieženie pamäti.
+
+\begin{priklad}
+    \label{prikl:rezolv_pred}
+    Majem množinu klauzúl 
+    $S=\{P,\ \neg P\lor Q,\ \neg P \lor \neg Q\}$.
+    Prislúchajúca herbrandovská báza je $\{P, Q\}$.
+    Množine klauzúl $S$ zodpovedá úplný sémantický strom $T$
+    naznačený na obrázku \ref{fig:rezolv_pred_prikl}. 
+    
+    K úplnému stromu $T$ môžeme zostrojiť uzavretý sémantický strom v ktorom
+    každá vetva sa končí odmietajúcim vrcholom, teda odmieta niektorú
+    z klauzúl z $S$.
+    Vieme, že žiadna z tých interpretácií, ktoré končia v listoch, 
+    nie je splniteľná. 
+
+    Následne, strom $T'$ môžeme postupne pravidlom rezolventy
+    upravovať -- klauzuly $\neg P \lor \neg Q$,
+    $\neg P \lor Q$ obsahujú kontrárnu dvojicu $\neg Q,Q$.
+    Ich rezolventa je $\neg P$. Množinu $S$ teda môžeme obohatiť a
+    dostaneme $S''=S \union \{ \neg P \}$. Môžeme tiež upraviť aj
+    strom $T'$ a dostávame $T''$.
+
+    Pokračujme ďalej: $P, \neg P$ sú kontrárna dvojica a ich
+    rezolventou je $\eps$. Dostávame strom $T'''$.
+
+    Dospeli sme teda k tomu, že množina klauzúl $S$ je nesplniteľná.
+    Zároveň si môžeme všimnúť, že každým aplikovaním pravidla
+    rezolventy zmenšujeme strom.
+    \begin{figure}
+        \centering
+        %%% {{{
+        \subfigure[$T$]{
+            \imageontop{
+                \includegraphics{img/13/priklad.1.mps}
+            }
+        }
+        \subfigure[$T'$]{
+            \imageontop{
+                \includegraphics{img/13/priklad.2.mps}
+            }
+        }
+        \vskip 1.5cm
+        \subfigure[$T''$]{
+            \imageontop{
+                \includegraphics{img/13/priklad.3.mps}
+            }
+        }
+        \subfigure[$T'''$]{
+            \hskip 2cm
+            \imageontop{
+                \includegraphics{img/13/priklad.4.mps}
+            }
+        }
+        %%% }}}
+        \caption{Stromy z príkladu \ref{prikl:rezolv_pred}}
+        \label{fig:rezolv_pred_prikl}
+    \end{figure}
+\end{priklad}
+
+\begin{priklad}[Opakovanie z úvodu k substitúcii]
+%%% {{{
+    Uvažujme dve klauzuly $C_1=P(x) \lor Q(x)$, 
+    $C_2 = \neg P(f(x)) \lor R(x)$.
+
+    V nich neexistuje žiadna kontrárna dvojica. Nahradením
+    $x$ za $f(a)$ resp. $a$ 
+    dostaneme základné inštancie
+    $C_1'=P(f(a)) \lor Q(f(a))$, 
+    $C_2'=\neg P(f(a)) \lor R(a)$.
+    Teraz môžeme vypočítať rezolventu $Q(f(a)) \lor R(a)$.
+
+    Mohli by sme postupovať aj všeobecnejšie -- nahraďme $x$ za $f(x)$ v
+    prvej klauzule a dostávame
+    $C_1^*= P(f(x)) \lor Q(f(x))$, $C_2^*= \neg P(f(x)) \lor R(x)$.
+
+    Rezolventa potom bude $C^*= Q(f(x)) \lor R(x)$.
+    Vidíme teda, že sme získali 2 rôzne rezolventy, jednu viac všeobecnú
+    ako druhú.
+%%% }}}
+\end{priklad}
+
+\subsubsection{Úplnosť metódy rezolvent}
+Metódu rezolvent zaviedol roku 1965 Robinson.
+Táto metóda je omnoho efektívnejšia ako pravidlá, ktoré zaviedli
+Davis a Putnam. Veľmi dôležitým aspektom je hlavne to, že metóda
+je úplná:
+Ak množina klauzúl nie je splniteľná, potom metódou rezolvent z nej vždy
+môžeme dostať prázdnu klauzulu 
+(a teda formula nie je splniteľná v žiadnej interpretácii). 
+
+\begin{lema}
+    Nech $C_1'$ a $C_2'$ sú inštancie klauzúl $C_1$ resp. $C_2$.
+    Ak $C'$ je rezolventa $C_1'$ a $C_2'$,
+    tak potom existuje rezolventa\footnote{Na prednáške to bolo
+        prezentované takto. Je však evidentné, že to malo byť
+        formulované ``existuje rezolventa $C$ taká, že pre ľubovoľné
+        inštancie $C_1',C_2'$ je $C'$ inštancia $C$''. Inak povedané,
+        $C$ bude najvšeobecnejšia rezolventa}    
+    $C$ klauzúl $C_1$ a $C_2$, 
+    že $C'$ je inštancia $C$. 
+\end{lema}
+
+\begin{dokaz}
+    Ak je treba, ako prvý krok premenujeme premenné v $C_1$ a $C_2$
+    aby boli rôzne (samozrejme, rovnaké premenovanie spravíme aj v
+    inštanciách $C_1',C_2'$).
+    Nech teraz $L_1'$ a $L_2'$ sú literály v $C_1',C_2'$, 
+    ktoré môžeme vynechať (sú nadbytočné).
+    Zoberme ich najvšeobecnejší unifikátor $\nu$ a binárna rezolventa
+    $C'$ bude
+    \begin{equation*}
+        C' = (C_1' \nu - L_1'\nu) \union ( C_2'\nu - L_2'\nu)
+    \end{equation*}
+
+    $C_1'$, $C_2'$ sú inštancie $C_1$ a $C_2$ a teda existuje
+    substitúcia\footnote{Poznamenávame, že $C_1$ a $C_2$ majú rôzne
+    premenné a teda túto substitúciu získame ako zloženie
+    individuálnych substitúcii pre jednotlivé klauzuly} 
+    $\Theta$ taká, že platí:
+    \begin{align*}
+        C_1' &= C_1 \Theta \\
+        C_2' &= C_2 \Theta
+    \end{align*}
+
+    Označme si teraz literály z $C_i$, ktoré
+    zodpovedajú po substituovaní substitúciou $\Theta$ literálu $L_i'$ ako
+    $L^1_i, L^2_i, \ldots, L^{r_i}_i$ kde $i=1,2$.
+    Teda platí
+    \begin{equation*}
+        L^1_i \Theta = L^2_i \Theta = \cdots = L^{r_i}_i\Theta=L'_i
+    \end{equation*}
+    Ďalej si označme najvšeobecnejší unifikátor pre 
+    $\{ L^1_i, L^2_i, \dots, L^{r_i}_i\}$ ako $\lambda_i$.
+    Platí
+    \begin{equation*}
+        L^1_i \lambda_i = L^2_i \lambda_i = \cdots 
+        =L^{r_i}_i\lambda_i=L_i
+        .\footnote{Pozor, zmizla nám čiarka z $L_i$ oproti
+        predchádzajúcej rovnici}
+    \end{equation*}    
+    Pretože $\lambda_i$ je najvšeobecnejší unifikátor, 
+    pre vhodnú substitúciu $\xi$ platí:
+    \begin{equation*}
+        L_i' = L^j_i \Theta = L^j_i (\lambda_i \circ \xi) = 
+        (L^j_i\lambda_i)\xi = L_i \xi
+    \end{equation*}
+
+    Pre pohodlnosť označme $\lambda = \lambda_1 \union \lambda_2$.
+    Z predpokladov vety je jasné, že $L_1', \neg L_2'$ sú
+    unifikovateľné. Označme ich najvšeobecnejší unifikátor 
+    ako $\sigma$.
+    Teraz pozor, zamerajme sa na spojenie $C_1 \lambda_1$ a $C_2
+    \lambda_2$. Hlaďanú najvšeobecnejšiu rezolventu zostrojíme práve
+    pomocou nich:
+    \begin{equation*}
+    \begin{split}
+    C &= ((C_1\lambda)\sigma - L_1\sigma) \union 
+            ((C_2\lambda_2)\sigma-L_2\sigma) \\
+      &= ((C_1\lambda)\sigma - (\{L^1_1, L^2_1, \dots, L^{r_1}_1 \}
+        \lambda )\sigma) \union
+        ((C_2\lambda)\sigma - (\{L^1_2, L^2_2, \dots, L^{r_2}_2 \}
+        \lambda )\sigma) \\
+      &= (C_1 (\lambda \circ \sigma) -
+            \{ L^1_1, \dots, L^{r_1}_1 \} (\lambda\circ\sigma)) \union
+         (C_2  (\lambda\circ\sigma) - 
+            \{L^1_2, \dots, L^{r_2}_1\}(\lambda\circ\sigma))
+    \end{split}
+    \end{equation*}
+
+    Na záver ešte potrebujeme overiť, že $C'$ je inštancia $C$.
+    \begin{equation*}
+    \begin{split}
+        C' &= (C_1' \nu - L_1' \nu) \cup (C_2'\nu - L_2'\nu) \\
+          &= ((C_1\Theta)\nu - 
+                (\{L^1_1, \dots ,L^{r_1}_1\}\Theta)\nu) \union
+             ((C_2\Theta)\nu - 
+                (\{L^1_2, L^2_2, \ldots, L^{r_2}_2\}\Theta )\nu) \\
+          &= (C_1(\Theta\circ\nu) - 
+                \{L^1_1, \dots, L^{r_1}_1\} (\Theta\circ\nu)) \union
+             (C_2(\Theta\circ\nu) - 
+                \{L^1_2, \dots, L^{r_2}_2\} (\Theta\circ\nu))
+    \end{split}
+    \end{equation*}
+
+    Lenže vieme, že $\lambda \circ \sigma$ je všeobecnejšie
+    ako $\theta \circ \nu$, pretože
+    $\lambda$ je všeobecnejší unifikátor ako $\Theta$ a 
+    $\sigma$ je všebecnejší unifikátor ako $\nu$.
+    Tým pádom $C'$ je naozaj inštancia $C$.\footnote{Ešte by sme
+        mohli mať zlé svedomie z toho, čo na to povie množinové mínus,
+        na ktoré sme v minulosti upozorňovali. Čitateľ sa môže sám
+        presvedčiť, že v tomto prípade je to naozaj v poriadku}
+
+\end{dokaz}
+
+\begin{veta}[Úplnosť metódy rezolvent] 
+    Množina klauzúl $S$ nie je splniteľná $\iff$ 
+    existuje odvodenie prázdnej klauzuly $\eps$ z $S$.
+\end{veta}
+
+\begin{dokaz}
+\noindent
+    \begin{itemize}
+    \item[$\Leftarrow:$]
+    Budeme ukazovať sporom.
+    Predpokladajme, že v $S$ existuje odvodenie prázdnej klauzuly $\eps$. 
+    Teda existuje postupnosť rezolvent $R_1, R_2, \dots, R_n$ 
+    (medzi nimi niekde bude aj $\eps$, zrejme môžeme predpokladať
+    $R_n = \eps$).
+
+    Kvôli sporu predpokladáme, že $S$ je splniteľná, 
+    teda existuje jej model $\mathcal{M}$, ktorý
+    vyhovuje všetkým klauzuliam z $S$. Ako sme predtým dokázali,
+    pravidlo rezolventy je korektné pravidlo a teda, ak sú
+    $C_1$, $C_2$ ľubovoľné klauzuly z $S$ a $C$ je ich rezolventa,
+    zo splniteľnosti $C_1$, $C_2$ vyplýva aj splniteľnosť $C$.
+    Ak teda prejdeme celé rezolvenčné odvodenie $R_1,R_2,\dots,R_n$,
+    postupne ukážeme, že $R_n=\eps$ je splniteľná klauzula. Spor.
+
 \startFIXME
-
-
-\paragraph{Príklad} $$C_1 = P(x) \lor P(f(y))\lor Rg(y))$$
-$$ C_2 = \neg P(f(g(a)) \lor Q(b)$$
-Spojenie pre $C_1$ vyzerá ako: $C_1': P(f(y)) \lor R(g(y))$.
-Binárna rezolventa $C_1' a C_2$ bude vyzerať takto: $R(g(g(a))) \lor Q(b)$ --
-rezolventa $C_1$ a $C_2$.
-
-
-\section{Opakovanie}
-	Ak množina klauzúl nie je splniteľná, potom metódou rezolvent z nej vždy
-	môžeme dostať prázdnu klauzulu (a ak sa táto dostane množiny klauzúl,
-	tak formula nie je splniteľná v žiadnej interpretácii). Ak máme nejakú
-	klauzulu $C$, $C\sigma$ sme nazývali spojením klauzuly $C$. Definícia
-	binárnej rezolventy. 
-
-\par  Metódu rezolvent zaviedol roku 1965 Robinson, je efektívnejšia ako obe
-varianty Herbrandovej metódy. 
-
-\par \{ sleep...\}
-
-\paragraph{Úplnosť metódy rezolvent}
-
-\paragraph{Príklad} Majem množinu klauzúl $S$:
-\begin{enumerate}
-	\item $P$
-	\item $\neg P\lor Q$
-	\item $\neg P \lor \neg Q$
-\end{enumerate}
-Tejto množine klauzúl zodpoveda uzavretý sémantický strom.
-Prislúchajúca herbrandovská báza je $\{P, Q\}$ (na tabuľu sa kreslí sémantický
-strom pre $P$ a $Q$, usilovný čitateľ si ho isto domyslí). Každá vetva sa končí
-odmietajúcim vrcholom, žiadna z tých interpretácií, ktoré končia v listoch, nie
-je splniteľná. Tomuto stromu môžeme priradiť uzavretý podstrom (označíme ho
-$T'$,  má odseknuté vetvy na miestach, kde sú podstromy odmietajúce)
-
-
-\begin{verbatim}
-            T
-            /\
-         P /  \ \neg P
-       Q /\ nQ Q/\ nQ 
-\end{verbatim}
-
-\begin{verbatim}
-            T'
-            (1)
-            /\
-      (2)P /  \ \neg P
-   (4) Q /\ nQ x (5)
-       x   x
-\end{verbatim}
-
-\par $\neg P$ -- rezolventa $(4)$, $(5)$, $\neg P \cup S$.  $S\cup \{ \neg P
-\}\cup \{ \square \}$.
-
-\par Vznikli nám teda klauzuly.
-$$(4) \neg P\qquad (2) (3)$$
-$$(5) \Box\qquad (4)(1)$$
-
-\par Strom sa po každej aplikácii pravidla postupne skracuje. 
-
-\paragraph{Lema} Nech $C_1'$ a $C_2'$ sú inštancie $C_1$ resp. $C_2$ (v uvedenom
-poradí). Ak $C'$ je rezolventa $C_1'$ a $C_2'$, tak potom existuje rezolventa
-$C$ klauzúl $C_1$ a $C_2$, že $C'$ je inštancia $C$. 
-
-\paragraph{Dôkaz} Ak je treba, premenujeme premenné $C_1$ a $C_2$. Nech $L_1'$ a
-$L_2'$ sú literály, ktoré môžeme vynechať (sú nadbytočné). ďalej nech platí:
-$$C' = (C_1' \nu - L_1'\nu) \cup ( C_2'\nu - L_2'\nu)$$
-Pričom $\nu$ je najvšeobecnejší unifikátor pre $L_1'$ a $\neg L_2'$. $C_1'$,
-$C_2'$ sú inštancie $C_1$ a $C_2$, a teda existuje substitúcia $\Theta$ taká, že
-platí:
-
-$$ C_1' = C_1 \Theta $$
-$$ C_2' = C_2 \Theta $$
-
-(Pozn.: $C_1$ a $C_2$ nemajú spoločné premenné). $L^1_i, L^2_i, \ldots, L^{r_i}_i,
-i=1,2$ sú literály, ktoré v $C_1$ zodpovedajú $L_i'$, teda $L^1_i \Theta = L^2_i
-\Theta = \cdots = L^{r_i}_i\Theta = L'_i (i=1,2)$. $D_i > 1$ dostaneme
-najvšeobecnejší kvantifikátor $\lambda_i (i=1,2)$ pre $\{ L^1_i, L^2_i, \ldots,
-L^{r_i}_i\}, L_i = L^1_i \lambda_i (i=1,2)$. $\lambda_i$ je najvšeobecnejší
-unifikátor, tak pre vhodnú substitúciu $\xi$ platí:
-$$ L_i' = L^1_i \Theta = L^1_i (lambda_i \circ \xi) = (L^1_i\lambda_i)\xi =
-L_i \xi$$
-
-$$L_i\xi = L_i'$$
-
-$L_i$ .. spojení $C_i\lambda_i$, pre $C_i$, ak $r_i = 1$, ak $r_i = 1$, potom
-$\lambda_i = \Sigma$, $L_i = L_i^1\lambda_i$.
-
-$$ \lambda = \lambda_1 \cup \lambda_2$$
-$$L_i' = \mbox{...} L_i$$
-
-$L'_i, \neg L_2'$ -- unifikovateľné.
-$L-1, \neg L_2$ -- unifikovateľné.
-
-Označme $\sigma$ najvšeobecnejší unifikátor pre $L_1'$ a $\neg L_2'$.
-
-$C= ((C_1\lambda)\sigma = L_1\sigma) \cup
-((C_2\lambda_2)\sigma-L_2\sigma) = ((c_1\lambda)\sigma - (\{L^1_+, L^2_1,
-\ldots, L^{r_i}_1 ...
-= C_1(\lambda\circ \sigma) = \{ L^1_1, \ldots L^{r_1}_1 \} (\lambda\circ\sigma)
-\cup C_2)(\lambda\circ\sigma) - \{L^1_2, \ldots
-L^{r_i}_1\}(\lambda\circ\sigma)$
-
-\par $C$ -- rezolventa $C_1$ a$C_2$, $C'$ je substitúcia $C$:
-$C = (C_1' \nu = L_1' \nu) \cup (C_2'\nu = L_2'\nu) = (C_1\Theta)\nu -
-(\{L^1_1, \ldots L^{r_i}_1\}\Theta)\nu)\cup ((C_2\Theta)\nu - \{L^1_2, L^2_2,
-\ldots, L^{r_i}_2\}\Theta )\nu) = 
-C_1(\Theta\circ\nu) - \{L^1_1, \ldots, L^{r_i}_1\} \Theta\circ\nu) \cup
-(C_2(\Theta\circ\nu) - \{L^1_2, \ldots L^{r_i}_2\} \Theta\circ\nu)
-$
-
-$\lambda \circ \sigma$ jke všeobecnejšia ako $\theta \circ \nu$.
-
-
-\paragraph{Veta (úplnosť metódy rezolvent)} Množina klauzúl $S$ nie je
-splniteľná práve vtedy, keď existuje odvodenie prázdnej klauzuly $\Box$ z $S$.
-
-\paragraph{Dôkaz} Predpokladajme, že z $S$ existuje odvodenie prázdnej klauzuly
-$\square$. $R_1, R_2, \ldots R_n$ sú všetky rezolventy v odvodení (medzi nimi
-niekde bude aj $\square$). Zoberiem $C_1$, $C_2$ -- ľubovoľné klauzuly z $S$ a
-$C_1$ a $C_2$ bude príslúchať nejaká rezolventa. Ak sú klauzuly splniteľné, je
-splniteľná aj rezolventa. To znamená, že $C_1$ a $C_2$ nemôžu byt splniteľné a
-teda nemôže byť množina klauzúl (klauzuly, ktorých rezolventou je prázdna
-klauzula, nebudú splniteľné nikdy). 
-
-\subparagraph{Obrátené tvrdenie} Prepokladajme, že množina klauzúl $S$ nie je
-splniteľná (máme ukázať, že ako rezolventa sa tam ukáže prázdna klauzula). Ak
+    \item[$\Rightarrow:$] Ak
 predpokladáme, že $S$ nie je splniteľná, potom podľa Herbrandovej vety (1.
 variant), nie je splniteľná práve vtedy, keď je možné jej priradiť konečný
 uzavretý sémantický strom. 
@@ -229,8 +337,8 @@ existovať rezolventa $C$ taká, že $C'$ je základná inštancia $C$.
 
 \par Vezmime si $T''$ -- uzavretý sémantický strom, $C \cup \{C\}$. ... (niečo
 ďalej?)
-
-
+    \end{itemize}
+\end{dokaz}
 
 \paragraph{Príklad} Majme množinu formúl $F_1: (\forall x) (C(x) \implies (W(x)
 \land R(x))$, $F_2: (\exists x)(C(x) \land Q(x))$ $G: (\exists x) (Q(x) \land
