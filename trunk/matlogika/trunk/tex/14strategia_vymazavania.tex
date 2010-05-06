@@ -1,62 +1,98 @@
 \section{Stratégia vymazávania}
-\startFIXME
-Na základe vety o úplnosti, majme nejakú množinu klauzúl $S$, postupne si z nej
-vytváram rezolventy. Ak nie je splniteľná, po konečnom počte krokov dostávam
-prázdnu klauzulu.
+
+Na základe vety o úplnosti vieme, že ak máme nejakú množinu klauzúl $S$,
+tak viem z nej postupne vytvárať rezolventy a ak nie je splniteľná, 
+po konečnom počte krokov dostávam prázdnu klauzulu $\eps$.
+Za účelom dôkazu teda musím zaradom prehľadávať všetky rezolventy, ktoré
+môže vzniknúť zo všetkých možných dvojíc klauzúl.
 
 \begin{priklad}
-    Majme množinu klauzúl $S=\{P\lor Q, \neg P\lor Q, P \lor
-    \neg Q, \neg P \lor \neg Q\}$. Metódou rezolvent ukážte, že $S$ nie je
-    splniteľná.
+    \label{prikl:vymazavanie}
+    Majme množinu klauzúl $S=\{P\lor Q,\ \neg P\lor Q,\ 
+        P \lor \neg Q,\ \neg P \lor \neg Q\}$. 
+    Metódou rezolvent ukážte, že $S$ nie je splniteľná.
 
-    \par nejakým spôsobom zostrojujeme postupnosť klauzúl, nakoniec niekde dostanem
-    prázdnu klauzulu. 
-    $S^0 = S$, $S^n = \{ \mbox{rezolventy} C_1, C_2 | C_1 \in S^0 \cup S^1,
-    \ldots \cup S^{n-1} \land C_2 \in S^{n-1}\}, n=1, 2, \ldots$. Takýmto spôsobom
-    by sme po $39$ krokoch dostali odpoveď. Niektoré klauzuly sa vyskytnú v
-    popísanom prístupe dvakrát. Môžu sa tam vyskytnúť tautológie.
+    \paragraph{Riešenie:}
+    Použijeme takzvanú metódu nasýtenia -- budeme postupne 
+    v každom kroku generovať najväčšiu možnú množinu rezolvent.
+    Definujme si postupnosť $\{S^i\}_{i=0}$ množín klauzúl nasledovne:
+    $S^0 = S$ a
+    \begin{equation*}
+        S^{n+1} = \{ \mbox{rezolventa klauzúl} C_1, C_2 | 
+            C_1 \in S^0 \union S^1 \union \dots \union S^{n},\
+            C_2 \in S^n\},\quad n=1, 2, \dots
+    \end{equation*}
+    Takýmto spôsobom by sme po $39$ krokoch dostali prázdnu klauzulu.
+    Problém tejto metódy je, že niektoré klauzuly sa vyskytnú v
+    popísanom prístupe viackrát. Prípadne sa tam môžu vyskytnúť tautológie.
 \end{priklad}
 
-\begin{definicia}
-    Klauzula $C$ je podklauzulou klauzuly $D$ (alebo pohlcuje
+Videli sme, že predchádzajúca metóda nie je úplne optimálna. Preto za
+účelom rýchlejšieho prehľadávania budeme niektoré evidentne nadbytočné
+rezolventy zahadzovať (a algoritmus nazveme stratégiou vymazávania).
+Najskôr si zadefinujeme, ako si budeme predstavovať nadbytočné rezolventy.
+
+\begin{definicia}[podklauzula]
+    Klauzula $C$ je podklauzulou klauzuly $D$ (alebo tiež $C$ pohlcuje
     $D$) práve vtedy, keď existuje substitúcia $\sigma$ taká, že platí $C\sigma
-    \subseteq D$. $D$ nazývame nadklauzulou $C$.
+    \subseteq D$. Klauzulu $D$ vtedy tiež nazývame nadklauzulou klauzuly $C$.
 \end{definicia}
 
 \begin{priklad}
-    $C = P(x)$, $D = P(A) \lor Q(a)$, $\sigma = \{a/x\}$,
-    $C\sigma = P(a)$, $C\sigma \subseteq D$.
+    Majme klauzuly $C = P(x)$ a $D = P(A) \lor Q(a)$.
+    Ak budeme uvažovať substitúciu $\sigma = \{a/x\}$, dostaneme
+    $C\sigma = P(a)$ a teda $C\sigma \subseteq D$.
+    Čiže $C$ je podklauzula $D$.
 \end{priklad}
 
-\paragraph{Poznámka} $D$ je identicky rovná $C$. (??)
-Ak klauzula $D$ je inštancia $C$, tak $D$ je nadklauzula $C$. (??). 
+\begin{poznamka}
+    Ak $D$ je identicky rovná $C$ alebo ak klauzula $D$ je inštancia $C$, 
+    potom $D$ je nadklauzula $C$.
+\end{poznamka}
 
-\par
-Možno to sformulovať takto: Majme $(S^0 \cup S^1 \cup \ldots \cup
-S^{n-1}\}$, berieme z nej klauzulu $C_1$ a $C_2$. V prípade, že ako rezolventa
-$C_1$ a $C_2$ nevznikne tautológia a nebude to ani nadklauzula niektorej z tých,
-ktoré sú už vypísané, vypíšem ju. Takto sa zbavujem tautológií a nadklauzúl.
 
-\begin{priklad}
-    $S=S^0$ a :
+Ako sme už teda povedali, stratégia vymazávania spočíva vo vylepšení metódy
+nasýtenia o zahadzovanie zbytočných výsledkov.
+Čiže opäť konštruujeme postupnosť $\{S^i}_{i=0}$.
+Do $S^{n+1}$ ale teraz vyberieme iba tie rezolventy $C_1, C_2$ 
+(opäť $C_1 \in (S^0 \union S^1 \union \dots \union S^n)$ a $C_2 \in S^n$),
+ktoré nie sú tautológie a ani nadklauzuly niektorej z klauzúl ´dosiahnutej
+doteraz.
+
+\begin{priklad}[Revízia \ref{prikl:vymazavanie}]
+    Opäť máme množinu klauzúl $S=\{P\lor Q,\ \neg P\lor Q,\ 
+        P \lor \neg Q,\ \neg P \lor \neg Q\}$.
+
     \begin{itemize}
-        \item $P\lor Q$
-        \item $\neg P \lor Q$
-        \item $P\lor \neg Q$
-        \item $\neg P \lor \neg Q$
+    %%% {{{
+    \item[$S^0:$]
+        \begin{itemize}
+            \item[1] $P\lor Q$
+            \item[2] $\neg P \lor Q$
+            \item[3] $P\lor \neg Q$
+            \item[4] $\neg P \lor \neg Q$
+        \end{itemize}
+
+    \item[$S^1:$]
+        \begin{itemize}
+        \item[5] $Q$ -- rezolventa 1, 2
+        \item[6] $P$ -- rezolventa 1, 3
+        \item[7] $\neg P$ -- rezolventa 2, 4
+        \item[8] $\neg Q$ -- rezolventa 3, 4
+        \end{itemize}
+
+    \item[$S^2:$]
+        \begin{itemize}
+            \item[$\vdots$] -- zahodíme veľa rezolvent, napr. rezolventa
+                1,8 je $P \lor \eps \equiv P$ a tú už máme.
+            \item[9] $\eps$ -- rezolventa 5,8
+        \end{itemize}
+    %%% }}}
     \end{itemize}
-    $$
-    S_1:
-    \begin{array}{ll}
-    (5)& Q (1) (2)\\
-    (6)& P (1) (3)\\
-    (7)& \neg P (2) (4)\\
-    (8)& \square (6) (7)\\
-    \end{array}
-    $$
 \end{priklad}
 
 \subsection{Algoritmus  pohltenia}
+\startFIXME
 
 $$\theta = \{ a_1 / x_1, a_2 / x_2, \ldots, a_n / x_n \}$$. $x_1, x_2, \ldots
 x_n$ sú premenné, ktoré sa vyskytujú v $D$. $a_1, a_2, \ldots a_n$ sú nové
