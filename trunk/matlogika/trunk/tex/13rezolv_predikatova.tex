@@ -184,6 +184,7 @@ môžeme dostať prázdnu klauzulu
 \end{lema}
 
 \begin{dokaz}
+%%% {{{
     Ak je treba, ako prvý krok premenujeme premenné v $C_1$ a $C_2$
     aby boli rôzne (samozrejme, rovnaké premenovanie spravíme aj v
     inštanciách $C_1',C_2'$).
@@ -273,7 +274,7 @@ môžeme dostať prázdnu klauzulu
         mohli mať zlé svedomie z toho, čo na to povie množinové mínus,
         na ktoré sme v minulosti upozorňovali. Čitateľ sa môže sám
         presvedčiť, že v tomto prípade je to naozaj v poriadku}
-
+%%% }}}
 \end{dokaz}
 
 \begin{veta}[Úplnosť metódy rezolvent] 
@@ -285,84 +286,104 @@ môžeme dostať prázdnu klauzulu
 \noindent
     \begin{itemize}
     \item[$\Leftarrow:$]
-    Budeme ukazovať sporom.
-    Predpokladajme, že v $S$ existuje odvodenie prázdnej klauzuly $\eps$. 
-    Teda existuje postupnosť rezolvent $R_1, R_2, \dots, R_n$ 
-    (medzi nimi niekde bude aj $\eps$, zrejme môžeme predpokladať
-    $R_n = \eps$).
+        Budeme ukazovať sporom.
+        Predpokladajme, že v $S$ existuje odvodenie prázdnej klauzuly $\eps$. 
+        Teda existuje postupnosť rezolvent $R_1, R_2, \dots, R_n$ 
+        (medzi nimi niekde bude aj $\eps$, zrejme môžeme predpokladať
+        $R_n = \eps$).
 
-    Kvôli sporu predpokladáme, že $S$ je splniteľná, 
-    teda existuje jej model $\mathcal{M}$, ktorý
-    vyhovuje všetkým klauzuliam z $S$. Ako sme predtým dokázali,
-    pravidlo rezolventy je korektné pravidlo a teda, ak sú
-    $C_1$, $C_2$ ľubovoľné klauzuly z $S$ a $C$ je ich rezolventa,
-    zo splniteľnosti $C_1$, $C_2$ vyplýva aj splniteľnosť $C$.
-    Ak teda prejdeme celé rezolvenčné odvodenie $R_1,R_2,\dots,R_n$,
-    postupne ukážeme, že $R_n=\eps$ je splniteľná klauzula. Spor.
+        Kvôli sporu predpokladáme, že $S$ je splniteľná, 
+        teda existuje jej model $\mathcal{M}$, ktorý
+        vyhovuje všetkým klauzuliam z $S$. Ako sme predtým dokázali,
+        pravidlo rezolventy je korektné pravidlo a teda, ak sú
+        $C_1$, $C_2$ ľubovoľné klauzuly z $S$ a $C$ je ich rezolventa,
+        zo splniteľnosti $C_1$, $C_2$ vyplýva aj splniteľnosť $C$.
+        Ak teda prejdeme celé rezolvenčné odvodenie $R_1,R_2,\dots,R_n$,
+        postupne ukážeme, že $R_n=\eps$ je splniteľná klauzula. Spor.
 
 \startFIXME
     \item[$\Rightarrow:$] Ak
-predpokladáme, že $S$ nie je splniteľná, potom podľa Herbrandovej vety (1.
-variant), nie je splniteľná práve vtedy, keď je možné jej priradiť konečný
-uzavretý sémantický strom. 
+        predpokladáme, že $S$ nie je splniteľná, potom podľa Herbrandovej vety (1.
+        variant), nie je splniteľná práve vtedy, keď je možné jej priradiť konečný
+        uzavretý sémantický strom. 
 
-\par Môže as stať, že strom $T$ pozostáva jedine z koreňa -- odmieta jedinú
-klauzulu a v tomto prípade veta platí. Teraz predpokladajme, že je konečný a má
-viac ako 1 vrchol. V tomto prípade, tak má aspoň jeden akceptujúci vrchol. Potom
-$i_v$ je čiastočná interpretácia končiaca v tom vrchole. Ďalej, každý
-nasledovník je odmietajúci. Vrchol je akceptujúci, ak čiastočná interpretácia v
-ňom existuje, a každý nasledujúci vrchol je odmietajúci.
+        \par Môže as stať, že strom $T$ pozostáva jedine z koreňa -- odmieta jedinú
+        klauzulu a v tomto prípade veta platí. Teraz predpokladajme, že je konečný a má
+        viac ako 1 vrchol. V tomto prípade, tak má aspoň jeden akceptujúci vrchol. Potom
+        $i_v$ je čiastočná interpretácia končiaca v tom vrchole. Ďalej, každý
+        nasledovník je odmietajúci. Vrchol je akceptujúci, ak čiastočná interpretácia v
+        ňom existuje, a každý nasledujúci vrchol je odmietajúci.
 
-\par Predpokladajme, že by tento strom nema akceptujúci vrchol. Potom každý
-vrchol obsahuje nasledovníka, ktorý nie je odmietajúci. Týmto pádom by sme
-vytvorili nekonečne dlhú vetvu, čo je spor (strom je konečný).
+        \par Predpokladajme, že by tento strom nema akceptujúci vrchol. Potom každý
+        vrchol obsahuje nasledovníka, ktorý nie je odmietajúci. Týmto pádom by sme
+        vytvorili nekonečne dlhú vetvu, čo je spor (strom je konečný).
 
-\par Ideme pracovať s akceptujúcim vrhcholom. Nech $v$ je akceptujúci vrchol
-stromu $T$ a $v_1$, $v_2$ sú odmietajúci nasledovníci $v$. $I(v)$ (čiastočná
-interpretácia končiaca vo vrchole $v$) vyzerá nasledovne:
+        \par Ideme pracovať s akceptujúcim vrhcholom. Nech $v$ je akceptujúci vrchol
+        stromu $T$ a $v_1$, $v_2$ sú odmietajúci nasledovníci $v$. $I(v)$ (čiastočná
+        interpretácia končiaca vo vrchole $v$) vyzerá nasledovne:
 
-\begin{align*}
-    I(v)    &= \{ m_1, m_2, \ldots, m_n \} \\
-    I(v_1)  &= \{ m_1, m_2, \ldots, m_n, m_{n+1} \}  \\
-    I(v_2)  &= \{ m_1, m_2, \ldots, m_n, \neg m_{n+1} \} 
-\end{align*}
+        \begin{align*}
+            I(v)    &= \{ m_1, m_2, \ldots, m_n \} \\
+            I(v_1)  &= \{ m_1, m_2, \ldots, m_n, m_{n+1} \}  \\
+            I(v_2)  &= \{ m_1, m_2, \ldots, m_n, \neg m_{n+1} \} 
+        \end{align*}
 
-$C_1'$ a $C_2'$ sú dve základne inštancie klauzúl $C_1$ a $C_2$ -- $C_1'$ a
-$C_2'$ neplatia v $I(v_1)$ a $I(v_2)$. $C_1'$ a $C_2'$ sa neodmietajú v $I(v)$.
-$C_1'$ musí obsahovať $\neg m_{n+1}$ a $C_2'$ musí obsahovať $m_{n+1}$. $L_1' =
-\neg m_{n+1}$ a $L_2' = m_{n+1}$. AAk vynecháme $L_1'$ a $L_2'$, dostaneme
-rezolventu. $C'$ je rezolventa $C_1$ a $C_2$. $C' = (C_1' - L_1') \cup (C_2' =
-L_2')$. $C'$ -- musí byť nepravdivá v $I(v)$. Podľa predchádzajúcej lemy musí
-existovať rezolventa $C$ taká, že $C'$ je základná inštancia $C$.
+        $C_1'$ a $C_2'$ sú dve základne inštancie klauzúl $C_1$ a $C_2$ -- $C_1'$ a
+        $C_2'$ neplatia v $I(v_1)$ a $I(v_2)$. $C_1'$ a $C_2'$ sa neodmietajú v $I(v)$.
+        $C_1'$ musí obsahovať $\neg m_{n+1}$ a $C_2'$ musí obsahovať $m_{n+1}$. $L_1' =
+        \neg m_{n+1}$ a $L_2' = m_{n+1}$. AAk vynecháme $L_1'$ a $L_2'$, dostaneme
+        rezolventu. $C'$ je rezolventa $C_1$ a $C_2$. $C' = (C_1' - L_1') \cup (C_2' =
+        L_2')$. $C'$ -- musí byť nepravdivá v $I(v)$. Podľa predchádzajúcej lemy musí
+        existovať rezolventa $C$ taká, že $C'$ je základná inštancia $C$.
 
-\par Vezmime si $T''$ -- uzavretý sémantický strom, $C \cup \{C\}$. ... (niečo
-ďalej?)
+        \par Vezmime si $T''$ -- uzavretý sémantický strom, $C \cup \{C\}$. ... (niečo
+        ďalej?)
     \end{itemize}
 \end{dokaz}
 
-\paragraph{Príklad} Majme množinu formúl $F_1: (\forall x) (C(x) \implies (W(x)
-\land R(x))$, $F_2: (\exists x)(C(x) \land Q(x))$ $G: (\exists x) (Q(x) \land
-R(x))$. Ukážte, že $G$ je logickým dôsledkom $F_1$ a $F_2$.
+\begin{priklad}
+    Majme nasledujúce formuly:
+    \begin{align*}
+        F_1: &(\forall x) (C(x) \implies (W(x) \land R(x))\\
+        F_2: &(\exists x) (C(x) \land Q(x)) \\
+        G:   &(\exists x) (Q(x) \land R(x))
+    \end{align*}
+    Ukážte, že $G$ je logickým dôsledkom $F_1$ a $F_2$.
 
-\paragraph{Riešenie} Pre $F_1$, $F_2$ a $\neg G$ vytvoríme štandardné formy.
-Dostávame nasledujúcich 5 klauzúl:
-\begin{enumerate}
-	\item $(\forall x) (C(x) \implies (W(x) \land R(x)) \iff (\forall
-	x)(\neg C(x) \lor (W(x)\land R(x)) \iff (\forall x) ((\neg C(x) \lor
-	W(x)) \land (\neg C(x) \lor R(x)))$
-	\par (1) $\neg C(x) \lor W(x)$ -- $F_1$
-	\par (2) $\neg C(x) \lor R(x)$ -- $F_1$
-	\par $C(a)$ -- $F_2$
-	\par $Q(a)$ -- $F_2$
-\end{enumerate}
-$$\neg G \iff \neg (\exists x)(Q(x)\land R(x)) \iff (\forall x) (\neg Q(x) \lor
-\neg R(x)) $$. Štandardná formula pre túto formulu je:
-\par (5) $\neg Q(x) \lor \neg R(x)$ -- $G$.
+    Riešenie: Budeme ukazovať nesplniteľnosť $F_1 \land F_2 \land \neg G$.
+    Pre $F_1$, $F_2$ a $\neg G$ vytvoríme štandardné formy.
+    $F_1$ si upravíme takto:
+    \begin{equation*}
+        (\forall x) (C(x) \implies (W(x) \land R(x)) \iff 
+        (\forall x)(\neg C(x) \lor (W(x)\land R(x)) \iff 
+        (\forall x) ((\neg C(x) \lor W(x)) \land (\neg C(x) \lor R(x)))
+    \end{equation*}
+    Štandardná forma je teda 
+    $\{\neg C(x) \lor W(x),\ \neg C(x) \lor R(x)\}$.
+    Štandardná forma $F_2$ je $\{C(a),\ Q(a)\}$.
+    Pre $\neg G$ dostávame
+    \begin{equation*}
+        \neg G \iff \neg (\exists x)(Q(x)\land R(x)) \iff 
+            (\forall x) (\neg Q(x) \lor \neg R(x))
+    \end{equation*}
+    Štandardná formula pre túto formulu je $\neg Q(x) \lor \neg R(x)$
 
-\par Rezolventy: 
-\par (6) $R(a)$ -- rezolventa (2), (3)
-\par (7) $\neg R(a)$ ($\sigma = \{a / x \})$ -- rezolventa (5), (4)
-\par (8) $\square$ -- rezolventa (6), (7)
+    Dostávame nasledujúcich 5 klauzúl:
+    \begin{itemize}
+        \item[1] $\neg C(x) \lor W(x)$ -- $F_1$
+        \item[2] $\neg C(x) \lor R(x)$ -- $F_1$
+        \item[3] $C(a)$ -- $F_2$
+        \item[4] $Q(a)$ -- $F_2$
+        \item[5] $\neg Q(x) \lor \neg R(x)$ -- $G$
+    \end{itemize}
 
-\par Záver: $G$ je logickýkm dôsledkom $F_1$ a $F_2$
+    Teraz budeme postupne robiť rezolventy:
+    \begin{itemize}
+        \item[6] $R(a)$ -- rezolventa 2, 3
+        \item[7] $\neg R(a)$ -- rezolventa 4, 5
+        \item[8] $\eps$ -- rezolventa 6, 7
+    \end{itemize}
+
+    Záver: $G$ je logickýkm dôsledkom $F_1$ a $F_2$.
+\end{priklad}
 
