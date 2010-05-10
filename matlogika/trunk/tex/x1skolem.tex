@@ -31,8 +31,15 @@
     ktoré v prefixe predchádzajú \emph{posledný} existenčný
     kvantifikátor (počítame zľava doprava).
 \end{definicia}
+
 \begin{priklad}
-    \todo{ukazka hodnosti formuly na niecom}
+    Uvažujme formulu
+    \begin{equation*}
+        (\forall x) (\forall y) (\exists z) 
+        (\forall u) (\exists w) (\exists v)
+        (\forall s) (\forall t) A
+    \end{equation*}
+    Jej hodnosť je 3.
 \end{priklad}
 
 \def\existsxton{(\exists x_1) (\exists x_2) \dots (\exists x_n)}
@@ -47,12 +54,12 @@
     \begin{itemize}
         \item $m=0$ - $A$ je v Skolemovom normálnom tvare
         \item IP: tvrdenie vety platí pre každú
-        formulu\footnote{používame tým pádom komplexnejší variant
-        indukcie}, ktorej hodnosť je $\le m-1$.
+        formulu ktorej hodnosť je $m-1$.
+        Nech je teda $A$ tvaru
         \begin{equation}
             A: \existsxton (\forall y) B(x_1,x_2,\dots,x_n,y)
         \end{equation}
-        kde $b$ \emph{nie je} nutne bezkvantifikátorová.
+        kde $B$ \emph{nie je} nutne bezkvantifikátorová.
         Predpokladajme, že v $B$ sú voľné iba $x_1,x_2,\dots,x_n,y$.
         Keďže hodnosť $A$ je $m$, tak vo formule $B$ poslednému
         existenčnému kvantifikátoru predchádza práve $m-1$ všeobecných
@@ -237,8 +244,8 @@
                         \implies B))$
 
                 \item $\provable (\forall x) A \implies (\forall x) (\neg B
-                   \implies \neg (A \implies B))$ -- veta o distribúcii
-                   kvantifikátorov
+                   \implies \neg (A \implies B))$ -- veta o zavedení
+                   všeobecných kvantifikátorov
 
                 \item $(\forall x) A \provable
                     (\forall x) (\neg B \implies \neg (A \implies B))$
@@ -272,11 +279,21 @@
                 %%% }}}
             \item[3] $\provable \highlightc{
                 \existsxton [(\forall y) (B \implies B) 
-                \implies  (\forall y) B]} \implies
+                \implies  (\forall y) B]} \implies $ \\
+                \phantom{x}$\quad\quad
                 \highlighta{
                 [ \forallxton (\forall y_n) (B \implies B)
                 \implies \existsxton (\forall y) B]}$ -- $n$-krát
-                použijeme 2.
+                využijeme 2 nasledujúcim štýlom:
+                Použijeme na dané pravidlo vetu o zavedení
+                existenčného kvantifikátora. Následne, pravú stranu
+                hlavnej implikácie vidíme ako kandidáta na krok 2.
+                Preto ju na novom riadku rozpíšeme podľa tohoto pravidla
+                a následne použítím jednoduchého sylogizmu tieto 2
+                riadky zložíme. Tím dostaneme variantu 2 s pridanou
+                ďalšou premennou a toto opakujeme príslušný počet
+                krát.
+
             \item[4] $\provable \highlighta{
                 \highlighto{\forallxton (\forall y_n) (B \implies B)}
                 \implies \highlightp{\existsxton (\forall y) B}}$.
@@ -309,16 +326,15 @@
         \def\righta{\scalebox{3}[1]{\highlighta{]}} }
         \def\rightb{\scalebox{3}[1]{\highlightb{]}} }
 
-        \item[] $A^*$
-        \item[$\Leftrightarrow$]            
-        $\highlightdim{\existsxton} 
+        \item[$A^*$] 
+        $=\highlightdim{\existsxton} 
             \lefta (\forall y)
             \leftb
               (Q_1 z_1) (Q_2 z_2) \dots (Q_l z_l) C \implies
               P^{(n+1)} \rightb \implies (\forall y)
               P^{(n+1)} \righta$
 
-        \item[$\Leftrightarrow$]
+        \item[] $\Leftrightarrow$
         $ \highlightdim{\existsxton} \lefta
                     (\forall y) (\overline{Q_1} z_1)
                     (\overline{Q_2} z_2) \dots
@@ -327,7 +343,7 @@
                             \implies (\forall u)
                                 P^{(n+1)} \righta$ -- veta o variantoch
                                 + $l$ prenexných operácií d)
-        \item[$\Leftrightarrow$]
+        \item[] $\Leftrightarrow$
         $ \highlightdim{\existsxton} \highlightc{(\exists y)}
                 \lefta
                     (\overline{Q_1} z_1)
@@ -337,7 +353,7 @@
                             \implies (\forall u)
                                 P^{(n+1)} \righta$ -- prenexná
                                 operácia d) aplikovaná na $y$
-        \item[$\Leftrightarrow$]
+        \item[] $\Leftrightarrow$
         $ \highlightdim{\existsxton} (\exists y)
                     (Q_1 z_1)
                     (Q_2 z_2) \dots
@@ -347,7 +363,7 @@
                                 P^{(n+1)} \righta$ -- $l$-krát prenexná
                                 operácia d)
 
-        \item[$\Leftrightarrow$]
+        \item[] $\Leftrightarrow$
         $ \highlightdim{\existsxton} (\exists y)
                     (Q_1 z_1)
                     (Q_2 z_2) \dots
@@ -366,8 +382,6 @@
         %%% }}}
         Posledná formula má hodnosť $m-1$ a tak ju vieme podľa
         indukčného predpokladu previesť na Skolemov normálny tvar.
-        \fixme{naco sme potrebovali uplnu indukciu, moze nastat
-        pripad, ze ta hodnost bude menej ako $m-1$?}
     \end{itemize}
 %%% }}}    
 \end{dokaz}

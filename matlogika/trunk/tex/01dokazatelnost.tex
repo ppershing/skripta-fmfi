@@ -49,7 +49,7 @@
 
 \begin{priklad}[Teória ostrého usporiadania]
 %%% {{{
-    Majme predikát $<$ na množine $N$, tak, že platí
+    Majme predikát $<$ na množine $\mathbb{N}$, tak, že platí
     \begin{itemize}
     \item[1.] $(\forall x)(\forall y) ((x < y) \implies \neg (y < x))$
     - asymetrickosť
@@ -64,13 +64,22 @@
     usporiadania.
 %%% }}}    
 \end{priklad}
+\begin{poznamka}
+    Pozornému čitateľovi isto neušiel fakt, že sme už raz mali teóriu
+    usporiadania a mali sme v nej až 4 axiómy. Poznamenajme, že vtedy
+    išlo o teóriu \emph{ne}ostrého usporiadania $\le$ a chýbajúca
+    axióma bola
+    \begin{equation*}
+        (\forall x)(\forall y) ((x=y) \implies (x \le y))
+    \end{equation*}
+\end{poznamka}
 
 \begin{priklad}[Elementárna aritmetika]
 %%% {{{
     Jazyk prvého rádu rozšírme o nasledujúce symboly:
     \begin{itemize}
         \item $0$ -- konštanta (nulárny funkčný symbol),
-        \item $S$ -- $S(x)=x+1$, čiže nasledovník (unárny funkčný symbol),
+        \item $S$ -- nasledovník (unárny funkčný symbol), čiže $S(x)=x+1$
         \item $+,*$ -- binárne funkčné symboly
     \end{itemize}
     Axiómy elementárnej aritmetiky:
@@ -83,8 +92,8 @@
         \item[6.] $(x * S(y)) = ((x*y)+x)$
     \end{itemize}
     Zoberme si realizáciu 
-        $\mathcal{N}=\langle N^+,0,S,+,* \rangle, N^+ =
-        \{1,2,\dots\}$.
+        $\mathcal{N}=\langle \mathbb{N}^+,0,S,+,* \rangle$ kde  
+        $\mathbb{N}^+ = \{1,2,\dots\}$.
         Potom $\mathcal{N}$ je model pre elementárnu aritmetiku,
         zvykne sa označovať aj ako \emph{štandardný model}.
         Takejto aritmetike sa hovorí Robinsonova aritmetika.
@@ -94,14 +103,14 @@
 
 \begin{poznamka}
     Nevšímajme si nachvíľu axiómy, ale iba relačnú štruktúru
-    $\mathcal{N}=\langle N^+,0,S,+,* \rangle$.
+    $\mathcal{N}=\langle \mathbb{N}^+,0,S,+,* \rangle$.
     Zoberme namiesto $S$ konštantu $1$.
-    Ciže $\mathcal{N}'=\langle N^+,0,1,+,* \rangle$.
+    Ciže $\mathcal{N}'=\langle \mathbb{N}^+,0,1,+,* \rangle$.
     $\mathcal{N}'$ realizuje jazyk teórie telies.
     Lenže $\mathcal{N}'$ nie je modelom tohoto jazyka --
     na to, aby daná realizácia bola modelom, muselo by platiť, že
     každá formula $T$ je splnená v danej realizácii. V našom prípade,
-    v každom telese platí $\provable \neg S(S(0))=S(0)$ (inak
+    v každom telese platí $\provable \neg (S(S(0))=S(0))$ (inak
     povedané, $2 \ne 1$, ak má teleso charakteristiku viac ako 2,
     v prípade charakteristiky 2 je to $0 \ne 1$). Nuž ale v 
     $\mathcal{N}'$ je splnená formula $S(S(0))=S(0)$, lebo sa
@@ -110,7 +119,8 @@
 
 \begin{priklad}[Teória grúp]
 %%% {{{
-    Špeciálne symboly sú $+,-$.
+    Špeciálne symboly sú $+$ (binárna operácia), $-$ (unárná operácia
+    -- inverzný prvok) a $0$ (konštanta).
     Axiómy sú:
     \begin{enumerate}
             \item $((x+y)+z) = (x+(y+z))$ -- asociativita
@@ -136,7 +146,7 @@
     Nech $\mathcal{M}$ nech je ľubovoľný model teórie $T$ 
     (čiže platí $\mathcal{M} \models A$).
     Ukážeme (indukciou podľa dĺžky dôkazu), že platí $\mathcal{M} \models A_i$
-    pri predpoklade, že pre $\forall j:j < i$ platí $m \models A_j$.
+    pri predpoklade, že pre $\forall j:j < i$ platí $\mathcal{M} \models A_j$.
 
     Do dôkazu sa $A_i$ môže dostať niekoľkými spôsobmi:
     \begin{enumerate}
@@ -178,7 +188,8 @@
             (\forall x) C)$ a $x$ nie je voľná v $B$.
             Mali by sme dokázať, že platí $\mathcal{M} \models A_i$.
             Zaujímavý prípad je, keď
-            $\mathcal{M} \models (B \implies C)[e(x/m)]$ platí, vtedy sa
+            $\mathcal{M} \models (B \implies C)[e(x/m)]$ platí pre
+            ľubovoľné indivíduum $m$, vtedy sa
             pozeráme na platnosť $(B \implies (\forall x)C)$.
             Posledná formula je ale ekvivalentná s $\neg B \lor (\forall x) C$.
             Dôležitý je tiež predpoklad, že $x$ nie je voľná v $B$,
@@ -216,9 +227,9 @@
         \begin{enumerate}
         \item Modus Ponens:
             Vieme
-            $T \provable A_j, T \provable A_j \implies A_i$.
+            $T \provable A_j,\ T \provable A_j \implies A_i$.
             Podľa IP platí
-            $T \models A_j, T \models A_j \implies A_i$ a vďaka
+            $T \models A_j,\ T \models A_j \implies A_i$ a vďaka
             korektnosti MP teda aj $T \models A_i$.
 
         \item Pravidlo zovšebecnenia: $A_i: (\forall x) A_j$.
@@ -274,12 +285,15 @@
     \begin{equation*}
         m \notmodels (A \implies A')[e]
     \end{equation*}
+    Dôležitým faktom je, že pri dôkaze sme totiž skryte použili
+    pravidlo zovšeobecnenia na voľnú premennú $\then$ nemôžeme použiť
+    VD.
 %%% }}}
 \end{poznamka}
 
 \begin{dosledok}[Vety o korektnosti]
-    Ak teória $T$ v jazyku $L$ má model $m$, potom $T$ je
-    bezposporná.
+    Ak teória $T$ v jazyku $L$ má model $\mathcal{M}$, potom $T$ je
+    bezosporná.
 \end{dosledok}
 \begin{dokaz}
 %%% {{{
@@ -290,22 +304,24 @@
     (podľa Tarského definície splniteľnosti).
     Lenže tá, ktorá nie je pravdivá, nie je ani dokázateľná 
     (podľa vety o korektnosti).
+    \\
 %%% }}}
 \end{dokaz}
 
 \medskip
 Tento výsledok hovorí, ze ak máme vyšetriť bezospornosť nejakej teórie,
-treba nájsť jej model. Dôkazy bezospornosti môžeme rozdeliť na 2 typy
+treba nájsť jej model. Dôkazy bezospornosti môžeme rozdeliť na 2 typy:
 \begin{itemize}
     \item syntaktické -- sú to konečné posutpnosti symbolov, alebo
-        formúl. Ak chceme dokázať bezospornosť $T$, tak ju syntakticky
-        prevedieme na teóriu $S$, o ktorej vieme, že je bezosporná.
+        formúl. Ak chceme dokázať bezospornosť $T$, môžeme popísať
+        postup, ako dôkaz sporu v $T$ prevedieme na dôkaz sporu
+        v teórii $S$, o ktorej vieme, že je bezosporná.
         Napríklad ak $T$ je predikátová logika, môžeme ju previesť na
         výrokovú logiku $S$.
 
     \item sémantické -- niekedy nie je možné dokazovať syntakticky.
-        Sémanticky dokazujeme tak, že nájdeme (nekonečný) model
-        $\mathcal{M}$ teórie $T$
+        Sémanticky dokazujeme tak, že nájdeme potenciálne nekonečný model
+        $\mathcal{M}$ teórie $T$.
 \end{itemize}
 
 
@@ -326,28 +342,46 @@ treba nájsť jej model. Dôkazy bezospornosti môžeme rozdeliť na 2 typy
     Každej formule $A$ na jazyku $L$ teda priradíme
     formulu $A^*$ na jazyku $L'$ nasledovne:
     \begin{enumerate}
-        \item ak $A$ je tvaru $A: P(t_1, \dots ,t_n)$,
-                tak $A^*: P(c, c, \dots,c)$.
-                \fixme{A co funkcne symboly?}
-        \item ak $A$ je tvaru $A: t_1=t_2$,
+        \item $A$ je tvaru $P(t_1, \dots ,t_n)$,
+                tak $A^*: P(c, c, \dots,c)$.\footnote{
+                O funkčné symboly sa nemusíme starať -- nahradili sme
+                ich totiž konštntou $c$.
+            }
+
+        \item $A$ je tvaru $t_1=t_2$,
                 tak $A^*: c=c$.
-        \item ak $A$ je tvaru $A: B \implies C$,
+
+        \item $A$ je tvaru $B \implies C$,
                 potom $A^*: B^* \implies C^*$.
-        \item ak $A$ je tvaru $A: B \squareop C$,
+
+        \item $A$ je tvaru $B \squareop C$,
                 potom $A^*: B^* \squareop C^*$.
-        \item ak $A$ je tvaru $A: \neg B$,
+
+        \item $A$ je tvaru $\neg B$,
                 potom $A^*: \neg B^*$
-        \item ak $A$ je tvaru $A: (Qx) B$, potom $A^*: B^*$.
+
+        \item $A$ je tvaru $(Qx) B$, potom $A^*: B^*$.
     \end{enumerate}
 
     Ak jazyk $L$ je jazyk bez rovnosti a $\provable_L A$, potom
-    o formule $A^*$ tvrdíme, že je to tautológia. \fixme{WTF? bud
-    tomu nechapem, alebo ak $\provable \exists x_1 \exists x_2 x_1 \ne
-    x_2$, potom $c \ne c$ je tautologia?}
-    Naopak, ak $L$ je jazyk s rovnosťou a $\provable_L A$,
-    potom $A^*$ je tautologický dôsledok $c=c$.
+    o formule $A^*$ tvrdíme, že je to tautológia.
+    Na druhú stranu, ak $L$ je jazyk s rovnosťou a $\provable_L A$,
+    potom $A^*$ je tautologický dôsledok $c=c$.\footnote{
+        Toto sa na prvý pohľad zá byť kontraintuitívne. Majme totiž
+        formulu $\exists x \exists y \neg (x=y)$. Z jej dokázateľnosti
+        tvrdíme dokázateľnosť $\neg (c=c)$ čo je evidentne nepravda.
 
-    Teraz ukážeme, že predikátová logika nie je sporná.
+        Problém je v tom, že $\exists x \exists y \neg (x=y)$
+        dokázateľná nie je. Prečo? Pozrime sa na celú našu redukciu.
+        Akoby sme dosadili špeciálny model $\mathcal{M}$, ktorého
+        univerzum $M$ tvorí iba jediná hodnota -- konštanta $c$.
+        Teda, ak pôvodná formula bola dokázateľná $\then$ platí v
+        každom modeli, teda špeciálne aj našom. Lenže n našom modeli
+        sa interpretuje ako $\neg (c=c)$ a teda nemohla byť
+        dokázateľná.
+    }
+
+    Teraz ukážeme, že predikátová logika nie je sporná:
     Tvrdíme, že pre žiadnu formulu $A$ nie je $\provable A$ aj 
     $\provable \neg A$.
     Ak by to platilo, dostali by sme sa do sporu,
