@@ -12,13 +12,14 @@
     \raisebox{-\abovedisplayshortskip}{\parbox{0.75\linewidth}{#1}}
 }
 
-\renewcommand{\implies}{\rightarrow}
-\newcommand{\then}{\Rightarrow}
-\newcommand{\notmodels}{\nvDash}
-\newcommand{\union}{\cup}
-\newcommand{\intersect}{\cap}
-\newcommand{\provable}{\vdash}
-\newcommand{\unprovable}{\nvdash}
+\renewcommand{\implies}{\rightarrow} % logicka implikacia ->
+\newcommand{\lequiv}{\leftrightarrow} % logicka ekvivalencia <->
+\newcommand{\then}{\Rightarrow} % normalna implikacia <=>
+\newcommand{\notmodels}{\nvDash} % nemodeluje |/=
+\newcommand{\union}{\cup} % mnozinove zjednotenie
+\newcommand{\intersect}{\cap} % mnozinovy prienik
+\newcommand{\provable}{\vdash} % dokazatelne |-
+\newcommand{\unprovable}{\nvdash} % nedokazatelne |/-
 
 \newcommand{\startFIXME}{
     \noindent 
@@ -29,8 +30,8 @@
 }
 \newcommand{\stopFIXME}{
     \noindent 
-    ---------------------------------------------
-    Koniec neoverenej časti
+    ---------------------------------------------\\
+    Koniec neoverenej časti\\
     \noindent 
     ---------------------------------------------
 }
@@ -53,10 +54,14 @@
 }
 
 
+%%%% rozne typy zvyraznenia
+% standardne 3 farby
 \newcommand{\highlighta}[1]{{\color{blue}#1}}
 \newcommand{\highlightb}[1]{{\color{BrickRed}#1}}
 \newcommand{\highlightc}[1]{{\color{OliveGreen}#1}}
+% zatemnenie
 \newcommand{\highlightdim}[1]{{\color{Gray}#1}}
+% podciarkovanie
 \newcommand{\highlighto}[1]{\underline{#1}}
 \newcommand{\highlightp}[1]{\dashuline{#1}}%\dotuline{#1}}
 
@@ -80,5 +85,15 @@
 \newenvironment{dokaz}{\trivlist
   \item[\hskip \labelsep{\bfseries Dôkaz:}]}{$\blacksquare$ \endtrivlist}
 
-\newenvironment{poznamka}{\trivlist
-  \item[\hskip \labelsep{\bfseries Poznámka:}]}{\endtrivlist}
+\newtheorem{HLPpoznamka}{Poznámka}[section]
+\newenvironment{poznamka}[1][]{
+    \ifthenelse{\equal{#1}{}}{
+        \begin{HLPpoznamka}
+    }{
+        \begin{HLPpoznamka}[#1]
+    }
+    {\it (: }\rm}{{\it :)}\end{HLPpoznamka}
+}
+
+%\newenvironment{poznamka}{\trivlist
+%  \item[\hskip  \labelsep{\bfseries Poznámka} {\it (:}]}{{\it :)} \endtrivlist}
