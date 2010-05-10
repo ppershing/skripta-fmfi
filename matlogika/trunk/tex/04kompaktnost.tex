@@ -2,17 +2,19 @@
 
 \begin{veta}[O kompaktnosti]
     Nech $T$ je množina formúl jazyka $L$, $A$ je formula $L$. Potom
-    $T \models A \iff \exists \mbox{konečná }T'\subseteq T: T' \models A$.
+    $T \models A \iff \exists 
+        \mbox{ konečná podmnožina }T'\subseteq T: T' \models A$.
 \end{veta}
 
 \begin{dokaz}
     Podľa G\"odelovej vety o úplnosti v predikátovej logike platí
     $T \models A \iff T \provable A$.
-    Nech $A_1, A_2, \dots , A_n$ je konečná postupnosť formúl -
+    Nech $A_1, A_2, \dots , A_n$ je konečná postupnosť formúl --
     dôkaz $A$. Zoberme $T' = \{B_1, B_2, \dots, B_m\}$, kde $B_i$ sú axiómy
     $T$ nachádzajúce sa v dôkaze $A$.
 
     Potom môžeme písať $T' \provable A \iff T' \models A$.
+    \\
 \end{dokaz}
 
 \begin{priklad}
@@ -20,15 +22,14 @@
     charakteristiky 0 nedokážeme v teórii prvého rádu zapísať
     pomocou konečného počtu axióm.
 
-    Nech $T$ je teória telies charakteristiky 0 (s rovnosťou),
-    $L=\{0,1,+,*\}$.
-    
+    Nech $T$ je teória telies charakteristiky 0 (s rovnosťou)
+    a jazykom $L=\{0,1,+,*\}$.    
     Označme si pre $p\in N, p\ge 1$ výraz $p \times 1$ ako
     \begin{equation*}
-        p \times 1 : \underbrace{1 + (1 + ( 1 + \dots (1 + 1}_{p}) \dots )
+        p \times 1 \equiv \underbrace{1 + (1 + ( 1 + \dots (1 + 1}_{p}) \dots )
     \end{equation*}
     Ďalej si označme formulu $P_p$ ako $P_p: p \times 1 = 0$.
-    Telesá charakteristiky $p$ môžeme popísať ako
+    Pre telesá charakteristiky $p$ platí (z definície charakteristiky)
     \begin{equation*}
      \models \neg P_1 \land \neg P_2 \land \dots \land \neg P_{p-1}
         \land P_p
@@ -36,17 +37,19 @@
     Ak teleso nemá konečnú charaktetistiku, tak jeho charakteristika
     je 0.
 
-    Nech $A$ je formula teórie telies charakteristiky 0. Pre $A$ platí
+    Uvažujme formulu $A$ teórie telies charakteristiky 0. Pre $A$ platí
     \begin{equation*}
      T \models A \iff T' \subseteq T, T'\mbox{ konečná}
     \end{equation*}
     Teória $T'$ obsahuje len konečne veľa axióm $\neg P_p$.
-    Označme $m$ najväčší index axiomy, ktorá patrí to $T'$.
+    Označme $m$ najväčší index axiomy, ktorá patrí do $T'$.
     Potom formula $A$ je splnená aj vo všetkých telesách dostatočne
     veľkej konečnej charakteristiky 
     (presnejšie povedané charakteristiky $>m$).
     Ak teda formula $A$ je teorémou telies charakteristiky $0$,
     tak platí aj vo všetkých telesách dostatočne veľkej charakteristiky.
+    Toto začína napovedať, že čosi nie je na kostolnom poriadku.
+    Dotiahnime teda naše argumenty do konca.
 
     Uvažujme teraz axiómy $A_1, \dots A_n$ teórie telies s
     charakteristikou 0.
@@ -72,10 +75,10 @@
         (\forall p)(p\times 1\not=0)
     \end{equation*}
     Toto sa v literatúre terminologicky nazýva
-    \emph{slabá logika druhého rádu}. V nej
+    {\tt slabá logika druhého rádu}. V nej
     vieme konečne axiomatizovať teóriu telies charakteristiky 0.
     Tým pádom 
-    \emph{v slabej logike druhého rádu neplatí veta o kompaktnosti}.
+    {\tt v slabej logike druhého rádu neplatí veta o kompaktnosti}.
 \end{poznamka}
 
 \begin{poznamka}
@@ -90,8 +93,9 @@
 
 \medskip \noindent
 Mali sme Godelovu vetu v dvoch tvaroch. Prvý bol
-$ T \models A \iff T \provable A$, druhý ``Teória je bezosporná, keď
-má model''. Preto aj veta o kompaktnosti bude mať druhý tvar.
+$ T \models A \iff T \provable A$, druhý variant znel 
+``Teória je bezosporná, keď má model''.
+Preto aj veta o kompaktnosti bude mať druhý tvar.
 
 \begin{veta}[2. tvar vety o kompaktnosti]
 %%% {{{
@@ -106,7 +110,8 @@ má model''. Preto aj veta o kompaktnosti bude mať druhý tvar.
     Z 2. G\"odelovej vety vyplýva, že $T$ má model $\iff$ je bezosporná.
     Z lindenbauma zase, že $T$ je bezosporná $\iff$ každá konečná
     $T' \subseteq T$ je bezosporná, čo opäť z G\"odelovou vety
-    $\iff$ každá konečná podmnožina $T'$ má model.
+    $\iff$ každá konečná podmnožina $T' \subseteq T$ má model.
+    \\
 %%% }}}
 \end{dokaz}
 
@@ -128,26 +133,30 @@ má model''. Preto aj veta o kompaktnosti bude mať druhý tvar.
             A_x[S(x)] \implies (\forall x)A)\Big)$
     \end{enumerate}
     Táto aritmetika má model 
-    $\mathcal{N} = \langle 0,1,S,+,*,\mathbb{N}^+ \rangle$.
+    $\mathcal{N} = \langle 0,1,S,+,*,\mathbb{N}_0 \rangle$.
 
     Ukážeme, že Peanova aritmetika má aj neštandardné modely.
-    Definujme množinu ``numerálov'' $\bar{n}$ -- termov jazyka $L$ ako
+    Definujme množinu ``numerálov'' $\bar{n}$ pre $n\in\mathbb{N}_0$
+    ako termoy jazyka $L$ nasledovne:\footnote{Veľmi podobne ako
+        Herbrandovské interpretácie, viď príslušnú kapitolu}
     \begin{itemize}
     \item $\bar{0} = 0$
     \item $\overline{n+1} = S(\bar{n}) = 
         \underbrace{S(S( \cdots S}_{(n+1)\mbox{-krát}}(0) \cdots ))$
     \end{itemize}
 
-    K $L$ zostrojíme $L_c$ tak, že do $L$ pridáme konštantu $c$ a
+    K jazyku $L$ zostrojíme rozšírený jazyk $L_c$ tak,
+    že do $L$ pridáme konštantu $c$ a
     teóriu rozšírime o axiómy
     \begin{equation*}
-        \provable C_n: c \not= \bar{n}
+        \provable C_n: c \not= \bar{n} \quad\quad \forall n\in\mathbb{N}_0
     \end{equation*}
 
     Vidíme, že každá konečná podmnožina $T_c$ má model,
-    ktorý vznikne expanziou štandardného modelu $n$.
-    Konštantu $c$ realizujeme indivíduom $n$, ktoré nepatrí do
-    indivíduí použitých v axiómach.
+    ktorý vznikne expanziou štandardného modelu $\mathcal{N}$.
+    Konštantu $c$ budeme jednoducho realizovať ako indivíduom $n$,
+    ktoré nepatrí do indivíduí použitých v axiómach (a teda je istým
+    spôsobom ``nové'').
     Čiže každá $T' \subseteq T_c$ má model a na základe vety o kompaktnosti 
     aj $T_c$ má model. Teraz si môžeme všimnúť, že model $T_c$ bude rôzny
     od štandardného modelu a nebude s ním ani izomorfný.

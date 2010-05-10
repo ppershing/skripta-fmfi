@@ -12,7 +12,7 @@ normálnom tvare a vychádzali z nasledujúcich hľadísk:
     \item Pretože matica (jadro) neobsahuje kvantifikátory, môže byť
         vyjadrená v konjunktívnej normálnej forme.
 
-    \item Zachovajúc nesplniteľnosť formúly môžeme z nej eliminovať
+    \item Zachovajúc nesplniteľnosť formoly z nej môžeme eliminovať
         existenčné kvantifikátory pomocou tzv. skolemovských funkcií (keď máme
         premennú vyjadrenú v prefixovom normálnom tvare a eliminujeme z nej
         existenčný kvantifikátor, dostaneme formulu, ktorá je nesplniteľná
@@ -37,10 +37,10 @@ kvantifikátory, $Q_{s_1}, Q_{s_2}, \dots Q_{S_m}$,
 kde $1 \le s_1 < s_2 < \dots < s_m < r$.
 Vtedy opäť odstránime $(Q_r x_r)$ z prefixu a
 za premennú $x_r$ dosadíme do $M$ term 
-$f(x_{s_1}, \ldots, x_{s_m})$. Túto funkciu voláme Skolemova funkcie a
-konštanty $c$ voláme Skolemove konštanty.
+$f(x_{s_1}, \ldots, x_{s_m})$. Takúto funkciu voláme skolemovaská
+funkcia a podobne, takúto konštantu $c$ voláme skolemovská konštanta.
 
-Tento postup môžem zopakovať pre všetky existenčné kvantifikátory a
+Tento postup môžeme zopakovať pre všetky existenčné kvantifikátory a
 výsledok nazveme štandardnou skolemovskou formou.
 
 \begin{priklad}
@@ -81,10 +81,17 @@ výsledok nazveme štandardnou skolemovskou formou.
 %%% }}}    
 \end{priklad}
 
+\begin{poznamka}
+    Formula môže mať viacero štandardných foriem.
+\end{poznamka}
+
+
+
 
 \begin{definicia}[Literál]
     Premenná, alebo jej negácia.
 \end{definicia}
+
 \begin{definicia}[Klauzula]
     Disjunkcia literálov.
     Špeciálne \emph{jednotková klauzula} (tiež jednoliterálna klauzula)
@@ -104,12 +111,12 @@ výsledok nazveme štandardnou skolemovskou formou.
 
 \begin{poznamka}
     Štandardná skolemovská forma sa dá zadať aj v množinovom zápise.
-    Takýto zápis budeme často využívať.
+    Presnejšie povedané, štandardná forma je konjunkcia klauzulí a
+    za jej množinu budeme považovať množinu týchto klauzúl.
+    Takýto zápis budeme často využívať a ako uvidíme, tieto dva zápisy
+    sú si plne ekvivalentné, čo sa týka nesplniteľnosti.
 \end{poznamka}
 
-\begin{poznamka}
-    Formula môže mať viacero štandardných foriem.
-\end{poznamka}
 
 \begin{priklad}
 %%% {{{
@@ -159,15 +166,16 @@ výsledok nazveme štandardnou skolemovskou formou.
     \begin{itemize}
     %%% {{{
     \item[$\Rightarrow:$] Sporom. Nech $A_1$ je splniteľná.
-        Potom $\forall x_1,\dots,x_{r-1}$ platí formula $A_1$, čize
-        existuje taká interpretácia $I$, že $I$ vyhovuje $A_1$ ( $A_1$ je pravdivé v $I$).
-        To znamená, že pre všetky $x_1 , \dots x_{r-1}$ existuje také $x_r$,
+        Potom  existuje taká interpretácia $I$, 
+        že $I$ vyhovuje $A_1$ ( $A_1$ je pravdivé v $I$).
+        To znamená, že pre všetky $x_1 , \dots, x_{r-1}$ existuje také $x_r$,
         ktoré je rovné $f(x_1, \dots, x_{r-1})$.
         Tá istá interpretácia teda vyhovuje aj pôvodnej formule $A$.
 
     \item[$\Leftarrow:$] Opäť sporom. Nech $A$ je splniteľná.
         Teda existuje interpretácia $I$, ktorá vyhovuje formule $A$.
-        Potom pre každé $x_1, \dots, x_{r-1}$ existuje také $x_r$, že platí 
+        Potom pre každú $r-1$-ticu $x_1, \dots, x_{r-1}$ 
+        existuje také $x_r$, že platí 
         $M[x_1, \dots, x_{r-1}, x_r, \dots, x_n]$.
         Rozšírme $I$ o $(r-1)$-árny funkčný 
         symbol $f$ tak, že $f(x_1, \dots, x_{r-1}) = x_r$. Potom $I'$
@@ -183,21 +191,23 @@ výsledok nazveme štandardnou skolemovskou formou.
     Tým pádom $A_0$ nie je splniteľná $\iff$ $A_1$ nie je splniteľná $\iff
     \dots \iff$ $A_m\equiv S$ nie je splniteľná.
     No a $S$ nie je splniteľná práve vtedy keď $\mathscr{S}$ nie je
-    splniteľná.
+    splniteľná.\footnote{Viď poznámku \ref{poznamka:standard_konj}.}
+    \\
 %%% }}}
 \end{dokaz}
 
 \begin{poznamka}
     Ak $A$ \emph{nie je splniteľná}, tak splniteľnosť $A$ je
-    ekvivalentná splniteľnosti $\mathscr{S}$, teda môžeme písať
+    ekvivalentná splniteľnosti množinovej verzie štandardnej formy
+    $\mathscr{S}$, teda môžeme písať
     $A \equiv \mathscr{S}$.
 \end{poznamka}
 
 \begin{poznamka}
     Ak $A$ je splniteľná, tak tvrdenie neplatí.
     Majme formulu $A$, ktorá je $A: (\exists x) P(x)$.
-    Tým pádom $S$ je $S: P(a)$ ($x$ sme nahradili skolemovskou
-    konštantou $a$).
+    Tým pádom štandardná forma $S$ je $S: P(a)$ 
+    ($x$ sme nahradili skolemovskou konštantou $a$).
     Vezmime interpretáciu s univerzom $D = \{1, 2 \}$,
     pričom $a$ priradíme v $I$ hodnotu $1$.
     Hodnoty pre $P$ budú $P(1)=false, P(2)=true$.
@@ -212,6 +222,7 @@ výsledok nazveme štandardnou skolemovskou formou.
 \end{poznamka}
 
 \begin{poznamka}
+    \label{poznamka:standard_konj}
     Majme formulu $A: A_1 \land A_2 \land \ldots \land A_n$.
     Pre každé $A_i$ si vytvoríme štandardnú formulu $S_i$.
     Potom štandardná forma pre $A$ je 
@@ -245,8 +256,7 @@ výsledok nazveme štandardnou skolemovskou formou.
 
     Chceme ukázať, že ak pre všetky $x \in G$ platí $x \circ x \in G$,
     potom je grupa komutatívna. Prvou časťou úlohy je formalizovanie zadania:
-    Nech $P(x,y,z)$ označuje $x \circ y = z$ a nech  $i(x) =
-    x^{-1}$.\footnote{ % o tom, ze to ma Toman zle
+    Nech $P(x,y,z)$ označuje\footnote{ % o tom, ze to ma Toman zle
         %%% {{{
         Na tomto mieste by som poznamenal, že to má Toman zle.
         Totiž, nahradením funkcie predikátom sme stratili jednoznačnosť
@@ -259,6 +269,7 @@ výsledok nazveme štandardnou skolemovskou formou.
         tohoto príkladu bude podľa Tomana.
         %%% }}}
     }
+    $x \circ y = z$ a nech  $i(x) = x^{-1}$.
 
     Prepísané axiómy vyzerajú nasledovne:
     \begin{align*}
@@ -268,11 +279,12 @@ výsledok nazveme štandardnou skolemovskou formou.
             \begin{split}
                 & \phantom{\land (} (\forall x) (\forall y) (\forall z)
                 (\forall u) (\forall v) (\forall w)
-                [ (P(x,y,u) \land  P(y,z,v) \land P(u, z, w))
-                    \implies P(x,v,w)] \\ 
+                [ (P(x,y,u) \land  P(y,z,v) \land \highlighta{P(u, z,w)})
+                    \implies \highlightc{P(x,v,w)}] \\ 
                 &\land (\forall x) (\forall y)(\forall z)
                 (\forall u)(\forall v) (\forall w)
-                [(P(x,y,u) \land P(y,z,v) \land P(x,v,w)) \implies P(u,z,w)]
+                [(P(x,y,u) \land P(y,z,v) \land \highlightc{P(x,v,w)})
+                    \implies \highlighta{P(u,z,w)}]
             \end{split} \\
         A_3':\ &(\forall x) P(x,e,x) \land (\forall x) P(e,x,x) \\
         A_4':\ &(\forall x) P(x,i(x),e) \land (\forall x) P(i(x),x,e)
@@ -345,6 +357,6 @@ výsledok nazveme štandardnou skolemovskou formou.
     Bolo by teda potrebné vyšetriť všetky oblasti.
     Toto je ale príliš zložité -- overiť niečo na všetkých možných
     oblastiach je nad naše sily.
-    Nám ale bude stačiť vyšetrovať na \emph{Herbrandovskom univerze},
+    Nám ale bude stačiť vyšetrovať na {\it Herbrandovskom univerze},
     ako si ukážeme v nasledujúcej stati.
 \end{priklad}

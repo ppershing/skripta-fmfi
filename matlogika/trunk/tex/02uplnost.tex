@@ -200,28 +200,36 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
     Budeme postupovať matematickou indukciou vzhľadom na zložitosť
     formuly. Pri dokazovaní sa ale obmedzíme iba na uzavreté formuly.
     \begin{itemize}
-    \item[1:]
+    \item[1:] Báza indukcie:
         \begin{itemize}
         \item Formula $A$ je tvaru $P(t_1,\dots,t_n)$. Pritom $t_1,
             \dots t_n$ sú termy bez premenných (inak by formula $A$
             nebola uzavretá). Podľa definície splniteľnosti platí, že
             $A$ je pravdivá v $T$ práve vtedy keď je dokázateľná v
             $T$. Zeberme si teraz ohodnotenie $e$ také, že
-            $t_i[e] = t_i$ (Čiže každý term realizujeme sám sebou).
-            Potom $A$ je pravdivá práve vtedy, keď je splnená aspoň
-            pre jedno ohodnotenie $e$.
+            $t_i[e] = t_i$ (Čiže každý term realizujeme samým sebou).
+            Podľa definície je uzavretá formula $A$ pravdivá práve vtedy, 
+            keď je splnená aspoň pre jedno ohodnotenie $e$ (vtedy je
+            automaticky splnená pre všetky ohodnotenia $e$).
             Teda
-            $\mathcal{M} \models A \iff
-                ([t_1],[t_2],\dots,[t_n]) \in P_\mathcal{M} \iff
-                T \provable P(t_1,t_n, \dots, t_n)$.
-            \fixme{O co islo v tomto bode?}
+            \begin{equation*}
+            \begin{split}
+                \mathcal{M} \models A 
+                &\iff \mathcal{M} \models A[e] \\
+                &\iff (t_1[e],t_2[e],\dots,t_n[e]) \in P_\mathcal{M}
+                \\
+                &\iff ([t_1],[t_2],\dots,[t_n]) \in P_\mathcal{M} \\
+                &\iff T \provable P(t_1,t_2, \dots, t_n) \equiv A
+            \end{split}
+            \end{equation*}
 
         \item Formula môže byť tvaru $A:t_1=t_2$. V tom prípade
             $\mathcal{M} \models t_1 = t_2 \iff [t_1]=[t_2] \iff
                 T \provable t_1=t_2$
         \end{itemize}
 
-    \item[2:]   Máme niekoľko možností, ako mohla formula $A$ vzniknúť:
+    \item[2:] Indukčný krok:\\
+        Máme niekoľko možností, ako mohla formula $A$ vzniknúť:
         \begin{itemize}
         \item $A:\neg B$. Na formulu $B$ sa vzťahuje IP, keďže $B$ je
             uzavretá formula. Teda
@@ -232,17 +240,20 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
             $\mathcal{M} \models A \iff T \provable A$.
 
         \item $A: B \implies C$. Ma formuly $B,C$ sa vzťahuje IP.
-            Rozoberme si teda obe implikácie tvrdeni
+            Rozoberme si obe implikácie tvrdenia
             $\mathcal{M} \models B \implies C \iff
              T \provable B \implies C$.
             \begin{itemize}
             \item[$\Rightarrow:$] Vieme, že $(B \implies C)
-                    \leftrightarrow \neg B \lor C$. Čiže môžeme
+                    \lequiv \neg B \lor C$. Čiže môžeme
                     predpokladať, že aspoň 1 z tvrdení 
                     $\mathcal{M} \models \neg B$,
                     $\mathcal{M} \models C$ platí. Rozoberme obe
-                    možnosti -- pri prvej dostávame, že $\neg B$ je
-                    pravdivá (a z IP dokázateľná)
+                    možnosti -- pri prvej predpokladáme, že $\neg B$ je
+                    pravdivá (a z IP dokázateľná\footnote{
+                        Presnejšie povedané, IP nestačí, potrebujeme
+                        spraviť ešte ďalší krok kvôli negácii.
+                        Ten sme už ale rozobrali.}):
                     \begin{itemize}
                     \item $T \provable \neg B$ -- IP
                     \item $\provable \neg B \implies (B \implies C)$ --
@@ -257,18 +268,18 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
                     \item $\provable C \implies (B \implies C)$ -- A1
                     \item $T \provable B \implies C$ -- MP
                     \end{itemize}
-                    Ak to zhrnieme, ak platí
-                    $\mathcal{M} \models B \implies C$, je formula
+                    Záver: ak platí
+                    $\mathcal{M} \models B \implies C$, tak je formula
                     $B \implies C$ dokázateľná v $T$.
-
+            \smallskip
             \item[$\Leftarrow:$] Uvažujeme, že
                 $T \provable B \implies C$.
                 Teória $T$ je úplná teória a $B \implies C$ je uzavretá.
                 Pre každú uzavretú formulu platí jedna z možností
-                $T \provable \neg B$ (potom $m \models \neg B$ a sme
+                $T \provable \neg B$ (potom $\mathcal{M} \models \neg B$ a sme
                 hotoví) alebo $T \provable B$.
                 Vtedy ale musí platiť $T \provable C$
-                a teda $m \models C$. Tým je tvrdenie dokázané.
+                a teda $\mathcal{M} \models C$. Tým je tvrdenie dokázané.
 
                 Ešte sa môžeme vrátiť k tomu, prečo platí $T \provable C$.
                 Uvažujme totiž $T \provable \neg C$.
@@ -293,7 +304,7 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
                 špecifikácie). Lenže z IP dostávame
                 $\mathcal{M} \models B_x[c] \then 
                  \mathcal{M} \models (\forall x) B$.
-
+            \smallskip
             \item Platí $T \provable \neg A$. Vtedy
                 $T \provable (\exists x) \neg B$. Ďalej, keďže teória je
                 Henkinovská, platí tiež 
@@ -302,7 +313,7 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
                 $T \provable \neg B_x[c]$. Potobne ako v
                 predchádzajúcom prípade máme
                 $\mathcal{M} \models \neg B_x[c] \then
-                 \mathcal{M} \not \models B$ (formula $B_x[c]$ je
+                 \mathcal{M} \not \models A$ (formula $B_x[c]$ je
                  nepravdivá a preto aj formula $(\forall x) B$ je
                  nepravdivá). Nuž ale potom
                  $\mathcal{M} \models \neg A$.
@@ -314,13 +325,17 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
     Ukázali sme, že pre uzavreté formuly vieme pomocou indukcie
     dokázať tvrdenie vety. Teraz, nech $A$ je ľubovoľná formula z teórie $T$.
     Pre ňu platí, že $T \provable A$ (predpoklad).
-    Potrebujem dokázať, že $T \provable A \iff m \models A$.
+    Potrebujem dokázať, že $T \provable A \iff \mathcal{M} \models A$.
     Zoberiem si $A'$ -- uzáver formuly $A$.
-    Na $A'$ sa vzťahuje naša indukcia a teda $m \models A' \iff T \provable A'$.
+    Na $A'$ sa vzťahuje naša indukcia a teda 
+    $\mathcal{M} \models A' \iff T \provable A'$.
     Podľa vety o uzávere ale platí
-    $m \models A \iff  m\models A' T \provable A' \iff T \provable A$
+    $\mathcal{M} \models A \iff  \mathcal{M} \models A'$ čo je 
+    $\iff T \provable A'$ a z vety o uzávere $\iff T \provable A$.
+    \\
 \end{dokaz}
 
-\par{Záver:} Pre ľubovoľnú teóriu, ktorá je idealizovaná (Henkinova a
+\noindent
+Záver: Pre ľubovoľnú teóriu, ktorá je idealizovaná (Henkinova a
 úplná), vieme zostrojiť model.
 
