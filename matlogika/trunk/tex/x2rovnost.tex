@@ -39,7 +39,16 @@ hovoriť o predikáte ``=''.
         \item[3.] $(\forall x) (\forall y) (\forall z)
             [( \langle x,y \rangle \in \varphi \land 
                \langle y,z \rangle \in \varphi) \implies
-               \langle x,z \rangle \in \varphi]$. Tranzitívnosť
+               \langle x,z \rangle \in \varphi]$.
+               Tranzitívnosť\footnote{Pozn.: Axiómu môžeme uvádzať aj
+               v ekvivalentnom tvare
+                $(\forall x) (\forall y) (\forall z)
+                [ \langle x,y \rangle \in \varphi \implies (
+                    \langle y,z \rangle \in \varphi \implies
+                    \langle x,z \rangle \in \varphi)]$. Inak povedané,
+                    $(A \land B) \implies C$ sme nahradili
+                    $A \implies (B \implies C)$.
+               }
     \end{itemize}
     Ak pridáme trichotomickosť, dostaneme teóriu neostrého
     usporiadania:
@@ -130,7 +139,7 @@ Rovnosť je symetrická a tranzitívna.
     dosadením $t_i$ za niektoré termy $s_i$, okrem prípadov, keď
     $t_i$ je premenná $x$ v kvantifikácii $(\forall x)$ 
     resp. $(\exists x)$. Potom
-    $\provable A \leftrightarrow A'$.
+    $\provable A \lequiv A'$.
     \end{itemize}
 \end{veta}
 
@@ -164,7 +173,7 @@ Rovnosť je symetrická a tranzitívna.
         \item Nech $P$ je atomická podformula tvaru
             $P(r_1,\dots,r_l)$. Potom po zámene dostaneme z 
             $P(r_1, \dots, r_k)$ formulu $P':P(r_1',\dots,r_k')$.
-            Chceme ukázať $\provable P(r_1,\dots,r_k) \leftrightarrow
+            Chceme ukázať $\provable P(r_1,\dots,r_k) \lequiv
                                      P(r_1',\dots,r_k')$, ak vieme, že
             podľa IP platí $\forall i: \provable r_i = r_i'$
             %%% {{{
@@ -197,7 +206,7 @@ Rovnosť je symetrická a tranzitívna.
         \item Nech atomická podformula je tvaru $r_1 = r_2$. 
         Tento prípad sa dá ukázať podobne ako predchádzajúci,
         na prednáške bol ale iný dokaz:
-        Chceme ukázať $\provable r_1=r_2 \leftrightarrow r_1'=r_2'$.
+        Chceme ukázať $\provable r_1=r_2 \lequiv r_1'=r_2'$.
             %%% {{{
             \begin{itemize}
             \item[$\Rightarrow:$]
@@ -249,15 +258,15 @@ Rovnosť je symetrická a tranzitívna.
         \item[i)] $\provable t_1=s_2 \implies t_2=s_2 \implies
             t_n=s_n \implies (t[t_1,\dots,t_n] = t[s_1,\dots,s_n])$.
         \item[ii)] $\provable t_1=s_2 \implies t_2=s_2 \implies
-            t_n=s_n \implies (A[t_1,\dots,t_n] \leftrightarrow 
+            t_n=s_n \implies (A[t_1,\dots,t_n] \lequiv 
                               A[s_1,\dots,s_n])$.
     \end{itemize}
     Ak navyše $x$ je premenná, ktorá nie je obsiahnutá v terme $t$,
     potom platí
     \begin{itemize}
-        \item[iii)] $\provable A_x[t] \leftrightarrow 
+        \item[iii)] $\provable A_x[t] \lequiv 
             (\forall x)((x=t) \implies A)$
-        \item[iv)] $\provable A_x[t] \leftrightarrow 
+        \item[iv)] $\provable A_x[t] \lequiv 
             (\exists x)((x=t) \land A)$
     \end{itemize}
 \end{veta}
@@ -279,12 +288,12 @@ Rovnosť je symetrická a tranzitívna.
             \begin{itemize}
             \item[$\Rightarrow:$]
                 \begin{itemize}
-                \item $\provable x=t \implies (A \leftrightarrow
+                \item $\provable x=t \implies (A \lequiv
                     A_x[t])$ -- podľa ii).
                 \item $\provable \underbrace{x=t}_X \implies (
                     \underbrace{A_x[t]}_Y \implies
                     \underbrace{A}_Z)$ -- platí totiž
-                    $\provable (B \implies (C \leftrightarrow D))
+                    $\provable (B \implies (C \lequiv D))
                     \implies (B \implies (D \implies C))$
                 \item $(X \implies (Y \implies Z)) \implies
                        (Y \implies (X \implies Z))$ -- pravidlo zámeny
@@ -320,19 +329,19 @@ Rovnosť je symetrická a tranzitívna.
         \item[iv)]
             \begin{itemize}
             \item[1] $\provable (\forall x)((x=t) \implies A)
-                \leftrightarrow A_x[t]$ -- iii)
+                \lequiv A_x[t]$ -- iii)
             \item[2] $\provable (\forall x)((x=t) \implies \neg A)
-                \leftrightarrow \neg A_x[t]$ -- inštancia 1
-            \item[3] $\provable \neg \neg A_x[t] \leftrightarrow
+                \lequiv \neg A_x[t]$ -- inštancia 1
+            \item[3] $\provable \neg \neg A_x[t] \lequiv
                 \neg (\forall x) ((x=t) \implies \neg A)$ -- obmena
                 ekvivalencie
-            \item[4] $\provable A_x[t] \leftrightarrow (\exists x) \neg
+            \item[4] $\provable A_x[t] \lequiv (\exists x) \neg
                 ((x=t) \implies \neg A)$ -- odstránenie $\neg \neg$ a
                 zámena kvantifikátora
             \item[5] $\provable \neg(X \implies \neg Y)
-                \leftrightarrow  (X \land Y)$ -- rozpísanie
+                \lequiv  (X \land Y)$ -- rozpísanie
                 $\land$
-            \item[6] $\provable A_x[t] \leftrightarrow (\exists x)
+            \item[6] $\provable A_x[t] \lequiv (\exists x)
                 ((x=t) \land A)$ -- veta o ekvivalencii aplikovaná na
                 4,5
 

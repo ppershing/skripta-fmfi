@@ -44,7 +44,7 @@ formulu.
 \begin{veta}
  Nech $A$ je ľubovoľná formula predikátovej logiky. Potom existuje
  formula $A'$ v prenexnom tvare taká, že
- $\provable A \leftrightarrow A'$.
+ $\provable A \lequiv A'$.
  \label{veta:prenex}
 \end{veta}
 
@@ -79,15 +79,15 @@ jej ekvivalentom.
     \item[b)] Platí
         \begin{itemize}
         \item[1]
-            $\provable \neg(\forall x) B \leftrightarrow
+            $\provable \neg(\forall x) B \lequiv
                 \highlighto{
                 \neg (\forall x) \highlightb{\neg\neg} B}$ -- 
-                pretože platí $B \leftrightarrow \neg \neg B$
+                pretože platí $B \lequiv \neg \neg B$
 
         \item[2]
             $\provable \highlighto{
                 \highlighta{\neg (\forall x) \neg} \neg B}
-             \leftrightarrow \highlightb{(\exists x)} \neg B$ --
+             \lequiv \highlightb{(\exists x)} \neg B$ --
                 pretože $(\exists x) A$ je z definície
                 $\neg (\forall x) \neg A$.
         \end{itemize}
@@ -97,17 +97,17 @@ jej ekvivalentom.
         Podobne
         \begin{itemize}
         \item[1]
-            $\provable \neg(\exists x) B \leftrightarrow
+            $\provable \neg(\exists x) B \lequiv
                 \neg (\exists x) \highlightb{\neg\neg} B$
 
         \item[2]
             $\provable \highlighto{
                 \highlighta{\neg (\exists x) \neg} \neg B}
-                \leftrightarrow \highlightb{(\forall x)} \neg B$
+                \lequiv \highlightb{(\forall x)} \neg B$
         \end{itemize}
 
     \item[c)] Nech $Q=\forall$. Chceme ukázať
-        $\provable (\forall x) (B \implies C) \leftrightarrow
+        $\provable (\forall x) (B \implies C) \lequiv
             (B \implies (\forall x) C)$ kde $x$ nie je voľná v $B$.
         \begin{itemize}
         \item[$\Rightarrow$]
@@ -160,7 +160,7 @@ jej ekvivalentom.
             \end{itemize}
         \end{itemize}
      Druhou možnosťou je $Q=\exists$. Našim cieľom je ukázať
-     $\provable (\exists x) (B \implies C) \leftrightarrow 
+     $\provable (\exists x) (B \implies C) \lequiv 
         (B \implies (\exists x) C)$ za predpokladu že $x$ nie je voľná v $B$.
         \begin{itemize}
         \item[$\Rightarrow$]
@@ -265,103 +265,103 @@ jej ekvivalentom.
     \item[d)]
         \begin{itemize}
         \item $Q=\forall$: Ukazujeme
-            $\provable (\exists x) (B \implies C) \leftrightarrow
+            $\provable (\exists x) (B \implies C) \lequiv
              ((\forall x) B \implies C)$ ak $x$ nie je voľná v $C$.
             \begin{itemize}
             \item[1]
                 $\provable \highlightc{((\forall x) B \implies C)}
-                    \leftrightarrow
+                    \lequiv
                     (\neg C \implies \neg (\forall x) B)$
             \item[2]
                 $\provable \highlightc{((\forall x) B \implies C)}
-                    \leftrightarrow
+                    \lequiv
                     (\neg C \implies \neg (\forall x) \highlighta{\neg
                     \neg} B)$
             \item[3]
                 $\provable \highlightc{((\forall x) B \implies C)}
-                    \leftrightarrow
+                    \lequiv
                     \highlightp{
                     (\neg C \implies \highlightb{(\exists x)} \neg B)}$
             \item[4]
                 $\provable 
                     \highlighto{(\exists x) (\neg C \implies \neg B)}
-                \leftrightarrow
+                \lequiv
                     \highlightp{
                     (\neg C \implies (\exists x) \neg B)}$
                  -- časť c) tohoto dôkazu
 
             \item[5]
                 $\provable \highlightc{((\forall x) B \implies C)}
-                    \leftrightarrow
+                    \lequiv
                     \highlighto{(\exists x) 
                         (\highlightb{\neg C \implies \neg B)}}$ --
                     vetou ekvivalentných zámenách sme dosadili 4 do 3
             \item[6] 
                 $\provable (\highlighta{B\implies C}) 
-                    \leftrightarrow 
+                    \lequiv 
                     (\highlightb{\neg C \implies \neg B})$ -- 
                     vieme z výrokovej logiky
             \item[7]
                 $\provable \highlightc{((\forall x) B \implies C)}
-                    \leftrightarrow
+                    \lequiv
                     (\exists x) (\highlighta{B \implies C})$ --
                     použili sme vetu o ekvivalentných zámenách na
                     5,6.
             \end{itemize}
 
         \item $Q=\exists$: Chceme ukázať
-            $\provable (\exists x) (B \implies C) \leftrightarrow
+            $\provable (\exists x) (B \implies C) \lequiv
              ((\forall x) B \implies C)$ ak $x$ nie je voľná v $B$.
              Postupujeme analogicky ako v predchádzajúcom prípade
             \begin{itemize}
             \item[1]
                 $\provable \highlightc{((\exists x) B \implies C)}
-                    \leftrightarrow
+                    \lequiv
                     (\neg C \implies \neg (\exists x) B)$
             \item[2]
                 $\provable \highlightc{((\exists x) B \implies C)}
-                    \leftrightarrow
+                    \lequiv
                     (\neg C \implies \neg (\exists x) \highlighta{\neg
                     \neg} B)$
             \item[3]
                 $\provable \highlightc{((\exists x) B \implies C)}
-                    \leftrightarrow
+                    \lequiv
                     \highlightp{
                     (\neg C \implies \highlightb{(\forall x)} \neg B)}$
             \item[4]
                 $\provable 
                     \highlighto{(\forall x) (\neg C \implies \neg B)}
-                \leftrightarrow
+                \lequiv
                     \highlightp{
                     (\neg C \implies (\forall x) \neg B)}$
                  -- časť c) tohoto dôkazu
 
             \item[5]
                 $\provable \highlightc{((\exists x) B \implies C)}
-                    \leftrightarrow
+                    \lequiv
                     \highlighto{(\forall x) 
                         (\highlightb{\neg C \implies \neg B)}}$ --
                     vetou ekvivalentných zámenách sme dosadili 4 do 3
             \item[6] 
                 $\provable (\highlighta{B\implies C}) 
-                    \leftrightarrow 
+                    \lequiv 
                     (\highlightb{\neg C \implies \neg B})$ -- 
                     vieme z výrokovej logiky
             \item[7]
                 $\provable \highlightc{((\exists x) B \implies C)}
-                    \leftrightarrow
+                    \lequiv
                     (\forall x) (\highlighta{B \implies C})$ --
                     použili sme vetu o ekvivalentných zámenách na
                     5,6.
             \end{itemize}
         \end{itemize}
         \item[e)] Ukazujeme
-            $\provable (Qx) (B\squareop C) \leftrightarrow (B\squareop (Qx)C)$,
+            $\provable (Qx) (B\squareop C) \lequiv (B\squareop (Qx)C)$,
             kde $x$ nie je voľná v $B$.
             Na základe operácii c), d) toto vieme dokázať, pretože platí
             \begin{align*}
-                &\provable (A \lor B) \leftrightarrow (\neg A \implies B) \\
-                &\provable (A \land B) \leftrightarrow \neg(A \implies \neg B)
+                &\provable (A \lor B) \lequiv (\neg A \implies B) \\
+                &\provable (A \land B) \lequiv \neg(A \implies \neg B)
             \end{align*}
   \end{itemize}
   %%% }}}
@@ -375,27 +375,27 @@ Budeme postupovať matematickou indukciou vzhľadom na zložitosť formuly $A$.
 
     \item $A=\neg B$. Na $B$ sa vzťahuje IP, teda vieme zostrojiť
         $B'$ takú, že platí
-        $\provable B \leftrightarrow B'$.
+        $\provable B \lequiv B'$.
         Položíme $A'=\neg B'$ a niekoľkonásobným aplikovaním 
         prenexnej operácie b) dostaneme 
         $A''$ v správnom tvare.
 
     \item $A=B \implies C$. Na $B,C$ platí IP a teda existujú formuly
         $B',C'$ v prenexnom tvare, pre ktoré platí
-        $\provable B \leftrightarrow B'$, $\provable C \leftrightarrow C'$.
+        $\provable B \lequiv B'$, $\provable C \lequiv C'$.
         Nech $A' = B' \implies C'$. Na základe vety o ekvivalencii platí
-        $\provable A \leftrightarrow A'$. Teraz potrebujeme dostať
+        $\provable A \lequiv A'$. Teraz potrebujeme dostať
         $A'$ do prenexného tvaru.
         Vezmime variant $C''$ formuly $C'$ taký, že $B',C''$ nemajú
         žiadnu spoločnú premennú.
         \begin{equation*}
-            \provable A \leftrightarrow (B' \implies C'')
+            \provable A \lequiv (B' \implies C'')
         \end{equation*}
         Teraz použijeme prenexné operácie c), d) a formulu
         $B' \implies C''$ prevedieme do prenexného tvaru.
 
     \item $A=(\forall x)B$. Z indukčného predpokladu vyplýva
-        existencia $B'$, $\provable B \leftrightarrow B'$.
+        existencia $B'$, $\provable B \lequiv B'$.
         Môžu nastať 2 prípady
         \begin{itemize}
         \item $x$ nie je viazaná v $B'$. Položme $A' = (\forall x) B'$
@@ -408,14 +408,14 @@ Budeme postupovať matematickou indukciou vzhľadom na zložitosť formuly $A$.
     Ak $A$ obsahuje spojky 
     $\land,\lor$, môžeme použiť prenexnú operáciu e) alebo formulu nahradiť
     ekvivaletnou formulou obsahujúcou $\neg,\implies$.
-    Ak sa vo vormule vyskytuje $\leftrightarrow$, nemôžeme priamo
-    použiť operácie e), d) ale $A\leftrightarrow B$ prepíšeme na
+    Ak sa vo vormule vyskytuje $\lequiv$, nemôžeme priamo
+    použiť operácie e), d) ale $A\lequiv B$ prepíšeme na
     $(A\implies B) \land (B \implies A)$.
 \end{poznamka}
 
 \begin{priklad}
     \noindent
-    Formula $A: B \leftrightarrow (\forall x) C$ kde $x$ nie je voľná
+    Formula $A: B \lequiv (\forall x) C$ kde $x$ nie je voľná
     v $B$ a $y$ sa nevyskytuje v $B,C$.
     \begin{align*}
        (B \implies (\forall x) C) \land ((\forall x) C \implies B) &\\
