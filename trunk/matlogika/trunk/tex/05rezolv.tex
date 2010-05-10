@@ -7,24 +7,25 @@ Keď uvažujeme výrokovú logiku, interpretujeme formulu $A$ funkciou
 $\bar{v}$ -- valuáciou.
 Formulu sme nazvali tautológiou, ak $\bar{v}(A)$ je pre každú
 interpretáciu pravda -- treba preskúmať $2^n$ interpretácii.
-V predikátovej logike je to ešte horšie.
+V predikátovej logike je to (ako uvidíme) ešte horšie.
 
 Zopakujme si, čo už vieme. V predikátovej logike máme funkčné a
 predikátové symboly. Univerzum budem označovať netradične ako $D$.
 Znakom $M$ budeme totiž označovať jadro(maticu) formuly v prenexnom
 tvare.
 
-Funkcia $f$ bude realizovaná ako $n$-árna funkcia $f(x_1,\dots,x_n): D^n \rightarrow D$.
-Predikát $P$ bude realizovaný ako $n$-árna funckia
+Funkcia $f$ jr realizovaná ako $n$-árna funkcia 
+$f(x_1,\dots,x_n): D^n \rightarrow D$.
+Predikát $P$ jr realizovaný ako $n$-árna funckia
 $P(x_1,\dots,x_n): D^n \rightarrow \{0,1\}$.
 
 Vo formule rozlišujeme voľné a viazané premenné.
 Ak má formula voľné premenné, nevieme určiť jej pravdivostnú hodnotu,
 iba ak za všetky voľné premenné dosadíme konštanty.
 
-Ďalej, ku každej formule $A$ viem zostrojiť takú,
-ktorá je v prefixovom (prenexnom) tvare -- t.j. je 
-prefix + jadro: $(Q_1 x_+)\cdots(Q_n x_n)M$.
+Ďalej, ku každej formule $A$ vieme zostrojiť takú,
+ktorá je v prefixovom (prenexnom) tvare -- t.j. je tvaru
+prefix + jadro: $(Q_1 x_1)\cdots(Q_n x_n)M$.
 
 Na upravenie formuly do tohoto tvaru používame prenexné operácie.
 Skutočnosť, že premenná $x$ má voľný výskyt vo formule $A$ budeme
@@ -39,8 +40,8 @@ Prenexné operácie:
     \neg (\exists x) A(x) &\equiv (\forall x) \neg A(x) \tag{2b}\\
     (\forall x) A(x) \land (\forall x) B(x) &\equiv 
         (\forall x) (A(x) \land B(x)) \tag{3a}\\
-    (\forall x) A(x) \lor (\forall x) B(x) &\equiv
-        (\forall x) (A(x) \lor B(x)) \tag{3b}
+    (\exists x) A(x) \lor (\exists x) B(x) &\equiv
+        (\exists x) (A(x) \lor B(x)) \tag{3b}
 \end{align*}
 \begin{poznamka}
     S predchádzajúcimi operáciami 3a,3b treba pracovať pozorne. Im veľmi
@@ -70,12 +71,14 @@ kde v oboch prípadoch $z$ je premenná, ktorá sa nevyskytuje voľne v $A$
 (a ani v pôvodnom $B(x)$).
 Tento najvšeobecnejší tvar ale zbytočne pridáva premenné a preto je
 vhodný iba v prípadoch, keď nefungujú operácie 1 až 3.
+
+%%%%%
 \subsection{Algoritmus na zostrojenie prenexného tvaru}
 
 \begin{enumerate}
 \item Odstránenie implikácií a ekvivalencií:
     \begin{align*}
-        A \leftrightarrow B &\equiv (A \implies B) \land (B \implies A) \\
+        A \lequiv B &\equiv (A \implies B) \land (B \implies A) \\
         A \implies B &\equiv \neg A \lor B
     \end{align*}
 

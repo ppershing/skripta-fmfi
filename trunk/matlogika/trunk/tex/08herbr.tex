@@ -5,19 +5,20 @@
     nasledujúce výrazy s rovnakým významom:
     ``nie je splniteľná'', 
     ``je sporná'' a
-    ``je protirečivá''. Taktiež, občas budeme zamieňať ich negácie
-    medzi sebou.
+    ``je protirečivá''. Taktiež, občas budeme zamieňať medzi sebou
+    aj ich negácie.
 \end{poznamka}
 
 \begin{definicia}[Herbrandovské univerzum množiny klauzúl]
-    Nech $H_0$ je množina konštánt, ktoré sa vyskytujú v $S$.
+    Nech $H_0$ je množina konštánt, ktoré sa vyskytujú v množine
+    klauzúl $S$.
     Ak $S$ neobsahuje žiadnu konštantu, tak položíme $H_0=\{ a \}$,
     kde $a$ je nejaká konštanta.
     Ďalej definujme $H_{i+1}$ ako zjednotenie $H_{i}$ a množiny všetkých termov
     tvaru $f^{(n)}(t_1,\dots, t_n)$, kde $f^{(n)} \in S$ a
     $t_1, \dots, t_n \in H_i$.
     Množinu $H_i$ nazývame
-    \emph{herbrandovské univerzum $i$-tej úrovne}.
+    {\rm herbrandovské univerzum $i$-tej úrovne}.
     Herbrandovské univerzum množiny klauzúl definujeme ako zjednotenie
     cez všetky úrovne:
     \begin{equation*}
@@ -28,7 +29,7 @@
 \begin{priklad}
     Majme množinu klauzúl
     $S= \{ P(x),\ \neg P(x) \lor \neg P(f(x))\}$.
-    Potom herbrandovské univerzá jednotilivých úrovní sú
+    Potom herbrandovské univerzá jednotlivých úrovní sú
     \begin{align*}
         H_0& = \{ a \} \\
         H_1& = \{ a,\ f(a) \} \\
@@ -39,21 +40,24 @@
 \end{priklad}
 
 \begin{priklad}
-    Nech $S=\{P(x) \lor R(x),\ R(z), T(y) \lor \neg W(y) \}$, teda
+    Nech $S=\{P(x) \lor R(x),\ R(z),\ T(y) \lor \neg W(y) \}$, teda
     množina $S$ neobsahuje žiadnu konštantu.
     Preto kladieme $H_0 = \{ a \}$. Dostávame
     $H_0=H_1=\dots=H=\{a\}$.
 \end{priklad}
 
 \begin{priklad}
-    Uvažujme množinu klauzúl $S=\{P(f(x),a g(y), b)\}$. Potom
+    Uvažujme množinu klauzúl $S=\{P(f(x),a,g(y), b)\}$. Potom
+    %% FIXME: do nasledujuceho alignu som nevedel narvat split
+    %% ak to niekto vie, nech to fixne
     \begin{align*}
-        H_0 &= \{ a,\ b\} \\
-        H_1 &= \{ a,\ b,\ f(a),\ g(a),\ f(b),\ g(b) \} \\
-        H_2 &= \{ a,\ b,\ f(a),\ g(a),\ f(b),\ g(b),\
-                f(f(a)),\ f(g(a)),\ f(f(b)),\ f(g(b)),\
+        H_0 =& \{ a,\ b\} \\
+        H_1 =& \{ a,\ b,\ f(a),\ g(a),\ f(b),\ g(b) \} \\
+        H_2 =& \{ a,\ b,\ f(a),\ g(a),\ f(b),\ g(b),\
+                f(f(a)),\ f(f(b)),\\
+              &\quad f(g(b)),\ f(g(b)),\
                 g(f(a)),\ g(f(b)),\ g(g(a)),\ g(g(b)) \}
-    \end{align*}
+    \end{align*}    
 \end{priklad}
 
 \begin{definicia}[výraz]
@@ -79,15 +83,6 @@
     za prvky Herbrandovského univerza.
 \end{definicia}
 
-\begin{definicia}[Herbrandovská báza]
-    Nech $S$ je množina formúl. Potom množina atómov
-    tvaru $p^{(n)}(t_1, \ldots, t_n)$ pre všetky $n$-árne predikáty,
-    ktoré sa vyskytujú v $S$ a všetky termy $t_i$ z Herbrandovského univerza
-    nazývame Herbrandovskou bázou $S$.
-    Sú to atómy takého tvaru, že sa v nich nevyskytuje žiadna
-    premenná.
-\end{definicia}
-
 \begin{priklad}
     Majme množinu $S = \{P(x),\ Q(f(x)) \lor R(y) \}$ a majme klauzulu
     $C: P(x)$. 
@@ -96,8 +91,17 @@
     Základné inštancie pre $C$ sú $P(a), P(f(a)), P(f(f(a))), \dots$.
 \end{priklad}
 
-Položme si otázku, čo znamená interpretovať množinu $S$ na
-Herbrandovskom univerze $H$. Musíme poznať kodnoty konštánt,
+\begin{definicia}[Herbrandovská báza]
+    Nech $S$ je množina formúl. Potom množina atómov
+    tvaru $P^{(n)}(t_1, \ldots, t_n)$ pre všetky $n$-árne predikáty,
+    ktoré sa vyskytujú v $S$ a všetky termy $t_i$ z Herbrandovského univerza
+    nazývame Herbrandovskou bázou $S$.
+    Sú to atómy takého tvaru, že sa v nich nevyskytuje žiadna
+    premenná.
+\end{definicia}
+
+Položme si otázku, čo znamená interpretovať množinu klauzúl $S$ na
+Herbrandovskom univerze $H$. Musíme poznať hodnoty konštánt,
 interpretáciu funkčných a predikátových symbolov. Budeme uvažovať
 špeciálnu interpretáciu, takzvanú $H$-interpretáciu, pri ktorej
 nebudeme interpretovať predikátové symboly (necháme si to ako keby na
@@ -114,7 +118,7 @@ neskôr).
 	\item Interpretácia $I$ zobrazuje všetky konštanty na samé
             seba, t.j. konštante $a \in S$ priradí tú istú konštantu $a \in H$.
 
-	\item Ak $f^{(n)}$ je $n$-árny funkčný symbol a
+	\item Nech $f^{(n)}$ je $n$-árny funkčný symbol a
             $h_1, \dots, h_n$ sú prvky herbrandovského univerza $H$.
             Potom funkciu $f$ budeme v $I$ realizovať ako funkciu,
             ktorá zobrazuje $(h_1, \dots, h_n) \in H^n$ na element
@@ -135,7 +139,7 @@ neskôr).
 \end{poznamka}
 
 \begin{priklad}
-    Nech $S=\{ P(x) \lor Q(x),\ R(f(y)) \}$.
+    Majme množinu klauzúl $S=\{ P(x) \lor Q(x),\ R(f(y)) \}$.
     Herbrandovské univerzum je
     $H=\{a,\ f(a),\ f(f(a)),\ \ldots \}$.
     V $S$ sa vyskytujú unárne predikáty $P,Q,R$.

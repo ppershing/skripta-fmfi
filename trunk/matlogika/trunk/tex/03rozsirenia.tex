@@ -4,10 +4,10 @@ V nasledujúcej časti budeme definovať rozšírenia,
 ktoré v istom zmysle ani nepomôžu ani
 neuberú sile teórii.
 
-\begin{definicia}[Rozšítenie jazyka]
+\begin{definicia}[Rozšírenie jazyka]
 %%% {{{
-    Jazyk $L'$ je \emph{rozšírením jazyka} $L$, ak každý
-    špeciálny symbol jazyka $L$ (prípadne aj symbol $=$)
+    Jazyk $L'$ je rozšírením jazyka $L$, ak každý
+    špeciálny symbol jazyka $L$ (prípadne aj symbol ``='')
     je v jazyku $L'$ obsiahnutý s rovnakým významom a s rovnakou árnosťou.
 %%% }}}
 \end{definicia}
@@ -19,7 +19,7 @@ neuberú sile teórii.
     Jazyk $L'$ je potom rozšírením jazyka $L$.
 \end{priklad}    
 
-\begin{definicia}[Rozšítenie teórie]
+\begin{definicia}[Rozšírenie teórie]
 %%% {{{
     Majme teóriu $T'$ s jazykom $L'$. Hovoríme, že $T'$ je
     rozšírením teórie $T$ s jazykom $L$, ak platí,
@@ -30,21 +30,23 @@ neuberú sile teórii.
 
 \begin{priklad}
     Uvažujme teóriu grúp -- je to teória s rovnosťou, ktorá
-    používa špeciálny symbol ``$+$'' a existuje v nej neutrálny prvok.
+    používa špeciálny symbol ``$+$'' a existuje v nej neutrálny prvok
+    ``0''.
     
-    Axiomy:
+    Axiómy tejto teórie sú:
     \begin{itemize}
     \item $\forall x,y,z: (x+y)+z = x+(y+z)$
     \item $(x+0) = x = (0+x)$
     \item $(x+(-x)) = 0 = ((-x)+x)$
     \end{itemize}
 
-    Ak si vezmeme relačnú štruktúru $m=\langle \mathbb{N}^+,0,+ \rangle$,
+    Ak si vezmeme relačnú štruktúru 
+    $\mathcal{M}=\langle \mathbb{N}_0,0,+ \rangle$,
     táto realizuje jazyk teórie grúp.
-    Nie je však modelom (nie všetky axiomy nie sú splnené, menovite
+    Nie je však jej modelom (lebo nie všetky axiómy sú splnené, menovite
     napríklad inverzné prvky).
-    Pokiaľ ale vezmeme $m=\langle \mathbb{Z},0,+ \rangle$,
-    táto množina tvorí model teórie grúp.  
+    Pokiaľ ale vezmeme $\mathcal{M}=\langle \mathbb{Z},0,+ \rangle$,
+    táto množina je realizáciou a zároveň aj modelom teórie grúp.  
 
     Teraz si zoberme jazyk $L = \{0,1,+,*\}$
     a uvažujme postupne nasledujúce teórie:
@@ -75,6 +77,7 @@ neuberú sile teórii.
     Špeciálne, je dokázateľné $T \provable A$ a $T \provable \neg A$.
     Keďže $T'$ je rozšírenie, musí potom platiť
     $T' \provable A$ a $T' \provable \neg A$. To je ale spor.
+    \\
 \end{dokaz}
 
 \begin{definicia}[konzervatívne rozšírenie]
@@ -89,7 +92,7 @@ neuberú sile teórii.
     Spojením posledných dvoch definícii dostávame, že pre
     konzervatívne rozšírenie $T',L'$ teórie $T,L$ platí
     \begin{equation*}
-        \forall A \in L: T \provable A \iff T' \provable A
+        \forall A \in L:\quad\quad T \provable A \iff T' \provable A
     \end{equation*}
 \end{poznamka}
 
@@ -99,8 +102,8 @@ neuberú sile teórii.
     $T$ je bezosporná $\iff$ $T'$ je bezosporná.
 \end{poznamka}
 
-\begin{veta}[Hankinova] 
-    K ľubovoľnej teórii $T$ môžeme zostrojiť Hankinovu
+\begin{veta}[Henkinova] 
+    K ľubovoľnej teórii $T$ môžeme zostrojiť Henkinovu
     teóriu $T_H$, ktorá je konzervatívnym rozšírením teórie $T$.
 \end{veta}    
 
@@ -112,7 +115,8 @@ neuberú sile teórii.
     Budeme tvoriť rozšírený jazyk $L_H$ tak, že budeme pridávať konštanty:
 
     Pre každú formulu $A$ napísanú v jazyku $L$,
-    ktorá má jedinú premennú $x$ vytvoríme konštanty $c_A, c_{\neg A}$
+    ktorá má jedinú {\tt voľnú} premennú $x$ 
+    vytvoríme konštanty $c_A, c_{\neg A}$
     a nasledovné axiomy: 
     \begin{itemize}
         \item[H1:]  $(\exists x) A \implies A_x[c_A]$
@@ -128,18 +132,18 @@ neuberú sile teórii.
             dvojitej negácie
     \end{itemize}
 
-    Konštanty $c_a, c_{\neg A}$ nazývame Hankinove konštanty prvého
+    Konštanty $c_A, c_{\neg A}$ nazývame henkinovské konštanty prvého
     rádu. Tieto konštanty nám vytvoria množinu konštánt, označme ju
     $C_1$. Týmito konštantami rozšírime jazyk $L$.
     
     Teraz zoberme formulu $B$ na jazyku $L(C_1)$, ktorá obsahuje práve
     jednu voľnú premennú a aspoň jednu konštantu z $C_1$. K tejto
     formule priradíme podobne ako minule konštanty $c_B, c_{\neg B}$.
-    Takto dosiahnuté konštanty budeme nazívať Hankinovské konštanty
+    Takto dosiahnuté konštanty budeme nazývať Henkinovské konštanty
     druhého rádu a ich množinu označíme ako $C_2$.
     
     Induktívne pokračujeme ďalej a podobne vytvárame množinu $C_3,
-    C_4, \dots$.
+    C_4, \dots$
     Množinu $C_{n+1}$ vo všeobecnosti vytvoríme z množiny $C_n$, tak,
     že zoberieme formuly nad jazykom $L(C_n)$, ktoré obsahujú jednu
     voľnú premennú a aspoň jednu konštantu $n$-tého rádu.
@@ -188,24 +192,29 @@ neuberú sile teórii.
     pričom $c_D$ nie je je použitá
     v $B_2, \ldots, B_n$. 
     \begin{equation*}
-        T \provable ((\exists x) D \implies D_x[c_D] ) \implies 
-            (B_2 \implies \ldots \implies B_n \implies A)
+        T \provable \highlighta{((\exists x) D \implies D_x[c_D])} \implies 
+            \highlightc{[B_2 \implies \ldots \implies B_n \implies A]}
     \end{equation*}
 
     \item
     Použijeme vetu o konštantách a dostávame
     \begin{equation*}
-        T \provable ((\exists x) D \implies D_x[\highlighta{w}] ) \implies 
-            [B_2 \implies \ldots \implies B_n \implies A]
+        T \provable \highlighta{((\exists x) D \implies
+            D_x[\highlightb{w}])} \implies 
+            \highlightc{[B_2 \implies \ldots \implies B_n \implies A]}
     \end{equation*}
     kde $w$ je nová premenná.
     \item
     Teraz môžeme použiť pravidlo zavedenia existenčného kvantifikátora --
-    ak $T \provable A \implies B$ a $w$ nie je voľná v $B$, potom $T\provable (\exists w) A \implies B$.
+    ak je dokázateľné $T \provable A \implies B$ 
+    a $w$ nie je voľná v $B$,
+    potom je dokázateľné aj $T\provable (\exists w) A \implies B$.
     Čiže
     \begin{equation*}
-        T \provable \highlighta{(\exists w)} ((\exists x)D \implies D_x[w]) 
-            \implies [B_2 \implies \ldots \implies B_n \implies A]
+        T \provable \highlightb{(\exists w)} 
+        \highlighta{((\exists x)D \implies D_x[w])}
+            \implies 
+            \highlightc{[B_2 \implies \ldots \implies B_n \implies A]}
     \end{equation*}
 
     \item
@@ -213,9 +222,9 @@ neuberú sile teórii.
     (Qx)B)$ (za predpokladu, že $x$ nie je voľná v $A$), aby sme $w$
     preniesli dovnútra. Výsledkom je
     \begin{equation*}
-        T \provable \highlighto{((\exists x) D \implies 
-                \highlighta{(\exists w)}D_x[w])}
-            \implies \highlightb{
+        T \provable \highlighta{((\exists x) D \implies 
+                \highlightb{(\exists w)}D_x[w])}
+            \implies \highlightc{
             [B_2 \implies \ldots \implies B_n \implies A]}
     \end{equation*}
 
@@ -223,14 +232,14 @@ neuberú sile teórii.
     Z vety o variantoch ale vieme, že platí (pretože $(\exists w) D_x[w]$ je
     variant $(\exists x) D$) formula
     \begin{equation*}
-        T \provable \highlighto{(\exists x) D \implies (\exists w)
+        T \provable \highlighta{(\exists x) D \implies (\exists w)
         D_x[w]}
     \end{equation*}
 
     \item
     A teda pomocou pravidla modus ponens získame
     \begin{equation*}
-        T \provable \highlightb{
+        T \provable \highlightc{
             B_2 \implies B_3 \implies \ldots \implies B_n \implies A}
     \end{equation*}
     \end{itemize}
@@ -238,6 +247,7 @@ neuberú sile teórii.
     Opakovaním postupu ďalších $n-1$ krát dostaneme $T \provable A$.
     Ukázali sme teda, že $T_H$ s jazykom $L(C)$
     je konzervatívne rozšírenie jazyka $L$.
+    \\
 %%% }}}
 \end{dokaz}
 
@@ -249,11 +259,12 @@ neuberú sile teórii.
 \begin{dokaz}
 %%% {{{
     Nech $\mathscr{S}$ je množina všetkých uzavretých formúl jazyka $L$.
-    Ďalej definujeme
+    Ďalej definujeme množinu (podmnožín $\mathscr{S}$)
     $\mathcal{B} = \{ S \mid S \subseteq \mathscr{S}, T \union S
         \mbox{ je bezosporná}\}$.
     Množina $\mathcal{B}$ je čiastočne usporiadaná vzhľadom na
-    inklúziu a má konečnú vlastnosť -- keď zoberiem ľubovoľnú podmnožinu
+    inklúziu a má 
+    takzvanú konečnú vlastnosť -- keď zoberieme ľubovoľnú podmnožinu
     $S \subseteq \mathscr{S}$, bude platiť
     \begin{equation*}
         S \in \mathcal{B} \iff \forall \mbox{ konečné } S' \in
@@ -276,7 +287,7 @@ neuberú sile teórii.
                     \then S_1 = S_2, \quad \mbox{t.j.} \\
                 &S_1 \subseteq S_2 \land S_2 \subseteq S_1 \then S_1 = S_2
             \end{align*}
-        \item tranzitívna. (dokážeme analogicky)
+        \item tranzitívna (dokážeme analogicky)
     \end{itemize}
     %
     $\mathcal{B}$ je teda čiastočne usporiadaná inklúziou $\Psi$.
@@ -286,11 +297,13 @@ neuberú sile teórii.
     \end{equation*}
     Ak by totiž $\emptyset$ nebola v $\mathcal{B}$, potom by $T$ bola sporná.
 
-    Teraz ukážeme, že množina $\mathcal{B}$ má konečnú vlastnosť:
+    \noindent
+    Teraz ukážeme, že množina $\mathcal{B}$ má konečnú vlastnosť, čiže
+    platí: Nech $S \in \mathscr{S}$, potom
     \begin{equation*}
-        S \in \mathscr{S}, S \in \mathcal{B} \iff \forall \textrm{
-        konečnú }S' \subseteq S \textrm{ platí } T \union S' 
-            \textrm{ je bezosporná, teda }S' \in \mathcal{B}
+            S \in \mathcal{B} \iff \forall \textrm{
+        konečnú podmnožinu }S' \subseteq S \textrm{ platí } T \union S' 
+            \textrm{ je bezosporná (teda }S' \in \mathcal{B})
     \end{equation*}
    
    \begin{itemize}
@@ -298,8 +311,9 @@ neuberú sile teórii.
             Nech $S \in \mathcal{B}$. Potom $T \union S$ je bezosporná.
             Ak teda $S' \subseteq S$ a  $S'$ je konečná, teória 
             $T \union S'$ bude tiež bezosporná $\then S' \in \mathcal{B}$
+
         \item[$\Leftarrow:$]
-            Predpokladajme, že pre každú konečnu podmnožinu $S' \subseteq S$
+            Predpokladajme, že pre každú konečnú podmnožinu $S' \subseteq S$
             je $T \union S'$ je bezosporná.
             Chceme ukázať $S' \in \mathcal{B} \then S \in \mathcal{B}$.
 
@@ -309,7 +323,7 @@ neuberú sile teórii.
             čiže pre ľubovoľnú dokázateľnú formulu A je dokázateľné
             $\neg(A \implies A)$.
 
-            Nech $A_1, A_2, \dots, A_n$ je dôkaz 
+            Nech $A_1, A_2, \dots, A_n$ je dôkaz platnosti 
                 $\provable \neg(A \implies A)$.
             Nech $B_1, B_2, \dots, B_m$ sú tie formuly,
             ktoré sa v tom dôkaze vyskytujú a patria do množiny $S$.
@@ -322,14 +336,16 @@ neuberú sile teórii.
 
     Teraz nachvíľu opustíme dôkaz Lindenbaumovej vety, aby sme
     sformulovali princíp maximality, ktorý sa nám bude hodiť.
-    \end{dokaz}
+    \\
+\end{dokaz}
 
-    \begin{lema}[Princíp maximality]
-        Každá neprázdna neprázdna podmnožina $\mathcal{P}(\mathscr{S})$ s konečnou vlastnosťou 
-        má maximálny prvok vzhľadom na inklúziu.
-    \end{lema}
+\begin{lema}[Princíp maximality]
+    Každá neprázdna neprázdna podmnožina potenčnej množiny
+    $\mathcal{P}(\mathscr{S})$ s konečnou vlastnosťou 
+    má maximálny prvok vzhľadom na inklúziu.
+\end{lema}
 
-    \begin{dokaz}[Pokračovanie dôkazu Lindenbaumovej vety]
+\begin{dokaz}[Pokračovanie dôkazu Lindenbaumovej vety]
     Dostali sme sa do štádia, keď sme ukázali, že $\mathcal{B}$ má
     konečnú vlastnosť. Budeme teda pokračovať tým, že vytvoríme
     rozšírenie pôvodnej teórie nad rovnakým jazykom.
@@ -353,13 +369,14 @@ neuberú sile teórii.
 
     Dosiahli sme zúplnenie teórie. Pre teóriu $T$ sme získali $T'$,
     ktorá je bezosporná a je úplným rozšírením $T$ na rovnakom jazyku.
+    \\
 %%% }}}    
 \end{dokaz}
 
 Zhrňme si, čo sme doteraz dosiahli:
 Keď máme teóriu $T$ nad jazykom $L$,
-vieme ju rozšíriť na hankinovskú teóriu $T_H$ s jazykom $L(C)$.
-V prípade, že $T$ je bezosporná, potom aj $T(H)$ je bezosporná.
+vieme ju rozšíriť na henkinovskú teóriu $T_H$ s jazykom $L(C)$.
+V prípade, že $T$ je bezosporná, bude aj $T_H$ bezosporná.
 Podľa Lindenbaumovej vety dokážem vytvoriť teóriu $T_H'$ s jazykom
 $L(C)$, ktorá je úplná a má model $\mathcal{M}'$.
 Našim cieľom je teraz získať model $\mathcal{M}$ pre pôvodnú teóriu.
@@ -367,10 +384,10 @@ Našim cieľom je teraz získať model $\mathcal{M}$ pre pôvodnú teóriu.
 
 \begin{definicia}[Redukcia]
     Majme teóriu $T$ nad jazykom $L$ a jej rozšírenie $T',L'$.
-    Nech $\mathcal{M}'$ je realizácia jazyka $L'$,
-    redukovaním štruktúry $\mathcal{M}'$ na jazyk $L$
+    Nech $\mathcal{M}'$ je realizácia jazyka $L'$.
+    Redukovaním štruktúry $\mathcal{M}'$ na jazyk $L$
     získame realizáziu teórie $T$ v jazyku $L$.
-    Redukciu definujeme nasledovne:
+    Formálne redukciu definujeme nasledovne:
     \begin{itemize}
     \item Univerzum $\mathcal{M}$ bude to isté univerzum ako univerzum
         $\mathcal{M}'$.
@@ -385,14 +402,16 @@ Našim cieľom je teraz získať model $\mathcal{M}$ pre pôvodnú teóriu.
     \end{itemize}
     
     Budeme hovoriť, že $\mathcal{M}$ vzniklo redukciou $\mathcal{M}'$ 
-    na jazyk $L$ a zapisovať $m: m' \triangle L$.\footnote{
+    na jazyk $L$ a zapisovať 
+    $\mathcal{M} = \mathcal{M}' \triangle L$.\footnote{
         Na prednáške bolo miesto $\triangle$ použíté niečo ako $\land$,
-        len ľavá nožička bola dlhšia ako pravá}
+        len ľavá nožička bola dlhšia ako pravá.}
     Alebo opačne, $\mathcal{M}'$ je expanzia realizácie $\mathcal{M}$.
 \end{definicia}
 
 \begin{poznamka}
-    Nech $\mathcal{M}$ je redukcia $\mathcal{M}'$ na jazyk $L$.
+    Nech $\mathcal{M}$ je redukcia $\mathcal{M}'$ na jazyk $L$
+    a nech $A$ je formula jazyka $L$.
     Potom platí $\mathcal{M} \models A \iff \mathcal{M}' \models A$.
 \end{poznamka}
 \begin{dokaz}
@@ -406,33 +425,38 @@ Našim cieľom je teraz získať model $\mathcal{M}$ pre pôvodnú teóriu.
     definície realizujú rovnako. Záverom teda je, že pre formulu
     $A$ su realizácie $\mathcal{M}, \mathcal{M'}$ rovnaké a teda platí
     tvrdenie poznámky.
+    \\
 \end{dokaz}
 
 \begin{veta}
     Nech $T'$ je rozšírenie teórie $T$ s jazykom $L$.
     Ak $\mathcal{M}'$ je model $T'$ a 
-    $\mathcal{M}:\mathcal{M}'\triangle L$, tak $\mathcal{M}$ je model $T$.
+    $\mathcal{M} =\mathcal{M}'\triangle L$, tak $\mathcal{M}$ je model $T$.
 \end{veta}
 \begin{dokaz}
     Nech $A \in T$. Teda, $T \provable A$. Potom (pretože $T'$ je
     rozšírenie $T$) platí $T' \provable A$.
     Čiže z vety o korektnosti dostávame $\mathcal{M}' \models A$. Ale
-    $A$ je nad jazykom $L$ a platí $\mathcal{M}: \mathcal{M'}
+    $A$ je nad jazykom $L$ a platí $\mathcal{M}= \mathcal{M'}
     \triangle L$. Teda, z predchádzajúcej poznámky vyplýva
     $\mathcal{M} \models A$.
+    \\
 \end{dokaz}
 
+\noindent
 Rozpamätajme sa na náš pôvodný zámer, načo sme sa vlastne zaoberali
-rozšíreniami.
-\begin{dokaz}[Dokončenie 2. G\"odelovej vety]
+rozšíreniami -- bola to práve G\"odelova veta.
+
+\begin{dokaz}[Dokončenie 2. variantu G\"odelovej vety]
     Naším zámerom bolo zostrojiť model pre teóriu, ktorá je bezosporná.
-    Postupujme teda nasledovne: K teórii $T$ existuje Hankinovské
+    Postupujme teda nasledovne: K teórii $T$ existuje henkinovské
     rozšírenie $T_H$, ktoré sa dá (konzervatívne) rozšíriť podľa
     Lindenbaumovej vety na úplnú teóriu $T_H'$. O tejto teórii vieme, že
     je bezosporná a teda vieme podľa vety o kanonickej štruktúre
     zostrojiť jej model $\mathcal{M}'$. Nuž a teraz nám stačí redukovať
     $\mathcal{M}'$ na pôvodný jazyk $L$ a dostávame
-    $\mathcal{M}: \mathcal{M}' \triangle L$ -- model pôvodnej teórie $T$.
+    $\mathcal{M}= \mathcal{M}' \triangle L$ -- model pôvodnej teórie $T$.
     Naopak, ak k teórii $T$ existoval model, zrejme sa nemôže stať, že by
-    bola sporná. Tým sme dokázali 2. G\"odelovu vetu.
+    bola sporná. Tým sme dokázali 2. variant G\"odelovej vety.
+    \\
 \end{dokaz}

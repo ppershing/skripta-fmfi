@@ -87,13 +87,13 @@
         \item[1.] $\neg (S(x) = 0)$
         \item[2.] $(S(x) = S(y)) \implies (x=y)$
         \item[3.] $(x+0) = x$
-        \item[4.] $(x+s(y)) = (s(x) + y)$
+        \item[4.] $(x+S(y)) = (S(x) + y)$
         \item[5.] $(x * 0) = 0$
         \item[6.] $(x * S(y)) = ((x*y)+x)$
     \end{itemize}
     Zoberme si realizáciu 
-        $\mathcal{N}=\langle \mathbb{N}^+,0,S,+,* \rangle$ kde  
-        $\mathbb{N}^+ = \{1,2,\dots\}$.
+        $\mathcal{N}=\langle \mathbb{N}_0,0,S,+,* \rangle$ kde  
+        $\mathbb{N}_0 = \{0,1,2,\dots\}$.
         Potom $\mathcal{N}$ je model pre elementárnu aritmetiku,
         zvykne sa označovať aj ako \emph{štandardný model}.
         Takejto aritmetike sa hovorí Robinsonova aritmetika.
@@ -103,9 +103,9 @@
 
 \begin{poznamka}
     Nevšímajme si nachvíľu axiómy, ale iba relačnú štruktúru
-    $\mathcal{N}=\langle \mathbb{N}^+,0,S,+,* \rangle$.
+    $\mathcal{N}=\langle \mathbb{N}_0,0,S,+,* \rangle$.
     Zoberme namiesto $S$ konštantu $1$.
-    Ciže $\mathcal{N}'=\langle \mathbb{N}^+,0,1,+,* \rangle$.
+    Ciže $\mathcal{N}'=\langle \mathbb{N}_0,0,1,+,* \rangle$.
     $\mathcal{N}'$ realizuje jazyk teórie telies.
     Lenže $\mathcal{N}'$ nie je modelom tohoto jazyka --
     na to, aby daná realizácia bola modelom, muselo by platiť, že
@@ -145,8 +145,9 @@
     z predpokladov $T$ (v teórii $T$).
     Nech $\mathcal{M}$ nech je ľubovoľný model teórie $T$ 
     (čiže platí $\mathcal{M} \models A$).
-    Ukážeme (indukciou podľa dĺžky dôkazu), že platí $\mathcal{M} \models A_i$
-    pri predpoklade, že pre $\forall j:j < i$ platí $\mathcal{M} \models A_j$.
+    Ukážeme (indukciou podľa dĺžky dôkazu), že 
+    ak platí $\forall j<i:\mathcal{M} \models A_j$,
+    potom platí aj platí $\mathcal{M} \models A_i$
 
     Do dôkazu sa $A_i$ môže dostať niekoľkými spôsobmi:
     \begin{enumerate}
