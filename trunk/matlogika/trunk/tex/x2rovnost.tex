@@ -161,7 +161,8 @@ Rovnosť je symetrická a tranzitívna.
         Máme 2 možnosti, ako vyzerá atomická podformula:
         %%% {{{
         \begin{itemize}
-        \item Nech $P$ je atomická podformula. Potom po zámene dostaneme z 
+        \item Nech $P$ je atomická podformula tvaru
+            $P(r_1,\dots,r_l)$. Potom po zámene dostaneme z 
             $P(r_1, \dots, r_k)$ formulu $P':P(r_1',\dots,r_k')$.
             Chceme ukázať $\provable P(r_1,\dots,r_k) \leftrightarrow
                                      P(r_1',\dots,r_k')$, ak vieme, že
@@ -193,11 +194,10 @@ Rovnosť je symetrická a tranzitívna.
                 \end{itemize}
             \end{itemize}
             %%% }}}
-        \item Nech atomická podformula je tvaru $r_1 = r_2$. Chceme
-        ukázať $\provable r_1=r_2 \leftrightarrow r_1'=r_2'$.
-        \fixme{Naozaj ut mozeme pouzivat VD? Toman jednoducho
-        prehlasi, ze je predpoklad $\provable r_1=r_2$ co mi neni
-        jasne ze preco by mal byt}
+        \item Nech atomická podformula je tvaru $r_1 = r_2$. 
+        Tento prípad sa dá ukázať podobne ako predchádzajúci,
+        na prednáške bol ale iný dokaz:
+        Chceme ukázať $\provable r_1=r_2 \leftrightarrow r_1'=r_2'$.
             %%% {{{
             \begin{itemize}
             \item[$\Rightarrow:$]
@@ -212,7 +212,7 @@ Rovnosť je symetrická a tranzitívna.
                 \item $\provable r_2' = r_1 \implies (
                             r_1 = r_1' \implies r_2' = r_1')$ --
                             tranzitívnosť
-                \item $r_1=r_2 \provable r_2' = r_1'$ -- 2xMP
+                \item $r_1=r_2 \provable r_2' = r_1'$ -- 2-krát MP
                 \item $r_1=r_2 \provable r_1' = r_2'$ -- symetria + MP
                 \item $\provable r_1=r_2 \implies r_1'=r_2'$ -- VD
                 \end{itemize}
@@ -235,7 +235,7 @@ Rovnosť je symetrická a tranzitívna.
         \end{itemize}
         %%% }}}
         Dokázali sme, že atomické podformuly sú ekvivalentné. Spolu s
-        vetou o ekvivalencii to ale znamená, že ja pôvodné formuly sú
+        vetou o ekvivalencii to ale znamená, že aj pôvodné formuly sú
         ekvivalentné.
 \end{itemize}
 %%% }}}
@@ -268,10 +268,12 @@ Rovnosť je symetrická a tranzitívna.
             premenné, tak to vyplýva priamo z predchádzajúcej vety a vety
             o dedukcii. V prípade, že tieto termy obsahujú premenné,
             tieto premenné nahradíme rôznymi konštantami, použijeme
-            vetu o konštantách, predchádzajúcu vetu a vetu o dedukcii.
-            \fixme{To co tu melie, funguje to? Ak hej, tak mi niekto
-            vysvetlite ako tam pouzijem tu vetu o konstantach, som
-            zvedavy}
+            vetu o konštantách,\footnote{Veta o konštantách hovorí, že
+            $T \provable A \iff T \provable A[c_1,\dots,c_m]$ kde
+            $c_1,\dots,c_m$ sú nové konštanty. Inak povedané,
+            to, že niečo vieme dokázať s premennými je ekvivalentné
+            tomu, že to vieme dokázať ak premenné nahradíme novými
+            konštantami} predchádzajúcu vetu a vetu o dedukcii.
         \item[iii)]
             %%% {{{
             \begin{itemize}

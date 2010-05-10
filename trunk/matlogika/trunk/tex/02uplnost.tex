@@ -2,44 +2,54 @@
 
 G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
 
-\begin{veta}[G\"odel, 1]
+\begin{veta}[G\"odel, 1. variant]
     Nech $T$ je teória v jazyku $L$ a nech $A$ je
     ľubovoľná formula jazyka $L$. Potom $T \provable A \iff T \models A$,
     čiže $A$ je dokázateľná práve vtedy keď
     je splnená v každom modeli teórie $T$.
 \end{veta}
 
-\begin{veta}[G\"odel, 2]
+\begin{veta}[G\"odel, 2. variant]
     Teória $T$ je bezosporná práve vtedy, ked $T$ má model.
 \end{veta}
 
 \begin{poznamka}
-    Varianta 1 G\"odelovej vety vyplýva z varianty 2.
+    Varianta 1 G\"odelovej vety vyplýva z variantu 2.
 \end{poznamka}
 
 \begin{dokaz}[Poznámky]
     Veta o dedukcii mala nasledovný dôsledok:
 
-    Ak máme teóriu $T$, $A$ je jej formula a $A'$ je uzáver formuly $A$,
-    tak $T \provable A \iff T \union \{ \neg A' \}$ je sporná teória,
-    t.j. podľa vety 2 nemá $T \union \{ \neg A' \}$ model.
+    Majme teóriu $T$ a jej formulu $A$. Nech $A'$ označuje uzáver
+    formuly $A$.
+    Potom platí: $T \provable A \iff T \union \{ \neg A' \}$ je sporná
+    teória.
 
+    V našom prípade z 2. varianty G\"odelovej vety dostávame
+    $T \provable A \iff T \union \{ \neg A' \}$ nemá model.
     Toto znamená, že v každom modeli teórie $T$ je pravdivý uzáver $A'$.
     Z toho dostávame $T \models A' \Rightarrow T \models A$
     (ak zoberieme ľubovoľný model $\mathcal{M}$ teórie $T$, formula
-    $A'$ je v ňom splnená ale to nutne znamená, že ak formula $A$ v
+    $A'$ je v ňom splnená ale to nutne znamená, že aj formula $A$ v
     ňom musí byť splnená)
-    a teda z platnosti vety 2 vyplýva veta 1.
+    a teda z platnosti variantu 2 vyplýva variant 1.
+    \\
 \end{dokaz}
 
-\begin{dokaz}[2. G\"odelovej vety]
+\begin{dokaz}[2. variantu G\"odelovej vety]
     Budeme sa snažiť zostrojiť model pre teóriu, ktorá je bezosporná.
-    Majme bezospornú teóriu v jazyku $L$. Potrebujeme v prvom rade $M$ --
-    univerzum. K dispozícii máme len syntaktické prostriedky teórie.
+    Majme bezospornú teóriu s jazykom $L$.
+    Potrebujeme v prvom rade univerzum -- $M$.
+    K dispozícii máme len syntaktické prostriedky teórie.
     Preto ako kandidát na $M$ prichádza do úvahy
     množina termov bez premenných.
-    Tieto termy majú jednoznačnú realizáciu (sami sebe budú realizáciou).
-    Teda, všetky objekty teórie budú charakterizované termami.
+    Tieto termy majú jednoznačnú realizáciu (sami sebe budú
+    realizáciou).\footnote{
+        Pre ujasnenie tejto myšlienky odporúčame čitateľovi
+        nalistovať si kapitolu o Herbrandovských interpretáciach
+        a nahliadnuť tak pointu tohoto činu.
+    }
+    V našom modeli budú teda všetky objekty teórie charakterizované termami.
 
     Ďalšou otázkou je, ako definovať splniteľnosť. Malo by platiť, že
     formula je splniteľná práve vtedy keď je dokázateľná, čize
@@ -51,7 +61,7 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
     treba riešiť:
     \begin{enumerate}
     \item \label{en:model_problem_konst}
-        Jazyk $L$ neobsahuje žiadne konštanty (a teda žiadne termy bez
+        Jazyk $L$ nemusú obsahovať žiadne konštanty (a teda žiadne termy bez
         premenných).
 
     \item \label{en:model_problem_rovnost}
@@ -60,7 +70,7 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
         premenných (rôzne konštanty).
 
     \item \label{en:model_problem_neg}
-        Nech $m$ je ľubovoľná realizácia jazyka $L$ a $A$ je uzavretá
+        Nech $\mathcal{M}$ je ľubovoľná realizácia jazyka $L$ a $A$ je uzavretá
         formula jazyka $L$. Potom práve jedna z formúl $A$, $\neg A$ je
         pravdivá, ale žiadna z nich nemusí byť dokázateľná v $T$.
 
@@ -78,7 +88,7 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
     čo je množina všetkých termov bez premenných
     a na nej zavedieme reláciu ekvivalencie.
 
-    Body č. \ref{en:model_problem_neg}, \ref{en:model_problem_konst} a 
+    Body č. \ref{en:model_problem_konst}, \ref{en:model_problem_neg} a 
     \ref{en:model_problem_korektnost} sa riešia tzv.
     úplným konzervatívnym rošírením teórie (Henkinovským).
     Budú to tzv.  konzervatívne teórie (na pôvodnom jazyku
@@ -86,11 +96,12 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
     Nachvíľu teda opustíme dôkaz G\"odelovej vety, aby sme si mohli niečo
     porozprávať o Henkinovej teórii. K dôkazu sa vrátime, keď na to budeme
     mať pripravenú pôdu.
+    \\
 \end{dokaz}
 
 \begin{definicia}[Úplná teória]
 %%% {{{
-    Hovoríme, že teória $T$ s jazykom $L$ je \emph{úplná}, ak $T$ je
+    Hovoríme, že teória $T$ s jazykom $L$ je úplná, ak $T$ je
     bezosporná teória a pre ľubovoľnú uzavretú formulu $A$ na jazyku
     $L$ buď $A$ alebo $\neg A$ je dokázateľná v $T$.
 %%% }}}
@@ -117,7 +128,7 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
 
 \begin{definicia}[Henkinova teória]
 %%% {{{ Henkinova teoria
-    Hovoríme, že teória $T$ s jazykom $L$ je \emph{Henkinova}, ak pre
+    Hovoríme, že teória $T$ s jazykom $L$ je Henkinova, ak pre
     ľubovoľnú uzavretú formulu $(\exists x)B$ jazyka $L$ platí
     \begin{equation*}
         T \provable (\exists x)B \implies B_x[c]
@@ -136,8 +147,8 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
     \label{lema:uplna_henkinova}
 \end{lema}
 \begin{dokaz}
-    Nech $L$ je jazyk teórie $T$, $\tau$ je množina všetkých
-    termov jazyka $L$ bez premenných. Na množine $\tau$ definujem reláciu
+    Nech $L$ je jazyk teórie $T$ a nech $\tau$ je množina všetkých
+    termov jazyka $L$ bez premenných. Na množine $\tau$ definujeme reláciu
     ekvivalencie nasledovne:
     \begin{equation*}
         \forall t_1, t_2 \in \tau :
@@ -147,34 +158,36 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
     spôsobom definovaná relácia je relácia ekvivalencie a rozdeľuje
     nám množinu $\tau$ na triedy ekvivalencie:
     \begin{equation*}
-        [t] = \{ s \in \tau: t \equiv s\}
+        [t] = \{ s \in \tau | t \equiv s\}
     \end{equation*}
     Týmto sme vyriešili problém \ref{en:model_problem_rovnost}.
 
     Zadefinujme si univerzum $M$ tak, že ho budú tvoriť vyššie popísané
     triedy ekvivalencie.
     Nech $f$ je ľubovoľný $n$-árny funkčný symbol a nech
-     $[t_1], [t_2], \ldots, [t_n] \in M$. Definujeme funkciu $f$ v relačnej
-     štruktúre $M$ nasledovne:
-     \begin{equation*}
-      f_\mathcal{M}([t_1], \dots, [t_n]) = [f(t_1, \dots t_n)]
-     \end{equation*}
-     \fixme{Ma tam byt $m,M,\mathcal{M}$ ?}
-    Bolo by potrebné ukázať, že táto definícia je konzistentná. Teda
+    $[t_1], [t_2], \ldots, [t_n] \in M$. Definujeme funkciu $f$ v relačnej
+    štruktúre $\mathcal{M}$ nasledovne:
+    \begin{equation*}
+        f_\mathcal{M}([t_1], \dots, [t_n]) = [f(t_1, \dots t_n)]
+    \end{equation*}
+    Bolo by potrebné ukázať, že táto definícia je konzistentná. Teda,
+    že platí
     $f_\mathcal{M}([t_1], \dots, [t_n])=f_\mathcal{M}([s_1], \dots, [s_n])$
-    ak $s_i \equiv t_i$, čiže nezáleží na výbere reprezentantov.
+    za predpokladu $\forall i \in {1,\dots,n}:s_i \equiv t_i$.
+    Inak povedané, nesmie záležať na výbere reprezentantov.
     Taktiež je dobré si uvedomiť, že
     $[t_{x_1,\dots,x_n}[t_1,\dots,t_n]]=t[e]$, ak platí $e(x_i/t_i)$ resp.
     $e(x_i)=t_i$.
 
-    Podobne, nech $P$ je $n$-árny predikátový symbol rôzny od $=$
-    (predikát $=$ sme si už zaviedli). V tom prípade definujeme
+    Podobne, nech $P$ je $n$-árny predikátový symbol rôzny od `='
+    (predikát `=' sme si už zaviedli). V tom prípade definujeme
     \begin{equation*}
-     ([t_1], \ldots [t_n]) \in P_\mathcal{M} \iff
-        T \provable P(t_1, \ldots, t_n)
+     ([t_1], \dots, [t_n]) \in P_\mathcal{M} \iff
+        T \provable P(t_1, \dots, t_n)
     \end{equation*}
     Zostáva nám ukázať, že nami definované $\mathcal{M}$ je
     naozaj modelom teórie $T$, čo bude predmetom nasledujúcej vety.
+    \\
 \end{dokaz}
 
 \begin{veta}[O kanonickej štruktúre]
