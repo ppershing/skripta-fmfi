@@ -92,32 +92,58 @@ doteraz.
 \end{priklad}
 
 \subsection{Algoritmus  pohltenia}
-\startFIXME
+Jediný problém, ktorý nám ostáva vyriešiť je detekcia či je nejaká
+klauzula tautológia alebo či je podformulou inej klauzuly. Prvý prípad
+sa rieši jednoducho -- tautológiu máme práve vtedy, ak sa vo formule
+vyskytuje kontrárna dvojica. S podformulou to bude horšie.
+Skúsme sa na to pozrieť takto:
 
-$$\theta = \{ a_1 / x_1, a_2 / x_2, \ldots, a_n / x_n \}$$. $x_1, x_2, \ldots
-x_n$ sú premenné, ktoré sa vyskytujú v $D$. $a_1, a_2, \ldots a_n$ sú nové
-konštanty, kotére sa nevyskytujú v $C$, $D$.
-
-$D\Theta$ je základná... .
-
-$$D = L_1 \lor L_2 \lor \ldots \lor L_m$$
-$$D \theta = L_1\Theta \lor L_2 \Theta \lor \ldots \lor L_m \Theta$$
-$$\neg D\Theta = \neg L_1 \Theta \land \neg L_2 \Theta \land \ldots \land \neg
-L_m \Theta$$
-Algoritums preveruje, či klauzula $C$ je podklauzulou $D$.
+Nech $C$, $D$ sú klauzuly. Označme si substitúciu premenných v D za
+nové konštanty (nevyskytujúce sa v $C$, $D$) ako
+\begin{equation*}
+    \Theta = \{ a_1 / x_1,\ a_2 / x_2,\ \ldots,\ a_n / x_n \}
+\end{equation*}
+%
+Ak je klauzula $D$ tvaru
+\begin{equation*}
+    D = L_1 \lor L_2 \lor \ldots \lor L_m
+\end{equation*}
+dostávame, že $D\Theta$ je základná klauzula (neobsahujúca premenné).
+%
+\begin{equation*}
+    D \Theta = L_1\Theta \lor L_2 \Theta \lor \ldots \lor L_m \Theta
+\end{equation*}
+%
+Nás bude zaujímať jej negácia
+\begin{equation*}
+\neg D\Theta = \neg L_1 \Theta \land \neg L_2 \Theta 
+                \land \ldots \land \neg L_m \Theta
+\end{equation*}
+%
+Algoritums, ktorý preveruje, či klauzula $C$ je podklauzulou $D$ bude
+vyzerať nasledovne:
 
 \begin{enumerate}
-    \item Nech $W = \{ \neg L_1 \Theta, \neg L_2 \Theta, \ldots, \neg L_m
-    \Theta \}$
+    \item Nech 
+        $W = \{ \neg L_1 \Theta, \neg L_2 \Theta, \ldots, \neg L_m \Theta \}$
+        a nech $k=0$ a $U^0 = \{ C \}$
 
-    \item Kladieme $k=0$ a $\mathcal{U}^0 = \{ C \}$
-    \item Ak $\mathcal{U}^k$ obsahuje $\square$, tak koniec $C$ je pod D. V
-    opačnom prípade kladieme $\mathcal{U}^{k+1} = \{ \mbox{rezolventa} C_1 a
-    C_2 | C_1 \in \mathcal{U}^{k} \land C_2 \in U\}$. 
-    \item Ak $\mathcal{U}^{k+1}$ je $\emptyset$, tak koniec, $C$ nie je
-    podklauzula $D$. V opačnom prípade kladieme $k=k+1$ a prejdeme ku kroku
+    \item Ak $U^k$ obsahuje $\eps$, tak algoritmus skončí
+        s výsledkom, že $C$ je pod $D$.
 
+    \item V opačnom prípade kladieme 
+        \begin{equation*}
+            U^{k+1} = \{ \mbox{rezolventa } C_1 \mbox{ a } C_2 | 
+            C_1 \in U^{k} \land C_2 \in U\}
+        \end{equation*}
+
+    \item Ak $U^{k+1}$ je $\emptyset$, tak algoritmus skončí s
+        výsledkom, že  $C$ nie je podklauzula $D$. 
+
+    \item V opačnom prípade kladieme $k=k+1$ a opakujeme krok 2
 \end{enumerate}
+
+\startFIXME
 
 \begin{poznamka}
     $\mathcal{U}^k, \mathcal{U}^{k+1}$, klauzuly z
