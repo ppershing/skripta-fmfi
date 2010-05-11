@@ -252,7 +252,7 @@ beginfig(41);
 
     % level 3- ->
     for i=0 upto 15:
-        arrow_dash(.5, btex etex)
+        arrow(.5, btex etex)
             (t[3][i div 2], t[4][i]) t[3][i div 2].c -- t[4][i].c;
     endfor;
 %%% }}}
@@ -301,11 +301,11 @@ beginfig(52);
     with spacing((20,24)) tree.t(4,2);
     node.t[0][0]("");
     node.t[1][0]("");
-    node_hidden.t[1][1](btex $\times$ etex);
-    node_hidden.t[2][0](btex $\times$ etex);
+    node.t[1][1](btex $\times$ etex);
+    node.t[2][0](btex $\times$ etex);
     node.t[2][1]("");
-    node_hidden.t[3][2](btex $\times$ etex);
-    node_hidden.t[3][3](btex $\times$ etex);
+    node.t[3][2](btex $\times$ etex);
+    node.t[3][3](btex $\times$ etex);
 
     arrow.top (.5, btex $P$ etex)
             (t[0][0], t[1][0]) t[0][0].c -- t[1][0].c;
@@ -342,9 +342,9 @@ beginfig(61);
 
     node.t[0][0]("");
     node.t[1][0]("");
-    node_hidden.t[1][1](btex $\times$ etex);
-    node_hidden.t[2][0](btex $\times$ etex);
-    node_hidden.t[2][1](btex $\times$ etex);
+    node.t[1][1](btex $\times$ etex);
+    node.t[2][0](btex $\times$ etex);
+    node.t[2][1](btex $\times$ etex);
 
     arrow.top(0.5, btex $P(a)$ etex)
             (t[0][0], t[1][0]) t[0][0].c -- t[1][0].c;

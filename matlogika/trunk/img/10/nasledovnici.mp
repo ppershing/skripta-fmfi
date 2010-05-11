@@ -21,7 +21,14 @@ beginfig(1);
         node.a[1][3](btex $v_n$ etex);
         arrow(0.5, "") (a[0][0], a[1][0]) a[0][0].c -- a[1][0].c;
         arrow(0.5, "") (a[0][0], a[1][1]) a[0][0].c -- a[1][1].c;
+        arrow(0.5, "") (a[0][0], a[1][2]) a[0][0].c -- a[1][2].c;
         arrow(0.5, "") (a[0][0], a[1][3]) a[0][0].c -- a[1][3].c;
+        % sipka zhora
+        sx = 20 + xpart a[0][0].c;
+        sy = 30 + ypart a[0][0].c;
+        put.s(sx,sy);
+        node_hidden.s("");
+        arrow(0.5, "") ( s, a[0][0]) s.c -- a[0][0].c;
 endfig;
 
 end.
