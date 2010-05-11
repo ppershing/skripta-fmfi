@@ -3,7 +3,7 @@
 \begin{definicia}[Rezolventa]
     Nech $C_1$ a $C_2$ sú ľubovoľné klauzuly, 
     $L_1$ je literál z $C_1$, $L_2$ je literál z $C_2$ a literály $L_1,L_2$
-    sú navzájom kontrátne. Vynechajme $L_1$ z $C_1$ a $L_2$ z $C_2$,
+    sú navzájom kontrárne. Vynechajme $L_1$ z $C_1$ a $L_2$ z $C_2$,
     dostaneme tak klauzuly $C_1', C_2'$.
     Disjunkciu $C_1' \lor C_2'$ nazveme rezolventou klauzúl $C_1$ a $C_2$.
 \end{definicia}
@@ -40,15 +40,15 @@
         $C$ pravdivé v $I$.
 
     \item $\neg L$ nie je pravdivý literál v $I$.
-        Potom evidentne $C_2'$ je pravdivý v $I$. A zo toho vyplýva, že aj
-        $C$ je pravdivé v $I$.
+        Potom je evidentne klauzula $C_2'$ pravdivá v $I$. 
+        A zo toho vyplýva, že aj $C$ je pravdivé v $I$.
     \end{itemize}
 \end{dokaz}
 
 \begin{poznamka}
     Nech $C_1$, $C_2$ sú jednotkové klauzuly. Ak $C_1,C_2$ majú
     rezolventu, potom musia tvoriť kontrárnu dvojicu $L, \neg L$
-    a rezolventou je prázdna klauzula $C \equiv \eps$.
+    a rezolventou je prázdna (nesplniteľná) klauzula $C \equiv \eps$.
 \end{poznamka}
 
 Našim cieľom bude zovše obecniť predchádzajúcu poznámku do
@@ -57,7 +57,7 @@ nesplniteľná práve vtedy keď z nej vieme nejakým spôsobom pomocou
 rezolvent získať prázdnu klauzulu.
 Teraz si to formálne rozpíšeme.
 
-\begin{definicia}[Rezolvenčné pravidlo]
+\begin{definicia}[Rezolvenčné odvodenie]
     Nech $S$ je množina klauzúl.
     Rezolvenčným odvodením klauzuly $C$ z množiny klauzúl $S$
     nazývame konečnú postupnosť klauzúl $C_1, C_2, \ldots, C_n$ 
@@ -141,13 +141,13 @@ Teraz si to formálne rozpíšeme.
         \item[2.] $A \implies B \provable A \implies B$
         \item[3.] $A \implies B \provable \neg B \implies \neg A$ --
                 MP 1,2
-        \item[4.] $\provable (\neg B \implies A) \implies
+        \item[4.] $\provable (\neg B \implies \neg A) \implies
             ((\neg A \implies C) \implies (\neg B \implies C))$ --
-                tvrdenie z výrokovej logiky
+                jednoduchý sylogizmus.
         \item[5.] $A \implies B \provable
             (\neg A \implies C) \implies (\neg B \implies C)$ -- MP
             3,4
-        \item[6.] $\neg A \implies C \implies \neg A \implies C$
+        \item[6.] $\neg A \implies C \provable \neg A \implies C$
         \item[7.] $A \implies B, \neg A \implies C \provable
             \neg B \implies C$ -- MP 5,6
     \end{itemize}
@@ -156,7 +156,7 @@ Teraz si to formálne rozpíšeme.
 
     Naopak, uvažujme, že chceme pravidlo MP simulovať pomocou pravidla
     rezolventy. Teda chceme ukázať $A, A\implies B \provable B$.
-    Použijeme nasledujúci trik.
+    Použijeme nasledujúci trik:
     \begin{itemize}
         \item[1.] $A \equiv A \lor \eps$
         \item[2.] $A \implies B \equiv \neg A \lor B$

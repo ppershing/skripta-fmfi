@@ -26,7 +26,8 @@ rezolventy.
     $t_i$ je term.
     Ďalej požadujeme, aby všetky
     $v_i$ boli navzájom rôzne ($i \in\{1,\dots,n\}$)
-    a aby term $t_i$ bol rôzny od $v_i$.
+    a aby term $t_i$ bol rôzny od $v_i$. Touto množinuo budeme
+    popisovať činnosť ``naraz nahraď každú premennú $v_i$ termom $t_i$''.
 
     Ak $t_1, \ldots, t_n$ sú základné inštancie (teda termy bez premenných),
     tak substitúciu nazývame tiež základná substitúcia.
@@ -34,7 +35,10 @@ rezolventy.
 
 \begin{poznamka}
     Na označovanie substitúcií budeme používať grécke písmená.
-    Špeciálne, prázdnu substitúciu označíme ako $\eps$.
+    Špeciálne, prázdnu substitúciu označíme ako $\eps$.\footnote{
+        Pozn.: Vzniká nám tu kolízia označenia s prázdnou nesplniteľnou
+        klauzulou. Z kontextu však bude jasné, o ktorý prípad pôjde.
+    }
 \end{poznamka}
 
 \begin{poznamka}
@@ -69,20 +73,20 @@ rezolventy.
 Ďalšia operácia, ktorú budeme potrebovať, je operácia skladania
 substitúcií.
 
-\begin{definicia}[kompozícia substitúcii]
-    Majme substitúciu $\theta = \{t_1/x_1, \ldots t_n/x_n\}$ a
+\begin{definicia}[Kompozícia substitúcii]
+    Majme substitúcie $\theta = \{t_1/x_1, \ldots t_n/x_n\}$ a
     $\lambda = \{ u_1/y_1, \ldots u_m/y_m \}$.
     Zloženie (kompozícia) $\theta \circ \lambda$ substitúcií
-    $\theta,\lambda$ je definovaná ako množina
+    $\theta,\lambda$ je definované ako množina
     \begin{equation*}
         \{t_1 \lambda/x_1, \dots, t_n \lambda/x_n, u_1/y_1m \dots u_m/y_m \}
     \end{equation*}
-    z ktorej navyše vyradíme vyradíme všetky členy $t_i\lambda/x_i$,
+    z ktorej navyše vyradíme všetky členy $t_i\lambda/x_i$,
     pre ktoré platí, že $t_i \lambda = x_i$ (aby sme nesubstituovali
     identititami)
     a tiež vyradíme všetky $u_i/y_i$,
     pre ktoré $y_i \in \{x_1, x_2, \dots, x_n\}$ (lebo by sme mali
-    predefinovanie správania sa substitúcie na $x_i$).
+    dvojité správanie sa substitúcie na $x_i$).
 \end{definicia}
 
 \begin{poznamka}
@@ -116,13 +120,13 @@ substitúcií.
 
     Tiež platí, že $\varepsilon \circ \theta = \theta = 
             \theta \circ \varepsilon$.
-    To znamená, že množina substitúcii s operáciou skladanie je
+    To znamená, že množina substitúcii s operáciou skladania je
     pologrupa (monoid) s jednotkou.
 \end{poznamka}
 
-\begin{definicia}[unifikátor]
-    Substitúciu $\theta$ nazveme unifikátorom pre
-    množinu výrazov $E_1, E_2, \dots, E_n$,
+\begin{definicia}[Unifikátor]
+    Substitúciu $\theta$ nazveme unifikátorom
+    množiny výrazov $E_1, E_2, \dots, E_n$,
     ak platí $E_1\theta = E_2\theta = \cdots = E_n\theta$.
     Množinu nazveme unifikovateľnou, ak pre ňu existuje
     unifikátor, ktorý je zjednocuje.
@@ -143,7 +147,7 @@ substitúcií.
 \begin{definicia}[Najvšeobecnejší unifikátor]
     Majme množinu výrazov $S=\{ E_1, E_2, \ldots, E_n\}$.
     Unifikátor $\sigma$ pre množinu výrazov $S$ nazveme 
-    najvšeobecnejší unifikátor, ak pre ľubovoľnú unifikátor $\theta$
+    najvšeobecnejší unifikátor, ak pre ľubovoľný unifikátor $\theta$
     množiny $S$ platí, že existuje substitúcia 
     $\lambda_{\theta}$ taká, že $\theta = \sigma \circ \lambda_{\theta}$.
 \end{definicia}
@@ -154,7 +158,7 @@ Uvažujme napríklad výrazy $P(a)$, $P(x)$.
 Pozerajme sa na ne ako na konečnú postupnosť symbolov -- 
 odlišujú sa akurát v treťom symbole. Toto je prvá odlišnosť/diferencia.
 Vo všeobecnosti môže byť týchto výrazov viacej a preto si zadefinujeme
-diferenú množinu.
+diferenčnú množinu.
 
 \begin{definicia}[Diferenčná množina]
 Nech $W$ je neprázdna množina výrazov.
@@ -167,15 +171,15 @@ Diferenčnú množinu pre množinu výrazov $W$ dostávame tak,
     Iný (a podľa mňa lepší) pohľad na to, ako získať diferenčnú množinu je
     pozrieť sa na stromy daných výrazov a začať ich naraz rekurzívne
     prehľadávať zľava doprava až narazíme na vrchol, ktorý je v niektorom
-    výraze iný. Vtedy do diferenčnej množiny zoberieme podstromy daných
-    vrcholov.
+    výraze iný. Vtedy do diferenčnej množiny zoberieme pre každý výraz
+    podstrom zakorenený v dotyčnom vrchole.
 \end{poznamka}
 
 \begin{priklad}
     \label{prikl:dif1}
     Majme množinu $W = \{P(x,f(y,z),\ P(x,a),\ P(x,g(h(k(x))))\}$.
     Nájdeme prvý pozíciu na ktorej sa líšia:
-    $\{P(x,\underline{f(y,z)},\ P(x,\underline{a}),\
+    $\{P(x,\underline{f(y,z)},\ P(x,\underline{\phantom{(}\!a}),\
     P(x,\underline{g(h(k(x)))}) \}$.
     Diferenčnou množinou bude množina líšiacich sa podvýrazov, teda
     $D= \{ f(y,z),\ a,\ f(h(k(x)))\}$. Jej grafická konštrukcia je na
@@ -203,7 +207,7 @@ Diferenčnú množinu pre množinu výrazov $W$ dostávame tak,
     \end{figure}
 \end{priklad}
 
-\begin{priklad}[nebol na prednáške]
+\begin{priklad}[Nebol na prednáške]
     \label{prikl:dif2}
     Uvažujme $W=\{P(a,f(a),f(g(y))),\ P(a,f(a),f(u))\}$.
     Diferenčná množina je $D=\{g(y),u\}$ a grafické znázornenie je na
@@ -249,7 +253,7 @@ dookola opakovať nasledujúce kroky:
     \item Ak existujú také elementy $v_k,t_k \in D_k$, že $v_k$ je
         premenná, ktorá sa nevyskytuje v terme $t_k$, tak pokračujeme ďalším
         krokom.
-        V opačnom prípade algoritmus zakončuje svoji činnosť
+        V opačnom prípade algoritmus zakončuje svoju činnosť
         s výsledkom, že množina $W$ nie je unifikovateľná.
 
     \item Položme $W_{k+1} = W_k \{t_k/v_k\}$ a
@@ -427,6 +431,7 @@ dookola opakovať nasledujúce kroky:
         $\lambda_{k+1} = \lambda_k - \{t_k\lambda_k/v_k\}$. 
 
         Pretože $v_k$ sa nevyskytuje v $t_k$, platí
+        $t_k \{ t_k\lambda_k / v_k\} = \eps$ a tým pádom
         \begin{equation*}
             t_k \lambda_{k+1} = t_k (\lambda_k - \{t_k\lambda_k / v_k\}) 
             =t_k \lambda_k

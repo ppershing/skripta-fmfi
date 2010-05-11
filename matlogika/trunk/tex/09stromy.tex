@@ -6,14 +6,15 @@ spôsobom postupne preberať. A práve na to nám budú slúžiť sémantické
 stromy.
 
 \begin{definicia}[Kontrárna dvojica]
-    Majme nejaký (elementárna formulu) $A$. Dvojicu
-    $\langle A, \neg A \rangle$ nazývame kontrárnou dvojicou.
+    Majme nejaký literál (elementárna formulu) $A$. Dvojicu
+    $\langle A, \neg A \rangle$ budeme nazývať kontrárnou dvojicou.
 
-    Ak klauzula obsahuje kontrárnu dvojicu, potom je tautológia.
+    Ak klauzula obsahuje kontrárnu dvojicu, potom je vždy platná a
+    teda je to tautológia.
 \end{definicia}
 
 \begin{definicia}[Sémantický strom]
-    Nech $S$ je množina klauzúl a $A$ je Herbrandovské báza pre
+    Nech $S$ je množina klauzúl a $A$ je Herbrandovská báza pre
     množinu $S$. Pod sémantickým stromom pre množinu klauzúl $S$
     budeme rozumieť zakorenený dolu rastúci strom
     v ktorom je každej hrane pripísaná množina atómov alebo negácií
@@ -21,16 +22,25 @@ stromy.
     pričom platí:
     \begin{enumerate}
         \item Z každého vrchola stromu vychádza konečný počet hrán.
-            Ooznačme ich ich $l_1, l_2, \ldots l_n$.
+            Ooznačme ich ich $l_1, l_2, \dots, l_n$.
             Nech $Q_i$ je konjunkcia všetkých literálov
             pripísaných hrane $l_i$, potom požadujeme aby 
-            $Q_1 \lor Q_2 \lor \ldots \lor Q_n$ bola tautológia.
+            $Q_1 \lor Q_2 \lor \cdots \lor Q_n$ bola tautológia.
 
         \item Označme pre vrchov $v$ symbolom $I(v)$
             zjednotenie všetkých množín literálov pripísaných hranám cesty,
             ktorá vedie z koreňa do vrcholu $v$. Potom $I(v)$
             nesmie obsahovať kontrárne dvojice.
     \end{enumerate}
+\end{definicia}
+
+\begin{definicia}
+    Nech $A=\{ A_1, A_2, \ldots A_n \}$ je Herbrandovská báza pre množinu
+    klauzúl $S$.
+    Hovoríme, že sémantický strom prislúchajúci $S$ je úplný,
+    ak pre každý koncový vrchol(list) $v$ platí:
+    $I(v)$ obsahuje $A_i$ alebo\footnote{Toto je exkluzívne alebo. Nemôže
+    totiž platiť, že by obsahovala obe formuly} $\neg A_i$ pre každé $i$.
 \end{definicia}
 
 \begin{priklad}
@@ -47,15 +57,6 @@ stromy.
         \label{fig:semantic-tree-example1}
     \end{figure}
 \end{priklad}
-
-\begin{definicia}
-    Nech $A=\{ A_1, A_2, \ldots A_n \}$ je Herbrandovská báza pre množinu
-    klauzúl $S$.
-    Hovoríme, že sémantický strom prislúchajúci $S$ je úplný,
-    ak pre každý koncový vrchol(list) $v$ platí:
-    $I(v)$ obsahuje $A_i$ alebo\footnote{Toto je exkluzívne alebo. Nemôže
-    totiž platiť, že by obsahovala obe formuly} $\neg A_i$ pre každé $i$.
-\end{definicia}
 
 \begin{priklad}
     \label{prikl:semantic-tree-example2}
@@ -109,7 +110,7 @@ stromy.
 
     \begin{figure}[h]
         \centering
-        \includegraphics{img/09stromy/stromy.41.mps}
+        \includegraphics[scale=0.9]{img/09stromy/stromy.41.mps}
         \caption{Nekonečný sémantický strom pre príklad
                 \ref{prikl:semantic-tree-example4}}
         \label{fig:semantic-tree-example4}
@@ -131,7 +132,7 @@ stromy.
         preberanie všetkých možných interpretácii.
     \item Navyše, na množinu $I(v)$ pre vrchol $v$ sa môžeme pozerať ako na
         čiastočnú interpretáciu (interpretuje len niektoré prvky bázy).
-    \item Už vieme, že množina klauzúl $S$ jue nesplniteľná $\iff$
+    \item Už vieme, že množina klauzúl $S$ je nesplniteľná $\iff$
         je nepravdivá pre všetky herbrandovské interpretácie. Otázka znie,
         ako sa to prejaví na sémantickom strome. Vieme, že každá klauzula
         je konečný objekt. Preto sa musí nájsť nejaká konečná čiastočná
@@ -147,7 +148,8 @@ stromy.
 \begin{definicia}[Odmietajúci vrchol]
     Vrchol $v$ sémantického stromu pre množinu klauzúl $S$ sa
     nazýva odmietajúcim, ak  $I(v)$ odmieta niektorú základú inštanciu
-    klauzuly z množiny $S$, no ľubovoľný  $v'$  na ceste z koreňa do $v$
+    klauzuly z množiny $S$, no ľubovoľný vrchol $v'$  na ceste z koreňa 
+    do vrcholu $v$
     neodmieta žiadnu základnú inštanciu klauzúl z $S$.
 \end{definicia}
 
