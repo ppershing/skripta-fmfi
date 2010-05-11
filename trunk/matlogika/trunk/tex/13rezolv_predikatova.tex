@@ -74,9 +74,9 @@
     Uvažujme $C_1 = P(x) \lor P(f(y))\lor R(g(y))$,
              $C_2 = \neg P(f(g(a)) \lor Q(b)$.
 
-    Spojenie $C_1$ vyzerá je $C_1': P(f(y)) \lor R(g(y))$.
-    Binárna rezolventa $C_1'$ a $C_2$ a tým pádom rezolventa $C_1,C_2$
-    bude $R(g(g(a))) \lor Q(b)$.
+    Spojenie $C_1$ je $C_1': P(f(y)) \lor R(g(y))$.
+    Binárna rezolventa $C_1'$ a $C_2$ (a tým pádom rezolventa
+    $C_1,C_2$) bude $R(g(g(a))) \lor Q(b)$.
 \end{priklad}
 
 Ešte predtým, než sa plne vrhneme do dokazovania úplnosti metódy
@@ -84,7 +84,7 @@ rezolvent, uvedieme si príklady na osvieženie pamäti.
 
 \begin{priklad}
     \label{prikl:rezolv_pred}
-    Majem množinu klauzúl 
+    Majme množinu klauzúl 
     $S=\{P,\ \neg P\lor Q,\ \neg P \lor \neg Q\}$.
     Prislúchajúca herbrandovská báza je $\{P, Q\}$.
     Množine klauzúl $S$ zodpovedá úplný sémantický strom $T$
@@ -178,7 +178,8 @@ môžeme dostať prázdnu klauzulu
         prezentované takto. Je však evidentné, že to malo byť
         formulované ``existuje rezolventa $C$ taká, že pre ľubovoľné
         inštancie $C_1',C_2'$ je $C'$ inštancia $C$''. Inak povedané,
-        $C$ bude najvšeobecnejšia rezolventa}    
+        $C$ bude najvšeobecnejšia rezolventa a bude nezávislá od voľby
+        základných inštancií $C_1',C_2'$.}
     $C$ klauzúl $C_1$ a $C_2$, 
     že $C'$ je inštancia $C$. 
 \end{lema}
@@ -274,6 +275,7 @@ môžeme dostať prázdnu klauzulu
         mohli mať zlé svedomie z toho, čo na to povie množinové mínus,
         na ktoré sme v minulosti upozorňovali. Čitateľ sa môže sám
         presvedčiť, že v tomto prípade je to naozaj v poriadku}
+    \\
 %%% }}}
 \end{dokaz}
 
@@ -301,43 +303,56 @@ môžeme dostať prázdnu klauzulu
         Ak teda prejdeme celé rezolvenčné odvodenie $R_1,R_2,\dots,R_n$,
         postupne ukážeme, že $R_n=\eps$ je splniteľná klauzula. Spor.
 
-\startFIXME
     \item[$\Rightarrow:$] Ak
-        predpokladáme, že $S$ nie je splniteľná, potom podľa Herbrandovej vety (1.
-        variant), nie je splniteľná práve vtedy, keď je možné jej priradiť konečný
-        uzavretý sémantický strom. 
+        predpokladáme, že $S$ nie je splniteľná,
+        potom podľa Herbrandovej vety (1. variant),
+        nie je splniteľná práve vtedy, keď je možné jej priradiť konečný
+        uzavretý sémantický strom $T$. Bez ujmy na všeobecnosti budeme
+        ďalej predpokladať, že tento strom je binárny, teda každý
+        vrchol má najviac dvoch synov.
 
-        \par Môže as stať, že strom $T$ pozostáva jedine z koreňa -- odmieta jedinú
-        klauzulu a v tomto prípade veta platí. Teraz predpokladajme, že je konečný a má
-        viac ako 1 vrchol. V tomto prípade, tak má aspoň jeden akceptujúci vrchol. Potom
-        $i_v$ je čiastočná interpretácia končiaca v tom vrchole. Ďalej, každý
-        nasledovník je odmietajúci. Vrchol je akceptujúci, ak čiastočná interpretácia v
-        ňom existuje, a každý nasledujúci vrchol je odmietajúci.
+        Môže as stať, že strom $T$ pozostáva jedine z koreňa --
+        odmieta prázdnu klauzulu a v tomto prípade veta platí.
+        Teraz predpokladajme, že strom $T$ je konečný a má viac ako 1 vrchol.
+        V tomto prípade má aspoň jeden akceptujúci vrchol.
 
-        \par Predpokladajme, že by tento strom nema akceptujúci vrchol. Potom každý
-        vrchol obsahuje nasledovníka, ktorý nie je odmietajúci. Týmto pádom by sme
-        vytvorili nekonečne dlhú vetvu, čo je spor (strom je konečný).
+        Predpokladajme, že by tento strom nemal akceptujúci vrchol.
+        Potom každý vrchol obsahuje nasledovníka, ktorý nie je odmietajúci.
+        Tým pádom ale môžeme vytvoriť nekonečne dlhú vetvu,
+        čo je spor s konečnosťou stromu $T$.
 
-        \par Ideme pracovať s akceptujúcim vrhcholom. Nech $v$ je akceptujúci vrchol
-        stromu $T$ a $v_1$, $v_2$ sú odmietajúci nasledovníci $v$. $I(v)$ (čiastočná
-        interpretácia končiaca vo vrchole $v$) vyzerá nasledovne:
-
+        Množine $I(v)$ pre akceptujúci vrchol $v$
+        zodpovedá čiastočná interpretácia končiaca v tom vrchole.
+        Nech $v_1$, $v_2$ sú odmietajúci nasledovníci vrcholu $v$
+        (spomeňme si na predpoklad, že strom je binárny).
+        Čiastočné interpretácie $I(v)$, $I(v_1)$, $I(v_2)$ vyzerajú
+        nasledovne:
         \begin{align*}
             I(v)    &= \{ m_1, m_2, \ldots, m_n \} \\
             I(v_1)  &= \{ m_1, m_2, \ldots, m_n, m_{n+1} \}  \\
             I(v_2)  &= \{ m_1, m_2, \ldots, m_n, \neg m_{n+1} \} 
         \end{align*}
 
-        $C_1'$ a $C_2'$ sú dve základne inštancie klauzúl $C_1$ a $C_2$ -- $C_1'$ a
-        $C_2'$ neplatia v $I(v_1)$ a $I(v_2)$. $C_1'$ a $C_2'$ sa neodmietajú v $I(v)$.
-        $C_1'$ musí obsahovať $\neg m_{n+1}$ a $C_2'$ musí obsahovať $m_{n+1}$. $L_1' =
-        \neg m_{n+1}$ a $L_2' = m_{n+1}$. AAk vynecháme $L_1'$ a $L_2'$, dostaneme
-        rezolventu. $C'$ je rezolventa $C_1$ a $C_2$. $C' = (C_1' - L_1') \cup (C_2' =
-        L_2')$. $C'$ -- musí byť nepravdivá v $I(v)$. Podľa predchádzajúcej lemy musí
-        existovať rezolventa $C$ taká, že $C'$ je základná inštancia $C$.
+        Zoberme teraz $C_1'$ a $C_2'$
+        (základné inštancie klauzúl $C_1$ a $C_2$), ktoré nie sú
+        odmietnuté v $I(v)$ ale sú odmietnuté v $I(v_1)$ resp.
+        $I(v_2)$. Potom $C_1'$ musí obsahovať $\neg m_{n+1}$ a
+        $C_2'$ musí obsahovať $m_{n+1}$. Položíme
+        $L_1' = \neg m_{n+1}$ a $L_2' = m_{n+1}$. Dostávame tak
+        rezolventu 
+        \begin{equation*}
+            C' = (C_1' - L_1') \cup (C_2' = L_2')
+        \end{equation*}
+        o ktorej vieme, že musí byť nepravdivá v $I(v)$.
+        Podľa predchádzajúcej lemy musí existovať rezolventa $C$ taká,
+        že $C'$ je základná inštancia $C$.
 
-        \par Vezmime si $T''$ -- uzavretý sémantický strom, $C \cup \{C\}$. ... (niečo
-        ďalej?)
+        Zoberme teraz nový sémantický strom $T'$, ktorý dostaneme
+        pre množinu $S \union \{ C \}$ tak, že odstrihneme strom $T$
+        vo vrchole zodpovedajúcemu rezolvente $C$.
+        Tento strom bude menší a teda
+        opakovaním postupu sa nakoniec dostaneme až k stromu s jedným
+        vrcholom. A o tom sme už prehlásili, že vtedy veta platí.
     \end{itemize}
 \end{dokaz}
 
@@ -354,9 +369,11 @@ môžeme dostať prázdnu klauzulu
     Pre $F_1$, $F_2$ a $\neg G$ vytvoríme štandardné formy.
     $F_1$ si upravíme takto:
     \begin{equation*}
-        (\forall x) (C(x) \implies (W(x) \land R(x)) \iff 
-        (\forall x)(\neg C(x) \lor (W(x)\land R(x)) \iff 
-        (\forall x) ((\neg C(x) \lor W(x)) \land (\neg C(x) \lor R(x)))
+    \begin{split}
+        (\forall x) (C(x) \implies (W(x) \land R(x))
+        & \iff (\forall x)(\neg C(x) \lor (W(x)\land R(x)) \\
+        & \iff (\forall x) ((\neg C(x) \lor W(x)) \land (\neg C(x) \lor R(x)))
+    \end{split}
     \end{equation*}
     Štandardná forma je teda 
     $\{\neg C(x) \lor W(x),\ \neg C(x) \lor R(x)\}$.
@@ -384,6 +401,7 @@ môžeme dostať prázdnu klauzulu
         \item[8] $\eps$ -- rezolventa 6, 7
     \end{itemize}
 
+    \noindent
     Záver: $G$ je logickýkm dôsledkom $F_1$ a $F_2$.
 \end{priklad}
 

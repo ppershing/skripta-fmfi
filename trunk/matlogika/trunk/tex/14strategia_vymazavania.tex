@@ -15,11 +15,11 @@ môže vzniknúť zo všetkých možných dvojíc klauzúl.
     \paragraph{Riešenie:}
     Použijeme takzvanú metódu nasýtenia -- budeme postupne 
     v každom kroku generovať najväčšiu možnú množinu rezolvent.
-    Definujme si postupnosť $\{S^i\}_{i=0}$ množín klauzúl nasledovne:
+    Definujme si postupnosť $\{S^i\}_{i=0}^\infty$ množín klauzúl nasledovne:
     $S^0 = S$ a
     \begin{equation*}
-        S^{n+1} = \{ \mbox{rezolventa klauzúl} C_1, C_2 | 
-            C_1 \in S^0 \union S^1 \union \dots \union S^{n},\
+        S^{n+1} = \{ \mbox{rezolventa klauzúl } C_1, C_2\ | \
+            C_1 \in S^0 \union S^1 \union \cdots \union S^{n} \land
             C_2 \in S^n\},\quad n=1, 2, \dots
     \end{equation*}
     Takýmto spôsobom by sme po $39$ krokoch dostali prázdnu klauzulu.

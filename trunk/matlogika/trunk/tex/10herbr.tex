@@ -7,8 +7,8 @@
     $F:X \mapsto Y$ platí
     \begin{equation*}
         \exists y \in Y:
-            \exists x_1,x_2 \in X:
-                x_1 \ne x_2 \land f(x_1)=y=f(x_2)
+            \exists x_1,x_2 \in X:\ 
+                [x_1 \ne x_2] \land [f(x_1)=y=f(x_2)]
     \end{equation*}
     Tvrdenie možno rozšíriť aj na prípad, že $X$ je nekonečná.
     Vtedy platí
@@ -26,13 +26,14 @@
     mohutnosťami. V druhom prípade $X$ vieme rozložiť na niekoľko
     tried ekvivalencie podľa hodnoty $f(x)$ a nutne aspoň jedna z nich
     musí byť nekonečná.
+    \\
 %%% }}}
 \end{dokaz}
 
-\begin{definicia}[usporiadanie stromu]
+\begin{definicia}[Usporiadanie stromu]
 %%% {{{
     Náš sémantický strom budeme chápať ako usporiadanú dvojicu 
-    $(T,\le)$ kde $T$ je množina vrcholov a $\le$ je relácia,
+    $(T,\le)$ kde $T$ je množina vrcholov a ``$\le$'' je relácia,
     ktorá čiastočne usporadúva $T$.
     Požadujeme, aby platilo
 
@@ -43,9 +44,9 @@
 	\item $T$ má najmenší vrchol (koreň)
     \end{enumerate}
 
-    Ak máme prvky $u$ a $v$, hovoríme, že prvok $v$ nasleduje
-    bezprostredne po prvku $u$, ak neexistuje $z$ také, že $u < z < v$.
-%%% }}}
+    Ak máme prvky $u,v$ a neexistuje $z$ také, že $u < z < v$,
+    hovoríme, že prvok $v$ nasleduje bezprostredne po prvku $u$.
+    %%% }}}
 \end{definicia}
 
 \begin{lema}[K\"onig] 
@@ -72,15 +73,15 @@
         \cup \{v_1, v_2, \ldots, v_n\}
     \end{equation*}
     Predpokladáme, že $A_v$ je nekonečná.
-    Na základe dirichletovho princípu potom jedna z množín $A_{v_i}$
+    Na základe Dirichletovho princípu potom jedna z množín $A_{v_i}$
     musí byť nekonečná.
 
     Vybereme si $x_0$ ako koreň (najmenší vrchol stromu $T$). 
     $A_{x_0} = T \backslash \{x_0\}$ a teda $A_{x_0}$ je nekonečná.
     Teraz viem ale nájsť pre $x_0$ nasledovníka $x_1$, pre ktorý
-    $A_{x_1}$ je nekonečné. A pre ten vieme nájsť nasledovníka $x_2$
-    \dots
-    Viem teda zostrojiť nekonečnú postupnosť nasledovníkov koreňa a
+    $A_{x_1}$ je nekonečné. A pre ten vieme nájsť nasledovníka $x_2$,
+    pre $x_2$ vieme nájsť $x_3$ atď.
+    Vieme teda zostrojiť nekonečnú postupnosť nasledovníkov koreňa a
     teda v strome existuje nekonečne dlhá cesta z koreňa.
 %%% }}}    
 \end{dokaz}
@@ -89,7 +90,7 @@ Po krátkej príprave sa môžeme pustiť do hlavnej časti, ktorá nás
 zaujíma. Budeme si formulovať Herbrandovu vetu, tradične v dvoch
 variantoch.
 
-\begin{veta}[Herbrandova 1]
+\begin{veta}[Herbrandova, 1. variant]
     Množina klauzúl $S$ nie je splniteľná práve vtedy,
     keď ľubovoľnému úplnému sémantickému stromu pre množinu klauzúl
     $S$ zodpovedá konečný uzavretý sémantický strom,
@@ -115,7 +116,7 @@ variantoch.
 
         Ešte potrebujeme zabezpečiť, aby strom bol konečný.
         To ale musí byť, lebo ak by existovala nekonečná vetva,
-        bola by to interpretácia, ktorá by neodmietala niektorú zo 
+        bola by to interpretácia, ktorá by neodmietala žiadnu zo
         základných inštancií.
 
     \item[$\Leftarrow:$] Teraz predpokladáme,
@@ -128,7 +129,7 @@ variantoch.
 %%% }}}
 \end{dokaz}
 
-\begin{veta}[Herbrandova 2]
+\begin{veta}[Herbrandova, 2. variant]
     Množina klauzúl $S$ nie je splniteľná $\iff$
     existuje konečná podmnožina $S'$ základných inštancií klauzúl z $S$,
     ktorá nie je splniteľná.
@@ -143,7 +144,8 @@ variantoch.
         platí, že ku každému úplnému sémantickému stromu $T$ pre
         množinu klauzúl $S$ existuje uzavretý konečný sémantický
         strom $T'$. Ak teraz zoberieme množinu základných inštancií
-        klauzúl z $T'$, dostávame konečnú množinu $S' \subseteq S$,
+        klauzúl z $T'$, ktoré prislúchajú odmietajúcim vrcholom (čiže
+        listom), dostávame konečnú množinu $S' \subseteq S$,
         ktorá tiež nie je splniteľná.
 
     \item[$\Leftarrow:$] Predpoklajme, že existuje
@@ -163,7 +165,7 @@ variantoch.
     Majme množinu klauzúl $S=\{P(x),\ \neg P(f(a))\}$.
     Chceme ukázať, že $S$ nie je splniteľná.
     Na základe 2. Herbrandovej vety stačí nájsť konečnú podmnožinu
-    základných inštancií klauzúl, ktorá nie je splniteľná.
+    množiny základných inštancií klauzúl, ktorá nie je splniteľná.
     Takáto množina je napríklad $S' = \{ P(f(a)),\ \neg P(f(a))\}$.
 \end{priklad}
 
@@ -196,7 +198,7 @@ variantoch.
     Chceme ukázať, že $S$ nie je splniteľná. Návod je napríklad
     takýto: Zostrojme si konečný uzavretý sémantický strom pre $S$
     a potom vypíšme základné inštancie klauzúl pripísaných jednotlivým
-    \fixme{cestám} tohoto stromu.
+    cestám (vetvám) tohoto stromu.
     Možné riešenie je tak napríklad
     \begin{equation*}
     \begin{split}
@@ -244,6 +246,7 @@ variantoch.
 \begin{priklad}
     Majme $S=\{P(a),\ \neg P(x) \lor Q(f(x)),\ \neg Q(f(a)) \}$ a
     univerzum $H_0 = \{a\}$.
+    \dots
     Dokázať nesplniteľnost množiny $S$ možno nasledovne:
     \begin{equation*}
     \begin{split}
@@ -272,10 +275,11 @@ keď $S$ nie je splniteľná.
     Keď $S$ nie je splniteľné, tak ani $S'$ nie je splniteľné --
     tautológie sú splnené pre ľubovoľné interpretácie.
     To, čo zostane, hovorí, či množina je alebo nie je splniteľná.
+    \\
 \end{dokaz}
 
 \subsubsection{Pravidlo jednoliterálnych klauzúl}
-Nech $S$ je množina klauzúl $L$ je nejaká jednoliterálová klauzula.
+Nech $S$ je množina klauzúl a $L$ je nejaká jednoliterálová klauzula.
 Vynechajme z $S$ všetky klauzuly, ktoré obsahujú literál $L$.
 Nech $S'$ sú klauzuly, ktoré nám zostanú po vynechaní.
 Môžu nastať dva prípady:
@@ -283,12 +287,13 @@ Môžu nastať dva prípady:
     \item $S' = \emptyset$. Potom množina klauzúl $S$ je splniteľná --
         stačí zobrať model, ktorý obsahuje $L$.
 
-    \item $S' \neq \emptyset$. Vezmem si literál $\neg L$ a vynechám z
-        z každej klauzuly, ktorá obsahujú $\neg L$ literál $\neg L$.%
+    \item $S' \neq \emptyset$. Vezmem si literál $\neg L$ a vynechám
+        ho z z každej klauzuly, ktorá ho obsahuje.%
         \footnote{Pozor, prechod od $S$ k $S'$ je principiálny iný ako
-            prechod od $S'$ ku $S''$.}
+            prechod od $S'$ ku $S''$. Prvý krát totiž mažeme celé
+            klauzuly, zatiaľ čo druhýkrát iba literály v klauzulách.}
         Dostanem tak množinu klauzúl $S''$.
-        Ak sa $S'$ nachádza $\neg L$, po vynechaní
+        Ak sa $\neg L$ nachádza v $S'$, po vynechaní
         $\neg L$ dostaneme $\eps$.
         Tvrdíme, že $S''$ nie je splniteľná
         $\iff$ $S$ nie je splniteľná.
@@ -322,9 +327,9 @@ Môžu nastať dva prípady:
 \end{dokaz}
 \subsubsection{Pravidlo čistých literálov}
 
-\begin{definicia}[čistý literál]
+\begin{definicia}[Čistý literál]
     Literál $L$ základnej klauzuly z $S$ budeme nazývať čistým,
-    ak literál $\neg L$ sa nevyskytuje v žiadnej základnej klauzule $S$.
+    ak sa literál $\neg L$ nevyskytuje v žiadnej základnej klauzule $S$.
 \end{definicia}
 
 \noindent
@@ -372,6 +377,7 @@ splniteteľná, čo je to isté ako že $S_1,S_2$ nie sú splniteľné.
 
 \begin{dokaz}
     %%% {{{
+    \noindent
     \begin{itemize}
     \item[$\Rightarrow:$] Dokazujme sporom.
         Nech $S_1 \lor S_2$ je splniteľná, 
@@ -390,21 +396,6 @@ splniteteľná, čo je to isté ako že $S_1,S_2$ nie sú splniteľné.
     \end{itemize}
     %%% }}}
 \end{dokaz}
-
-
-\begin{definicia}[prázdna klauzula]
-    Označme prázdnu nesplniteľnú klauzulu ako $\eps$.\footnote{Na
-    prednáške prezentované ako $\square$.}
-    Ďalej, označme prázdnu splniteľnú klauzulu ako $\neg
-    \eps$.\footnote{Na prednáške vôbec nebolo, ale hodí sa.}
-    Potom platí
-    \begin{align*}
-        \equiv \eps \lor A &\equiv A \\
-        \neg \eps \land A &\equiv A \\
-        \eps \land \dots &\equiv false \\
-        \neg \eps \lor \dots &\equiv true
-    \end{align*}
-\end{definicia}
 
 \begin{priklad}
     Majme množinu $S$ vyjadrenú v tvare
@@ -469,7 +460,7 @@ splniteteľná, čo je to isté ako že $S_1,S_2$ nie sú splniteľné.
     Zistite, či množina je alebo nie je splniteľná.
 
     \begin{itemize}
-    \item vytvoríme si mnonžiny podľa pravidla rezu:
+    \item vytvoríme si množiny podľa pravidla rezu:
         \begin{align*}
             (P\land \neg Q) \land (Q \lor \neg R)  \land 
             (\neg Q \lor \neg R) \\

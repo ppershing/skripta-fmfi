@@ -59,13 +59,15 @@ jej ekvivalentom.
             nahraď podformulou $(Qx) (B\implies C)$
     \item[d)] ak $x$ nie je voľná v $C$, tak $((Qx) B) \implies C$
         nahraď $(\overline{Q} x) (B \implies C)$
-    \item[e)] ak $x$ nie je voľná v $B$, $\square \in \{\land,\lor\}$.
+    \item[e)] ak $x$ nie je voľná v $B$ resp. $C$, $\square \in \{\land,\lor\}$.
      Potom $B \squareop ((Qx)C)$ resp. $((Qx)B)\squareop C$ nahraď
      $(Qx)(B \squareop C)$
 \end{itemize}
 \begin{poznamka}
-    Asi stojí za zmienku upozorniť, že v časti c) $x$ nie je voľná vo
-    formule $C$ narozdiel od častí b), d), kde $x$ nie je voľná v $B$.
+    Asi stojí za zmienku upozorniť, že v časti d) $x$ nie je voľná vo
+    formule $C$ narozdiel od časti c), kde $x$ nie je voľná v $B$.
+    Taktiež, medzi týmito dvoma prípadmi je zásadný rozdiel v
+    tom, že v časti d) negujeme kvantifikátor.
 \end{poznamka}
 
 \begin{lema}
@@ -218,7 +220,7 @@ jej ekvivalentom.
 
                 \item[*] $\provable
                     \highlighta{
-                    [\neg \underbrace{B}_X \implies 
+                    [\underbrace{\neg B\phantom{)}}_{\neg X} \implies 
                         \underbrace{(\exists x) ( B \implies C)}_Z]
                     }
                     \implies
@@ -227,7 +229,7 @@ jej ekvivalentom.
                         \implies 
                       \underbrace{(\exists x) (B \implies C)}_Z)
                     \implies
-                    ((\underbrace{B}_X \implies 
+                    ((\underbrace{B\phantom{)}}_X \implies 
                         \underbrace{(\exists x) C}_Y)
                       \implies 
                         \underbrace{(\exists x) (B
@@ -295,7 +297,7 @@ jej ekvivalentom.
                     \lequiv
                     \highlighto{(\exists x) 
                         (\highlightb{\neg C \implies \neg B)}}$ --
-                    vetou ekvivalentných zámenách sme dosadili 4 do 3
+                    vetou o ekvivalentných zámenách sme dosadili 4 do 3
             \item[6] 
                 $\provable (\highlighta{B\implies C}) 
                     \lequiv 

@@ -270,18 +270,20 @@ priradiť Herbrandovskú interpretáciu a zaviesť príslušné tvrdenia a defin
     $I_1^*$ a $I_2^*$, pričom v prvej bude $a$ interpretované ako $1$ 
     a v druhej ako $2$.
 
+    \newcommand{\phn}{\phantom{\neg}}
     \begin{align*}
-        I_1^* &= \{ P(a),\ \neg Q(a,a),\ P(f(a,a)),\ \neg Q(a,f(a,a)),\
+        I_1^* &= \{ \phn P(a),\ \neg Q(a,a),\ P(f(a,a)),\ \neg Q(a,f(a,a)),\
             \neg Q(f(a,a),a),\ \dots \} \\
         I_2^* &= \{ \neg P(a),\ \neg Q(a,a),\ P(f(a,a)),\ \neg Q(a,f(a,a)),\
-            Q(f(a,a),a),\ \dots \}
+            \phn Q(f(a,a),a),\ \dots \}
     \end{align*}
+    \def\phn{\undefined}
 \end{priklad}
 
 Teraz si formálne zavedieme, čo to znamená priradiť nejakej interpretácii $I$
 zodpovedajúcu H-interpretáciu $I^*$:
 
-\begin{definicia}[zodpovedajúca H-interpretácia]
+\begin{definicia}[Zodpovedajúca H-interpretácia]
     Majme interpretáciu $I$ pre množinu klauzúl $S$ na oblasti
     interpretácií $D$. Interpretácii $I$ priradíme zodpovedajúcu
     H-interpretáciu $I^*$ nasledovne:
@@ -308,7 +310,7 @@ zodpovedajúcu H-interpretáciu $I^*$:
     Nech klauzula $C^{(i)}$ je nasledujúca disjunkcia literálov
     $C^{(i)} = L^{(i)}_1 \lor L^{(i)}_2 \lor \ldots \lor
         L^{(i)}_{r_i}$ pre $i=1,\ldots,n$.
-    Ľubovoľný literál $L^{(i)}_j$ je tvaru atomická formula alebo
+    Ľubovoľný literál $L^{(i)}_j$ je buď atomická formula alebo
     jej negácia. Predpokladajme že interpretácia $I$ na univeze $D$
     vyhovuje množine klauzúl $S$. Potom musí byť pravdivý aspoň jeden
     literál v každej klauzule $C^{(i)}$.
@@ -318,6 +320,7 @@ zodpovedajúcu H-interpretáciu $I^*$:
     dostávame $P^{(n)}(h_1, \dots, h_n)$ je pravdivé v $I^*$.
     Teda, ak $I$ vyhovuje množine klauzúl $S$, bude jej vyhovovať aj
     $I^*$.
+    \\
 \end{dokaz}
 
 \begin{veta}
@@ -359,45 +362,48 @@ bližšie k rozhodovaniu platnosti $S$.
 \end{poznamka}
 
 \begin{poznamka}
-    \noindent
+    Zhrňme si niekoľko základných pozorovaní:
     \begin{enumerate}
 	\item Majme klauzulu (disjunkciu literálov) $C$
             a nech $C'$ je jej základná inštancia, t.j. 
             každá premenná bola nahradená prvkom H-univerza.
-            $C'$ je splniteľná v interpretácii $I$
+            $C'$ je splniteľná v (H-)interpretácii $I$
 	    práve vtedy, keď existuje základný literál $L' \in I$,
             ktorý je splniteľný.
             Teda $C'$ je splniteľná $\iff$ $C' \intersect I \ne 0$.            
 
 	\item Klauzula $C$ je splnená v interpretácii $I$ $\iff$ každá jej
-	základná inštancia $C'$ je splnená v $I$.
+	    základná inštancia $C'$ je splnená v $I$.
 
 	\item Klauzula $C$ je odmietnutá (vyvrátená) v $I$ $\iff$ existuje
-	aspoň jedna taká základná inštancia $C'$, ktorá 
-        nie je splniteľná (teda je vyvrátená) v $I$.
+	    aspoň jedna taká základná inštancia $C'$, ktorá 
+            nie je splniteľná (teda je vyvrátená) v $I$.
 
 	\item Množina klauzúl $S$ nie je splniteľná $\iff$ 
-        pre každú interpretáciu $I$ existuje aspoň jedna základná inštancia 
-        $C'$ klauzuly $C\in S$, ktorá nie je splniteľná v $I$.
+            pre každú interpretáciu $I$ existuje aspoň jedna klauzula
+            $C\in S$ a jej základná inštancia $C'$, 
+            ktorá nie je splniteľná v $I$.
     \end{enumerate}
 \end{poznamka}
 
 \begin{priklad}
     Uvažujme klauzulu $C=\neg P(x) \lor Q(f(x))$ a
     interpretácie $I_1,I_2,I_3$ definované nasledovne:
+    \newcommand{\phn}{\phantom{\neg}}
     \begin{align*}
         I_1 &= \{ \neg P(a),\ \neg Q(a),\ \neg P(f(a)),\ 
-            \neg Q(f(a)),\ \neg P(f(f(a))),\ \neg Q(f(f(a))),\ \ldots \} \\
-        I_2 &= \{ P(a),\ Q(a),\ P(f(a)),\ Q(f(a)),\ P(f(f(a))),\ 
-            Q(f(f(a))),\ \ldots \} \\
-        I_3 &= \{ P(a),\ \neg Q(a),\ P(f(a)),\ \neg Q(f(a)),\ 
-            P(f(f(a))),\ \neg Q(f(f(a))),\ \ldots \} \\
+            \neg Q(f(a)),\ \neg P(f(f(a))),\ \neg Q(f(f(a))),\ \dots \} \\
+        I_2 &= \{ \phn P(a),\ \phn Q(a),\ \phn P(f(a)),\ 
+            \phn Q(f(a)),\ \phn P(f(f(a))),\ \phn Q(f(f(a))),\ \dots \} \\
+        I_3 &= \{ \phn P(a),\ \neg Q(a),\ \phn P(f(a)),\
+            \neg Q(f(a)),\ \phn P(f(f(a))),\ \neg Q(f(f(a))),\ \dots \} \\
     \end{align*}
+    \def\phn{\undefined}
     Všímajme si klauzulu $C$ a jednotlivé interpretácie:
     $I_1$ vyhovuje $C$ (inak povedané $C$ je splnená) a zabezpečujú to
-    $\neg P(a),\ \neg P(f(a)),\ \neg P(f(f(a))), \dots$.
+    $\neg P(a),\ \neg P(f(a)),\ \neg P(f(f(a))), \dots$
     Podobne, $C$ je splnená v $I_2$ a zabezpečujú to
-    $Q(a),\ Q(f(a)),\ Q(f(f(a))), \dots$. Naopak, $C$ nie je
+    $Q(a),\ Q(f(a)),\ Q(f(f(a))), \dots$ Naopak, $C$ nie je
     splniteľná v $I_3$.
 \end{priklad}
 
