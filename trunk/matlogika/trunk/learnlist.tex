@@ -1,0 +1,1124 @@
+% vim: set fdm=marker: sw=2: sts=2: ts=2:
+
+\documentclass[a4paper]{report}
+%\documentclass[a5paper,12pt]{report}
+\usepackage{ulem}
+\usepackage{slovak}
+\usepackage[utf8]{inputenc}
+\usepackage{a4wide}
+\usepackage{tabularx}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{epsfig}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{mathrsfs}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{ifthen}
+\usepackage{subfigure}
+\usepackage[margin=2cm]{geometry}
+
+
+\input{utility/makra.tex}
+
+
+\newenvironment{dokaz}{\smallskip \par \noindent{\bfseries D:}}{}
+\newenvironment{definicia}{\smallskip \par \noindent{\bfseries Def:}}{}
+\newenvironment{priklad}{\smallskip \par \noindent{\bfseries Príkl:}}{}
+\newenvironment{veta}{\smallskip \par \noindent{\bfseries Veta:}}{}
+\newenvironment{lema}{\smallskip \par \noindent{\bfseries Lema:}}{}
+\newenvironment{dosledok}{\smallskip \par \noindent{\bfseries Dôsl:}}{}
+\newenvironment{poznamka}{\smallskip \par \noindent{\bfseries Pozn:}}{}
+\newenvironment{postup}{\smallskip \par \noindent{\bfseries Postup:}}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%
+\subsection{Prenexné tvary formúl}
+%%% {{{
+
+\begin{definicia}[Prenexný tvar]
+\end{definicia}
+
+\begin{priklad}
+    Formula elementárnej aritmetiky:
+    $ (\forall x) (\forall y) (\exists z) (x+y=z)$
+\end{priklad}
+
+\begin{veta}
+ Nech $A$ je ľubovoľná formula predikátovej logiky. Potom existuje
+ formula $A'$ v prenexnom tvare taká, že
+ $\provable A \lequiv A'$.
+ \label{veta:prenex}
+\end{veta}
+
+\begin{definicia}[Zoznam prenexných operácií]
+\end{definicia}
+
+\begin{lema}
+    Prenexnými operáciami dostaneme ekvivalentné formuly
+\end{lema}
+\begin{dokaz}
+\end{dokaz}
+
+\begin{dokaz}[Dôkaz vety \ref{veta:prenex} o prexexných tvaroch]
+\end{dokaz}
+
+\begin{priklad}
+    Formula $A: B \lequiv (\forall x) C$ kde $x$ nie je voľná
+    v $B$ a $y$ sa nevyskytuje v $B,C$.
+\end{priklad}
+
+\begin{priklad}
+    Formula elementárnej aritmetiky:
+    $(\exists x) (x=y) \implies (\exists x)((x=0) \lor
+                    \neg (\exists y)(y<0))$
+\end{priklad}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Skolemov tvar formuly}
+%%% {{{
+
+\begin{definicia}[Skolemov normálny tvar]
+\end{definicia}
+
+\begin{veta}
+    Nech $A$ je formula predikátovej logiky. Potom k nej môžeme
+    zostrojiť formulu $A'$ v Skolemovom normálnom tvare, pričom platí
+    $\provable A \iff \provable A'$.
+    \label{veta:skolem}
+\end{veta}
+
+\begin{definicia}[Hodnosť formuly]
+\end{definicia}
+
+\begin{priklad}[Príklad hodnosti formuly]
+\end{priklad}
+
+\begin{dokaz}[vety \ref{veta:skolem}]
+\end{dokaz}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Predikátová logika s rovnosťou}
+%%% {{{
+
+\begin{definicia}[Zoznam axióm rovnosti]
+\end{definicia}
+
+\begin{priklad}[Teória neostrého čiastočného usporiadania $\le$]
+\end{priklad}
+
+\begin{lema}[Rovnosť je symetrická a tranzitívna]
+\end{lema}
+\begin{dokaz}
+\end{dokaz}
+
+\begin{veta}
+    Nech $t_1,\ldots,t_n,s_1,\ldots,s_n$ sú termy, pričom platí
+        $\forall i \in \{1,\dots,n\}:\; \provable t_i = s_i$.
+    Potom
+    \begin{itemize}
+    \item[i)] Ak $t$ je term, ktorý vznikne z termu $s$ nahradením
+        niektorých výskytov termov $s_i$ za $t_i$, potom 
+        $\provable t=s$.
+    \item[ii)] Ak $A'$ je formula, ktorá vznikne z formuly $A$
+    dosadením $t_i$ za niektoré termy $s_i$, okrem prípadov, keď
+    $t_i$ je premenná $x$ v kvantifikácii $(\forall x)$ 
+    resp. $(\exists x)$. Potom
+    $\provable A \lequiv A'$.
+    \end{itemize}
+\end{veta}
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{veta}
+    Majme term $t$, termy $t_1,\dots,t_n, s_1,\dots, s_n$ a formulu
+    $A$.
+    Potom platí
+    \begin{itemize}
+        \item[i)] $\provable t_1=s_2 \implies t_2=s_2 \implies
+            t_n=s_n \implies (t[t_1,\dots,t_n] = t[s_1,\dots,s_n])$.
+        \item[ii)] $\provable t_1=s_2 \implies t_2=s_2 \implies
+            t_n=s_n \implies (A[t_1,\dots,t_n] \lequiv 
+                              A[s_1,\dots,s_n])$.
+    \end{itemize}
+    Ak navyše $x$ je premenná, ktorá nie je obsiahnutá v terme $t$,
+    potom platí
+    \begin{itemize}
+        \item[iii)] $\provable A_x[t] \lequiv 
+            (\forall x)((x=t) \implies A)$
+        \item[iv)] $\provable A_x[t] \lequiv 
+            (\exists x)((x=t) \land A)$
+    \end{itemize}
+\end{veta}
+\begin{dokaz}
+\end{dokaz}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Pravdivosť a dokázateľnosť}
+%%% {{{
+
+\begin{definicia}[Logická platnosť formuly]
+\end{definicia}
+
+\begin{definicia}[Teória]
+\end{definicia}
+
+\begin{definicia}[Model teórie]
+\end{definicia}
+
+\begin{definicia}[Tautologický dôsledok]
+\end{definicia}
+
+\begin{priklad}[Teória ostrého usporiadania]
+\end{priklad}
+
+\begin{priklad}[Elementárna aritmetika]
+\end{priklad}
+
+\begin{poznamka}[Model verzus realizácia]
+\end{poznamka}
+
+\begin{priklad}[Teória grúp]
+\end{priklad}
+
+\begin{veta}[O korektnosti]
+    Ak $T$ je teória v jazyku $L$ a ak formula $A$ je taká,
+    že $T \provable A$, potom $T \models A$.
+\end{veta}
+
+\begin{dokaz}
+\end{dokaz}
+
+
+\begin{priklad}[Existencia nedokázateľnej formuly a jej negácie v elementárnej aritmerike]
+\end{priklad}
+
+
+\begin{poznamka}[Neexistencia vety o dedukcii v predikátovej logike]
+\end{poznamka}
+
+\begin{dosledok}[Vety o korektnosti]
+    Ak teória $T$ v jazyku $L$ má model $\mathcal{M}$, potom $T$ je
+    bezosporná.
+\end{dosledok}
+\begin{dokaz}
+\end{dokaz}
+
+\begin{poznamka}[Syntaktické vs. sémantické dôkazy]
+\end{poznamka}
+
+\begin{priklad}[Bezospornosť predikátovej logiky]
+\end{priklad}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Veta o úplnosti}
+%%% {{{
+
+
+\begin{veta}[G\"odel, 1. variant]
+    Nech $T$ je teória v jazyku $L$ a nech $A$ je
+    ľubovoľná formula jazyka $L$. Potom $T \provable A \iff T \models A$,
+    čiže $A$ je dokázateľná práve vtedy keď
+    je splnená v každom modeli teórie $T$.
+\end{veta}
+
+\begin{veta}[G\"odel, 2. variant]
+    Teória $T$ je bezosporná práve vtedy, ked $T$ má model.
+\end{veta}
+
+\begin{poznamka}
+    Varianta 1 G\"odelovej vety vyplýva z variantu 2.
+\end{poznamka}
+
+\begin{dokaz}[Poznámky]
+\end{dokaz}
+
+\begin{dokaz}[2. variantu G\"odelovej vety]
+\end{dokaz}
+
+\begin{definicia}[Úplná teória]
+\end{definicia}
+
+\begin{poznamka}
+    Pojem úplnosti teda zodpovedá nasledujúcej konštrukcii: ...
+\end{poznamka}
+
+\begin{poznamka}
+    V úplnej teórii (a teda špeciálne v $T_h$) nemôže nastať problém 
+    \ref{en:model_problem_neg}, ktorý sme spomínali.
+\end{poznamka}
+
+\begin{definicia}[Henkinova teória]
+\end{definicia}
+
+\begin{poznamka}
+    Ak je teória Henkinova, tak sme vyriešili problémy
+    \ref{en:model_problem_konst}, \ref{en:model_problem_korektnost}.
+\end{poznamka}
+
+\begin{lema}
+    Ak $T$ je úplná a Henkinova teória, tak potom $T$ má model.
+    \label{lema:uplna_henkinova}
+\end{lema}
+\begin{dokaz}
+\end{dokaz}
+
+\begin{veta}[O kanonickej štruktúre]
+    Nech $T$ je úplná Henkinovská teória a nech $\mathcal{M}$ je
+    definované podľa dôkazu lemy \ref{lema:uplna_henkinova}.
+    Potom $T \provable A \iff \mathcal{M} \models A$.
+\end{veta}
+
+\begin{dokaz}
+\end{dokaz}
+
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Rozšírenia teórie}
+%%% {{{
+
+\begin{definicia}[Rozšírenie jazyka]
+\end{definicia}
+
+\begin{priklad}[Na rozšítenie jazyka]
+\end{priklad}    
+
+\begin{definicia}[Rozšírenie teórie]
+\end{definicia}
+
+\begin{priklad}[Na rozšírenie teórie -- teória grúp, okruhov, ...]
+\end{priklad}
+
+\begin{poznamka}
+    Je dôležité si uvedomiť, že nie všetky axiómy pôvodnej teórie $T$
+    sa musia nachádzať aj v rozšírenej teórii $T'$ -- 
+    stačí, ak sa dajú odvodiť v $T'$.
+\end{poznamka}
+
+\begin{poznamka}
+ Ak teória $T'$ nad jazykom $L'$ je rozšírením teórie $T$ nad jazykom
+ $L$ a vieme že $T'$ je bezosporná, potom aj $T$ je bezosporná.
+\end{poznamka}
+\begin{dokaz}
+\end{dokaz}
+
+\begin{definicia}[Konzervatívne rozšírenie]
+\end{definicia}
+
+\begin{poznamka}
+    Spojením posledných dvoch definícii dostávame, že pre
+    konzervatívne rozšírenie $T',L'$ teórie $T,L$ platí
+    $ \forall A \in L:\quad\quad T \provable A \iff T' \provable A$
+\end{poznamka}
+
+\begin{poznamka}
+    Nech $T',L'$ je konzervatívne rozšírenie $T,L$. Potom platí (z
+    predchádzajúcej poznámky)
+    $T$ je bezosporná $\iff$ $T'$ je bezosporná.
+\end{poznamka}
+
+\begin{veta}[Henkinova] 
+    K ľubovoľnej teórii $T$ môžeme zostrojiť Henkinovu
+    teóriu $T_H$, ktorá je konzervatívnym rozšírením teórie $T$.
+\end{veta}    
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{veta}[Lindenbaum]
+    Ak $T$ je bezosporná teória s jazykom $L$, potom existuje úplné
+    rozšírenie $T'$ teórie $T$ s rovnakým jazykom $L$.
+\end{veta}
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{definicia}[Redukcia]
+\end{definicia}
+
+\begin{poznamka}
+    Nech $\mathcal{M}$ je redukcia $\mathcal{M}'$ na jazyk $L$
+    a nech $A$ je formula jazyka $L$.
+    Potom platí $\mathcal{M} \models A \iff \mathcal{M}' \models A$.
+\end{poznamka}
+\begin{dokaz}
+\end{dokaz}
+
+\begin{veta}
+    Nech $T'$ je rozšírenie teórie $T$ s jazykom $L$.
+    Ak $\mathcal{M}'$ je model $T'$ a 
+    $\mathcal{M} =\mathcal{M}'\triangle L$, tak $\mathcal{M}$ je model $T$.
+\end{veta}
+\begin{dokaz}
+\end{dokaz}
+
+\begin{dokaz}[Dokončenie 2. variantu G\"odelovej vety]
+\end{dokaz}
+
+
+\section{Veta o kompaktnosti}
+
+\begin{veta}[O kompaktnosti]
+    Nech $T$ je množina formúl jazyka $L$, $A$ je formula $L$. Potom
+    $T \models A \iff \exists 
+        \mbox{ konečná podmnožina }T'\subseteq T: T' \models A$.
+\end{veta}
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{priklad}
+    Na základe vety o kompaktnosti ukážeme, že teóriu telies
+    charakteristiky 0 nedokážeme v teórii prvého rádu zapísať
+    pomocou konečného počtu axióm.
+\end{priklad}
+
+\begin{poznamka}[slabá logika druhého rádu]
+\end{poznamka}
+
+\begin{veta}[2. tvar vety o kompaktnosti]
+%%% {{{
+    Nech $T$ je množina formúl jazyka $L$. 
+    Model teórie $T$ existuje práve vtedy, keď každá konečná podmnožina
+    $T' \subseteq T$ má model.
+%%% }}}    
+\end{veta}
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{priklad}
+    Pomocou vety o kompaktnosti tohto tvaru dokážeme zaručiť,
+    že pre Peanovu aritmetiku existujú aj neštandardné modely.
+\end{priklad}
+
+
+\subsection{Metóda rezolvent}
+%%% {{{
+Prenexné operácie:
+\begin{align*}
+    (Qx)A(x) \lor B &\equiv (Qx)(A(x) \lor B) \tag{1a}\\
+    (Qx)A(x) \land B &\equiv (Qx)(A(x) \land B) \tag{1b}\\
+    \neg (\forall x) A(x) &\equiv (\exists x) \neg A(x) \tag{2a}\\
+    \neg (\exists x) A(x) &\equiv (\forall x) \neg A(x) \tag{2b}\\
+    (\forall x) A(x) \land (\forall x) B(x) &\equiv 
+        (\forall x) (A(x) \land B(x)) \tag{3a}\\
+    (\exists x) A(x) \lor (\exists x) B(x) &\equiv
+        (\exists x) (A(x) \lor B(x)) \tag{3b}
+\end{align*}
+\begin{poznamka}
+    S predchádzajúcimi operáciami 3a,3b treba pracovať pozorne. Im veľmi
+    podobné úpravy totiž neplatia:
+\end{poznamka}
+
+Pretože môžeme substituovať za premenné --
+    $(\forall x) B(x) \equiv (\forall z) B(z)$, môžeme predchádzajúce
+prenexné operácie zhrnúť do nasledujúcich všeobecných transformácií.
+\begin{align*}
+    (Q_1 x)A(x) \lor (Q_2 x)B(x) \equiv 
+        (Q_1 x)(Q_2 z)(A(x) \lor B(z)) \tag{4a} \\
+    (Q_3 x)A(x) \land (Q_4 x)B(x) \equiv
+        (Q_3 x)(Q_4 z)(A(x) \land B(z)) \tag{4b}
+\end{align*} 
+kde v oboch prípadoch $z$ je premenná, ktorá sa nevyskytuje voľne v $A$
+(a ani v pôvodnom $B(x)$).
+Tento najvšeobecnejší tvar ale zbytočne pridáva premenné a preto je
+vhodný iba v prípadoch, keď nefungujú operácie 1 až 3.
+
+%%%%%
+\subsection{Algoritmus na zostrojenie prenexného tvaru}
+
+\begin{enumerate}
+\item Odstránenie implikácií a ekvivalencií:
+
+\item Odstránenie dvojitej negácie a presun negácie k formule.
+
+\item  Premenovanie viazaných premenných, ak je to potrebné.
+
+\item Použijeme zákony 1,2,3,4:
+\end{enumerate}
+
+\begin{priklad}
+        $(\forall x)(\forall y) \left[ (\exists z) \left(P(x,z) \land
+            P(y,z)\right) \implies (\exists u) Q(x,y,u) \right]$
+\end{priklad}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Skolemovské štandardné formuly}
+%%% {{{
+
+\begin{postup}[Ako prevádzať do štandardnej skolemovskej formy]
+\end{postup}
+
+\begin{priklad}
+    Nájdite štandardnú formu pre formuly:
+    $(\exists x) (\forall y) (\forall z) (\exists u) (\forall v) (\exists w)
+        P(x,y,z,u,v,w) $
+\end{priklad}
+
+\begin{priklad}
+    Nájdite štandardnú formu pre formulu:
+    $ (\forall x)(\exists y) (\exists z) 
+        \left[ (\neg P(x,y) \land Q(x,z))\lor R(x,y,z)\right] $
+\end{priklad}
+
+\begin{definicia}[Literál]
+\end{definicia}
+
+\begin{definicia}[Klauzula]
+\end{definicia}
+
+\begin{definicia}[Prázdna klauzula]
+\end{definicia}
+
+\begin{priklad}[Množinový zápis]
+    Uvažujme klauzulu $P \land Q \land \neg R$.
+\end{priklad}
+
+\begin{veta}
+    Nech $\mathscr{S}$ je množina klauzúl, ktoré tvoria štandardnú
+    formu formuly $A$. Potom $A$ nie je splniteľná $\iff$ $\mathscr{S}$
+    nie je splniteľná.
+\end{veta}
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{poznamka}
+    Ak $A$ \emph{nie je splniteľná}, tak splniteľnosť $A$ je
+    ekvivalentná splniteľnosti množinovej verzie štandardnej formy
+    $\mathscr{S}$, teda môžeme písať
+    $A \equiv \mathscr{S}$.
+\end{poznamka}
+
+\begin{poznamka}
+    Ak $A$ je splniteľná, tak tvrdenie neplatí.
+\end{poznamka}
+
+\begin{poznamka}
+    Z predchádzajúcej poznámky sa ukazuje, že metódy dokazovania
+    formúl budú založené na vyvrátení negácie.
+\end{poznamka}
+
+\begin{poznamka}[Štandardná forma konjunkcie]
+\end{poznamka}
+
+\begin{priklad}[Z teórie grúp]
+    Pokúsime sa zapísať pomocou množiny
+    klauzúl tvrdenie z teórie grúp. 
+    Chceme ukázať, že ak pre všetky $x \in G$ platí $x \circ x \in G$,
+    potom je grupa komutatívna.
+\end{priklad}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Herbrandovské univerzum}
+%%% {{{
+
+\begin{definicia}[Herbrandovské univerzum množiny klauzúl]
+\end{definicia}
+
+\begin{priklad}
+    Majme množinu klauzúl
+    $S= \{ P(x),\ \neg P(x) \lor \neg P(f(x))\}$.
+\end{priklad}
+
+\begin{priklad}
+    Nech $S=\{P(x) \lor R(x),\ R(z),\ T(y) \lor \neg W(y) \}$, teda
+    množina $S$ neobsahuje žiadnu konštantu.
+\end{priklad}
+
+\begin{priklad}
+    Uvažujme množinu klauzúl $S=\{P(f(x),a,g(y), b)\}$.
+\end{priklad}
+
+\begin{definicia}[výraz]
+\end{definicia}
+
+\begin{definicia}[podvýraz]
+\end{definicia}
+
+\begin{definicia}[základný výraz]
+\end{definicia}
+
+\begin{definicia}[základná inštancia]
+\end{definicia}
+
+\begin{priklad}
+    Majme množinu $S = \{P(x),\ Q(f(x)) \lor R(y) \}$ a majme klauzulu
+    $C: P(x)$. 
+\end{priklad}
+
+\begin{definicia}[Herbrandovská báza]
+\end{definicia}
+
+\begin{definicia}[H-interpretácia]
+\end{definicia}
+
+\begin{poznamka}
+    Ako sme už spomínali, nekladieme žiadne obmedzenia 
+    na interpretáciu predikátov.
+\end{poznamka}
+
+\begin{priklad}[Na rôzne interpretácie]
+    Majme množinu klauzúl $S=\{ P(x) \lor Q(x),\ R(f(y)) \}$.
+\end{priklad}
+
+
+\medskip
+Ďalšou úlohou bude k ľubovoľnej interpretácii nad ľubovoľným univerzom
+priradiť Herbrandovskú interpretáciu a zaviesť príslušné tvrdenia a definície.
+
+\begin{priklad}
+    \label{prikl:interpretacia}
+    Majme množinu klauzúl $S = \{ P(x),\ Q(y, f(y,a)) \}$.
+    Nech je oblasť interpretácie $D = \{1,2\}$ a interpretujme
+    konštanty, funkčné symboly a predikátové symboly podľa tabuľky ...
+    \begin{table}[h]
+        %%% {{{
+        \centering
+        \begin{tabular}{|r||c|c|c|c|c|}
+            \hline
+            symbol & a & f(1,1) & f(1,2) & f(2,1) & f(2,2) \\
+            \hline
+            hodnota & 2 & 1 & 2 & 2 & 1 \\
+            \hline
+        \end{tabular}
+        
+        \medskip
+        \begin{tabular}{|r||c|c|c|c|c|c|}
+            \hline
+            predikát & P(1) & P(2) & Q(1,1) & Q(1,2) & Q(2,1) & Q(2,2) \\
+            \hline
+            hodnota & true & false & false & true & false & true \\
+            \hline
+        \end{tabular}
+        \caption{Interpretácia $I$ z príkladu
+          \ref{prikl:interpretacia}}
+        \label{tab:priklad-interpretacia}
+        %%% }}}
+    \end{table}
+\end{priklad}
+
+\begin{priklad}
+    \label{prikl:interpretacia2}
+    Môže nastať aj iný prípad -- majme množinu klauzúl $S$, ktorá neobsahuje
+    konštantu: $S=\{P(x),\ Q(y,f(y,z)) \}$.
+\end{priklad}
+
+\begin{definicia}[Zodpovedajúca H-interpretácia]
+\end{definicia}
+
+\begin{lema}
+    Majme interpretáciu $I$ na oblasti $D$. Nech táto interpretácia
+    vyhovuje množine klauzúl $S$. Potom ľubovoľná H-interpretácia $I^*$,
+    ktorá je priradená (zodpovedá) $I$, taktiež vyhovuje množine klauzúl $S$.
+\end{lema}
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{veta}
+    Množina klauzúl $S$ nie je splniteľná práve vtedy,
+    keď $S$ je nepravdivá pri všetkých H-interpretáciach $S$.
+\end{veta}
+
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{poznamka}
+    Zhrňme si niekoľko základných pozorovaní:
+    \begin{enumerate}
+	\item Majme klauzulu (disjunkciu literálov) $C$
+            a nech $C'$ je jej základná inštancia, t.j. 
+            každá premenná bola nahradená prvkom H-univerza.
+            $C'$ je splniteľná v (H-)interpretácii $I$
+	    práve vtedy, keď existuje základný literál $L' \in I$,
+            ktorý je splniteľný.
+            Teda $C'$ je splniteľná $\iff$ $C' \intersect I \ne 0$.            
+
+	\item Klauzula $C$ je splnená v interpretácii $I$ $\iff$ každá jej
+	    základná inštancia $C'$ je splnená v $I$.
+
+	\item Klauzula $C$ je odmietnutá (vyvrátená) v $I$ $\iff$ existuje
+	    aspoň jedna taká základná inštancia $C'$, ktorá 
+            nie je splniteľná (teda je vyvrátená) v $I$.
+
+	\item Množina klauzúl $S$ nie je splniteľná $\iff$ 
+            pre každú interpretáciu $I$ existuje aspoň jedna klauzula
+            $C\in S$ a jej základná inštancia $C'$, 
+            ktorá nie je splniteľná v $I$.
+    \end{enumerate}
+\end{poznamka}
+
+\begin{priklad}
+    Uvažujme klauzulu $C=\neg P(x) \lor Q(f(x))$ a
+    interpretácie $I_1,I_2,I_3$ definované nasledovne ...
+\end{priklad}
+
+\begin{priklad}
+    Uvažujme množinu klauzúl $S=\{P(x),\ \neg P(x)\}$ a
+    interpretácie $I_1 = \{ P(x) \}, I_2 = \{ \neg P(x) \}$.
+
+    Množina $S$ nie je splnená ani jednou interpretáciou.
+\end{priklad}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Sémantické stromy}
+%%% {{{
+
+\begin{definicia}[Kontrárna dvojica]
+\end{definicia}
+
+\begin{definicia}[Sémantický strom]
+\end{definicia}
+
+\begin{definicia}[Úplný sémantický strom]
+\end{definicia}
+
+\begin{priklad}
+    Uvažujme množinu klauzúl $S = \{P,Q\}$. Potom úplný sémantický strom
+    pre túto množinu môže byzerať napríklad ako na obrázku...
+\end{priklad}
+
+\begin{priklad}
+    K tej istej množine klauzúl môžeme mať viacero sémantických
+    stromov.
+\end{priklad}
+
+
+\begin{priklad}
+    Veľmi malý strom môžeme dostať v prípade, ak $S=\{P(x),\ P(a)\}$. 
+\end{priklad}
+
+\begin{priklad}
+    Sémantický strom zďaleka nemusí byť konečný. Uvažujme napríklad množinu
+    klauzúl $S=\{P(x), Q(f(x)) \}$.
+\end{priklad}
+
+\begin{poznamka}
+    Strom = organizované preberanie interpretácii,\\
+    $I(v)$ ako čiastočná interpretácia,\\
+    nesplniteľnosť a odrezávanie stromu
+\end{poznamka}
+
+\begin{definicia}[Odmietajúci vrchol]
+\end{definicia}
+
+\begin{definicia}[Uzavretý sémantický strom]
+\end{definicia}
+
+\begin{definicia}[Akceptujúci vrchol]
+\end{definicia}
+
+\begin{priklad}
+    Uvažujme množinu klauzúl
+    $S= \{ P,\ Q \lor R,\ \neg P \lor \neg Q,\ \neg R \lor \neg P \}$.
+    Obrázok: Pôvodný strom/Strom vzniknutý odrezaním odmietajúcich
+    vrcholov.
+\end{priklad}
+
+
+
+\begin{priklad}
+    Uvažujme množinu klauzúl $S=\{ P(x),\ \neg P(x) \lor Q(f(x)),\ \neg Q(f(x)) \}$.
+\end{priklad}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Herbrandova veta}
+%%% {{{
+\begin{definicia}[Usporiadanie stromu]
+\end{definicia}
+
+\begin{lema}[K\"onig] 
+    Nech každý vrchol stromu s koreňom má konečné vetvenie
+    (t.j. konečný stupeň vetvenia) a strom $T$ je nekonečný.
+    Potom v ňom existuje nekonečne dlhá vetva.
+\end{lema}
+\begin{dokaz} 
+\end{dokaz}
+
+\begin{veta}[Herbrandova, 1. variant]
+    Množina klauzúl $S$ nie je splniteľná práve vtedy,
+    keď ľubovoľnému úplnému sémantickému stromu pre množinu klauzúl
+    $S$ zodpovedá konečný uzavretý sémantický strom,
+    t.j. ľubovoľná vetva úplného stromu vedie do odmietajúceho vrchola.
+\end{veta}
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{veta}[Herbrandova, 2. variant]
+    Množina klauzúl $S$ nie je splniteľná $\iff$
+    existuje konečná podmnožina $S'$ základných inštancií klauzúl z $S$,
+    ktorá nie je splniteľná.
+\end{veta}
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{priklad}
+    Majme množinu klauzúl $S=\{P(x),\ \neg P(f(a))\}$.
+    Chceme ukázať, že $S$ nie je splniteľná.
+\end{priklad}
+
+\begin{priklad}
+    Majme množinu klauzúl $S=\{\neg P(x) \lor Q(f(x),x),\
+        P(g(b)),\ \neg Q(y,z) \}$.
+    Táto množina nie je splniteľná.
+\end{priklad}
+
+\begin{priklad}
+    Uvažujme množinu klauzúl $
+        S = \{ \neg P(x,y,u) \lor \neg P(y,z,v) \lor 
+                    \neg P(x,v,w) \lor P(u,z,w),\ 
+	        \neg P(x,y,u) \lor \neg P(z,y,v) \lor
+                    \neg P(u,z,w) \lor P(x,v,w),\
+	        P(g(x,y),x,y),\
+                P(x,h(x,y),y),\
+                P(x,y,f(x,y),\
+                \neg P(k(v),x,k(x))\}$.
+    Chceme ukázať, že $S$ nie je splniteľná.
+\end{priklad}
+
+\begin{poznamka}[Gilmore, 1960]
+\end{poznamka}
+
+\begin{priklad}
+    Majme množinu klauzúl $S=\{P(x),\ \neg P(a)\}$ a
+    univerzum nech je $H_0 = \{a\}$.
+\end{priklad}
+
+
+\begin{priklad}
+    Majme $S=\{P(a),\ \neg P(x) \lor Q(f(x)),\ \neg Q(f(a)) \}$ a
+    univerzum $H_0 = \{a\}$.
+\end{priklad}
+
+\subsubsection{Dokazovacie pravidlá}
+
+\begin{definicia}[Pravidlo tautológie]
+\end{definicia}
+\begin{dokaz}
+\end{dokaz}
+
+\begin{definicia}[Pravidlo jednoliterálnych klauzúl]
+\end{definicia}
+\begin{dokaz}
+\end{dokaz}
+
+\begin{definicia}[Čistý literál]
+\end{definicia}
+
+\begin{definicia}[Pravidlo čistých literálov]
+\end{definicia}
+\begin{dokaz}
+\end{dokaz}
+
+
+\begin{definicia}[Pravidlo rezu]
+\end{definicia}
+\begin{dokaz}
+\end{dokaz}
+
+\begin{priklad}
+    Majme množinu $S$ vyjadrenú v tvare
+    $S=(P \lor Q \lor \neg R) \land (P \lor \neg Q) 
+        \land \neg P \land R \land U$.
+    Ukážeme, že množina klauzúl nie je splniteľná.
+\end{priklad}
+
+\begin{priklad}
+    Uvažujme $S=(P \lor Q) \land \neg Q \land ( \neg P \lor Q \lor \neg R)$.
+    Ukážte, že množina klauzúl $S$ je splniteľná.
+\end{priklad}
+
+\begin{priklad}
+    Nech je $S=(P \lor Q) \land (P \lor \neg Q) \land
+        (R \lor Q) \land (R \lor \neg Q)$.
+    Ukážte, že $S$ je splniteľná.
+\end{priklad}
+
+\begin{priklad}
+    Uvažujme $S=(P \lor \neg Q) \land (\neg P \lor Q) \land 
+                (Q \lor \neg R) \land (\neg Q \lor \neg R)$.
+    Zistite, či množina je alebo nie je splniteľná.
+\end{priklad}
+
+\begin{priklad}
+    Majme $S=(P \lor Q) \land (P \lor \neg Q) \land 
+        (R \lor Q) \land (R \lor \neg Q)$. 
+\end{priklad}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Metóda rezolvent pre výrokovú logiku}
+%%% {{{
+\begin{definicia}[Rezolventa]
+\end{definicia}
+
+\begin{priklad}
+    Majme $C_1 = P \lor R$ a $C_2 = \neg P \lor Q$. Uvažujme kontrárnu dvojicu
+    $P,\neg P$. Potom $C_1' = R$, $C_2'=Q$. Rezolventa je $R \lor Q$.
+\end{priklad}
+
+\begin{priklad}
+    Majme $C_1= \neg P \lor Q\lor R$, $C_2 = \neg Q \lor S$.
+    Kontrárna dvojica je $\neg Q$, $Q$ a rezolventa $\neg P \lor R \lor S$.
+\end{priklad}
+
+\begin{priklad}
+    Majme klauzuly $C_1: \neg P \lor Q$ a  $C_2: \neg P \lor R$.
+    Tieto klauzuly nemajú rezolventu.
+\end{priklad}
+
+\begin{veta}
+    Nech $C_1$ a $C_2$ sú klauzuly a nech $C$ je ich rezolventa.
+    Potom $C$ je logickým dôsledkom klauzúl $C_1$ a $C_2$.
+\end{veta}
+\begin{dokaz}
+\end{dokaz}
+
+\begin{poznamka}
+    Nech $C_1$, $C_2$ sú jednotkové klauzuly. Ak $C_1,C_2$ majú
+    rezolventu, potom musia tvoriť kontrárnu dvojicu $L, \neg L$
+    a rezolventou je prázdna (nesplniteľná) klauzula $C \equiv \eps$.
+\end{poznamka}
+
+\begin{definicia}[Rezolvenčné odvodenie]
+\end{definicia}
+
+\begin{definicia}
+    Majme množinu klauzúl $S$ a klauzulu $C$.
+    Hovoríme, že $C$ môžeme získať z $S$,
+    ak existuje (rezolvenčné) odvodenie $C_1, \dots, C_m$ z množiny $S$ také, že
+    $C_m \equiv C$.
+\end{definicia}
+
+\begin{priklad}
+    Uvažujme množinu klauzúl $S=\{\neg P \lor Q,\ \neg Q,\ P\}$.
+    Dokážte, že množina klauzúl $S$ nie je
+    splniteľná.
+\end{priklad}
+
+\begin{priklad}
+    Nech $S=\{P \lor Q,\ \neg P \lor Q,\ 
+            P \lor \neg Q,\ \neg P \lor \neg Q\}$.
+    Opäť vieme dokázať nesplniteľnosť množiny klauzúl $S$...
+\end{priklad}
+
+\begin{lema}
+    Pravidlo modus ponens je ekvivalentné s pravidlom rezolventy.
+\end{lema}
+
+\begin{dokaz}
+\end{dokaz}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Substitúcia a unifikácia}
+%%% {{{
+\begin{definicia}[Substitúcia]
+\end{definicia}
+
+\begin{priklad}
+\end{priklad}
+
+\begin{definicia}[Inštancia výrazu]
+\end{definicia}
+
+\begin{priklad}
+\end{priklad}
+
+\begin{definicia}[Kompozícia substitúcii]
+\end{definicia}
+
+\begin{priklad}
+    Majme substitúcie
+    $ \theta = \{t_1/x_1,\ t_2/x_2\} = \{ f(y)/x,\ z/y\},
+        \lambda = \{u_1/y_1,\ u_2/y_2,\ u_3/y_3\} = \{ a/x,\ b/y,\
+        y/z\} $
+\end{priklad}
+
+\begin{poznamka}
+    To znamená, že množina substitúcii s operáciou skladania je
+    pologrupa (monoid) s jednotkou.
+\end{poznamka}
+
+\begin{definicia}[Unifikátor]
+\end{definicia}
+
+\begin{priklad}
+    Majme množinu $\{P(a,y),\ P(x,f(b)\}$.
+\end{priklad}
+
+\begin{definicia}[Najvšeobecnejší unifikátor]
+\end{definicia}
+
+\begin{definicia}[Diferenčná množina]
+\end{definicia}
+
+\begin{priklad}
+    Majme množinu $W = \{P(x,f(y,z),\ P(x,a),\ P(x,g(h(k(x))))\}$.
+    Nájdite jej diferenčnú množinu.
+\end{priklad}
+
+\begin{priklad}[Nebol na prednáške]
+    Uvažujme $W=\{P(a,f(a),f(g(y))),\ P(a,f(a),f(u))\}$.
+    Diferenčná množina je ...
+\end{priklad}
+
+\begin{postup}[Unifikačný algoritmus]
+\end{postup}
+
+\begin{poznamka}
+    Ak je množina unifikovateľná, vždy existuje najvšeobecnejší unifikátor.
+\end{poznamka}
+
+\begin{priklad}
+    Nájdite najvšeobecnejší unifikátor pre množinu
+    $ W=\{ P(a,x,f(g(y))),\ P(z,f(z),f(u)) \}$.
+\end{priklad}
+
+
+\begin{priklad}
+    Zistite, či je unifikovateľná množina 
+    $ W=\{Q(f(a),g(x)),\ Q(y,y)\}$.
+\end{priklad}
+
+\begin{poznamka}[Konečnosť algoritmu]
+\end{poznamka}
+
+\begin{veta}[Unifikačná]
+    Ak $W$ je konečná neprádzna unifikovateľná množina výrazov,
+    tak unifikačný algoritmus vždy zakončuje svoju činnosť na druhom kroku
+    a posledné $\sigma_k$ je najvšeobecnejší unifikátor.
+\end{veta}
+
+\begin{dokaz}
+\end{dokaz}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection {Metóda rezolvent pre logiku 1. rádu}
+%%% {{{
+\begin{definicia}[Spojenie]
+\end{definicia}
+
+\begin{priklad}
+    Uvažujme klauzulu $C$, ktorá vyzerá nasledovne: 
+    $C = \{ P(x) \lor P(f(y)) \lor \neg Q(x)\}$.
+\end{priklad}
+
+\begin{definicia}[binárna rezolventa]
+\end{definicia}
+
+\begin{priklad}
+    Majme $C_1 = P(x) \lor Q(x)$ a $C_2 = \neg P(a) \lor R(x)$, 
+    čo budú predpoklady.
+\end{priklad}
+
+\begin{definicia}[Rezolventa logiky 1. rádu] 
+\end{definicia}
+
+\begin{priklad}
+    Uvažujme $C_1 = P(x) \lor P(f(y))\lor R(g(y))$,
+             $C_2 = \neg P(f(g(a)) \lor Q(b)$.
+\end{priklad}
+
+\subsubsection{Úplnosť metódy rezolvent}
+
+\begin{lema}
+    Nech $C_1'$ a $C_2'$ sú inštancie klauzúl $C_1$ resp. $C_2$.
+    Ak $C'$ je rezolventa $C_1'$ a $C_2'$,
+    tak potom existuje rezolventa
+    $C$ klauzúl $C_1$ a $C_2$, 
+    že $C'$ je inštancia $C$. 
+\end{lema}
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{veta}[Úplnosť metódy rezolvent] 
+    Množina klauzúl $S$ nie je splniteľná $\iff$ 
+    existuje odvodenie prázdnej klauzuly $\eps$ z $S$.
+\end{veta}
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{priklad}
+    Majme nasledujúce formuly:
+    $ F_1: (\forall x) (C(x) \implies (W(x) \land R(x)),
+        F_2: (\exists x) (C(x) \land Q(x)),
+        G:   (\exists x) (Q(x) \land R(x))$.
+    Ukážte, že $G$ je logickým dôsledkom $F_1$ a $F_2$.
+\end{priklad}
+%%% }}}
+
+%%%%%%%%%%%
+\subsection{Stratégia vymazávania}
+%%%% {{{
+\begin{priklad}
+    Majme množinu klauzúl $S=\{P\lor Q,\ \neg P\lor Q,\ 
+        P \lor \neg Q,\ \neg P \lor \neg Q\}$. 
+    Metódou rezolvent ukážte, že $S$ nie je splniteľná.
+\end{priklad}
+
+
+\begin{definicia}[podklauzula]
+\end{definicia}
+
+\begin{priklad}
+    Majme klauzuly $C = P(x)$ a $D = P(A) \lor Q(a)$.
+\end{priklad}
+
+\begin{poznamka}
+    Ak $D$ je identicky rovná $C$ alebo ak klauzula $D$ je inštancia $C$,
+    potom $D$ je nadklauzula $C$.
+\end{poznamka}
+
+\begin{postup}[Algoritmus pohltenia]
+\end{postup}
+
+\begin{poznamka}
+    $\mathcal{U}^k, \mathcal{U}^{k+1}$, klauzuly z
+    $\mathcal{U}^{k}$ sú konečné. $\mathcal{U}^0, \mathcal{U}^1, \ldots \square$.
+\end{poznamka}
+
+\begin{dokaz}
+\end{dokaz}
+
+\begin{priklad}
+    $C = \neg P(x) \lor Q(f(x), a)$. $D = \neg P(h(y)) \lor
+    Q(f(h(y)),a) \lor P(z)$. Zistite, či klauzula $C$ je podklauzulou $D$.
+
+\end{priklad}
+
+\begin{priklad}
+    $C=P(x,x)$ a $D=P(f(x),y) \lor P(y,f(x))$. Zistite, či $C$
+    je podklauzula $D$.
+
+\end{priklad}
+
+\begin{priklad}
+    Majme formuly: $P\implies S, S \implies U,P,U$.
+    Dokážte, že formula 4 vyplýva z formúl 1, 2 a 3. 
+\end{priklad}
+
+%%% }}}
+
+\end{document}
