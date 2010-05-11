@@ -47,12 +47,9 @@ beginfig(2);
     with spacing((30,25)) tree.a(3,2);
     node.a[0][0]("");
     node.a[1][0]("");
-    node_hidden.a[1][1]("");
-    node_hidden.a[2][0]("");
-    node_hidden.a[2][1]("");
-    label(btex $\times$ etex, a[1][1].c);
-    label(btex $\times$ etex, a[2][0].c);
-    label(btex $\times$ etex, a[2][1].c);
+    node.a[1][1](btex $\times$ etex);
+    node.a[2][0](btex $\times$ etex);
+    node.a[2][1](btex $\times$ etex);
 
     % level 0->1
     arrow.top(.5, btex $P$ etex)
@@ -79,10 +76,8 @@ endfig;
 beginfig(3);
     with spacing((30,25)) tree.a(3,2);
     node.a[0][0]("");
-    node_hidden.a[1][0]("");
-    node_hidden.a[1][1]("");
-    label(btex $\times$ etex, a[1][0].c);
-    label(btex $\times$ etex, a[1][1].c);
+    node.a[1][0](btex $\times$ etex);
+    node.a[1][1](btex $\times$ etex);
 
     % level 0->1
     arrow.top(.5, btex $P$ etex)
@@ -100,8 +95,7 @@ endfig;
 
 beginfig(4);
     with spacing((30,25)) tree.a(3,2);
-    node_hidden.a[0][0]("");
-    label(btex $\times$ etex, a[0][0].c);
+    node.a[0][0](btex $\times$ etex);
 
     pair off;
     off = (0, -7);
