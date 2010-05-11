@@ -1,0 +1,29 @@
+\newtheorem{definicia}{Definícia}[section]
+\newtheorem{HLPpriklad}{Príklad}[section]
+\newenvironment{priklad}[1][]{
+    \ifthenelse{\equal{#1}{}}{
+        \begin{HLPpriklad}
+    }{
+        \begin{HLPpriklad}[#1]
+    }
+    \rm}{\end{HLPpriklad}
+}
+\newtheorem{veta}{Veta}[section]
+\newtheorem{lema}{Lema}[section]
+\newtheorem{dosledok}{Dôsledok:}[section]
+
+\newenvironment{dokaz}{\trivlist
+  \item[\hskip \labelsep{\bfseries Dôkaz:}]}{$\blacksquare$ \endtrivlist}
+
+\newtheorem{HLPpoznamka}{Poznámka}[section]
+\newenvironment{poznamka}[1][]{
+    \ifthenelse{\equal{#1}{}}{
+        \begin{HLPpoznamka}
+    }{
+        \begin{HLPpoznamka}[#1]
+    }
+    {\it (: }\rm}{{\it :)}\end{HLPpoznamka}
+}
+
+%\newenvironment{poznamka}{\trivlist
+%  \item[\hskip  \labelsep{\bfseries Poznámka} {\it (:}]}{{\it :)} \endtrivlist}
