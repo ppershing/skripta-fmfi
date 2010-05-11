@@ -4,6 +4,9 @@ default: fast
 fast:
 	cslatex main
 
+learnlist.dvi: learnlist.tex
+	cslatex learnlist
+
 main.dvi: */*.tex *.tex Makefile img/*
 	cslatex main
 	bibtex main
