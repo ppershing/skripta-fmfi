@@ -35,8 +35,11 @@
 \begin{priklad}
     Uvažujme formulu
     \begin{equation*}
-        (\forall x) (\forall y) (\exists z) 
-        (\forall u) (\exists w) (\exists v)
+        \highlighta{(\forall x) (\forall y)}
+        (\exists z) 
+        \highlighta{(\forall u)}
+        (\exists w)
+        \highlightc{(\exists v)}
         (\forall s) (\forall t) A
     \end{equation*}
     Jej hodnosť je 3.
@@ -45,10 +48,13 @@
 \def\existsxton{(\exists x_1) (\exists x_2) \dots (\exists x_n)}
 \def\forallxton{(\forall x_1) (\forall x_2) \dots (\forall x_n)}
 
-\begin{dokaz}[vety \ref{veta:skolem}]
+\begin{dokaz}[Vety \ref{veta:skolem} o Skolemovom tvare]
 %%% {{{
-    Budeme predpokladať, že $A$ je uzavretá (Podľa vety o uzávere
-    platí $\provable A$ práve vtedy, keď je dokázateľný jej uzáver.
+    Budeme predpokladať, že $A$ je uzavretá 
+    (Podľa vety o uzávere
+    platí, že je dokázateľné $\provable A$ práve vtedy,
+    keď je dokázateľný uzáver formuly $A$)
+    a taktiež že je v prenexnom tvare (to vieme zabezpečiť).
     Dôkaz bude prebiehať matematickou indukciou vzhľadom na hodnosť
     $m$ formuly $A$.
     \begin{itemize}
@@ -59,8 +65,9 @@
         \begin{equation}
             A: \existsxton (\forall y) B(x_1,x_2,\dots,x_n,y)
         \end{equation}
-        kde $B$ \emph{nie je} nutne bezkvantifikátorová.
-        Predpokladajme, že v $B$ sú voľné iba $x_1,x_2,\dots,x_n,y$.
+        kde $B$ \emph{nie je} nutne bezkvantifikátorová (a je v
+        prenexnom tvare).
+        Pretože $A$ je uzavretá, v $B$ sú voľné iba $x_1,x_2,\dots,x_n,y$.
         Keďže hodnosť $A$ je $m$, tak vo formule $B$ poslednému
         existenčnému kvantifikátoru predchádza práve $m-1$ všeobecných
         kvantifikátorov.
@@ -73,7 +80,7 @@
                     (\forall y) P^{(n+1)} (x_1,\dots,x_n,y)
             \right]
         \end{equation}
-        Postupne ukážeme, že $\provable A \Leftrightarrow \; \provable
+        Postupne ukážeme, že $\provable A \iff \; \provable
         A^*$.
         %%% {{{ \provable A <==> \provable A*
         \begin{itemize}
@@ -90,10 +97,10 @@
                             (Y\implies (X\implies Z))$ -- veta o zámene
                             predpokladov
 
-            \item[3] $\provable
-                \highlightb{\underbrace{(B \implies P^{(n+1)})}_{X} \implies 
+            \item[3] $\provable 
+                \highlightb{[\underbrace{(B \implies P^{(n+1)})}_{X} \implies 
                         (\underbrace{B}_{Y} \implies
-                        \underbrace{P^{(n+1)}}_{Z}))} \implies
+                        \underbrace{P^{(n+1)}}_{Z}))]} \implies
                 \highlighta{[ \underbrace{B}_{Y} \implies
                  (\underbrace{(B \implies P^{(n+1)})}_{X} \implies
                         \underbrace{P^{(n+1)}}_{Z})]}$ -- inštancia
@@ -215,7 +222,8 @@
                  indukčného predpokladu a 6
             \end{itemize}
         %%% }}}
-        \vskip 0.5cm
+
+        \medskip
         \item[$\Leftarrow$]
         Predpokladáme, že je dokázateľné $\provable A^* : 
                 \existsxton [(\forall y) (B \implies P^{(n+1)}) 
@@ -226,8 +234,8 @@
         formula $B$ sa dá chápať ako špeciálny prípad $(n+1)$-árneho
         predikátu. Preto bude dokázateľná aj inštancia
         formuly $A^*$, ktorá vyzerá nasledovne:
-            $\provable  \existsxton [(\forall y) (B \implies B) 
-                \implies (\forall y) B]$
+        $\provable  \existsxton [(\forall y) (B \implies B) 
+            \implies (\forall y) B]$
 
         %%% {{{ <==
             \begin{itemize}
@@ -235,46 +243,48 @@
                 \existsxton [(\forall y) (B \implies B) 
                 \implies (\forall y) B]}$
 
-            \item[2] $\provable (\exists x) (A \implies B) \implies
-                ((\forall x) A \implies (\exists x) B)$ -- Dá sa
+            \item[2] $\provable (\exists x) (X \implies Y) \implies
+                ((\forall x) X \implies (\exists x) Y)$ -- dá sa
                 dokázať napríklad takto:
                 %%% {{{
                 \begin{itemize}
-                \item $\provable A \implies (\neg B \implies \neg (A
-                        \implies B))$
+                \item $\provable X \implies (\neg Y \implies \neg (X
+                        \implies Y))$
 
-                \item $\provable (\forall x) A \implies (\forall x) (\neg B
-                   \implies \neg (A \implies B))$ -- veta o zavedení
+                \item $\provable (\forall x) X \implies (\forall x)
+                (\neg Y
+                   \implies \neg (X \implies Y))$ -- veta o zavedení
                    všeobecných kvantifikátorov
 
-                \item $(\forall x) A \provable
-                    (\forall x) (\neg B \implies \neg (A \implies B))$
+                \item $(\forall x) X \provable
+                    (\forall x) (\neg Y \implies \neg (X \implies Y))$
                     -- veta o dedukcii
 
-                \item $(\forall x) A \provable
-                    \highlighta{(\forall x) \neg B} \implies
-                    \highlightb{(\forall x) \neg (A \implies B)}$ --
+                \item $(\forall x) X \provable
+                    \highlighta{(\forall x) \neg Y} \implies
+                    \highlightb{(\forall x) \neg (X \implies Y)}$ --
                     veta o distribúcii kvantifikátorov\footnote{
                         formálne by sme mali ešte spraviť medzikrok
-                        $(\forall x) A \provable \neg B \implies
-                                \neg (A \implies B)$
+                        $(\forall x) X \provable \neg Y \implies
+                                \neg (X \implies Y)$
                     }
 
-                \item $(\forall x) A \provable
+                \item $(\forall x) X \provable
                     \highlightb{\highlightc{\neg} (\forall x) 
-                                 \neg (A \implies B)} \implies
+                                 \neg (X \implies Y)} \implies
                     \highlighta{\highlightc{\neg} (\forall x) 
-                                 \neg B}$ -- obmena implikácie
+                                 \neg Y}$ -- obmena implikácie
 
-                \item $\highlighta{(\forall x)} A \provable
-                    \highlightb{\highlightp{(\exists x)} (A \implies
-                    B)} \implies
-                    \highlightp{(\exists x)} B$ -- nahradenie
+                \item $\highlighta{(\forall x)} X \provable
+                    \highlightb{\highlightp{(\exists x)} (X \implies
+                    Y)} \implies
+                    \highlightp{(\exists x)} Y$ -- nahradenie
                     kvantifikátorov
 
-                \item $\highlightb{(\exists x) (A \implies B)} \provable
-                     \highlighta{(\forall x) A } \implies
-                    (\exists x) B$ -- 2 krát veta o dedukcii
+                \item $\provable \highlightb{(\exists x) (A \implies B)} 
+                    \implies
+                     \highlighta{(\forall x) X } \implies
+                    (\exists x) Y$ -- 2 krát veta o dedukcii
                 \end{itemize}
                 %%% }}}
             \item[3] $\provable \highlightc{
@@ -302,7 +312,7 @@
                 $\provable \highlighto{\forallxton (\forall y) (B
                 \implies B)}$
                 -- $(n+1)$-krát pravidlo zovšeobecnenia použité na 
-                dokázateľnú formulu $B \implies B$
+                dokázateľnú formulu $\provable B \implies B$.
             \item[6]
                 $\provable \highlightp{\existsxton (\forall y) B}$
                 -- MP 4,5
@@ -312,10 +322,12 @@
         %%% }}}
 
         Ešte potrebujeme transformovať formulu $A^*$ na formulu s
-        hodnosťou $m-1$. Nech
+        hodnosťou $m-1$. Vieme, že $B$ je v prenexnom tvare
+        (predpokladami sme to hneď na začiatku) a teda ju môžeme
+        zapísať ako 
         $B:(Q_1 z_1)(Q_2 z_2) \dots (Q_l z_l) C$, kde $C$ je formula
         bez kvantifikátorov. Vieme, že hodnosť $B$, resp.
-        hodnosť $(Q_1 z_1)(Q_2 z_2) \dots (Q_l z_l)$ je $m-1$
+        hodnosť jej prefixu $(Q_1 z_1)(Q_2 z_2) \dots (Q_l z_l)$ je $m-1$
         nakoľko hodnosť $A$ je $m$ a v $A$ sa pred $B$ nachádza
         jeden všeobecný kvantifikátor.
         %%% {{{
@@ -380,7 +392,8 @@
             \let\rightb\undefined
         \end{itemize}
         %%% }}}
-        Posledná formula má hodnosť $m-1$ a tak ju vieme podľa
+        Posledná formula má hodnosť $m-1$ a je v prenexnom tvate.
+        Tým pádom ju vieme podľa
         indukčného predpokladu previesť na Skolemov normálny tvar.
     \end{itemize}
 %%% }}}    

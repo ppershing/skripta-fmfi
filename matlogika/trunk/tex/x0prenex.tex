@@ -7,7 +7,7 @@ disjunktívnu normálnu formu, budeme mať aj v predikátovej logike isté
 špeciálne tvary. Zaujímavé sú najmä prexenxná forma a ešte Skolemov
 normálny tvar, čo je špeciálny prípad prexenej formy.
 V prípade prenexného tvaru ide o preskupenie kvantifikátorov na
-začiatok formuly - tvar vzniká aplikovaním kvantifikátorov na otvorenú
+začiatok formuly -- tvar vzniká aplikovaním kvantifikátorov na otvorenú
 formulu.
 
 
@@ -20,7 +20,7 @@ formulu.
     $Q_i \in\{\forall, \exists\}$ sú
     kvantifikátory a  formula $B$ je bez kvantifikátorov.
     Formulu $B$ nazveme otvoreným jadrom formuly $A$, 
-    formulu $(Q_1 x_1) (Q_2 x_2) (Q_3 x_3) \dots (Q_n x_n)$ nazveme
+    výraz $(Q_1 x_1) (Q_2 x_2) (Q_3 x_3) \dots (Q_n x_n)$ nazveme
     prefixom formuly $A$.
 \end{definicia}
 
@@ -29,16 +29,18 @@ formulu.
     \begin{itemize}
      \item $x_1, \dots, x_n$ sú navzájom rôzne pre vylúčenie viacnásobných
         kvantifikácií.
-     \item ak $n=0$, tak $A$ je otvorená a nemá prefix
+     \item Ak $n=0$, tak $A$ je otvorená a nemá prefix.
      \item $B$ je najväčšia otvorená podformula formuly $A$.
     \end{itemize}
 \end{poznamka}
 
 \begin{priklad}
-    Formula elementárnej aritmetiky:
+    Nasledujúca formula elementárnej aritmetiky je v prenexnom tvare:
     \begin{equation*}
         (\forall x) (\forall y) (\exists z) (x+y=z)
     \end{equation*}
+    Prefixom je $(\forall x)(\forall y)(\exists z)$ a otvorené jadro
+    je $x+y=z$.
 \end{priklad}
 
 \begin{veta}
@@ -49,19 +51,24 @@ formulu.
 \end{veta}
 
 Pri prevádzaní formuly na prenexný tvar budeme využívať nasledujúce
-\emph{prenexné} operácie, každá z nich nahrádza podformulu
+{\it prenexné operácie}, každá z nich nahrádza podformulu
 jej ekvivalentom.
 \begin{itemize}
-    \item[a)] $B$ nahraď variantom formuly $B$ (premenovanie viazaných
-    premenných)
+    \item[a)] Podformulu $B$ nahraď jej variantom (premenovanie viazaných
+        premenných).
+
     \item[b)] $\neg(Q x) B$ nahraď $(\overline{Q} x) \neg B$
+        (negácia kvantifikátorov).
+
     \item[c)] ak $x$ nie je voľná v $B$, tak podformulu $B\implies (Qx)C$
-            nahraď podformulou $(Qx) (B\implies C)$
+            nahraď podformulou $(Qx) (B\implies C)$.
+
     \item[d)] ak $x$ nie je voľná v $C$, tak $((Qx) B) \implies C$
-        nahraď $(\overline{Q} x) (B \implies C)$
+        nahraď $(\overline{Q} x) (B \implies C)$.
+
     \item[e)] ak $x$ nie je voľná v $B$ resp. $C$, $\square \in \{\land,\lor\}$.
      Potom $B \squareop ((Qx)C)$ resp. $((Qx)B)\squareop C$ nahraď
-     $(Qx)(B \squareop C)$
+     $(Qx)(B \squareop C)$.
 \end{itemize}
 \begin{poznamka}
     Asi stojí za zmienku upozorniť, že v časti d) $x$ nie je voľná vo
@@ -78,7 +85,9 @@ jej ekvivalentom.
   \noindent
   \begin{itemize}
     \item[a)] Veta o variantoch
+
     \item[b)] Platí
+        %%% {{{
         \begin{itemize}
         \item[1]
             $\provable \neg(\forall x) B \lequiv
@@ -94,43 +103,48 @@ jej ekvivalentom.
                 $\neg (\forall x) \neg A$.
         \end{itemize}
         Následným použítím vety o ekvivalencii môžeme prvú
-        ekvivalenciu dodadiť do druhej a dostávame požadovaný
+        ekvivalenciu dosadiť do druhej a dostávame požadovaný
         výsledok.
         Podobne
         \begin{itemize}
         \item[1]
             $\provable \neg(\exists x) B \lequiv
-                \neg (\exists x) \highlightb{\neg\neg} B$
+                \highlighto{
+                \neg (\exists x) \highlightb{\neg\neg} B}$
 
         \item[2]
             $\provable \highlighto{
                 \highlighta{\neg (\exists x) \neg} \neg B}
                 \lequiv \highlightb{(\forall x)} \neg B$
         \end{itemize}
+        %%% }}}
 
-    \item[c)] Nech $Q=\forall$. Chceme ukázať
+    \item[c)]
+        %%% {{{
+        Nech $Q=\forall$. Chceme ukázať
         $\provable (\forall x) (B \implies C) \lequiv
             (B \implies (\forall x) C)$ kde $x$ nie je voľná v $B$.
         \begin{itemize}
         \item[$\Rightarrow$]
-            5. Axióma predikátovej logiky
+            Piata axióma predikátovej logiky.
 
 
         \item[$\Leftarrow$]
             \begin{itemize}
+            %%% {{{
             \item[1] $\provable (\forall x) C \implies C$ --
                 axióma špecifikácie
 
             \item[2] $\provable \highlighta{
                  \underbrace{(B \implies (\forall x) C)}_X
                 \implies 
-                 (\underbrace{((\forall x) C \implies C)}_Y
-                    \implies \underbrace{(B \implies C)}_Z)}$ --
+                 [\underbrace{((\forall x) C \implies C)}_Y
+                    \implies \underbrace{(B \implies C)}_Z]}$ --
                     Jednoduchý sylogizmus
 
             \item[*] $\provable X \implies (Y \implies Z)$.
 
-            \item[*] $\provable (X \implies (Y \implies Z) \implies
+            \item[*] $\provable (X \implies (Y \implies Z)) \implies
                 (Y \implies (X \implies Z))$ -- pravidlo zámeny
                 predpokladov
 
@@ -153,20 +167,23 @@ jej ekvivalentom.
                     C)]}}$ - MP 2,3
 
             \item[5] $\provable \highlighto{
-                (B \implies (\forall x)) \implies (B
+                (B \implies (\forall x) C) \implies (B
                     \implies C)}$ - MP 1,4
 
             \item[6] $\provable (B \implies (\forall x) C) \implies
-            \highlighta{(\forall x)} (B \implies C)$ -- 
+                \highlighta{(\forall x)} (B \implies C)$ -- 
                 pravidlo zavedenia veľkého kvantifikátora
+            %%% }}}
             \end{itemize}
         \end{itemize}
-     Druhou možnosťou je $Q=\exists$. Našim cieľom je ukázať
-     $\provable (\exists x) (B \implies C) \lequiv 
+
+        Druhou možnosťou je $Q=\exists$. Našim cieľom je ukázať
+        $\provable (\exists x) (B \implies C) \lequiv 
         (B \implies (\exists x) C)$ za predpokladu že $x$ nie je voľná v $B$.
         \begin{itemize}
         \item[$\Rightarrow$]
             \begin{itemize}
+            %%% {{{
             \item[1] $\provable C \implies (\exists x) C$ --
                 duálna verzia axiómy špecifikácie
 
@@ -187,21 +204,22 @@ jej ekvivalentom.
             \item[4] $\provable \highlightb{
                   ((C \implies (\exists x) C) \implies 
                   \highlighto{[( B \implies
-                  C) \implies (B \implies (\exists x) C))]}}$ -- MP 2,3
+                  C) \implies (B \implies (\exists x) C)]}}$ -- MP 2,3
 
             \item[5] $\provable
-                  \highlighto{(( B \implies
-                  C) \implies (B \implies (\exists x) C)))}$ -- MP 1,4
+                  \highlighto{( B \implies
+                  C) \implies (B \implies (\exists x) C)}$ -- MP 1,4
 
             \item[6] $\provable \highlighta{(\exists x)}
                 ( B \implies C) \implies (B \implies (\exists x) C)$
                 -- pravidlo zavedenie existenčného kvantifikátora
+            %%% }}}
             \end{itemize}
 
-
-        \vskip 5mm
+        \medskip
         \item[$\Leftarrow$]
             \begin{itemize}
+            %%% {{{
                 \item[1] $\provable C \implies (B \implies C)$ -- A1
 
                 \item[2] $\provable (\exists x) C \implies 
@@ -247,9 +265,11 @@ jej ekvivalentom.
                     \highlighto{
                     (B \implies (\exists x) C) \implies (\exists x) (B
                     \implies C ))}$ -- MP 2,6
+            %%% }}}
             \end{itemize}
             Ešte treba dokázať formulu (*)
             \begin{itemize}
+            %%% {{{
             \item[a] $\neg X \implies Z, Y \implies Z, X \implies Y,
                 \highlighta{X}
                 \provable Z$
@@ -262,14 +282,19 @@ jej ekvivalentom.
             \item[d] $\provable (\neg X \implies Z) \implies (
                     (Y \implies Z) \implies ((X \implies Y) \implies
                     Z))$ -- veta o dedukcii
+            %%% }}}
             \end{itemize}
         \end{itemize}
+        %%% }}}
+
     \item[d)]
+        %%% {{{
         \begin{itemize}
         \item $Q=\forall$: Ukazujeme
             $\provable (\exists x) (B \implies C) \lequiv
              ((\forall x) B \implies C)$ ak $x$ nie je voľná v $C$.
             \begin{itemize}
+            %%% {{{
             \item[1]
                 $\provable \highlightc{((\forall x) B \implies C)}
                     \lequiv
@@ -309,6 +334,7 @@ jej ekvivalentom.
                     (\exists x) (\highlighta{B \implies C})$ --
                     použili sme vetu o ekvivalentných zámenách na
                     5,6.
+            %%% }}}
             \end{itemize}
 
         \item $Q=\exists$: Chceme ukázať
@@ -316,6 +342,7 @@ jej ekvivalentom.
              ((\forall x) B \implies C)$ ak $x$ nie je voľná v $B$.
              Postupujeme analogicky ako v predchádzajúcom prípade
             \begin{itemize}
+            %%% {{{
             \item[1]
                 $\provable \highlightc{((\exists x) B \implies C)}
                     \lequiv
@@ -355,16 +382,20 @@ jej ekvivalentom.
                     (\forall x) (\highlighta{B \implies C})$ --
                     použili sme vetu o ekvivalentných zámenách na
                     5,6.
+            %%% }}}
             \end{itemize}
         \end{itemize}
-        \item[e)] Ukazujeme
-            $\provable (Qx) (B\squareop C) \lequiv (B\squareop (Qx)C)$,
-            kde $x$ nie je voľná v $B$.
-            Na základe operácii c), d) toto vieme dokázať, pretože platí
-            \begin{align*}
-                &\provable (A \lor B) \lequiv (\neg A \implies B) \\
-                &\provable (A \land B) \lequiv \neg(A \implies \neg B)
-            \end{align*}
+        %%% }}}
+
+    \item[e)] Ukazujeme
+        $\provable (Qx) (B\squareop C) \lequiv (B\squareop (Qx)C)$,
+        kde $x$ nie je voľná v $B$.
+        Na základe operácii c), d) toto vieme dokázať, pretože platí
+        \begin{align*}
+            &\provable (A \lor B) \lequiv (\neg A \implies B) \\
+            &\provable (A \land B) \lequiv \neg(A \implies \neg B)
+        \end{align*}
+
   \end{itemize}
   %%% }}}
 \end{dokaz}
@@ -373,7 +404,7 @@ jej ekvivalentom.
 %%% {{{
 Budeme postupovať matematickou indukciou vzhľadom na zložitosť formuly $A$.
 \begin{itemize}
-    \item $A$ je atomická formula. $A$ je potom v prenexnom tvare.
+    \item $A$ je atomická formula. Potom je $A$ v prenexnom tvare.
 
     \item $A=\neg B$. Na $B$ sa vzťahuje IP, teda vieme zostrojiť
         $B'$ takú, že platí

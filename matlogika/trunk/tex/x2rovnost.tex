@@ -29,18 +29,18 @@ hovoriť o predikáte ``=''.
 \noindent
 %%% {{{
     \begin{itemize}
-        \item[1.] $(\forall x) \langle x,x\rangle \in \varphi$ -- Identita
+        \item[1.] $(\forall x) \langle x,x\rangle \in \varphi$ -- identita
 
         \item[2.] $(\forall x) (\forall y) [
             (\langle x,y \rangle \in \varphi \land
              \langle y,x \rangle \in \varphi) \implies (x=y)]$ -- 
-             Antisymetrickosť
+             antisymetrickosť
 
         \item[3.] $(\forall x) (\forall y) (\forall z)
             [( \langle x,y \rangle \in \varphi \land 
                \langle y,z \rangle \in \varphi) \implies
-               \langle x,z \rangle \in \varphi]$.
-               Tranzitívnosť\footnote{Pozn.: Axiómu môžeme uvádzať aj
+               \langle x,z \rangle \in \varphi]$ --
+               tranzitívnosť\footnote{Pozn.: Axiómu môžeme uvádzať aj
                v ekvivalentnom tvare
                 $(\forall x) (\forall y) (\forall z)
                 [ \langle x,y \rangle \in \varphi \implies (
@@ -300,7 +300,7 @@ Rovnosť je symetrická a tranzitívna.
                        predpokladov
                 \item $\provable A_x[t] \implies (x=t \implies A)$ --
                     MP na pravidlo zámeny predpokladov
-                \item $\provable A_x[y] \implies (\forall x)(x=t
+                \item $\provable A_x[t] \implies (\forall x)(x=t
                     \implies A)$ -- pravidlo zavedenia všeobecného
                     kvantifikátora
                 \end{itemize}
@@ -319,7 +319,7 @@ Rovnosť je symetrická a tranzitívna.
                 \item $\provable (t=t) \implies ((\forall x) ((x=t)
                     \implies A) \implies A_x[t])$ -- MP
 
-                \item $\provable t=t$ - axióma R1
+                \item $\provable t=t$ -- axióma R1
 
                 \item $\provable (\forall x) ((x=t)
                     \implies A) \implies A_x[t]$ -- MP

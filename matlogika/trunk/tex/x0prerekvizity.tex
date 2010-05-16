@@ -1,12 +1,12 @@
 \section{Prerekvizity a označenia}
 
-V tejto časti si zhrnieme najdôležitejšie označenia, pojmy, vety z
-prednášky Úvod do matematickej logiky.
+V tejto časti si zhrnieme najdôležitejšie označenia, pojmy a vety z
+prednášky ``Úvod do matematickej logiky''.
 
 \noindent Označenia:
 \begin{itemize}
     \item $\provable A$ -- formula $A$ je dokázateľná
-    \item $M \models A$ -- $M$ je modelom $A$
+    \item $\mathcal{M} \models A$ -- $\mathcal{M}$ je modelom $A$
     \item $\implies, \lequiv$ -- implikácia, ekvivalencia vo
     výrokovej/predikátovej logike
     \item $\Rightarrow, \Leftrightarrow$ -- implikácia a ekvivalencia v
@@ -15,14 +15,14 @@ prednášky Úvod do matematickej logiky.
 
 \noindent Axiómy:
 \begin{itemize}
-    \item[A1:] $(A \implies (B \implies A))$
-    \item[A2:] $((A \implies (B \implies C)) \implies 
-                ((A \implies B) \implies (A \implies C)))$
-    \item[A3:] $((\neg B \implies \neg A) \implies (A \implies B))$
-    \vskip 0.5cm
+    \item[A1:] $A \implies (B \implies A)$
+    \item[A2:] $(A \implies (B \implies C)) \implies 
+                [(A \implies B) \implies (A \implies C)]$
+    \item[A3:] $(\neg B \implies \neg A) \implies (A \implies B)$
+    \smallskip
     \item[A4:] $(\forall x) A \implies A_x[t]$
     \item[A5:] $(\forall x) (A \implies B) \implies (A \implies
-    (\forall x) B)$ ak $x$ nie je voľná v $A$.
+    (\forall x) B)\quad$ (ak $x$ nie je voľná v $A$)
 \end{itemize}
 
 \noindent Pravidlá:
@@ -38,11 +38,15 @@ prednášky Úvod do matematickej logiky.
 
 \begin{veta}[O dedukcii]
     \begin{equation*}
-        T \provable A \implies B \Leftrightarrow T,A \provable B
+        T \provable A \implies B \iff T,A \provable B
     \end{equation*}
+    Pozn.: V predikátovej logike ale musí na implikáciu $\Leftarrow$ 
+    navyše platiť, že na žiadnu voľnú premennú z formly $A$
+    nepoužijeme v dôkaze $T,A \provable B$ pravidlo zovšeobecnenia.
+    Špeciálne teda ekvivalencia platí v prípade, že $A$ je uzavretá.
 \end{veta}
 
-\begin{veta}[Postove vety a iné užitočné tvrdenia:]
+\begin{veta}[Postove vety a iné užitočné tvrdenia]
     \noindent
     \begin{itemize}
         \item $\provable A \implies A$

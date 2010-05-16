@@ -89,7 +89,7 @@ výsledok nazveme štandardnou skolemovskou formou.
 
 
 \begin{definicia}[Literál]
-    Premenná, alebo jej negácia.
+    Atóm (predikát), alebo jeho negácia.
 \end{definicia}
 
 \begin{definicia}[Klauzula]
@@ -120,12 +120,12 @@ výsledok nazveme štandardnou skolemovskou formou.
 
 \begin{priklad}
 %%% {{{
-    Uvažujme klauzulu $P \land Q \land \neg R$.\footnote{
+    Uvažujme formulu $P \land Q \land \neg R$.\footnote{
     Toman na tomto mieste píše $P \lor Q \lor \neg R$, som si však
-    takmer istý, že to má byť opačne.
+    takmer istý, že to pôvodne myslel opačne.
     }
     Ako vieme ju zapísať ako
-    množinu literálov v konjunkcii nasledovne
+    množinu klauzúl v konjunkcii nasledovne
     $\{P, Q, \neg R\}$.
     Podobne, pre štandardnú formu
     \begin{equation*}
@@ -254,19 +254,26 @@ výsledok nazveme štandardnou skolemovskou formou.
     %%% }}}
     \end{itemize}
 
-    Chceme ukázať, že ak pre všetky $x \in G$ platí $x \circ x \in G$,
+    Chceme ukázať, že ak pre všetky $x \in G$ platí $x \circ x = e$,
     potom je grupa komutatívna. Prvou časťou úlohy je formalizovanie zadania:
     Nech $P(x,y,z)$ označuje\footnote{ % o tom, ze to ma Toman zle
         %%% {{{
-        Na tomto mieste by som poznamenal, že to má Toman zle.
+        Na tomto mieste by som poznamenal, že to má Toman spravené
+        výrazne podifne.
         Totiž, nahradením funkcie predikátom sme stratili jednoznačnosť
         funkčnej hodnoty, teda, momentálne môže platiť
         $P(x,y,z) \land P(x,y,z') \land z \ne z'$. Jednoduchou
         interpretáciou, ktorá spĺňa všetky axiómy je napríklad
         $P \equiv true$ a evidentne takáto realizácia nie je teóriou grúp.
-        Riešenie je buď pridať piatu axiómu obmedzujúcu $P$ alebo naozaj
-        používať funkčný symbol namiesto predikátového. Každopádne, zvyšok
-        tohoto príkladu bude podľa Tomana.
+
+        Na druhej strane, spomínaná Tomanova teória je korektná.
+        Pointa tkvie v tom, že Tomanova teória {\it nemá}
+        predikát rovnosti (čo ruší naše argumenty). Mohlo by sa zdať,
+        že daná teória je potom akosi oklieštená, čo aj je.
+        Predikát rovnosti ``$a=b$'' sa ale formálne dá nahradiť predikátom
+        ``$P(a,e,b)$''. Takto definovaná ``rovnosť'' vyhovuje všetkým
+        axiómam rovnosti a navyše sa v nej nedá použiť protipríklad
+        uvedený vyššie. Teória je teda v poriadku.
         %%% }}}
     }
     $x \circ y = z$ a nech  $i(x) = x^{-1}$.
@@ -294,7 +301,7 @@ výsledok nazveme štandardnou skolemovskou formou.
     Späť k nášmu tvrdeniu. Chceme ukázať
     \begin{align*}
     %%% {{{
-        &(\forall x \in G : x \circ x \in G) \then
+        &(\forall x \in G : x \circ x =e) \then
             (\forall u,v \in G: u \circ v = v \circ u) \\
         B':\ & (\forall x) P(x,x,e) \implies  
             (\forall u) (\forall v) [P(u,v,w) \implies P(v,u,w)]
