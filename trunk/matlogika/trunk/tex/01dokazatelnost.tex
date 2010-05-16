@@ -4,9 +4,9 @@
 \begin{definicia}[Logická platnosť formuly]
 %%% {{{
     Nech $L$ je jazyk prvého rádu a $A$ je formula jazyka
-    $L$. Hovoríme, že formula $A$ je \emph{logicky platná},
+    $L$. Hovoríme, že formula $A$ je logicky platná,
     označujeme $\models A$,
-    ak je splnená v ľubovoľnej realizácii $m$ jazyka $L$.
+    ak je splnená v ľubovoľnej realizácii $\mathcal{M}$ jazyka $L$.
 
     \begin{align*}
         \mathcal{M} & \models A[e] \quad \forall \mathcal{M} \\
@@ -52,14 +52,16 @@
     Majme predikát $<$ na množine $\mathbb{N}$, tak, že platí
     \begin{itemize}
     \item[1.] $(\forall x)(\forall y) ((x < y) \implies \neg (y < x))$
-    - asymetrickosť
+        -- asymetrickosť
+
     \item[2.] $(\forall x)(\forall y)(\forall z) (((x<y) \land (y<z)) \implies
-        (x<z))$ - tranzitívnosť
-    \item[3.] $(\forall x)(\forall y)( (x\not=y) \implies ((x<y) \lor (y<x)))$ -
-     trichotomickosť
+        (x<z))$ -- tranzitívnosť
+
+    \item[3.] $(\forall x)(\forall y)( (x\not=y) \implies ((x<y) \lor (y<x)))$
+        -- trichotomickosť
     \end{itemize}
-    Ak sú splnené axiómy 1,2, tak daná množina je modelom čiastočného
-    usporiadania. Ak je
+    Ak sú splnené axiómy 1,2, tak daná množina je modelom 
+    {\it čiastočného} ostrého. usporiadania. Ak je
     navyše splnená aj axióma 3, množina tvorí teóriu ostrého
     usporiadania.
 %%% }}}    
@@ -70,7 +72,7 @@
     išlo o teóriu \emph{ne}ostrého usporiadania $\le$ a chýbajúca
     axióma bola
     \begin{equation*}
-        (\forall x)(\forall y) ((x=y) \implies (x \le y))
+        (\forall x) (x \le x)
     \end{equation*}
 \end{poznamka}
 
@@ -119,8 +121,8 @@
 
 \begin{priklad}[Teória grúp]
 %%% {{{
-    Špeciálne symboly sú $+$ (binárna operácia), $-$ (unárná operácia
-    -- inverzný prvok) a $0$ (konštanta).
+    Špeciálne symboly sú $+$ (binárna operácia), $-$ (unárna operácia
+    -- inverzný prvok) a $0$ (konštanta -- neutrálny prvok).
     Axiómy sú:
     \begin{enumerate}
             \item $((x+y)+z) = (x+(y+z))$ -- asociativita
@@ -144,7 +146,7 @@
     Nech $A_1, A_2, \ldots, A_n\equiv A$ je odvodenie (dôkaz) formuly $A$
     z predpokladov $T$ (v teórii $T$).
     Nech $\mathcal{M}$ nech je ľubovoľný model teórie $T$ 
-    (čiže platí $\mathcal{M} \models A$).
+    (čiže platí $\mathcal{M} \models T$).
     Ukážeme (indukciou podľa dĺžky dôkazu), že 
     ak platí $\forall j<i:\mathcal{M} \models A_j$,
     potom platí aj platí $\mathcal{M} \models A_i$
@@ -158,13 +160,13 @@
     \begin{enumerate}
         \item $A_i$ je axióma výrokovej logiky -- je poskladaná z
             atomických formúl a logických spojok $\neg$ a $\implies$. Potom
-            $A_i$ je tautológia výrokovej logiky (ak formula je tautológia,
-            jej pravdivostná hodnota nezávisi od ohodnotenia
+            $A_i$ je tautológia výrokovej logiky a ak je formula tautológia,
+            jej pravdivostná hodnota nezávisí od ohodnotenia
             premenných:
-            $\mathcal{M} \models A_i$, teda $\mathcal{M} \models A_i[e]$).
+            $\mathcal{M} \models A_i$, čiže $\mathcal{M} \models A_i[e]$.
 
         \item $A_i$ je axioma špecifikácie, teda je tvaru 
-            $A_i: (\forall x) B \implies B_x[t]$, 
+            $A_i: (\forall x) B \implies B_x[t]$, kde
             $t$ je substitúcia za $x$ do $B$. 
             Chceme ukázať, že formula bude pravdivá
             pri každom ohodnotení $e$.
@@ -194,7 +196,7 @@
             pozeráme na platnosť $(B \implies (\forall x)C)$.
             Posledná formula je ale ekvivalentná s $\neg B \lor (\forall x) C$.
             Dôležitý je tiež predpoklad, že $x$ nie je voľná v $B$,
-            a teda nezávisí od ohodnotenia viazanej premennej.
+            a teda $B$ nezávisí od jej ohodnotenia.
             Ak $B$ nie je pravdivá, tak disjunkcia je pravdivá a
             problém je vyriešený.
             Ak by $B$ bola pravdivá, tak by malo byť $(\forall x) C$
@@ -234,10 +236,10 @@
             korektnosti MP teda aj $T \models A_i$.
 
         \item Pravidlo zovšebecnenia: $A_i: (\forall x) A_j$.
-            Z IP platí $\models A_j \then
-                \mathcal{M} \models A_i[e(x/m)]$
+            Z IP platí $T \models A_j $ a teda 
+                $\mathcal{M} \models A_i[e(x/m)]$
             pre ľubovoľné indivíduum $m$. Tým pádom ale
-            $\models (\forall x) A_j$.
+            $T \models (\forall x) A_j$.
             
         \end{enumerate}
     \end{enumerate}
@@ -248,12 +250,12 @@
 \begin{priklad} % existencia nedokazatelnej formuly a jej negacie v el. ar.
 %%% {{{
     Uvažujme elementárnu aritmetiku, ktorá má svoj štandardný
-    model. Uvažujme formulu $x=0$ v $N$.
+    model $\mathcal{M}$. Uvažujme formulu $x=0$ v $N$.
     \begin{itemize}
         \item Nech $e(x) = m$ kde $m \neq 0$. Potom formula $A:x=0$ nie je
-        splnená pre ohodnotenie $e$ a teda $m \notmodels A[e]$.
+        splnená pre ohodnotenie $e$ a teda $\mathcal{M} \notmodels A[e]$.
         \item Nech $e(x) = 0$. Potom formula $A': \neg x=0$ nie je
-        splnená v ohodnotení $e$, t.j. $m \notmodels A'[e]$.
+        splnená v ohodnotení $e$, t.j. $\mathcal{M} \notmodels A'[e]$.
     \end{itemize}
     To ale znemaná, že formula $A$ ani jej negácia $A'$
     nie sú splniteľné (a teda dokázateľné) v elementárnej aritmetike.
@@ -284,7 +286,7 @@
     \end{align*}
     dostávame
     \begin{equation*}
-        m \notmodels (A \implies A')[e]
+        \mathcal{M} \notmodels (A \implies A')[e]
     \end{equation*}
     Dôležitým faktom je, že pri dôkaze sme totiž skryte použili
     pravidlo zovšeobecnenia na voľnú premennú $\then$ nemôžeme použiť
@@ -377,7 +379,7 @@ treba nájsť jej model. Dôkazy bezospornosti môžeme rozdeliť na 2 typy:
         Akoby sme dosadili špeciálny model $\mathcal{M}$, ktorého
         univerzum $M$ tvorí iba jediná hodnota -- konštanta $c$.
         Teda, ak pôvodná formula bola dokázateľná $\then$ platí v
-        každom modeli, teda špeciálne aj našom. Lenže n našom modeli
+        každom modeli, teda špeciálne aj našom. Lenže v našom modeli
         sa interpretuje ako $\neg (c=c)$ a teda nemohla byť
         dokázateľná.
     }

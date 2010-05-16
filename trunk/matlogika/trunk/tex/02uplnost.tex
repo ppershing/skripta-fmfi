@@ -102,8 +102,8 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
 \begin{definicia}[Úplná teória]
 %%% {{{
     Hovoríme, že teória $T$ s jazykom $L$ je úplná, ak $T$ je
-    bezosporná teória a pre ľubovoľnú uzavretú formulu $A$ na jazyku
-    $L$ buď $A$ alebo $\neg A$ je dokázateľná v $T$.
+    bezosporná teória a pre ľubovoľnú {\tt uzavretú} formulu $A$ na jazyku
+    $L$ platí, že buď $A$ alebo $\neg A$ je dokázateľná v $T$.
 %%% }}}
 \end{definicia}
 
@@ -239,7 +239,7 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
             jedna možnosť. Tým sme ale ukázali, že
             $\mathcal{M} \models A \iff T \provable A$.
 
-        \item $A: B \implies C$. Ma formuly $B,C$ sa vzťahuje IP.
+        \item $A: B \implies C$. Na formuly $B,C$ sa vzťahuje IP.
             Rozoberme si obe implikácie tvrdenia
             $\mathcal{M} \models B \implies C \iff
              T \provable B \implies C$.
@@ -298,11 +298,12 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
             \begin{itemize}
             \item Platí $T\provable A$.
                 Teda, $T \provable (\forall x) B$.
-                Ďalej platí $\provable (\forall x) B \implies B_x[c]$
+                Ďalej platí pre ľubovoľnú konštantu $c$,
+                že je dokázateľné $\provable (\forall x) B \implies B_x[c]$
                 -- axióma špecifikácie.
                 Potom aj $T \provable B_x[c]$ (MP na axiómu
                 špecifikácie). Lenže z IP dostávame
-                $\mathcal{M} \models B_x[c] \then 
+                $\forall c: \mathcal{M} \models B_x[c] \then 
                  \mathcal{M} \models (\forall x) B$.
             \smallskip
             \item Platí $T \provable \neg A$. Vtedy
@@ -310,7 +311,7 @@ G\"odelova veta, ktorú si teraz vyslovíme a dokážeme, má 2 varianty.
                 Henkinovská, platí tiež 
                 $T \provable (\exists x) \neg B \implies \neg B_x[c]$.
                 Pomocou MP odvodíme
-                $T \provable \neg B_x[c]$. Potobne ako v
+                $T \provable \neg B_x[c]$. Podobne ako v
                 predchádzajúcom prípade máme
                 $\mathcal{M} \models \neg B_x[c] \then
                  \mathcal{M} \not \models A$ (formula $B_x[c]$ je

@@ -41,14 +41,14 @@ neuberú sile teórii.
     \end{itemize}
 
     Ak si vezmeme relačnú štruktúru 
-    $\mathcal{M}=\langle \mathbb{N}_0,0,+ \rangle$,
+    $\mathcal{M}=\langle \mathbb{N}_0,0,+,- \rangle$,
     táto realizuje jazyk teórie grúp.
     Nie je však jej modelom (lebo nie všetky axiómy sú splnené, menovite
     napríklad inverzné prvky).
-    Pokiaľ ale vezmeme $\mathcal{M}=\langle \mathbb{Z},0,+ \rangle$,
+    Pokiaľ ale vezmeme $\mathcal{M}=\langle \mathbb{Z},0,+,- \rangle$,
     táto množina je realizáciou a zároveň aj modelom teórie grúp.  
 
-    Teraz si zoberme jazyk $L = \{0,1,+,*\}$
+    Teraz si zoberme jazyk $L = \{0,1,+,-,*, ^{-1}\}$
     a uvažujme postupne nasledujúce teórie:
     \begin{enumerate}
     \item teória grúp
@@ -164,7 +164,7 @@ neuberú sile teórii.
     \begin{itemize}
     \item
         Nech platí, že v $T_H$ je dokázateľná formula $A$
-        a nech $B_1, B_2, \dots, B_n$ sú všetky Hankinovské
+        a nech $B_1, B_2, \dots, B_n$ sú všetky Henkinovské
         axiómy vyskytujúce sa v dôkaze $A$. Keďže dôkaz je konečný, týchto
         axióm je konečný počet. Ďalej môžeme uvažovať (ako sme už ukázali),
         že všetky axiómy $B_1, \ldots, B_n$ sú typu $H1$.
@@ -190,7 +190,7 @@ neuberú sile teórii.
     ``hlavnú'' konštantu inú).
     Teda $B_1$ je tvaru $(\exists x) D \implies D_x[c_D]$,
     pričom $c_D$ nie je je použitá
-    v $B_2, \ldots, B_n$. 
+    v $A,B_2,B_3, \ldots, B_n$. 
     \begin{equation*}
         T \provable \highlighta{((\exists x) D \implies D_x[c_D])} \implies 
             \highlightc{[B_2 \implies \ldots \implies B_n \implies A]}
@@ -263,7 +263,7 @@ neuberú sile teórii.
     $\mathcal{B} = \{ S \mid S \subseteq \mathscr{S}, T \union S
         \mbox{ je bezosporná}\}$.
     Množina $\mathcal{B}$ je čiastočne usporiadaná vzhľadom na
-    inklúziu a má 
+    inklúziu a (ako si neskôr ukážeme) má 
     takzvanú konečnú vlastnosť -- keď zoberieme ľubovoľnú podmnožinu
     $S \subseteq \mathscr{S}$, bude platiť
     \begin{equation*}
@@ -340,7 +340,7 @@ neuberú sile teórii.
 \end{dokaz}
 
 \begin{lema}[Princíp maximality]
-    Každá neprázdna neprázdna podmnožina potenčnej množiny
+    Každá neprázdna podmnožina potenčnej množiny
     $\mathcal{P}(\mathscr{S})$ s konečnou vlastnosťou 
     má maximálny prvok vzhľadom na inklúziu.
 \end{lema}
