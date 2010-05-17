@@ -302,12 +302,12 @@ Môžu nastať dva prípady:
 \begin{dokaz}
 %%% {{{
     Máme $S'$, ktoré vzniklo vynechaním klauzúl obsahujúcich $L$ z $S$.
-    Ak $S'=\emptyset$, každá klauzula z $S$ obsahuje $L$ 
-    (je tvaru $L \lor \eps$).
+    Ak $S'=\emptyset$, každá klauzula z $S$ obsahuje $L$ v disjunkcii
+    (špeciálne $L$ je tvaru $L \lor \eps$).
     Stačí nám ohodnotenie, kedy $L$ je pravdivé, čo zabezpečí
     pravdivosť celého výroku. 
 
-    Keď $S'$ nie je prázdna, vytvoríme $S''$.,
+    Keď $S'$ nie je prázdna, vytvoríme $S''$.
     Ideme ukázať, že $S''$ nie je splniteľná práve vtedy,
     keď $S$ nie je splniteľná.
 
@@ -363,9 +363,10 @@ Tvrdíme, že $S$ nie je splniteľná $\iff$ $S'$ nie je splniteľná.
 Predpokladame, že množinu $S$ vieme vyjadriť v tvare
 \begin{equation*}
     (A_1 \lor L) \land \ldots \land (A_m \lor L) \quad \land \quad
-    (B_1 \lor \neg L) \land \ldots \land (B_n \lor \neg L) \land R
+    (B_1 \lor \neg L) \land \ldots \land (B_n \lor \neg L) 
+    \quad \land \quad R
 \end{equation*}
-pričom $A_i, B_i$ neobsahujú $L$ ani $\neg L$.
+pričom $A_i, B_i, R$ neobsahujú $L$ ani $\neg L$.
 Označme si množiny
 \begin{align*}
     S_1 &= A_1 \land A_2 \land \ldots \land A_m \land R \\
