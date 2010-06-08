@@ -26,13 +26,13 @@ generovaniu krivky dostatočnú pozornosť.
 
 \begin{definicia}[Eliptická krivka]
     Pod eliptickou krivkou nad poľom $F$ budeme označovať množinu
-    všetkých takých bodov, ktoré vyhovujú rovnici
+    všetkých takých bodov $(x,y)$, ktoré vyhovujú rovnici
     \begin{equation*}
         x^3 + A x + B = y^2
     \end{equation*}
     kde $A,B$ sú vopred zvolené konštanty.
     Pre body $(x,y)$ si zavedieme grupovú operáciu sčítania ``+''
-    a neutrálny prvok $\mathbf{0}$
+    a taktiež pridáme neutrálny prvok $\mathbf{0}$
     ktorý bude predstavovať bod v nekonečne.
 \end{definicia}
 
@@ -66,15 +66,15 @@ Z koeficientu pred $x^2$ dostávame $b=-2a$ a teda
 \begin{equation*}
     4 A^3 + 27 B^2 = 0
 \end{equation*}
-Pri generovaní kriviek budeme teda musieť otestovať túto rovnice a v
+Pri generovaní kriviek budeme teda musieť otestovať túto rovnicu a v
 prípade rovnosti generovať novú krivku.
 
 Poďme ale späť k sčítavaniu
 \begin{definicia}[Sčítanie bodov eliptickej krivky]
     Majme body $P=[x_1,y_1]$ a $Q=[x_2,y_2]$.\footnote{Body
         eliptických kriviek zvykneme označovať veľkými písmenami}
-    Nech $P \ne -Q$, kde znamienkom ``-'' budeme označovať
-    bod $(x,-y)$ (Prípad $P = -Q$ definujeme ako $P+Q=\mathbf{0}$).
+    Nech $P \ne -Q$, kde unárnou operáciou ``$-$'' nad bodom
+    $(x,y)$ budeme označovať bod $(x,-y)$.
     Potom operáciu sčítania $P+Q$ definujeme nasledovne:
 
     \begin{equation*}
@@ -89,10 +89,11 @@ Poďme ale späť k sčítavaniu
                 (3 x_1^2 + A)(2 y_1)^{-1} \quad & P = Q
             \end{cases}
     \end{equation*}
+    Sčítanie pre prípad $P = -Q$ definujeme ako $P+Q=\mathbf{0}$.
 \end{definicia}
 
 Budeme tvrdiť, že množina bodov $\{(x,y)\} \union \mathbf{0}$
-eliptickej krivky spolu s operáciu ``+'' bude tvoriť grupu. Toto
+eliptickej krivky spolu s operáciu ``$+$'' bude tvoriť grupu. Toto
 netriviálne algebraické tvrdenie prenecháme na neveriaceho
 čitateľa. Ak teda zoberieme ako $F$ nejaké konečné
 pole, dostávame konečnú grupu.
@@ -215,10 +216,8 @@ postupne preberali možné parametre $B$ a $p$.
     izomorfizmus je, na druhej strane je dostatočne komplikovaný.
 \end{poznamka}
 
-
 Teraz si predstavíme algoritmus ECDSA určený na digitálne podpisovanie
 správ.
-
 Začneme parametrami, ktoré sa zvyknú uvádzať v tabuľkách eliptických
 kriviek:
 \begin{itemize}
@@ -305,7 +304,7 @@ volaním funkcie \ref{proc:signecdsa}.
             $\langle x_1, y_1 \rangle = k * G$ \;
             $r \assign x_1 \pmod{n}$ \;
         }
-        $s \assign k^{-1}(\mbox{SHA-1}(m) + d*r) \pmod{n}$ \;
+        $s \assign k^{-1}(\mbox{SHA-1}(m) + d\cdot r) \pmod{n}$ \;
     }
     \Return{$\langle r,s \rangle$}\;
 \end{procedure}
@@ -326,8 +325,8 @@ algoritmu a je popísané vo funkcii \ref{proc:verifyecdsa}.
     \label{proc:verifyecdsa}
     \lIf{$(r \not \in \{1, \dots, n-1\} \lor
            s \not \in \{1, \dots, n-1\})$}{reject}\;
-    $u_1 \assign \mbox{SHA-1}(m) s^{-1}\pmod{n}$ \;
-    $u_2 \assign r s^{-1} \pmod{n}$ \;
+    $u_1 \assign \mbox{SHA-1}(m) \cdot s^{-1} \pmod{n}$ \;
+    $u_2 \assign r \cdot s^{-1} \pmod{n}$ \;
     $X \assign u_1 * G + u_2 * Q$ \;
     \lIf{$(X=\mathbf{0})$}{reject\;}
     $ \langle x_1, y_1 \rangle \assign X$ \;
@@ -364,7 +363,7 @@ krivkách, vrelo mu odporúčame pozrieť sa na \cite{ecdsa}.
     krivkách. Má to ale drobný háčik.
     Ako si čitateľ iste všimol, pri podpisovaní nepotrebujeme
     žiadnym spôsobom vedieť prevádzať správu resp. jej hash na body
-    eliptickej krivky, všetky výpočty (až na násobenie body krivky
+    eliptickej krivky, všetky výpočty (až na násobenie bodu krivky
     číslom) sa dejú v $Z_n$. Pri šifrovaní ElGamalom 
     je ale situácia odlišná -- potrebujeme vedieť efektívne prevádzať
     medzi bodmi krivky a bitovými reťazcami. Existujú algoritmy, ktoré
@@ -416,7 +415,7 @@ $sk=d \inr \{1,\dots,n-1\}$ a $pk=Q=d*G$.
 
 Teraz trochu pouvažujeme nad tým, ako čo najviac zefektívniť prácu na
 eliptických krivkách. Uvažujme napríklad výpočet $15*G$ štandardnou
-exponenciáciou(v našom prípade ale neumocňujeme, iba násobíme):
+exponenciáciou (v našom prípade ale neumocňujeme, iba násobíme):
 $15*G = 8*G + 4*G + 2*G + G$. Tento zápis vieme ale spraviť aj
 efektívnejšie : $15*G = 16*G - G$. V prvom rade si môžeme všimnúť, že
 sme pridali jedno sčítanie $16*G = 8*G + 8*G$, ušetrili sme ale dve
@@ -430,7 +429,7 @@ tým veľmi veľa nenarobíme, lebo existuje iba jedna reprezentácia
 ``$-1$'' a skúsiť použiť číselnú sústavu s ciframi $0,1,-1$.
 
 \begin{definicia}[NAF -- Non Adjacent Form]
-    Uvažujme reprezentáciu čísla v $0,1,-1$ kovej sústave.
+    Uvažujme reprezentáciu čísla v $\{0,1,-1\}$-kovej sústave.
     Túto reprezentáciu budeme nazývať Non Adjacent Form, ak každé dve
     nenulové cifry budú oddelené aspoň jednou nulovou.
 \end{definicia}
@@ -439,11 +438,11 @@ tým veľmi veľa nenarobíme, lebo existuje iba jedna reprezentácia
     Uvažujme nasledujúce zápisy čísla 7:
     \begin{align*}
         (0\ 1\ 1\ 1)_2 &= 4+2+1=7 \\
-        (1\ 0\ -1\ 1)_2 &= 8-2+1=7 \\
-        (1\ -1\ 1 1)_2 &= 8-4+2+1=7 \\
-        (1\ 0\ 0\ -1)_2 &= 8-1=7
+        (1\ 0\ {-1}\ 1)_2 &= 8-2+1=7 \\
+        (1\ {-1}\ 1\ 1)_2 &= 8-4+2+1=7 \\
+        (1\ 0\ 0\ {-1})_2 &= 8-1=7
     \end{align*}
-    Z týchto zápisoj je NAF iba posledný.
+    Z týchto zápisov je NAF iba posledný.
 \end{priklad}
 
 \begin{poznamka}

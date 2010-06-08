@@ -25,7 +25,7 @@ $(k,g^{kt})$ pre $k=0,1,\dots,\lfloor n/t \rfloor t$.
 Táto časť algoritmu trvá $O(t)$, teda $O(\sqrt{n})$, potrebná pamäť je
 tiež $O(t)=O(\sqrt{n})$.
 
-Po tomtp predpočítaní môžeme pokračovať malými krokmi.
+Po tomto predpočítaní môžeme pokračovať malými krokmi.
 Počítajme postupne hodnoty $y g^0,yg,yg^2,\dots, yg^{t-1}$ a pozeráme sa,
 či niektorá z týchto hodnôt sa nenachádza v zapamätanej tabuľke.
 Grafické znázornenie činnosti celého algoritmu je na obrázku
@@ -37,8 +37,8 @@ Grafické znázornenie činnosti celého algoritmu je na obrázku
     \caption{Kroky v baby-step/giant-step algoritme}
 \end{figure}
 
-Zložitosť druhého kroku je maximálne $t$ krát tabuľkový lookup, pretože
-najneskôr o $t$ hodnôt narazíme na nejakú hodnotu, ktorá už v tabuľke bude.
+Zložitosť druhého kroku je maximálne $n/t$-krát tabuľkový lookup, pretože
+najneskôr o $n/t$ hodnôt narazíme na nejakú hodnotu, ktorá už v tabuľke bude.
 Dokopy teda po oboch krokoch nájdeme diskrétny logaritmus
 v čase $O(\sqrt{n})$ a pamäti $O(\sqrt{n})$.
 
@@ -49,12 +49,12 @@ Podobne ako pri faktorizácii sa budeme snažiť nájsť nejakú funkciu, ktorá
 by sa správala ako čo najlepšie náhodné zobrazenie. Pri takejto funkcii
 potom môžeme očakávať nájdenie cyklu/kolízie v čase $O(\sqrt{n})$.
 
-Zvoľme si $x_0 = g^{a_0} y^{b_0}$ kde $a_0,b_0 \inr Z_{n-1}$.
-$x_0$ bude začiatočný prvok postupnosti. Na ``znáhodnenie'' našej funkcie
-si grupu $G$ rozdelíme na 3 disjunktné množiny:
+Zvoľme si $x_0 = g^{a_0} y^{b_0}$ kde $a_0,b_0 \inr Z_{n-1}$. Hodnota
+$x_0$ bude začiatočný prvok postupnosti, ktorú budeme generovať.
+Na ``znáhodnenie'' našej funkcie si grupu $G$ rozdelíme na 3 disjunktné množiny:
 $G=S_1 \union S_2 \union  S_3$.
 
-Potom môžeme uvažovať nasledujúcu funkciu $f$:
+Uvažujme teraz nasledujúcu funkciu $f$:
 \begin{equation*}
     x_{i+1} = f(x_i) =
         \begin{cases}
@@ -64,7 +64,7 @@ Potom môžeme uvažovať nasledujúcu funkciu $f$:
         \end{cases}
 \end{equation*}
 Je dôležité, že vďaka operáciam, ktoré sme zvolili, vieme vypočítať aj
-"rozklad" $x_{i+1}$ nasledovne:
+"rozklad"\footnote{Ten totiž budeme potrebovať} $x_{i+1}$ nasledovne:
 
 \begin{equation*}
     (a_{i+1},b_{i+1}) =
@@ -86,9 +86,9 @@ hľadanie cyklov spomínaných v kapitole o faktorizácii.
 
 Ak nájdeme kolíziu, dostávame
 \begin{align*}
-    g^{a_i} y^{b_i} &= g^{a_j} y^{b_j} \\
-    y^{b_i-b_j} &= g^{a_j-a_i} \\
-    x &=(a_j - a_i)(b_i-b_j)^{-1} \pmod n
+    g^{a_i} y^{b_i} &\equiv g^{a_j} y^{b_j} \pmod n\\
+    y^{b_i-b_j} &\equiv g^{a_j-a_i} \pmod n\\
+    x &\equiv(a_j - a_i)(b_i-b_j)^{-1} \pmod n
 \end{align*}
 a teda vieme $x$ vypočítať.
 
@@ -106,7 +106,7 @@ $n=p_1^{m_1} \dots p_k^{n_k}$
 
 \subsection{Index calculus}
 Narozdiel od predchádzajúcich algoritmov, tento algoritmus nie je
-všeobecný. Dá sa použiť napríklad $(Z_p^*,\cdot), GF(2^m)$.
+všeobecný. Dá sa použiť napríklad pre grupy $(Z_p^*,\cdot), GF(2^m)$.
 V prípade eliptických kriviek sa nedá použiť. Tento jeho hendikep
 ale kompenzuje jeho časová zložitosť, ktorá je subexponenciálna.
 
@@ -121,13 +121,13 @@ Položme $a \inr Z_{p-1}$.
 Našou snahou bude rozložiť $g^a$ nad bázou $B$, teda nájsť hodnoty
 $e_1,\dots,e_b$ také, že $g^a \mod p = p_1^{e_1} p_2^{e_2} \dots
 p_b^{e_b}$.
-Našou ambíciou je nazbierať čo najviac takýchto závislostí, optimálne
+Cieľom je nazbierať čo najviac takýchto závislostí, optimálne
 $b+1$. Ak totiž zlogaritmujeme dané rovnosti, dostaneme sústavu
 lineárnych rovníc.
 $a=e_1 \dlog_g p_1 + e_2 \dlog_g p_2 + \dots + e_b \dlog_g p_b \pmod{p-1}$.
 V tejto sústave sú neznáme $\dlog_g p_1, \dlog_g p_2, \dots, \dlog_g p_b$.
 
-Ak sme úspešne zvládly tento predvýpočet, môžeme skúšať počítať dlog y
+Ak sme úspešne zvládli tento predvýpočet, môžeme skúšať počítať $\dlog y$
 nasledovne.
 Zvolíme si $b\inr Z_{p-1}$ a skúšame, či vieme hodnotu
 $y g^a = p_1 ^ {e_1} \dots p_b ^ {e_b}$. Tým pádom

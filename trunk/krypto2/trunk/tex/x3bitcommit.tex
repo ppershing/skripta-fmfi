@@ -9,10 +9,12 @@ a následne po istom čase ho odhalí. Formálne to môžeme definovať takto:
     ktorú vieme ``ľahko'' počítať.
     Od $f$ požadujeme navyše ešte tieto vlastnosti:
     \begin{itemize}
-    \item Zo znalosti $f(b,x)$ je ťažké určiť $b$ -- vlastnosť utajenia.
+    \item \emph{vlastnosť utajenia} --
+        Zo znalosti $f(b,x)$ je ťažké určiť $b$.
 
-    \item Je ťažké nájsť $x, y$ také, že $x \neq y$ a 
-            $f(0,x) = f(1,y)$ -- vlastnosť záväznosti.
+    \item \emph{vlastnosť záväznosti} --
+        Je ťažké nájsť $x, y$ také, že $x \neq y$ a 
+            $f(0,x) = f(1,y)$.
     \end{itemize}
 
     Potom bit commitment protokol vyzerá nasledovne:
@@ -26,12 +28,13 @@ a následne po istom čase ho odhalí. Formálne to môžeme definovať takto:
     \end{enumerate}
 \end{definicia}
 
-Tento protokol môžeme realizovať viacerými spôsobmi. 
+\noindent
+Tento protokol môžeme realizovať viacerými spôsobmi:
 
 \subsection{Bit commitment pomocou RSA}
 
 Majme nejakú inštanciu RSA systému, teda trojicu $(n,e,d)$,
-kde účastník $b$ nepozná súkromný kľúč.
+kde účastník $B$ nepozná súkromný kľúč.
 Bit commitment realizujeme nasledovne:
 \begin{enumerate}
     \item Záväzok: $A$ si zvolí $x \inr \mathbb{Z}_n^*$, také, že
@@ -59,7 +62,8 @@ V tomto prípade ide o nepodmienenú bezpečnosť.
 
 \subsection{Bit commitment pomocou diskrétneho logaritmu}
 Majme konečnú grupu $G$ a jej prvky $g, h \in G$,
-pričom v tejto grupe nevieme efektívne rátať diskrétny logaritmus. Zároveň
+pričom v tejto grupe nevieme efektívne počítať diskrétny logaritmus.
+Zároveň predpokladáme, že
 nevieme diskrétny logaritmus $h$ pri základe $g$.
 Realizácia funkcie $f(b,x)$ bude nasledovná: 
 \begin{equation*}
@@ -71,6 +75,8 @@ lebo existujú $x, y$ také, že: $g^x = g^y h$
 a teda nevieme jednoznačne určiť $b$ zo znalosti $f(b,x)$.
 Vlastnosť záväznosti výplýva z toho, že nepoznáme
 diskrétny logaritmus $h$ pri základe $g$.
+
+\todo{BC pomocou kvadratických rezíduí}
 
 \subsubsection{Nepodmienená bezpečnosť a záväznosť}
 Môžeme si všimnúť, že sme vedeli dosiahnúť pri jednej vlastnosti 

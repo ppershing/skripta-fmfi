@@ -41,7 +41,7 @@ Jednoduchým riešením je napríklad použiť hashovanie na každý prvok
 postupnosti $x_i$. Praktický problém, ku ktorému ale narážame je
 pamäť, ktorá by musela byť $\Theta(\sqrt{n})$, čo je v dnešnej dobe
 limitujúci faktor. Existujú však aj metódy na hľadanie cyklov,
-ktoré používajú konštantńu pamäť.
+ktoré používajú konštantnú pamäť.
 
 \subsubsection{Metódy na hľadanie cyklov}
 
@@ -55,9 +55,9 @@ $(x_1,x_2),\ (x_2,x_4),\ (x_3,x_6),\ (x_4,x_8),\ \dots$.
 Jej funkčnosť dokážeme nasledovne: Predpokladajme, že v aktuálnom
 kroku algoritmu máme prvky $x_i, x_{j=2i}$. Ďalej redpokladajme,
 že oba tieto prvky ležia v cykle, ktorého dĺžka je $\lambda$.
-Ak by platilo $i = j \pmod{\lambda}$, tak nutne platí $x_i = x_j$.
+Ak by platilo $i \equiv j \pmod{\lambda}$, tak nutne platí $x_i = x_j$.
 Uvažujme teda, že rovnosť nenastáva. V tom prípade ale platí 
-$j-i = i \pmod{\lambda}$. Na začiatku je táto hodnota 0 
+$j-i \equiv i \pmod{\lambda}$. Na začiatku je táto hodnota 0 
 a každým krokom algoritmu vzrastie o 1. Čiže,
 najneskôr o $\lambda$ krokov bude $j-i \equiv 0 \pmod{\lambda}$.
 Preto môžeme časovú zložitosť algoritmu ohraničiť ako $O(\mu+\lambda)$.

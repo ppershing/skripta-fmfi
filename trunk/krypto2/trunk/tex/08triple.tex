@@ -1,6 +1,6 @@
 \section{Bezpečnosť trojitého šifrovania}
 
-Uvažujme trojetí šifrovanie pomocou dvoch kľúčov v EDE móde.
+Uvažujme trojité šifrovanie pomocou dvoch kľúčov v EDE móde.
 Čiže $TE_{k_1,k_2} (x) = E_{k_1}(D_{k_2}(E_{k_1}(x)))$.
 Predpokladajme, že oba kľúče $k_1, k_2$ majú rovnakú veľkosť a to
 menovite $n$.
@@ -12,9 +12,10 @@ CPA -- útokom s možnosťou voľby šifrového textu.
 Jeden taký možný útok si ukážeme:
 \begin{itemize}
     \item Predpripravme si hashovaciu tabuľku
-            $\langle m \mapsto \{k^{(1)}, k^{(2)}, \dots \} \rangle$,
-            kde správe $m$ priradíme také hodnoty kľúčov $k^{(i)}$,
-            aby platilo $E_{k^{(i)}}(m)=0$.
+        $\langle m \mapsto \{k^{(1)}, k^{(2)}, \dots \} \rangle$,
+        kde správe $m$ priradíme také hodnoty kľúčov $k^{(i)}$,
+        aby platilo $E_{k^{(i)}}(m)=0$. Táto tabuľka nám bude slúžiť
+        na hľadanie kľúčov $k_2$.
         Tabuľku môžeme predpripraviť napríklad tak, že pre každý možný
         kľúč $k$ vypočítame $m=D_k(0)$. Predpríprava bude zaberať čas
         $O(2^n)$.
