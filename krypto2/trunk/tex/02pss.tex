@@ -2,12 +2,12 @@
 
 PSS je dokázateľne bezpečná (za istých predpokladov) schéma na
 digitálne podpisy. Navrhli ju páni Mihir Bellare a Philip Rogaway
-v \cite{pss}. Celá schéma je vlastne akýmsi znáhodnením hashovania -- k
-správe sa pridá náhodný reťazec dĺžky $k_0$ a hash sa počíta až
-potom. Samozrejme, pri overovaní hashu treba nejakým spôsobom
+v \cite{pss}. Celá schéma je vlastne akýmsi znáhodnením hašovania -- k
+správe sa pridá náhodný reťazec dĺžky $l_0$ a haš sa počíta až
+potom. Samozrejme, pri overovaní hašu treba nejakým spôsobom
 vyriešiť, aby sme sa dozvedeli použitý náhodný reťazec. Ako sa ukáže
 neskôr, toto nie je až taký veľký problém ak použijeme ďalšiu
-hashovaciu funkciu.
+hašovaciu funkciu.
 
 PSS má oproti doteraz spomínaným schémam jednu veľkú výhodu -- pri
 dôkaze jej bezpečnosti sa ukáže ``tesná'' hranica. T.j., možnosť
@@ -17,20 +17,27 @@ rovnakou pravdepodobnosťou.
 
 \subsubsection{RSA-PSS}
 
-Podpisová schéma $PSS[k_0,k_1]=\langle GenPSS,SignPSS,VerifyPSS\rangle$ je
-parametrizovaná dvoma hodnotami $k_0, k_1$.
-Generovanie kľúča $k$ je presne rovnaké ako v $GenRSA\mbox{-}FDH$.
+Podpisová schéma $PSS[l_0,l_1]=\langle GenPSS,SignPSS,VerifyPSS\rangle$ je
+schéma s kľúčom dĺžky $k$ parametrizovaná dvoma hodnotami $k_0, k_1$.
+Generovanie kľúča dĺžky $k$ je presne rovnaké ako v $GenRSA\mbox{-}FDH$.
 
-Pri podpisovaní bude náš algoritmus používať dve hashovacie funkcie.
+Pri podpisovaní bude náš algoritmus používať dve hašovacie funkcie.
 Prvú si označíme $h$ a nazveme ju kompresor, pretože bude skracovat
 správu, $h:\{0,1\}^* \rightarrow \{0,1\}^{k_1}$.
 Druhá funkcia bude $g$ (nazvaná aj generátor), pričom
 $g:\{0,1\}^{k_1} \rightarrow \{0,1\}^{k-k_1-1}$.
 
 Ešte si označíme $g_1$, resp. $g_2$ ako funkciu, ktorá vracia
-prvých $k_0$ (resp. zvyšných $k-k_0-k_1-1$) bitov funkcie $g$.
+prvých $l_0$ (resp. zvyšných $k-k_0-k_1-1$) bitov funkcie $g$.
 
-Na obrázku \todo{} je schematicky naznačený postup podpisovania
+\begin{figure}[h]
+    \centering
+    \includegraphics{img/02/pss.1.mps}
+    \caption{Postup podpisovania v schéme PSS}
+    \label{fig:pss}
+
+\end{figure}
+Na obrázku \ref{fig:pss} je schematicky naznačený postup podpisovania
 podľa pseudokódu \ref{proc:signpss}
 
 % {{{ proc SignPSS
@@ -46,7 +53,8 @@ podľa pseudokódu \ref{proc:signpss}
 %% }}}
 
 Môžeme si všimnúť, že náhodný reťazec $r$ sme neuviedli v
-``otvorenom'' tvare, ale zviazali sme ho funkciou $g_1$. Intuitívne,
+``otvorenom'' tvare, ale zviazali sme ho (prexorovaním) funkciou $g_1$. 
+Intuitívne,
 toto nám umožní zaručiť jeho integritu a zároveň máme možnosť ho
 zrekonštruovať.
 

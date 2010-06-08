@@ -2,7 +2,7 @@
 
 Asymetrické kryptovacie systémy, ktoré veľmi dobre poznáme, vyžadujú,
 aby si každý vygeneroval vlastnú inštanciu danej schémy. Problém pri
-takomto riešení je distribúcia verejného kľúča. Ak nemám dostatočne
+takomto riešení je distribúcia verejného kľúča. Ak nemáme dostatočne
 dôveryhodný kanál na distribúciu môjho verejného kľúča, útočník si
 môže pripraviť vlastný kľúč a presvedčiť obeť o tom, že je to môj
 kľúč. Navyše, existujú isté ťažkosti s udržiavaním verejných kľúčov a
@@ -19,7 +19,7 @@ Ako si to teda môžeme predstaviť? Nebudeme generovať inštanciu schémy,
 ale uvažujme rovno, že mojím kľúčom bude priamo moja identifikácia -
 či už email, OpenID konto a pod.
 
-Na pomoc si ale budeme musieť prizvať dôveryhodnú tretiu stranu $T$.
+Na pomoc si ale budeme musieť prizvať dôveryhodnú tretiu stranu $M$.
 Táto strana bude mať 2 kľúče master public key $M_{pk}$ a master
 secret key $M_{sk}$. Túto tretiu stranu budeme potrebovať, aby nám
 vygenerovala náš súkromný kľúč k môjmu verejnému kľúču (kontu).
@@ -69,7 +69,8 @@ Schéma pre dôveryhodnú tretiu stranu bude nasledovná
 \end{itemize}
 
 Najskôr by sme si mali overiť, že vieme ľahko vytvoriť dobrú
-hashovaciu funkciu. Uvažujme $h:\{0,1\}^* \mapsto Z_n$.
+hashovaciu funkciu. Uvažujme, že máme kvalitnú hašovaciu funkciu
+$h:\{0,1\}^* \mapsto Z_n$.
 Potom túto funkciu vieme veľmi jednoducho transformovať, aby išla do
 zúženého definičného oboru nasledovným spôsobom.
 
@@ -123,7 +124,7 @@ Dešifrovanie:
 \begin{poznamka}
     Ako sa o chvíľu ukáže, naša dešifrovacia funkcia
     nebude formálne fungovať ako $D(c,U_{sk}, M_{pk})$.
-    Čitateľovi, ktorý sa nechce zahrať hru ``nájdi 5 rozdielov''
+    Čitateľovi, ktorému sa nechce zahrať hru ``nájdi 5 rozdielov''
     môžeme zahintiť, že na dešifrovanie bude potrebovať aj identitu
     účastníka, za ktorého to dešifruje, resp. presnejšie povedané bude
     potrebovať verejný kľúč $U_{pk}$ ktorý sa dá získať ako hash
@@ -140,7 +141,7 @@ Budeme rozlišovať 2 prípady (a práve na to potrebujeme aj verejný kľúč):
             \jacobi{t_1 + U_{pk} t_1^{-1} + 2 U_{sk}}{n} =
             \jacobi{t_1 + U_{sk}^2 t_1^{-1} + 2 U_{sk}}{n} \\
             &=
-            \jacobi{t_1(1 + U_{sk}^2 t_1^{-1} + 2 t_1{-1} U_{sk})}{n} =
+            \jacobi{t_1(1 + U_{sk}^2 t_1^{-2} + 2 t_1^{-1} U_{sk})}{n} =
             \jacobi{t_1(1+U_{sk}t_1^{-1})^2}{n}  \\
             &=
             \jacobi{t_1}{n} \cdot \jacobi{(1+U_{sk}t_1^{-1})^2}{n}=
@@ -155,7 +156,7 @@ Budeme rozlišovať 2 prípady (a práve na to potrebujeme aj verejný kľúč):
             \jacobi{t_2 - U_{pk} t_2^{-1} + 2 U_{sk}}{n} =
             \jacobi{t_2 + U_{sk}^2 t_2^{-1} + 2 U_{sk}}{n} \\
             &=
-            \jacobi{t_2(1 + U_{sk}^2 t_2^{-1} + 2 t_2{-1} U_{sk})}{n}
+            \jacobi{t_2(1 + U_{sk}^2 t_2^{-2} + 2 t_2^{-1} U_{sk})}{n}
             \\
             &=
             \jacobi{t_2}{n} \cdot \jacobi{(1+U_{sk}t_2^{-1})^2}{n} \\

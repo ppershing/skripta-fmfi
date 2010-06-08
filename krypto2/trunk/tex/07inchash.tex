@@ -1,27 +1,27 @@
 \section{Inkrementálne hašovanie}
 
 Predstavme si, že máme dlhý dokument (súbor alebo disk),
-označme ho $m$ a chceme si uchovávať jeho hash napríklad kvôli
+označme ho $m$ a chceme si uchovávať jeho haš napríklad kvôli
 integrite alebo autenticite. Pri klasickom riešení
 by sme museli prejsť celý dokument a spočítať jeho 
-hash $H(m)$. Následne keď urobíme čo i len najmenšiu
-zmenu, tak na to, aby sme získali nový hash musíme opäť
+haš $H(m)$. Následne keď urobíme čo i len najmenšiu
+zmenu, tak na to, aby sme získali nový haš musíme opäť
 prejsť celý súbor. Toto je náročné na systémové prostriedky
-a veľmi neefektívne. Predstavíme preto niekoľko riešení, ktoré sa
+a veľmi neefektívne. Predstavíme si preto niekoľko riešení, ktoré sa
 snažia riešiť tento problém a ukážeme ich nedostatky.
 
 \subsection{Triviálne riešenia}
 
 Môžeme náš dokument rozdeliť na časti (disk na sektory)
-a uchovávať hash každej časti osobitne. V prípade, keď
-$m = m_1 m_2 \dots m_k$, tak hash bude 
+a uchovávať haš každej časti osobitne. V prípade, keď
+$m = m_1 m_2 \dots m_k$, tak haš bude 
 $H(m) = \langle h(m_1), h(m_2), \dots, h(m_k) \rangle$.
-Toto riešenie má ale príliš dlhý výsledný hash.
+Toto riešenie má ale príliš dlhý výsledný haš.
 Takisto, z pohľadu autenticity nie je nič moc, že vieme
 preusporiadavať bloky.
 
 Iné riešenie je použiť Merkleho stromy. Ale aby
-sme mali rýchly update hashe musíme pamätať zloženie celého stromu,
+sme mali rýchly update hašu musíme pamätať zloženie celého stromu,
 čo tiež nie je potešujúce.
 
 
@@ -29,14 +29,15 @@ sme mali rýchly update hashe musíme pamätať zloženie celého stromu,
 
 Zoberme konečnú komutatívnu grupu $(G, \odot)$ (napríklad $(2^n, \oplus)$).
 Následne predpokladajme, že máme hašovaciu funkciu s oborom hodnôť $G$.
-Rozdeľme dokument na $k$ blokov $m = x_1 x_2 \dots x_k$. Náš hash bude 
+Rozdeľme dokument na $k$ blokov $m = m_1 m_2 \dots m_k$, každý
+veľkosti $n$. Náš haš bude 
 \begin{equation*}
-    H(m) = \bigodot_{j=1}^k h(i, x_i)
+    H(m) = \bigodot_{j=1}^k h(i, m_i)
 \end{equation*}
-Pokiaľ sa blok $x_i$ zmení na $x_i'$, tak nový hash vypočítame
+Pokiaľ sa blok $m_i$ zmení na $m_i'$, tak nový haš vypočítame
 nasledovne:
 \begin{equation*}
-    H(m') = H(m) \odot h(i, x_i)^{-1} \odot h(i, x_i')
+    H(m') = H(m) \odot h(i, m_i)^{-1} \odot h(i, x_i')
 \end{equation*}
 
 \subsubsection{Súvislosť s problémom vyvažovania}
@@ -68,61 +69,84 @@ NP-ťažký.\footnote{Pozor, nie NP-úplný.}
 \end{lema}
 
 \begin{dokaz}
-    Majme orákulum $A$, ktoré hľadá kolíziu pre inkrementálnu hašovaciu
-    funkciu nad grupou $(G, \odot)$. Toto orákulum nám položí $q$ otázok
+    Majme program $A$, ktoré hľadá kolíziu pre inkrementálnu hašovaciu
+    funkciu nad grupou $(G, \odot)$. Tento program nám položí $q$ otázok
     typu ``aká je hodnota $h(i, x_i)$?'' Na tieto otázky mu odpovieme postupne
-    $a_1, a_2, \dots, a_q$.
-    Orákulum podá odpoveď $H(x) = H(y)$, čo je vlastne 
+    hodnotami $a_1, a_2, \dots, a_q$.
+    Program následne vyprodukuje odpoveď $H(x) = H(y)$, čo je vlastne 
     $\bigodot_{i \in I} a_i = \bigodot_{j \in J} a_j$.
     (Keďže predpokladáme, že funkcia $h$ sa správa ako náhodné orákulum,
     tak sa na všetky zložky $x$ a $y$ musí $A$ opýtať.)
 \end{dokaz}
+\fixme{Tento dôkaz je pochybný -- problémy: 1. čo ak máme otázok viac,
+ 2. A čo randomizácia? Ak vieme hľadať kolízie iba pravdepodobnostne,
+ tak tento postup nefunguje}
 
-\subsection{XOR-hash}
+\subsection{XOR-HASH}
 
 Najprv si ukážeme tzv. XOR-HASH.
-Predpokladajme, že $h\colon \{0,1\}^l \to \{0,1\}^n$.
-Hash bude daná vzorcom:
-$H(m) = \displaystyle\bigoplus_{j=1}^k h(i, x_i)$.
+Predpokladajme, že $h\colon \{0,1\}^n \to \{0,1\}^l$.
+Haš bude daný vzorcom
+\begin{equation*}
+    H(m) = \bigoplus_{j=1}^k h(i, m_i)
+\end{equation*}
 
-Ukážeme, že aj v prípade, že $h$ je kvalitná hašovacia funkcia
+Ukážeme, že aj v prípade, že aj v prípade ak $h$ je kvalitná hašovacia funkcia
 (správa sa ako náhodné orákulum) vieme XOR-HASH invertovať.
 
-Na vstupe majme $z \in \{0,1\}^n$. Najprv si pripravíme
-2 náhodné dokumenty $x^0 = x_1^0 x_2^0 \dots x_k^0$ a 
-$x_1 = x_1^1 x_2^1 \dots x_k^1$. Spočítame si hashe ich častí:
-$a_i^b = h(i, x_i^b)$. 
-Teraz chceme nájsť $y = y_1 y_2 \dots y_k$, kde $y_1 \in \{0,1\}$,
-také, že $z = a_1^{y_1} \oplus a_2^{y_2} \oplus \dots \oplus a_k^{y_k}$
-(teda $H(x_1^{y_1} x_2^{y_2} \dots x_k^{y_k}) = z$).
+Na vstupe majme hodnotu $z \in \{0,1\}^l$, ktorý chceme invertovať.
+Najprv si pripravíme 2 náhodné dokumenty (postupnosti blokov)
+$m^{(0)} = m_1^{(0)} m_2^{(0)} \dots m_k^{(0)}$ a 
+$m^{(1)} = m_1^{(1)} m_2^{(1)} \dots m_k^{(1)}$. Bolo by pritom
+vhodné, aby zodpovedajúce si bloky boli rôzne, teda aby $\forall i:
+m_i^{(0)} \ne m_i^{(1)}$.
+Vypočítame si haše jednotlivých častí a označíme ich ako
+$a_i^{(b)} = h(i, m_i^{(b)})$. 
+Teraz chceme nájsť vektor $y = (y_1,y_2, \dots ,y_k)$, kde $y_i \in \{0,1\}$,
+taký, aby platilo 
+\begin{equation*}
+    z = a_1^{(y_1)} \oplus a_2^{(y_2)} \oplus \dots \oplus a_k^{(y_k)}
+\end{equation*}
+(čo je inak povedané $H(m_1^{(y_1)} m_2^{(y_2)} \dots m_k^{(y_k)}) = z$).
 Táto rovnica sa dá napísať aj ako:
-$$z = a_1^0 (1 - y_1) \oplus a_1^1 y_1 \oplus \dots \oplus a_k^0 (1 - y_k) \oplus a_k^1 y_k$$
+\begin{equation*}
+    z = a_1^{(0)} (1 - y_1) \oplus a_1^{(1)} y_1 \oplus \dots 
+        \oplus a_k^{(0)} (1 - y_k) \oplus a_k^{(1)} y_k
+\end{equation*}
 
-Keďže $z$ má $n$ bitov a všetky tieto bity sa počítajú nezávisle od ostatných vieme
-zostaviť $n$ rovníc nad $Z_2$. A máme $k$ neznámych. Keďže v praktických
-aplikáciách je $k > n$ dostaneme skoro vždy riešenie.
+Keďže $z$ má $l$ bitov a všetky tieto bity sa počítajú nezávisle od
+ostatných, vieme zostaviť $l$ rovníc nad $Z_2$. 
+A máme $k$ neznámych.
+V praktických aplikáciách je $k > l$ 
+a teda riešením sústavy dostaneme skoro vždy riešenie.
 
 \todo{sanca na najdenie riesenia}
 
 \subsection{Ad-hash}
 
-Tento krát spravíme iteratívnu hash v grupe $(Z_m, +)$.
-Tu sa dá ukázať, že problém vyvažovania pre $(Z_m, +)$
-je ťažký. 
-
+Tento krát spravíme iteratívnu hašovaciu funkciu v grupe $(Z_u, +)$.
+\begin{equation*}
+    H(x) = \sum_{i=1}^k h(i, m_i) \pmod{u}
+\end{equation*}
+Tu sa dá ukázať, že problém vyvažovania pre $(Z_u, +)$ je ťažký. 
 V praxi sa používajú napr. tieto 2 konštrukcie:
 
 NASD konštrukcia:
-$$H(x) = \displaystyle\sum_{i=1}^k h(i, x_i) \bmod 2^{256}$$
+\begin{equation*}
+    H(x) = \sum_{i=1}^k h(i, m_i) \pmod{2^{256}}
+\end{equation*}
 
 DCIHF konštrukcia:
-$$H(x) = \displaystyle\sum_{i=1}^{k-1} \textrm{SHA-1}(x_i, x_{i+1}) \bmod 2^{160}+1$$
+\begin{equation*}
+    H(x) = \sum_{i=1}^{k-1} \textrm{SHA-1}(m_i, m_{i+1}) \pmod{2^{160}+1}
+\end{equation*}
 
 \subsection{Zovšeobecnený narodeninový útok}
 
 Predstavme si, že máme dva zoznamy slov $L_1, L_2 \in \{0,1\}^n$ vygenerované
 napríklad pomocou hašovacej funkcie. Teraz chceme nájsť
-$x_1 \in L_1, x_2 \in L_2\colon x_1 = x_2 \Leftrightarrow x_1 \oplus x_2 = 0$.
+také $x_1 \in L_1, x_2 \in L_2$, že $x_1 = x_2$
+resp. inak povedané $x_1 \oplus x_2 = 0$.
 
 Toto je starý známy narodeninový útok. Pokiaľ obidva zoznamy budú mať veľkosť
 $2^{n/2}$, tak máme celkom dobrú šancu, že takáto dvojica existuje. Nájdeme ju
@@ -175,9 +199,12 @@ Najprv si pripravíme zoznamy veľkosti $2^{\frac{n}{l+1}}$. Následne ich postu
 vo výške $v$ (výška úplne dole je $1$, smerom nahor rastie) spravíme join na posledných $w_v = \frac{vn}{l + 1}$
 bitoch. Výnimka je koreň tam robíme join na všetkých $n$ bitoch.
 
-{\bf Časová zložitosť:} Každý nekoreňový join vyrobí $2^{\frac{n}{l+1}}$ dvojíc a trvá mu to čas $O(2^{\frac{n}{l+1}})$.
-Koreňový join vyrobí jednu dvojicu a trvá mu to tiež čas $O(2^{\frac{n}{l+1}})$. Celkovo musíme urobiť $k-1$ joinov, takže
-celková časová zložitosť je $O(k 2^{\frac{n}{1+lg k}})$.
+\paragraph{Časová zložitosť:}
+Každý nekoreňový join vyrobí $2^{\frac{n}{l+1}}$ dvojíc 
+a trvá mu to čas $O(2^{\frac{n}{l+1}})$.
+Koreňový join vyrobí jednu dvojicu a trvá mu to tiež čas 
+$O(2^{\frac{n}{l+1}})$. Celkovo musíme urobiť $k-1$ joinov, takže
+celková časová zložitosť je $O(k\cdot 2^{\frac{n}{1+lg k}})$.
 
 \begin{figure}
     \centering
@@ -194,7 +221,7 @@ Zároveň toto ukazuje, že pokiaľ chceme hľadať kolíziu pre nejaké $k^{'} 
 určite tak rýchlo ako pre $k$. Vyberme si nejaké $x_{k+1}, x_{k+2}, \dots, x_{k^{'}}$ a položme
 $c = x_{k+1} \oplus x_{k+2} \oplus \dots \oplus x_{k^{'}}$. A potom nájdeme kolíziu pre prvých $k$ zoznamov. 
 
-Takto by sme vedeli útočiť napríklad už na XOR-hash. Vygenerujeme zoznamy a nájdeme kolíziu, ktorá nám po
+Takto by sme vedeli útočiť napríklad už na XOR-HASH. Vygenerujeme zoznamy a nájdeme kolíziu, ktorá nám po
 vyxorovaní dá požadovanú hašovaciu hodnotu. Pre XOR to ale žiadny pokrok nie je, keďže vieme robiť
 útok s ďaleko lepšou zložitosťou.
 

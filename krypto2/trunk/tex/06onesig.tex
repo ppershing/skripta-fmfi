@@ -10,13 +10,13 @@ Ich hlavná výhoda bude spočívať v jednoduchších predpokladoch pri dôkaze
 bezpečnosti. Kým pri bežných podpisových schémach sme stavali na
 tažkosti istých matematických problémov (RSA, dlog, Diffie-Hellman),
 pri jednorázových schémach nám bude stačiť napríklad jednosmernosť
-hashovacej funkcie.\footnote{Už aj toto je pomerne náročný predpoklad,
-    keďže nevieme povedať veľa o existencii one-way funkcií}
-Druhou výhodou môže byť rýchlosť -- zrejme je jednoduchšie hashovať hodnoty
+hašovacej funkcie.\footnote{Už aj toto je pomerne náročný predpoklad,
+    keďže nevieme povedať veľa o existencii one-way funkcií.}
+Druhou výhodou môže byť rýchlosť -- zrejme je jednoduchšie hašovať hodnoty
 ako napríklad umocňovať.
 Treťou výhodou (i keď skôr teoretickou) je možnosť odolať kvantovým
 výpočtom -- pre väčsinu používaných ťažkých problémov sú známe kvantové
-algoritmy, ktoré ich efektívne počítajú. Pre invertovanie hashovacích
+algoritmy, ktoré ich efektívne počítajú. Pre invertovanie hašovacích
 funkcií ale takéto algoritmy nie sú známe.
 
 Otázka teda môže znieť, že či jednorázovosť je až taká obmedzujúca
@@ -52,9 +52,9 @@ Pojem bezpečnosti takejto schémy si upravíme na jednu správu.
 
 \subsection{Lamportova schéma}
 
-Uvažujme, že máme funkciu $f: X \rightarrow Y$, ktorá je jednosmerná.
+Uvažujme, že máme funkciu $h: X \rightarrow Y$, ktorá je jednosmerná.
 Budeme podpisovať správy $m$ fixnej veľkosti $|m|=n$. Toto samo o sebe nie
-je žiadny problém, ak uvážime, že budeme podpisovať len hash správy, ktorý je
+je žiadny problém, ak uvážime, že budeme podpisovať len haš správy, ktorý je
 fixnej veľkosti.
 
 Generovanie kľúča bude vyzerať nasledovne:
@@ -65,11 +65,11 @@ Generovanie kľúča bude vyzerať nasledovne:
     \For{$i:=1$ \KwTo $n$}{
         $x_{i,0} \inr X$\;
         $x_{i,1} \inr X$\;
-        $y_{i,0} \assign f(x_{i,0})$\;
-        $y_{i,1} \assign f(x_{i,1})$\;
+        $y_{i,0} \assign h(x_{i,0})$\;
+        $y_{i,1} \assign h(x_{i,1})$\;
     }
-    \Return $\langle sk=(x_{1,0},x_{1,1},\ldots,x_{n,0},x_{n,1}),\quad
-             pk=(y_{1,0},y_{1,1},\ldots,y_{n,0},y_{n,1}) \rangle$\;
+    \Return $sk=\langle x_{1,0},x_{1,1},\ldots,x_{n,0},x_{n,1}\rangle,\quad
+             pk=\langle y_{1,0},y_{1,1},\ldots,y_{n,0},y_{n,1} \rangle$\;
 \end{procedure}
 %%% }}}
 
@@ -81,7 +81,7 @@ kľúča.
 \begin{procedure}[H]
     \caption{SignLamport($m$)}
     \For{$i:=1$ \KwTo $n$}{
-        $\sigma_i \assign f(x_{i, m_i})$\;
+        $\sigma_i \assign x_{i, m_i}$\;
     }
     \Return $\sigma = \langle \sigma_1, \ldots, \sigma_n \rangle$
 \end{procedure}
@@ -92,8 +92,9 @@ Overovanie spočíva v overení každého podpísaného bitu správy.
 %%% {{{ VerifyLamport
 \begin{procedure}[H]
     \caption{VerifyLamport($m, \sigma$)}
+    // $\sigma_i = x_{i, m_i}$ \;
     \For{$i:=1$ \KwTo $n$}{
-        \If{$f(x_{i, m_i}) \ne y_{i, m_i}$}{
+        \If{$h(\sigma_i) \ne y_{i, m_i}$}{
             \Return reject\;
         }
     }
@@ -105,23 +106,23 @@ Bezpečnosť schémy je založená na nasledujúcom pozorovaní:
 Aby bol útočník k správe $m$ a jej podpisu $\sigma$ vygenerovať
 falošnú správu $m' \ne m$ a jej podpis $\sigma'$, musel by byť schopný
 vygenerovať $x_{i,b}$ pre nejakú novú dvojicu $(i,b)$.
-To ale znamená invertovať niektorú hodnotu $y_{i,b}$ z verejnej
-funkcie a to predpokladáme, že je možné iba so zanedbateľnou
+To ale znamená invertovať niektorú hodnotu $y_{i,b}$ verejnej
+hašovacej funkcie $h$ a to predpokladáme, že je možné iba so zanedbateľnou
 pravdepodobnosťou.
 
 Na druhej strane, schéma je evidentne jednorázová.
 Až na špeciálny prípad, keď sú podpísané dve správy $m_1,m_2$ líšiace
 sa v práve jednom bite (vtedy si útočník nepomôže), vieme kombinovať
 jednotlivé bity podpisov a podpísať inú správu. V prípade, že
-podpisujeme hash hodnotu, je navyše očakávané, že správy sa budú líšiť
+podpisujeme haš hodnotu, je navyše očakávané, že správy sa budú líšiť
 na zhruba polovici bitov.
 
 \medskip
 Uvažujme teraz praktické aspekty používania takejto schémy. Podpisujme
-hash, napríklad výstup z funkcie SHA-256. Ďalej predpokladajme, že
+haš, napríklad výstup z funkcie SHA-256. Ďalej predpokladajme, že
 $|X|=|Y|=256 \unit{bit}$. Potom dostávame pre súkromný kľúč veľkosť
 $|sk|=2*256*256 \unit{bit} =16 \unit{kB}$. Verejný kľúč je rovnako dlhý, čiže
-$|pk|=16 \unit{kB}$ a podpis má polovičnú dĺžku kľúčov - $|\sigma|=8
+$|pk|=16 \unit{kB}$ a podpis má polovičnú dĺžku kľúčov, čiže $|\sigma|=8
 \unit{kB}$.
 V porovnaní napríklad s RSA je to výrazne horšie. Bolo by teda dobré
 nejakým spôsobom skrátiť kľúče.
@@ -137,7 +138,7 @@ $x_{1,0}, \ldots, x_{n,1}$ nevieme efektívne vypočítať žiadnu ďalšiu -
 to by bolo ekvivalentné zlomeniu podpisovej schémy).
 
 \subsubsection{Skrátenie verejného kľúča}
-Namiesto celého kľúča zverejníme iba hash
+Namiesto celého kľúča zverejníme iba haš
 $y=H(y_{1,0},y_{1,1},\ldots,y_{n,1})$. Tým pádom ale pri podpisovaní
 musíme uviesť aj všetky hodnoty $y$, aby si to overovateľ mohol
 overiť. Po chvíli zamyslenia sa ale môžeme pozorovať, že na overenie
@@ -160,11 +161,11 @@ použijeme podpis, kde podpíšeme iba jednotkové bity.
 V prvom rade by sme mali ukázať, že takáto zmena nepokazí bezpečnosť
 schémy. Majme preto známu správu $m$ s podpisom $\sigma$ a
 predpokladajme, že sa útočník snaží vyrobiť $m'$.
-Ak existuje bit $i$, $m_i=0$ a platilo by $m'_i=1$, tak sa dostávame
+Ak existuje bit číslo $i$ taký, že $m_i=0$ a platilo by $m'_i=1$, tak sa dostávame
 do známej situácie, kedy útočník musí vyrobiť platný vzor pre $y_{i,1}$.
-Ošemetná situácia ale nastáva, ak máme bit $m_i=1$ a útočník ho zmení
+Ošemetná situácia ale nastáva, ak máme $i$-ty bit $m_i=1$ a útočník ho zmení
 na nulu. V tomto prípade totiž nemusí nič podvrhnúť, lebo pre nulový
-bit nemusí nič uviesť. Zachráni nás však checksum -- totiž, ak zmenšíme
+bit nemusí nič uviesť. Zachráni nás však checksuma -- totiž, ak zmenšíme
 celkový počet jednotiek v správe (a to jediné nám ostáva, ak nemáme
 nablyšťanú guľu na lámanie one-way funkcie), vznikne nám aspoň jedna
 jednotka na doteraz neodhalenom mieste. Nie je totiž možné, aby sme
@@ -187,14 +188,15 @@ schémy a zverejniť príslušné verejné kľúče. Problém tohoto prístupu j
 čisto praktický -- musíme zverejniť veľmi dlhý verejný kľúč (všetky
 verejné kľúče). V prípade, že máme napríklad jednu centrálnu autoritu,
 ktorá vydáva súkromné kľúče a na svojej stránke zverejňuje všetky
-verejné kľúče, môže to robiť isté problémy.
+verejné kľúče, to môže robiť isté problémy.
 
 Preto by sme chceli akýmsi spôsobom zredukovať údaje o všetkých
 verejných kľúčoch do nejakého odtlačku. Môžeme to spraviť rekurzvívne
--- označme si $H_{i,j}$ ako odtlačok všetkých kľúčov v intervale $<i,j>$.
+-- označme si $H_{i,j}$ ako odtlačok všetkých kľúčov v intervale 
+$\left<i,j\right>$.
 Potom môžeme definovať rekurzívne $H_{l,r}=h(H_{l,m} || H_{m+1,r})$ kde
 $m$ je stred medzi $l$ a $r$, čiže $m=\lfloor (l+r)/2 \rfloor$ a
-$h$ je hashovacia funkcia. Takýmto spôsobom môžeme vybudovať celý
+$h$ je hašovacia funkcia. Takýmto spôsobom môžeme vybudovať celý
 strom.
 \begin{figure}[h]
     \centering
@@ -231,7 +233,7 @@ aby sme mohli mať menší verejný kľúč.
 pri veľkom strome totiž vypočítať jednotlivé potrebné hodnoty môže trvať až
 čas úmerný počtu kľúčov. Toto sa dá riešiť na úkor pamäte udržiavaním istej
 predpočítanej množiny vrcholov. Druhá možnosť je, ak chceme používať kľúče
-zaradom v podarí $1,2,\dots,n$, existujú isté algoritmy na iteratívne
+zaradom v podarí $1,2,\dots,n$, potom existujú isté algoritmy na iteratívne
 počítanie, kedy z autentifikačnej cesty pre kľúč $k$ vypočítame cestu pre
 kľúč $k+1$ v čase aj pamäti $O(\log n)$, napríklad podľa \cite{merkle_iter}.
 
@@ -275,7 +277,7 @@ a nebude schopný vyrobiť správny podpis inej správy.
 Pokiaľ sa falšovateľ pokúsi podpisať inú správu, tak podpisovateľ zistí, že bol použitý iný
 ako jeho súkromný kľúč a je to schopný preukázať.
 
-\subsubsection{Heyst Pedersenova schéma}
+\subsubsection{Heyst-Pedersenova schéma}
 
 Uvažujme grupu $G$, kde $|G| = q$ a $q$ je nejaké (dostatočne veľké) prvočíslo.
 Zoberme generátory $g, h \in G$.
@@ -372,18 +374,25 @@ Teraz si dokážeme niekoľko vlastností tejto schémy.
     priestore $Z_q^4$).
 \end{dokaz}
 
-Toto dokazuje, že potenciálnych súkromných kľúčov je exponenciálne veľa.
-Na to aby sme ukázali, že útočník má
-šancu na úspech $1/q$ treba ešte ukázať jednu vec.
-Môže totiž nastať patologický prípad, kde veľa súkromných kľúčov
-pri podpise falošnej správy $m^*$ dá rovnaký podpis.
-Teda budeme mať rôzne kľúče $sk_1, sk_2, \dots, sk_n$,
-kde $Sig_{sk_1}(m^*) = Sig_{sk_2}(m^*) = \dots = Sig_{sk_n}(m^*)$.
+Toto dokazuje, že ak získame správu $m$ a jej podpis $\sigma$,
+potenciálnych súkromných kľúčov je exponenciálne veľa (práve $q$).
+Na to aby sme ukázali, že útočník má šancu na úspech $1/q$ 
+treba ešte ukázať jednu vec.
+Útočník totiž chce vytvoriť novú správu $m^*$ a jej podpis $\sigma^*$.
+Čo ak by sa stalo, že síce zo správy $m$ a jej podpisu $\sigma$
+získame veľa rôznych súkromných kľúčov, avšak existovala by správa
+$m^*$, pri ktorej by použitie týchto kľúčov viedlo k rovnakému podpisu 
+$\sigma^*$? Je to veľmi nepríjemný prípad, kedže potom šanca na
+vygenerovanie korektného a nevyvrátiteľného podpisu je vyššia ako by
+sme chceli.
+Formálne popísané, nechceme aby nastal prípad, že máme sadu možných súkromných
+kľúčov $sk_1, sk_2, \dots, sk_n$, pre ktoré platí
+$Sig_{sk_1}(m^*) = Sig_{sk_2}(m^*) = \dots = Sig_{sk_n}(m^*)$.
 To, že tento prípad nenastane ukazuje nasledujúca lema:
 
 \begin{lema}
     Pre ľubovoľné $\langle pk, m, \sigma, m^*, \sigma^* \rangle$, kde
-    súkromný kľúč $sk$ vyhovuje privátnemu kľúču $pk$ a platí
+    súkromný kľúč $sk$ vyhovuje verejnému kľúču $pk$ a platí
     $\sigma = Sig_{sk}(m)$, $\sigma^* = Sig_{sk}(m^*)$ platí,
     že existuje existuje maximálne jeden takýto kľúč $sk$.
 \end{lema}
