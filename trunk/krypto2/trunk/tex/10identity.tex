@@ -168,7 +168,7 @@ Budeme rozlišovať 2 prípady (a práve na to potrebujeme aj verejný kľúč):
 veľmi nízke. Ak máme správu dĺžky $l$, tak
 šifrovanie pozostáva z $l$ operácii počítania Jakobiho
 symbolu a delenia, dešifrovanie je $l$-krát výpočet Jakobiho symbolu.
-Pre typické parametre ako $n=1024bit$ a $l=128$ je očakávateľné, že
+Pre typické parametre ako $n=1024 \unit{bit}$ a $l=128$ je očakávateľné, že
 potrebný čas bude menší ako na jedinú exponenciáciu. Preto jedinou
 reálnou otázkou ostáva veľkosť správy, ktorá v tomto prípade narastie
 na $32KB$.
@@ -188,10 +188,13 @@ vyzerá $m$.
 
 Nech $y = t - U_{pk} t^{-1} \pmod{n}$.
 Potom
-\begin{align*}
-    t^2 - y t - U_{pk} &\equiv 0 \pmod{n} \\
-    t^2 - y t - U_{pk} &\equiv 0 \pmod{p}
-\end{align*}
+\begin{equation*}
+    t^2 - y t - U_{pk} \equiv 0 \pmod{n}
+\end{equation*}
+a teda špeciálne
+\begin{equation*}
+    t^2 - y t - U_{pk} \equiv 0 \pmod{p}
+\end{equation*}
 Dostali sme kvadratickú rovnicu nad poľom $Z_p$ a teda riešením sú 2 korene
 $r_1,r_2$.
 Dostávame teda
@@ -200,11 +203,14 @@ Dostávame teda
     (t-r_1)(t-r_2) &\equiv t^2 - y t - U_{pk} &\pmod{n}\\
     r_1 r_2 &\equiv -U_{pk} &\pmod{p}
 \end{alignat*}
-
+%
 Ak vypočítajme Jakobiho symbol $\jacobi{r_1}{p} \jacobi{r_2}{p}$,
-dostaneme hodnotu $\jacobi{r_1}{p}\jacobi{r_2}{p} = \jacobi{r_1 r_2}{p} =
-\jacobi{-U_{pk}}{p} = \jacobi{-1}{p} \jacobi{U_{sk}^2}{p}=-1\cdot 1=-1$
-(nakoľko platí $\jacobi{-1}{p}=-1$ za predpokladu $p \equiv 3 \pmod{4}$).
+dostaneme hodnotu 
+\begin{equation*}
+    \jacobi{r_1}{p}\jacobi{r_2}{p} = \jacobi{r_1 r_2}{p} =
+    \jacobi{-U_{pk}}{p} = \jacobi{-1}{p} \jacobi{U_{sk}^2}{p}=-1\cdot 1=-1
+\end{equation*}
+nakoľko platí $\jacobi{-1}{p}=-1$ za predpokladu $p \equiv 3 \pmod{4}$.
 
 \begin{poznamka}[Stanekova básnická otázka na publikum: čo ak sú
     niektoré 2 korene rovnaké?]
@@ -214,7 +220,7 @@ dostaneme hodnotu $\jacobi{r_1}{p}\jacobi{r_2}{p} = \jacobi{r_1 r_2}{p} =
     $U_{pk}, -U_{pk} \in QR_p$, čo je spor, pretože za predpokladu 
     $p\equiv 3 \pmod{4}$ je rezíduum práve jedno z nich.
 
-    Iné zdôvodnenie: $r^2$ nemôže byť naraz kvadratické nerezíduum.
+    Skrátene povedané $r^2$ nemôže byť kvadratické nerezíduum.
 \end{poznamka}
 
 To isté môžeme zistiť modulo $q$.
@@ -226,12 +232,14 @@ Chceli by sme ukázať, že znalosť $y_2$ neovplyvní pravdepodobnosť, že
 správa nadobúda istú hodnotu, t.j.
 $Pr[m=m_0]=Pr[m=m_0 | y=y_2]$.
 To je podľa Bayessovej vety
-$Pr[m=m_0 | y=y_2] = Pr[y=y_2 | m=m_0] Pr[m=m_0] / Pr[y=y_2]$.
+\begin{equation*}
+    Pr[m=m_0 | y=y_2] = \frac{Pr[y=y_2 | m=m_0] \cdot Pr[m=m_0]}{Pr[y=y_2]}
+\end{equation*}
 No a evidentne (pretože $t$ volíme náhodne a rovnomerne)
-$Pr[y=y_2 | m=+1] =2/j_{+}(n), Pr[y=y_2 | m=-1] = 2/j_{-}(n)$
-kde $j_{+},j_{-}$ označuje počet čísel s Jakobiho symbolom
-+1 resp. -1. 
-My však vieme, že $j_{+}(n) = j_{-}(n) = (p-1)(q-1)/2$ a teda
+platí $Pr[y=y_2 | m=+1] =2/J_{+}(n)$ a $Pr[y=y_2 | m=-1] = 2/J_{-}(n)$
+kde $J_{+},J_{-}$ označuje počet čísel s Jakobiho symbolom $+1$ resp. $-1$. 
+
+My však vieme, že $J_{+}(n) = J_{-}(n) = (p-1)(q-1)/2$ a teda
 $Pr[y=y_2| m=+1] = Pr[y=y_2 | m=-1] = Pr[y=y_2]$. Tým sme ale ukázali,
 že $Pr[m=m_0] = Pr[m=m_0 | y=y_2]$ a teda $y_2$ naozaj nič nevypovedá
 o hodnote $m$.

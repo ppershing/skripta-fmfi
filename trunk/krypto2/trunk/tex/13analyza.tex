@@ -35,7 +35,7 @@ znázornená na obrázku \ref{fig:cipher}.
 \end{figure}
 
 Čo sa týka operácie ``shuffle'', je jednoduchá a symetrická, konkrétne
-bity prvého S-boxu pošle na najnižšie bity S-boxov ďalšieho kola,
+bity prvého (sprava) S-boxu pošle na najnižšie bity S-boxov ďalšieho kola,
 bity druhého S-boxu pošle na druhé najnižšie bity S-boxov ďalšieho
 kola atď. Špeciálne v poslednom kole vynechávame shuffle, pretože je
 to zbytočné -- z hľadiska bezpečnosti nič nepridá a šifrovací
@@ -51,8 +51,8 @@ S-box (substitučný box) sme si zvolili nasledovne:
     Naša šifra je zhodná so šifrou prezentovanou na prednáške až na
     jeden drobný detail. Rozhodli sme sa číslovať bity na vstupe
     sprava doľava narozdiel od prednášky. Dôvod je totiž ten, že bity
-    S-boxy sú číslované sprava doľava a pôvodne to spôsobovalo chaos
-    keďže boli číslované opačným smerom ako biry vstupu. Táto
+    S-boxu sú číslované sprava doľava a pôvodne to spôsobovalo chaos
+    keďže boli číslované opačným smerom ako bity vstupu. Táto
     transformácia sa ale nezaobišla bez následkov. Aby sme zachovali
     obrázky (a tiež lineárne kombinácie, ktoré potrebujeme), museli
     sme zmeniť funkciu Sboxu (vymeniť jej poradie bitov).
@@ -137,6 +137,7 @@ pravdepodobností.
 
 \todo{suvis tabulky s pravdepodobnostami}
 \begin{lema}[Piling-up lema]
+    \todo{znenie a dokaz}
 \end{lema}
 
 
@@ -148,7 +149,7 @@ pravdepodobností.
     lineárnu kombináciu vstupných bitov $9,10,12,15$ a výstupných
     bitov $0,2,8,10$. Presnejšie ktoré lineárne kombinácie budeme
     uvažovať po ceste si čitateľ môže pozrieť na obrázku
-    \ref{prikl:lin1}. Nateraz nás bude zaujímať hlavne to, že na
+    \ref{fig:lin1}. Nateraz nás bude zaujímať hlavne to, že na
     vstupe aj na výstupe máme relatívne malý počet použitých S-boxov.
     Tým pádom vie byť kryptoanalýza úspešná (lebo nám stačí preveriť
     kľúče na malej kombinácii výstupov).
@@ -191,7 +192,7 @@ pravdepodobností.
     textov tým istým náhodným kľúčom a následne sme skúšali hádať časť
     podkľúča $key_5$. Algoritmus bol jednoduchý -- pre každý možný
     kľúč (resp. tú časť kľúča, o ktorej máme šancu niečo zistiť, v
-    našom prípade sboxy so vstupmi 0-3, 8-11) sme pomocou všetkých
+    našom prípade S-boxy so vstupmi 0-3, 8-11) sme pomocou všetkých
     otvorených a šifrových textov vypočítali pravdepodobnosť (a teda
     aj balanciu) pre daný kľúč. Následne sme ako kľúč zvolili ten,
     ktorý mal najväčšiu balanciu v absolútnej hodnote. V tabuľke
@@ -288,6 +289,8 @@ ich budeme môcť beztrestne násobiť.
         \includegraphics[scale=0.7]{img/13/dif.1.mps}
         \caption{Diferenciálna analýza v príklade \ref{prikl:dif1}}
     \end{figure}
+
+    \noindent
     \input{tex/kryptoanalyza/danalyza1.tex}
     \input{tex/kryptoanalyza/dattack1.tex}
 \end{priklad}
@@ -299,6 +302,8 @@ ich budeme môcť beztrestne násobiť.
         \includegraphics[scale=0.7]{img/13/dif.2.mps}
         \caption{Diferenciálna analýza v príklade \ref{prikl:dif2}}
     \end{figure}
+
+    \noindent
     \input{tex/kryptoanalyza/danalyza2.tex}
     \input{tex/kryptoanalyza/dattack2.tex}
 \end{priklad}
@@ -310,6 +315,8 @@ ich budeme môcť beztrestne násobiť.
         \includegraphics[scale=0.7]{img/13/dif.3.mps}
         \caption{Diferenciálna analýza v príklade \ref{prikl:dif3}}
     \end{figure}
+
+    \noindent
     \input{tex/kryptoanalyza/danalyza3.tex}
     \input{tex/kryptoanalyza/dattack3.tex}
 \end{priklad}
