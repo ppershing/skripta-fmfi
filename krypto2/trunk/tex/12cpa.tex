@@ -1,31 +1,41 @@
 \section{CPA odolnosť symetrických šifier}
 
 Majme nejaký symetrický šifrovací systém. Formálne nech:
-$\Pi = <Gen(1^n); E_k(\cdot); D_k(\cdot)>$, kde $Gen$ je generátor
-kľúča s dĺžkou $n$, $E_k(\cdot)$ je šifrovacia transformácia (môže byť
+$\Pi = \langle Gen(1^n), E_k(\cdot), D_k(\cdot) \rangle$, 
+kde $Gen$ je generátor kľúča s dĺžkou $n$, 
+$E_k(\cdot)$ je šifrovacia transformácia (môže byť
 pravdepodobnostná a nakoniec sa ukáže, že je dobré aby aj bola)
 a $D_k(\cdot)$ je dešifrovacia transformácia. Samozrejme, požadujeme, aby
-systém bol korektný teda $\forall x, k\colon D_k(E_k(x))=x$.
+systém bol korektný teda $\forall x, \forall k\colon D_k(E_k(x))=x$.
 
 Chceme, aby systém bol odolný voči útoku s možnosťou voľby otvoreného textu.
 Teda útočník má k dispozícií orákulum, ktoré mu umožňuje zašifrovať ľubovoľný
 text, ktorý si vyberie. Na to, aby sme ukázali, že systém je odolný vočí 
-útoku s voľbou otvoreného textu, tak je dobré ukázať, že útočník
+útoku s voľbou otvoreného textu, je dobré ukázať, že útočník
 nevie rozlišovať šifrové texty, teda:
 
 \begin{definicia}
-Šifrovací systém $\Pi$ má nerozlíšiteľné šifrové texty pri $CPA$, ak platí:
-$$Pr[PrivK_{A,\Pi}^{CPA}(n) = 1] \leq \frac{1}{2} + negl(n)$$
+    Šifrovací systém $\Pi$ má nerozlíšiteľné šifrové texty pri $CPA$, ak platí:
+    \begin{equation*}
+        Pr[PrivK_{A,\Pi}^{CPA}(n) = 1] \leq \frac{1}{2} + negl(n)
+    \end{equation*}
 
-Kde $PriK_{A,\Pi}^{CPA}$ je experiment s útočníkom $A$ na šifre $\Pi$ definový nasledovne:
-\begin{enumerate}
-\item $K = Gen(1^n)$ - vygenerujeme nejaký kľúč
-\item Útočníkový dáme šifrovacie orákulum, to si označme ako $A^{E_k(\cdot)}$. Následne $A^{E_k(\cdot)} \to (m_0,m_1)$ -
-útočník vygeneruje 2 otvorené texty (navyše požadujeme $|m_0| = |m_1|$). 
-\item Zvolíme $b \inr \{0,1\}$ a položíme $c = E_k(m_b)$, to pošleme útočníkovi.
-\item Útočník sa pokúsi rozlíšiť šifrový text $A^{E_k(\cdot)}(c) \to b^{'} \in \{0,1\}$.
-\item Ak $b=b{'}$, tak experiment vráti $1$, ináč $0$.
-\end{enumerate}
+    Kde $PrivK_{A,\Pi}^{CPA}$ je experiment s útočníkom $A$ na
+    šifrovacom systéme $\Pi$ definový nasledovne:
+    \begin{enumerate}
+        \item $K = Gen(1^n)$ -- vygenerujeme nejaký kľúč
+        \item Útočníkový dáme šifrovacie orákulum,
+            to si označme ako $A^{E_k(\cdot)}$. 
+            
+        \item Útočník vygeneruje 2 otvorené texty $m_0,m_1$ 
+            (požadujeme aby $|m_0| = |m_1|$). 
+        \item Zvolíme si $b \inr \{0,1\}$ a položíme $c = E_k(m_b)$.
+            Hodnotu $c$ povieme útočníkovi.
+        \item Útočník sa pokúsi rozlíšiť šifrový text $c$, teda snaží
+            sa uhádnuť $b'$ -- číslo správy, z ktorej daný šifrový
+            text vznikol.
+        \item Ak $b=b{'}$, tak experiment vráti $1$, ináč $0$.
+    \end{enumerate}
 \end{definicia}
 
 Všimnime si, že nijako nezakazujeme útočníkovi sa priamo spýtať na zašifrovanie $m_0$, resp. $m_1$. 
@@ -38,53 +48,114 @@ postupnosť, ktorá sa čo najviac podobala na náhodnú, tak tu
 chceme zostrojiť funkciu, ktorá sa čo najviac podobná na náhodnú. 
 Tá má následné mnohostranné využitie, napr. pri konštrukciu symetrických šifier.
 
-Pseudonáhodnú funkciu definujeme podobne ako pseudonáhodnú postupnosť (nevieme ju
-v pravdepodobnostnom polynomiálnom čase odlíšiť od náhodnej). 
+Pseudonáhodnú funkciu definujeme podobne ako pseudonáhodnú postupnosť 
+(nevieme ju v pravdepodobnostnom polynomiálnom čase odlíšiť od náhodnej). 
 Navyše to bude funkcia s kľúčom. 
-Teda $F: \{0,1\}^* \times \{0,1\}^* \to \{0,1\}^*$. Pre jednoduchosť, nech dĺžky
-kľúča, správý a výstupu funkciu sú rovnaké, teda $n = |k| = |x| = |F_k(x)|$.
+Teda $F: \{0,1\}^* \times \{0,1\}^* \to \{0,1\}^*$. 
+Pre jednoduchosť, nech dĺžky
+kľúča, správy a výstupu funkcie $F$ sú rovnaké, teda $n = |k| = |x| = |F_k(x)|$.
 
 \begin{definicia}
-Funkcia $F_k(x)$ je pseudonáhodná ak $\forall PPT D \exists negl(\cdot)\colon$
-$$|Pr[D^{F_k} = 1] - Pr[D^f = 1]| \leq negl(n)$$
-kde: $k \inr \{0,1\}^n; f \inr \{ \{0,1\}^n \to \{0,1\}^n\}$.
+    Funkcia $F_k(x)$ je pseudonáhodná ak $\forall$ PPT rozlišovateľa 
+        $D$ platí
+    \begin{equation*}
+        \Big| Pr[D^{F_k} = 1] - Pr[D^f = 1] \Big| \leq negl(n)
+    \end{equation*}
+    kde $k$ je náhodný kľúč $k \inr \{0,1\}^n$ a 
+    $f$ je náhodná funkcia $f \inr \{ \{0,1\}^n \mapsto \{0,1\}^n\}$.
 \end{definicia}
 
-Pokiaľ máme pseudonáhodný generátor $G$, tak vieme pomocou neho zostrojiť pseudonáhodnú
-funkciu nasledovne:
-Nech $|G(x)=2n|$ a $G(x) = G_0(x)||G_1(x)$. Potom $F_k(x_1 x_2 \dots x_n) = G_{x_n}(\dots(G_{x_2}(G_{x_1}(k)))\dots)$.
+Pokiaľ máme pseudonáhodný generátor $G$,
+tak vieme pomocou neho zostrojiť pseudonáhodnú funkciu nasledovne:
+Nech $|G(x)=2n|$. Rozdeľme si $G$ na 2 časti, teda $G(x) = G_0(x)||G_1(x)$.
+Potom môžeme definovať
+\begin{equation*}
+    F_k(x_1 x_2 \dots x_n) = G_{x_n}(\dots(G_{x_2}(G_{x_1}(k)))\dots)
+\end{equation*}
 
 Teraz si ukážeme ako pomocou pseudonáhodnej funkciu zostrojiť symetrickú šifru $\Pi$, ktorá má nerozlíšiteľné
-šifrové texty pri CPA útoku:\\
-$Gen(1^n)\colon k \inr \{0,1\}^n$\\
-$E_k(m)\colon <r, F_k(r) \oplus m> m \in \{0,1\}^n, r \inr \{0,1\}^n$\\
-$D_k(<r,s>) = F_k(r) \oplus s$
+šifrové texty pri CPA útoku:
+
+\begin{procedure}[h!]
+    \caption{Gen($1^k$)}
+    $key \inr \{0,1\}^k$\;
+    \Return $key$\;
+\end{procedure}
+
+\begin{procedure}[h!]
+    \caption{Encrypt($key,m$)}
+    $r \inr \{0,1\}^k$\;
+    $c = F_{key}(r) \oplus m$\;
+    \Return $\langle r,c \rangle$\;
+\end{procedure}
+
+\begin{procedure}[h!]
+    \caption{Decrypt($key,\langle r,c\rangle$)}
+    $m \assign F_{key}(r) \oplus c$.
+    \Return $m$\;
+\end{procedure}
 
 \begin{veta}
-$\Pi$ má nerozlíšiteľné šifrové texty pri CPA útoku, ak $F_k(\cdot)$ je pseudonáhodná.
+$\Pi$ má nerozlíšiteľné šifrové texty pri CPA útoku, ak $F_{key}(\cdot)$ 
+je pseudonáhodná funkcia.
 \end{veta}
 
 \begin{dokaz}
-Dôkaz rozdelíme na 2 kroky.
+    Dôkaz rozdelíme na 2 kroky.
 
-{\bf 1. krok:} Zostrojíme šifrovací systém $\tilde{\Pi}$, kde miesto $F_k(\cdot)$ použijeme
-náhodnú funkciu $f$. Ukážeme, že tento systém má nerozlíšiteľný šifrové texty pri CPA útoku.
-Útočník teda dostane zašifrovaný text $<r_c, f(r_c) \oplus m_b>$.
-Môžu nastať 2 situácie. Buď $r_c$ bolo použité v odpovediach na útočníkové otázky alebo nie. Ak bolo, tak túto situáciu
-označme ako $Repeat$. Počet otázok označme ako $q(n)$, keďže útočník pracuje v polynomiálnom čase, aj
-tento počet je polynomiálny. Potom šanca na úspech útočníka je nasledovná:
-$$Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1] = Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1\land Repeat]  + Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1 \land \neg Repeat]$$
+    \begin{enumerate}
+    \item Zostrojíme šifrovací systém $\tilde{\Pi}$, 
+        kde miesto $F_k(\cdot)$ použijeme náhodnú funkciu $f$.
+        Ukážeme, že tento systém má nerozlíšiteľný šifrové texty pri CPA útoku.
+        Útočník teda dostane zašifrovaný text 
+        $\langle r_c, f(r_c) \oplus m_b \rangle$.
 
-Vieme, že $Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1\land Repeat] \leq Pr[Repeat] = \frac{q(n)}{2^n} = neql(n)$.
-A navyše $Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1\land \neg Repeat] = \frac{1}{2}$, lebo v tomto prípade útočník
-nevie nič a môže len tipovať, teda celkovo: $Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1] \leq \frac{1}{2} + negl(n)$, čo sme chceli dokázať.
+        Môžu nastať 2 situácie. Buď $r_c$ bolo použité v odpovediach 
+        na útočníkové otázky alebo nie. Ak bolo, tak túto situáciu
+        označme ako $Repeat$. Počet otázok označme ako $q(n)$ 
+        (keďže útočník pracuje v polynomiálnom čase, 
+        aj tento počet je polynomiálny). 
+        Potom šanca na úspech útočníka je nasledovná:
+        \begin{equation*}
+            Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1] = 
+                Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1\land Repeat]  + 
+                Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1 \land \neg Repeat]
+        \end{equation*}
 
-{\bf 2. krok:} Ukážeme, že ak $\Pi$ nie je bezpečná, tak vieme rozlišovať medzi $F_k(\cdot)$ a $f$.
-Nech útočník $A$ má nezanedbateľnú pravdepodobnosť úspechu $\frac{1}{2}+\epsilon(n)$. 
-Potom náš rozlišovač $D$ bude simulovať $A$ pričom pri šifrovaní použije funkciu, ktorú sa práve 
-snaží odlíšiť. A vráti $1$ ak útočník uspel a $0$ ak neuspel.
-Potom platí: $Pr[D^{F_k} = 1] - Pr[D^f = 1] = Pr[PrivK_{A,\Pi}^{CPA}(n)=1] - Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1] 
-= \epsilon(n) - negl(n)$, čo je nezanedbateľná šanca na úspech.
+        Vieme, že platí
+        \begin{equation*}
+            Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1\land Repeat] \leq 
+            Pr[Repeat] = \frac{q(n)}{2^n} = neql(n)
+        \end{equation*}
+        Navyše
+        \begin{equation*}
+            Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1\land \neg Repeat] = 
+                \frac{1}{2}
+        \end{equation*}
+        lebo v tomto prípade útočník nevie nič a môže len tipovať.
+        Celkovo máme
+        \begin{equation*}
+            Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1] \leq \frac{1}{2} + negl(n)
+        \end{equation*}
+        čo sme chceli dokázať.
+
+    \item Ukážeme, že ak $\Pi$ nie je bezpečná, 
+        tak vieme rozlišovať medzi $F_k(\cdot)$ a $f$.
+        Nech útočník $A$ má nezanedbateľnú pravdepodobnosť úspechu 
+        $\frac{1}{2}+\epsilon(n)$. 
+        Zostrojme rozlišovač $D$, ktorý bude simulovať $A$ 
+        pričom pri šifrovaní použije funkciu, ktorú sa práve snaží odlíšiť. 
+        $D$ vráti $1$ ak útočník uspel a $0$ ak neuspel.
+
+        Potom platí: 
+        \begin{equation*}
+            Pr[D^{F_k} = 1] - Pr[D^f = 1] = 
+                Pr[PrivK_{A,\Pi}^{CPA}(n)=1] - 
+                Pr[PrivK_{A,\tilde{\Pi}}^{CPA}(n)=1] 
+            = \epsilon(n) - negl(n)
+        \end{equation*}
+        čo je nezanedbateľná šanca na úspech.
+    \end{enumerate}
 \end{dokaz}
 
 Podobne ako pseudonáhodnú funkciu môžeme definovať pseudonáhodnú permutáciu. Tá nesmie byť rozlíšiteľná od úplne
@@ -93,13 +164,19 @@ Navyše vieme zadefinovať aj silne pseudonáhodnú permutáciu, kde rozlišova�
 k inverznej permutácii.
 
 \begin{priklad}
-Ako vyrobiť z pseudonáhodnej funkcie pseudonáhodnú permutáciu? Využijeme klasický princíp
-Feistelovskej šifry. Rozdelíme vstup permutácie na dva bloky $L_0, H_0$ a kľuč na podkľúče $k_1, k_2, \dots$ a následne:
-$L_{i+1} = H_{i}, H_{i+1} = L_{i} \oplus F_{k_i}(H_i)$.
-Pokiaľ by sme ako výstup zobrali $L_1, H_1$, tak nedostaneme náhodnú permutáciu, lebo niektoré bity sa len kopírujú.
-Pokiaľ by sme zobrali ako výstup $L_2, H_2$, tak zase máme problém s tým, že pokiaľ znegujeme bit v $L_0$, tak sa presne ten
-istý bit zneguje v $L_2$. Dá sa ukázať, že pokiaľ ale vezmeme $L_3, H_3$ tak máme pseudonáhodnú permutáciu a ak vezmeme $L_4, H_4$
-tak máme silne pseudonáhodnú permutáciu.
+    Ako vyrobiť z pseudonáhodnej funkcie pseudonáhodnú permutáciu?
+    Využijeme klasický princíp
+    Feistelovskej šifry. Rozdelíme vstup permutácie na dva bloky $L_0, H_0$ 
+    a kľúč na podkľúče $k_1, k_2, \dots$. Následne položíme
+    $L_{i+1} = H_{i}, H_{i+1} = L_{i} \oplus F_{k_i}(H_i)$.
+    Pokiaľ by sme ako výstup zobrali $L_1, H_1$, 
+    tak nedostaneme náhodnú permutáciu, lebo niektoré bity sa len kopírujú.
+    Pokiaľ by sme zobrali ako výstup $L_2, H_2$, 
+    máme problém s tým, že pokiaľ znegovaním bit v $L_0$ sa presne ten
+    istý bit zneguje aj v $L_2$.
+    Dá sa však ukázať, že pokiaľ vezmeme $L_3, H_3$ tak máme 
+    pseudonáhodnú permutáciu a ak vezmeme $L_4, H_4$
+    tak máme dokonca silne pseudonáhodnú permutáciu.
 \end{priklad}
 
 \subsection{Bezpečnosť módov blokových šifier}
@@ -108,31 +185,62 @@ V tejto časti budeme predpokladať, že samotná šifrovacia transformácia je 
 Ukážeme si, že niektoré módy majú vlastnosť nerozlíšiteľnosti pri CPA a niektoré nie.
 
 \begin{itemize}
-\item ECB mód - nezvnikne pseudonáhodná permutácia, napr. po zašifrovaní textov $(m_0,m_0), (m_0, m_1)$ vieme rozlišovať.
-\item CBC mód - pri použití náhodného inicializačného vektora vznikne pseudonáhodná permutácia.
-\item OFB mód - to isté ako CBC
-\item CTR mód - funguje nasledovne. Zvolíme náhodne inicializačný vektor $IV$. Šifrujeme nasledovne: $C_0 = IV, C_i = P_i \oplus E_k(IV + i)$. Ukážeme, že máme nerozlíšiteľné šifrové texty.
+    \item ECB mód -- nezvnikne pseudonáhodná permutácia, 
+        napr. po zašifrovaní textov $(m_0,m_0), (m_0, m_1)$ vieme rozlišovať.
+    \item CBC mód -- pri použití náhodného inicializačného vektora 
+        vznikne pseudonáhodná permutácia.
+    \item OFB mód -- to isté ako CBC
+    \item CTR mód -- funguje nasledovne: 
+        Zvolíme náhodne inicializačný vektor $IV$.
+        Šifrujeme nasledovne: $C_0 = IV, C_i = P_i \oplus E_k(IV + i)$.
+        Ukážeme, že máme nerozlíšiteľné šifrové texty.
 \end{itemize}
 \begin{veta}
-Ak $E_k$ pri CTR móde je pseudonáhodná permutícia, tak CTR mód má nerozlíšiteľné šifrové texty pri CPA.
+    Ak $E_k$ pri CTR móde je pseudonáhodná permutícia,
+    tak CTR mód má nerozlíšiteľné šifrové texty pri CPA.
 \end{veta}
 \begin{dokaz}
-Opäť najprv ukážeme, že upravená schéma $\tilde{\Pi}$, kde miesto $E_k$ použijeme náhodnú permutáciu $f$
-má nerozlíšiteľné šifrové texty. 
-Predpokladajme, že všetky texty majú najviac $q(n)$ blokov a útočník položí najviac $q(n)$ otázok.
-Označme odpovede na útočníkové otázky ako $c^1, c^2, \dots, c^{q(n)}$. Útočník vie vcelku jasne rozlišovať práve
-vtedy, keď $\exists x\colon |c_0^x - c_0| \leq q(n)$ (čiže vtedy keď sa nám veci vstupujúce do $E_k$ \clqq prekrývajú\crqq).
-Túto situáciu nazvime Overlap.
-Potom šanca útočníka na úspech je:
-$$Pr[X_{\tilde{\Pi}} = 1] = Pr[X_{\tilde{\Pi}} = 1 \land Overlap] + Pr[X_{\tilde{\Pi}} = 1 \land \neg Overlap]$$
-Pričom $Pr[X_{\tilde{\Pi}} = 1 \land Overlap] \leq \displaystyle\sum_{i=1}^{q(n)} \frac{2q(n)}{2^n} = \frac{2q(n)^2}{2^n}$. Voči každej
-otázke máme $2q(n)$ dobrých miest, kde môže začínať naše IV. A máme $q(n)$ otázok.
-Zároveň $Pr[X_{\tilde{\Pi}} = 1 \land \neg Overlap] = \frac{1}{2}$, lebo v tomto prípade opäť nevieme povedať nič.
-A teda celkovo $Pr[X_{\tilde{\Pi}} = 1] \leq \frac{1}{2} + \frac{2q(n)^2}{2^n} = \frac12 + negl(n)$.
+    Opäť najprv ukážeme, že upravená schéma $\tilde{\Pi}$,
+    kde miesto $E_k$ použijeme náhodnú permutáciu $f$
+    má nerozlíšiteľné šifrové texty. 
+    Predpokladajme, že všetky texty majú najviac $q(n)$ blokov 
+    a útočník položí najviac $q(n)$ otázok.
+    Označme countre použité v odpovediach na útočníkové otázky ako 
+    $c^1, c^2, \dots, c^{q(n)}$. 
+    Útočník vie rozlišovať správy vtedy, ak 
+    $\exists i, \exists j \colon i\ne j \land  |c^i - c^j| \leq q(n)$ 
+    (vtedy keď sa nám veci vstupujúce do $E_k$ \clqq prekrývajú\crqq).
+    Túto situáciu nazvime Overlap.
+    Potom šanca útočníka na úspech je:
+    \begin{equation*}
+        Pr[X_{\tilde{\Pi}} = 1] = 
+            Pr[X_{\tilde{\Pi}} = 1 \land Overlap] + 
+            Pr[X_{\tilde{\Pi}} = 1 \land \neg Overlap]
+    \end{equation*}
+    Pritom platí
+    \begin{equation*}
+        Pr[X_{\tilde{\Pi}} = 1 \land Overlap] \leq 
+            \sum_{i=1}^{q(n)} \frac{2q(n)}{2^n} = \frac{2q(n)^2}{2^n}
+    \end{equation*}
+    kedže voči každej otázke (ktorých je $q(n)$) máme $2q(n)$ miest, 
+    kde môže začínať náš IV tak, aby vznikol prienik.
+    Zároveň platí
+    \begin{equation*}
+        Pr[X_{\tilde{\Pi}} = 1 \land \neg Overlap] = \frac{1}{2}
+    \end{equation*}
+    lebo v tomto prípade opäť nevieme povedať nič.
+    A teda celkovo platí
+    \begin{equation*}
+        Pr[X_{\tilde{\Pi}} = 1] \leq \frac{1}{2} + \frac{2q(n)^2}{2^n} = 
+            \frac12 + negl(n)
+    \end{equation*}
 
-Zbytok dôkazu je presne rovnaký ako pri konštrukcii zo pseudonáhodnej funkcie.
+    Zbytok dôkazu je presne rovnaký ako pri konštrukcii 
+    zo pseudonáhodnej funkcie.
 \end{dokaz}
 
 \subsection{CCA odolnosť}
-Ukazuje sa, že pokiaľ chceme mať CCA odolnosť voči útočníkom, tak bežné módy sú nedostačujúce.
-Treba ešte pridať kontrolu integrity správy (aby si útočník nevedel len tak správu vyskladať po častiach).
+Ukazuje sa, že pokiaľ chceme mať CCA odolnosť voči útočníkom,
+tak bežné módy sú nedostačujúce.
+Treba ešte pridať kontrolu integrity správy 
+(aby si útočník nevedel len tak správu vyskladať po častiach).

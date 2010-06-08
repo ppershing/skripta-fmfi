@@ -37,14 +37,14 @@ Uveďme si jednoduchý príklad
   nezávislé, môže sa ale stať, že bit 0 generujeme s inou pravdepodobnosťou
   ako bit 1.
 
-  Existuje jednoduchý Van Neumanov\fixme{spelling} korektor, ktorý rieši
+  Existuje jednoduchý Van Neumannov korektor, ktorý rieši
   daný problém nasledovne: Zakaždým zoberme dvojicu bitov $r_{2i},r_{2i+1}$
   a na výstup dajme nasledovné:
   \begin{itemize}
-    \item[00] - nevypíšem nič, opakuj s ďalšou dvojicou bitov
-    \item[11] - nevypíšem nič, opakuj s ďalšou dvojicou bitov
-    \item[01] - 0
-    \item[10] - 1
+    \item[00] -- nevypíš nič, opakuj s ďalšou dvojicou bitov
+    \item[11] -- nevypíš nič, opakuj s ďalšou dvojicou bitov
+    \item[01] -- 0
+    \item[10] -- 1
   \end{itemize}
   Pretože bity sú nezávislé, evidentne pravdepodobnosť dvojice 01 a 10 je
   rovnaká. Problémom tejto konštrukcie je ale nejasná priepustnosť --
@@ -57,64 +57,110 @@ Uveďme si jednoduchý príklad
 \subsection{Pseudonáhodné generátory}
 
 \begin{definicia}
-Algoritmus $G$ je pseudonáhodný generátor (PRNG) so vstupom $s \in \{0,1\}^n$ (seed) ak platí:
-\begin{itemize}
-\item $\exists l(\cdot)\colon |G(s)| = l(n) > n$ (teda generátor generuje dlhšiu postupnosť ako seed, ktorý dostane)
-\item Vlastnosť pseudonáhodnosti: $\forall \text{PPT}~ D\colon |Pr[D(r) = 1] - Pr[D(G(s)) = 1]| \leq negl(n)$, kde 
-$r \inr \{0,1\}^{l(n)}, s \inr \{0,1\}^n$ (teda nevieme statistickým testom rozlíšiť výstupnú postupnosť od náhodnej postupnosti)
-\end{itemize}
+    Algoritmus $G$ je pseudonáhodný generátor (PRNG) so vstupom 
+    $s \in \{0,1\}^n$ (seed) ak platí:
+    \begin{itemize}
+        \item existuje polynóm $l(\cdot)$ taký, že
+            $|G(s)| = l(n) > n$ (teda generátor generuje dlhšiu postupnosť 
+            ako seed, ktorý dostane)
+        \item vlastnosť pseudonáhodnosti -- $\forall$ PPT
+            algoritmus $D$ platí
+            \begin{equation*}
+                \Big|Pr[D(r) = 1] - Pr[D(G(s)) = 1]\Big| \leq negl(n)
+            \end{equation*}
+            kde $r \inr \{0,1\}^{l(n)}, s \inr \{0,1\}^n$ 
+            (teda nevieme štatistickým testom rozlíšiť výstupnú postupnosť 
+            od náhodnej postupnosti)
+    \end{itemize}
 \end{definicia}
 
-Táto definícia sa dosť ťažko overuje. Existuje ale tzv. Next-bit test, pri ktorom sa ukáže, že ak algoritmus
-spĺňa Next-bit text, tak je aj PRNG.
+Táto definícia sa dosť ťažko overuje. Existuje ale takzvaný next-bit test, 
+pri ktorom sa ukáže, že ak algoritmus
+spĺňa next-bit test, tak je daný algoritmus je PRNG.
 
 \begin{definicia}
-Algoritmus $G$ spĺňa Next-bit text, ak pre ľubovoľný PPT $A$ platí:
-$forall i < l(n)\colon Pr[A(x_1, x_2, \dots, x_i) = x_{i+1}] \leq \frac{1}{2} + negl(n)$, kde
-$x \in G(s), s \inr \{0,1\}^n$ (teda neexistuje algoritmus, ktorý na základe
-prvých $i$ bitov vie úspešne tipnút nasledujúci bit).
+    Algoritmus $G$ spĺňa next-bit test, ak pre ľubovoľný PPT
+    algoritmus $A$ platí:
+    \begin{equation*}
+        \forall i < l(n)\colon Pr[A(x_1, x_2, \dots, x_i) = x_{i+1}] \leq \frac{1}{2} + negl(n)
+    \end{equation*}
+    kde
+    $x \in G(s), s \inr \{0,1\}^n$ (teda neexistuje algoritmus, ktorý na základe
+    prvých $i$ bitov vie úspešne tipnút nasledujúci bit).
 \end{definicia}
 
 \begin{veta}
-Algoritmus $G$ je PRNG práve vtedy ak spĺňa Next-bit test.
+    Algoritmus $G$ je PRNG práve vtedy ak spĺňa next-bit test.
 \end{veta}
 
 \begin{dokaz}
-"$\Rightarrow$": Ak by $G$ nespĺňal Next-bit test, tak priamo máme rozlišovací algoritmus.
+    \noindent
+    \begin{itemize}
+    \item[$\Rightarrow:$]
+        Ak by $G$ nespĺňal Next-bit test,
+        tak máme priamo rozlišovací algoritmus.
 
-"$\Leftarrow$": Nech $G$ nespĺňa nejaký štatistický test $A^{'}$. Na základe neho zostrojíme Next-bit
-test $A$ nasledovne:
+    \item[$\Leftarrow:$]
+        Nech $G$ nespĺňa nejaký štatistický test $A$.
+        Na základe neho zostrojíme algoritmus $A'$ pre next-bit test nasledovne:
 
-Uvažujme nasledovné distribúcie ($x_1 \dots x_{l(n)} \leftarrow G(s), r_1 \dots r_{l(n)} \inr \{0,1\}$):
-$$H_0 = r_1 r_2 \dots r_{l(n)}$$
-$$H_1 = x_1 r_2 \dots r_{l(n)}$$
-$$H_2 = x_1 x_2 r_3 \dots r_{l(n)}$$
-$$\dots$$
-$$H_{l(n)} = x_1 x_2 \dots x_{l(n)}$$
+        Uvažujme distribúcie 
+        \begin{align*}
+            H_0 &= r_1 r_2 r_3 \dots r_{l(n)} \\
+            H_1 &= x_1 r_2 r_3 \dots r_{l(n)} \\
+            H_2 &= x_1 x_2 r_3 \dots r_{l(n)} \\
+            &\dots \\
+            H_{l(n)} &= x_1 x_2 x_3 \dots x_{l(n)}
+        \end{align*}
+        kde $x_1 \dots x_{l(n)} \leftarrow G(s)$ sú pseudonáhodné bity
+        a $r_1 \dots r_{l(n)} \inr \{0,1\}$ sú náhodné bity.
 
-Keďže $A^{'}$ vie rozlišovať, tak platí:
-$$|Pr[A^{'}(t) = 1 | t \in H_0] - Pr[A^{'}(t) = 1 | t \in H_{l(n)}]| \geq \frac{1}{p(n)}$$
-Bez ujmy na všeobecnosti predpokladajme, že výraz v absolútnej hodnote je kladný.
-Potom ho vieme rozpísať ako:
-$$(Pr[A^{'}(t) = 1 | t \in H_0] - Pr[A^{'}(t) = 1 | t \in H_{1}]) + (Pr[A^{'}(t) = 1 | t \in H_1] - Pr[A^{'}(t) = 1 | t \in H_{2}])
-+ \dots $$ $$+ (Pr[A^{'}(t) = 1 | t \in H_{l(n)-1}] - Pr[A^{'}(t) = 1 | t \in H_{l(n)}]) \geq \frac{1}{p(n)}$$
+        Keďže $A$ vie rozlišovať medzi $H_0$ a $H_{l(n)}$, tak platí:
+        \begin{equation*}
+            \Big|Pr[A(t) = 1 | t \in H_0] - 
+                 Pr[A(t) = 1 | t \in H_{l(n)}] \Big| 
+            \geq \frac{1}{p(n)}
+        \end{equation*}
+        Bez ujmy na všeobecnosti predpokladajme, 
+        že výraz v absolútnej hodnote je kladný.
+        Potom ho vieme rozpísať ako:
+        \begin{equation*}
+        \begin{split}
+        &\Big(Pr[A(t) = 1 | t \in H_0] - 
+                Pr[A(t) = 1 | t \in H_{1}] \Big) \\ 
+        &+\Big(Pr[A(t) = 1 | t \in H_1] - 
+                Pr[A(t) = 1 | t \in H_{2}]\Big)\\
+        &+ \dots \\
+        &+ \Big(Pr[A(t) = 1 | t \in H_{l(n)-1}] - 
+                Pr[A(t) = 1 | t \in H_{l(n)}] \Big) \geq \frac{1}{p(n)}
+        \end{split}
+        \end{equation*}
 
-A teraz aspoň jeden sčítanec v zátvorke musí byť nezanedbateľný (ináč by bol celý výsledok zanedbateľný), čiže
-$\exists i < l(n)\colon Pr[A^{'}(t) = 1 | t \in H_{i}] - Pr[A^{'}(t) = 1 | t \in H_{i+1}] \geq \frac{1}{l(n)p(n)}$.
+        A teraz aspoň jeden sčítanec v zátvorke musí byť nezanedbateľný 
+        (inak by bol celý výsledok zanedbateľný), čiže 
+        $\exists i < l(n)\colon Pr[A(t) = 1 | t \in H_{i}] - 
+            Pr[A(t) = 1 | t \in H_{i+1}] \geq \frac{1}{l(n)p(n)}$.
 
-A Next-bit test $A(x_1 \dots x_i)$ zostrojíme nasledovne:
-Zoberieme postupnosti $s_0 = x_1 \dots x_i 0 r_{i+2} \dots r_{l(n)}, s_1 = x_1 \dots x_i 1 r_{i+2} \dots r_{l(n)}$
-a posuňme ich $A^{'}$. Ak:
-$A^{'}(s_0) = A^{'}(s_1)$, tak vratíme $b \inr \{0,1\}$. Ak $A^{'}(s_0) = 0 = \neg A^{'}(s_1)$, tak vrátime 0.
-A ak $A^{'}(s_0) = 1 = \neg A^{'}(s_1)$, tak vrátime 1.
+        Next-bit test $A'(x_1 \dots x_i)$ zostrojíme nasledovne:
+        Zoberieme postupnosti $s_0 = x_1 \dots x_i 0 r_{i+2} \dots r_{l(n)}$
+        a $s_1 = x_1 \dots x_i 1 r_{i+2} \dots r_{l(n)}$.
+        Dajme tieto dve postupnosti na vstup rozlišovača $A$.
+        Ak bude platiť $A(s_0) = A(s_1)$, tak vratíme $b \inr \{0,1\}$. 
+        Ak $A(s_0) = 0 \ne A(s_1)$, tak vrátime 0.
+        A napokon, ak $A(s_0) = 1 \ne A(s_1)$, tak vrátime 1.
 
-Dá sa ukázať, že šanca na úspech bude $\frac{1}{2} + \frac{1}{l(n)p(n)}$.
+        Dá sa ukázať, že šanca na úspech bude 
+        $\frac{1}{2} + \frac{1}{l(n)p(n)}$.
+    \end{itemize}
 \end{dokaz}
 
+
+\noindent
 Príkladom pseudonáhodného generátora je generátor podľa štandardu ANSI-X9.17:
 
 Na začiatku nastavíme náhodné hodnoty $K, seed$. 
-
-Vygenerovanie náhodného výstupu vyzerá nasledovne. Zoberie sa $timestamp$ a zašifruje
-sa pomocou kľúča $K$, dostaneme hodnotu $T_i = E_k(timestamp)$. Výstup z generátora bude
-hodnota $out = E_k(T_i \oplus seed)$. Navyše sa nastaví nový seed ako hodnota $E_k(T_i \oplus out)$.
+Vygenerovanie náhodného výstupu vyzerá nasledovne: 
+Zoberie sa $timestamp$ a zašifruje sa pomocou kľúča $K$,
+čím dostaneme hodnotu $T_i = E_k(timestamp)$. Výstup z generátora bude
+hodnota $out = E_k(T_i \oplus seed)$. 
+Navyše sa nastaví nový $seed$ ako hodnota $seed=E_k(T_i \oplus out)$.
