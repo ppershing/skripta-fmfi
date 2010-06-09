@@ -50,19 +50,21 @@ Podobná situácia je pri $g^x \pmod m$, kde niektoré hodnoty nemôžeme vôbec
 rozoznať.
 
 A navyše je tu ďalší problém. Server musí udržiavať hesla v otvorenej podobe, čo má dosť
-veľké bezpečnostné problémy.
+veľké bezpečnostné problémy. Môžeme miesto hesla si ukladať a používať na šifrovanie napríklad hash hesla (a tou aj šifrovať), ale
+to stále nebráni útočníkovi napodobniť použivateľa, keď získa túto hash.
 
 Tento problém sa snaží riešiť Augmented EKE protokol (A-EKE). Zoberme si funkciu, ktorá
 nám z hesla vygeneruje kľúče pre asymetrické šifrovanie: $(sk_a, pk_a) = f(P)$. 
-Server si uloží iba hodnotu $pk_a$. Navyše požadujeme, aby sa dalo šifrovať aj pomocou
-$sk_a$, aj pomocou $pk_a$ (chceme obojsmernú schému ako je napr. RSA). Nasledne vieme v protokole
-nahradiť šifrovanie pomocou hesla šifrovaním pomocou asymetrickej šifry nasledovne:
+Server si uloží iba hodnotu $pk_a$. Na symetrické šifrovanie použijeme miesto hesla $pk_a$.
+Nakoniec pomocou súkromného kľúča (ktorý vie zostrojiť iba vlastník hesla) zaručíme, že komunikujeme
+s pravým človekom.
+
 \begin{enumerate}
-\item $A\to S\colon A, E_{sk_a}(g^x)$
-\item $S\to A\colon E_{pk_a}(g_y), E_K(N_S)$ (server pozná len $pk_a$, $A$ vie dešifrovať aj pomocou $sk_a$)
+\item $A\to S\colon A, E_{pk_a}(g^x)$
+\item $S\to A\colon E_{pk_a}(g_y), E_K(N_S)$
 \item $A\to S\colon E_K(N_S, N_A)$
 \item $S\to A\colon E_K(N_A)$
-\item $A\to S\colon E_K(E_{sk_a}(K))$ - tento krok je tu navyše, slúži nato, aby útočník pokiaľ získa $pk_a$ sa nevedel vložiť do komunikácie
+\item $A\to S\colon E_K(Sig_{sk_a}(K))$ - tento krok je tu navyše, slúži nato, aby útočník pokiaľ získa $pk_a$ sa nevedel vložiť do komunikácie
 \end{enumerate}
 
 \todo{SRP}
