@@ -49,22 +49,30 @@ Pokiaľ odpočuje viac konverzácií, tak sa časom dostane k správnemu heslu. 
 Podobná situácia je pri $g^x \pmod m$, kde niektoré hodnoty nemôžeme vôbec dostať a toto vie útočník
 rozoznať.
 
-A navyše je tu ďalší problém. Server musí udržiavať hesla v otvorenej podobe, čo má dosť
+A navyše je tu ďalší problém. Server musí udržiavať heslá v otvorenej podobe, čo má dosť
 veľké bezpečnostné problémy. Môžeme miesto hesla si ukladať a používať na šifrovanie napríklad hash hesla (a tou aj šifrovať), ale
 to stále nebráni útočníkovi napodobniť použivateľa, keď získa túto hash.
 
-Tento problém sa snaží riešiť Augmented EKE protokol (A-EKE). Zoberme si funkciu, ktorá
-nám z hesla vygeneruje kľúče pre asymetrické šifrovanie: $(sk_a, pk_a) = f(P)$. 
-Server si uloží iba hodnotu $pk_a$. Na symetrické šifrovanie použijeme miesto hesla $pk_a$.
-Nakoniec pomocou súkromného kľúča (ktorý vie zostrojiť iba vlastník hesla) zaručíme, že komunikujeme
-s pravým človekom.
+Tento problém sa snaží riešiť Augmented EKE protokol (A-EKE).
+Zoberme si funkciu, ktorá
+nám z hesla vygeneruje kľúče pre asymetrické podpisovanie: 
+$\langle sk_A, pk_A \rangle = f(P)$. 
+Server si uloží iba hodnotu $pk_A$.
+Protokol bude podobný ako EKE, teda budeme šifrovať \emph{symetricky}
+pomocou kľúča odvodeného z hesla, v našom prípade to bude $pk_A$.
+Nakoniec pomocou súkromného kľúča (ktorý vie zostrojiť iba vlastník hesla)
+podpíšeme komunikáciu a tým zaručíme, že komunikujeme s pravým človekom.
 
 \begin{enumerate}
-\item $A\to S\colon A, E_{pk_a}(g^x)$
-\item $S\to A\colon E_{pk_a}(g_y), E_K(N_S)$
-\item $A\to S\colon E_K(N_S, N_A)$
-\item $S\to A\colon E_K(N_A)$
-\item $A\to S\colon E_K(Sig_{sk_a}(K))$ - tento krok je tu navyše, slúži nato, aby útočník pokiaľ získa $pk_a$ sa nevedel vložiť do komunikácie
+    \item $A\to S\colon A, E_{pk_A}(g^x)$.
+        Pozor, v celej schéme šifrujeme iba \emph{symetricky}!
+    \item $S\to A\colon E_{pk_A}(g^y), E_K(N_S)$
+    \item $A\to S\colon E_K(N_S, N_A)$
+    \item $S\to A\colon E_K(N_A)$
+    \item $A\to S\colon E_K(Sig_{sk_A}(K))$ --
+        tento krok je tu navyše oproti EKE, slúži nato,
+        aby útočník pokiaľ získa $pk_A$ sa nevedel vložiť do
+        komunikácie.
 \end{enumerate}
 
 \todo{SRP}
