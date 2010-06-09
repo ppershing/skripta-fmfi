@@ -32,7 +32,7 @@ Následne predpokladajme, že máme hašovaciu funkciu s oborom hodnôť $G$.
 Rozdeľme dokument na $k$ blokov $m = m_1 m_2 \dots m_k$, každý
 veľkosti $n$. Náš haš bude 
 \begin{equation*}
-    H(m) = \bigodot_{j=1}^k h(i, m_i)
+    H(m) = \bigodot_{i=1}^k h(i, m_i)
 \end{equation*}
 Pokiaľ sa blok $m_i$ zmení na $m_i'$, tak nový haš vypočítame
 nasledovne:
@@ -88,14 +88,14 @@ Najprv si ukážeme tzv. XOR-HASH.
 Predpokladajme, že $h\colon \{0,1\}^n \to \{0,1\}^l$.
 Haš bude daný vzorcom
 \begin{equation*}
-    H(m) = \bigoplus_{j=1}^k h(i, m_i)
+    H(m) = \bigoplus_{i=1}^k h(i, m_i)
 \end{equation*}
 
 Ukážeme, že aj v prípade, že aj v prípade ak $h$ je kvalitná hašovacia funkcia
 (správa sa ako náhodné orákulum) vieme XOR-HASH invertovať.
 
 Na vstupe majme hodnotu $z \in \{0,1\}^l$, ktorý chceme invertovať.
-Najprv si pripravíme 2 náhodné dokumenty (postupnosti blokov)
+Najprv si pripravíme dva náhodné dokumenty (postupnosti blokov)
 $m^{(0)} = m_1^{(0)} m_2^{(0)} \dots m_k^{(0)}$ a 
 $m^{(1)} = m_1^{(1)} m_2^{(1)} \dots m_k^{(1)}$. Bolo by pritom
 vhodné, aby zodpovedajúce si bloky boli rôzne, teda aby $\forall i:

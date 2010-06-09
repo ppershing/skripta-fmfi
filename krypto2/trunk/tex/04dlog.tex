@@ -49,18 +49,19 @@ Podobne ako pri faktorizácii sa budeme snažiť nájsť nejakú funkciu, ktorá
 by sa správala ako čo najlepšie náhodné zobrazenie. Pri takejto funkcii
 potom môžeme očakávať nájdenie cyklu/kolízie v čase $O(\sqrt{n})$.
 
-Zvoľme si $x_0 = g^{a_0} y^{b_0}$ kde $a_0,b_0 \inr Z_{n-1}$. Hodnota
-$x_0$ bude začiatočný prvok postupnosti, ktorú budeme generovať.
+Naším cieľom je vypočítať hodnotu $x = \dlog_g y$.
+Zvoľme si $z_0 = g^{a_0} \cdot h^{b_0}$ kde $a_0,b_0 \inr Z_{n-1}$. Hodnota
+$z_0$ bude začiatočný prvok postupnosti, ktorú budeme generovať.
 Na ``znáhodnenie'' našej funkcie si grupu $G$ rozdelíme na 3 disjunktné množiny:
 $G=S_1 \union S_2 \union  S_3$.
 
 Uvažujme teraz nasledujúcu funkciu $f$:
 \begin{equation*}
-    x_{i+1} = f(x_i) =
+    z_{i+1} = f(z_i) =
         \begin{cases}
-         y x_i & x_i \in S_1 \\
-         x_i^2 & x_i \in S_2 \\
-         g x_i & x_i \in S_3
+         y \cdot z_i & z_i \in S_1 \\
+         x_i^2 & z_i \in S_2 \\
+         g \cdot z_i & z_i \in S_3
         \end{cases}
 \end{equation*}
 Je dôležité, že vďaka operáciam, ktoré sme zvolili, vieme vypočítať aj
@@ -69,9 +70,9 @@ Je dôležité, že vďaka operáciam, ktoré sme zvolili, vieme vypočítať aj
 \begin{equation*}
     (a_{i+1},b_{i+1}) =
         \begin{cases}
-         (a_i,b_i+1) & x_i \in S_1 \\
-         (2a_i,2b_i) & x_i \in S_2 \\
-         (a_i+1,b_i) & x_i \in S_3 \\
+         (a_i,b_i+1) & z_i \in S_1 \\
+         (2a_i,2b_i) & z_i \in S_2 \\
+         (a_i+1,b_i) & z_i \in S_3 \\
         \end{cases}
 \end{equation*}
 
@@ -86,7 +87,7 @@ hľadanie cyklov spomínaných v kapitole o faktorizácii.
 
 Ak nájdeme kolíziu, dostávame
 \begin{align*}
-    g^{a_i} y^{b_i} &\equiv g^{a_j} y^{b_j} \pmod n\\
+    g^{a_i} \cdot y^{b_i} &\equiv g^{a_j} \cdot y^{b_j} \pmod n\\
     y^{b_i-b_j} &\equiv g^{a_j-a_i} \pmod n\\
     x &\equiv(a_j - a_i)(b_i-b_j)^{-1} \pmod n
 \end{align*}
@@ -106,43 +107,43 @@ $n=p_1^{m_1} \dots p_k^{n_k}$
 
 \subsection{Index calculus}
 Narozdiel od predchádzajúcich algoritmov, tento algoritmus nie je
-všeobecný. Dá sa použiť napríklad pre grupy $(Z_p^*,\cdot), GF(2^m)$.
+všeobecný. Dá sa použiť napríklad pre grupy $(Z_q^*,\cdot), GF(2^m)$.
 V prípade eliptických kriviek sa nedá použiť. Tento jeho hendikep
 ale kompenzuje jeho časová zložitosť, ktorá je subexponenciálna.
 
-Uvažujme pre jednoduchosť grupu $G=(Z_p^*,\cdot)$.
+Uvažujme pre jednoduchosť grupu $G=(Z_q^*,\cdot)$.
 Algoritmus pozostáva z 2 krokov - predvýpočtu a samotného výpočtu.
 Predvýpočet sa môže spraviť raz pre jednu grupu.
 
 Predvýpočet:
 
 Majme zvolenú prvočíselnú bázu $B=\{p_1,\dots,p_b\}$.
-Položme $a \inr Z_{p-1}$. 
+Položme $a \inr Z_{q-1}$. 
 Našou snahou bude rozložiť $g^a$ nad bázou $B$, teda nájsť hodnoty
-$e_1,\dots,e_b$ také, že $g^a \mod p = p_1^{e_1} p_2^{e_2} \dots
+$e_1,\dots,e_b$ také, že $g^a \mod q = p_1^{e_1} p_2^{e_2} \dots
 p_b^{e_b}$.
 Cieľom je nazbierať čo najviac takýchto závislostí, optimálne
 $b+1$. Ak totiž zlogaritmujeme dané rovnosti, dostaneme sústavu
 lineárnych rovníc.
-$a=e_1 \dlog_g p_1 + e_2 \dlog_g p_2 + \dots + e_b \dlog_g p_b \pmod{p-1}$.
+$a=e_1 \dlog_g p_1 + e_2 \dlog_g p_2 + \dots + e_b \dlog_g p_b \pmod{q-1}$.
 V tejto sústave sú neznáme $\dlog_g p_1, \dlog_g p_2, \dots, \dlog_g p_b$.
 
 Ak sme úspešne zvládli tento predvýpočet, môžeme skúšať počítať $\dlog y$
 nasledovne.
-Zvolíme si $b\inr Z_{p-1}$ a skúšame, či vieme hodnotu
+Zvolíme si $b\inr Z_{q-1}$ a skúšame, či vieme hodnotu
 $y g^a = p_1 ^ {e_1} \dots p_b ^ {e_b}$. Tým pádom
 $x+a = e_1 d_1 + \dots + e_b d_b$.
 
 Časová zložitosť (veľmi podobná Dixonovmu algoritmu) je
-$O(e^{(1+O(1))\sqrt{\log p \log \log p}})$.
+$O(e^{(1+O(1))\sqrt{\log q \log \log q}})$.
 
 \begin{poznamka}
-    Výpočet v prípade, že $G$ je $GF(p^m)$ je veľmi podobný, bázu budú ale
+    Výpočet v prípade, že $G$ je $GF(q^m)$ je veľmi podobný, bázu budú ale
     tvoriť ireducibilné polynómy.
 \end{poznamka}
 \begin{poznamka}
-    Nech G je podgrupa $Z_p^*$, ktorej veľkost $|G|=q$ je prvočíslo.
-    Ak mame generator $g\in G$, potom výpočet $\dlog_g x$ v $G$ 
+    Nech G je podgrupa $Z_q^*$, ktorej veľkost $|G|=n$ je prvočíslo.
+    Ak máme generátor $g\in G$, potom výpočet $\dlog_g x$ v $G$ 
     realizujeme buď pollard rho metodou.
     \todo{doplnit}
 \end{poznamka}

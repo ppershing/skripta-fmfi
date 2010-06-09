@@ -146,7 +146,7 @@ $\ref{fig:elliptic-plus}$.
             \hline 7 & 10 & - \\
             \hline 8 & 4 & 2, 9 \\
             \hline 9 & 2 & - \\
-            \hline 19 & 10 & - \\
+            \hline 10 & 10 & - \\
         \end{tabular}
         \caption{Body ležiace na eliptickej krivke $x^3 + x + 1
         \pmod{11}$}
@@ -156,7 +156,7 @@ $\ref{fig:elliptic-plus}$.
        E=\Big\{ [0,1], [0,10], [1,5], [1,6],
                 [2,0], [3,3], [3,8],
                 [4,5], [4,6], [5,2], [5,9],
-                [6,5], [6,6], [9,2], [9,9], \mathbf{0} \Big\}
+                [6,5], [6,6], [8,2], [8,9], \mathbf{0} \Big\}
     \end{equation*}
     Príklad niektorých sčítaní:
     \begin{align*}
@@ -180,7 +180,7 @@ sme mali prvočíselnú grupu. Začneme však postupne:
     Nech $E$ je grupa bodov eliptickej krivky $\pmod{p}$.
     Potom platí
     \begin{equation*}
-        p+p - 2 \sqrt{p} \le |E| \le p + 1 + 2 \sqrt{p}
+        p + 1 - 2 \sqrt{p} \le |E| \le p + 1 + 2 \sqrt{p}
     \end{equation*}
 \end{veta}
 
@@ -190,7 +190,7 @@ Na pomoc príde Schoofov algoritmus, ktorý v čase
 $O((\log{p})^6)$ vie presne určiť počet bodov krivky. Problém je však
 v tom, že na praktické účely je aj toto priveľa -- v roku 2001 vraj
 výpočet pre 200 bitové čísla trval niekoľho hodín. Teda, v súčasnosti
-nie je efektívne počítať veľkosť grupy tvojenej bodmi eliptickej
+nie je efektívne počítať veľkosť grupy tvorenej bodmi eliptickej
 krivky, minimálne nie na takej úrovni ako sa používa RSA napríklad pri
 zabezpečovaní secure http.
 
@@ -261,7 +261,7 @@ n =   77706 7556890291 6283677847 6272940756 2656962592
             \end{verbatim}
         \item Polynomial Basis:  
             \begin{verbatim}
-b   = 27b680a c8b8596d a5a4af8a 19a0303f ca97fd76
+B   = 27b680a c8b8596d a5a4af8a 19a0303f ca97fd76
               45309fa2 a581485a f6263e31 3b79a2f5;
 G_x = 5f93925 8db7dd90 e1934f8c 70b0dfec 2eed25b8
               557eac9c 80e2e198 f8cdbecd 86b12053; 
@@ -271,7 +271,7 @@ G_y = 3676854 fe24141c b98fe6d4 b20d02b4 516ff702
         \item Normal Basis:  
             \begin{verbatim}
 seed = 77e2b073 70eb0f83 2a6dd5b6 2dfc88cd 06bb84be;
-b    =  157261b 894739fb 5a13503f 55f0b3f1 0c560116
+B    =  157261b 894739fb 5a13503f 55f0b3f1 0c560116
                 66331022 01138cc1 80c0206b dafbc951;
 G_x  =  749468e 464ee468 634b21f7 f61cb700 701817e6
                 bc36a236 4cb8906e 940948ea a463c35d; 
@@ -298,8 +298,8 @@ volaním funkcie \ref{proc:signecdsa}.
 \begin{procedure}[H]
     \caption{SignECDSA($m,sk=d, D=\langle q,FR, A,B,G,n,h \rangle$)}
     \label{proc:signecdsa}
-    \Repeat{$s \not =0$}{
-        \Repeat{$r \not =0$}{
+    \Repeat{$s =0$}{
+        \Repeat{$r =0$}{
             $k \inr \{ 1, \dots, n-1 \}$ \;
             $\langle x_1, y_1 \rangle = k * G$ \;
             $r \assign x_1 \pmod{n}$ \;
@@ -380,7 +380,7 @@ $sk=d \inr \{1,\dots,n-1\}$ a $pk=Q=d*G$.
 
 \begin{procedure}[H]
     \caption{ECEG::encrypt($m$)}
-    \Repeat{$(x_0 \not =0)$}{
+    \Repeat{$(x_0  =0)$}{
         $k \inr \{ 1, \dots, n-1\}$ \;
         $ R \assign k*G$ \;
         $ \langle x_0, y_0 \rangle \assign k*Q$ \;
@@ -419,7 +419,7 @@ exponenciáciou (v našom prípade ale neumocňujeme, iba násobíme):
 $15*G = 8*G + 4*G + 2*G + G$. Tento zápis vieme ale spraviť aj
 efektívnejšie : $15*G = 16*G - G$. V prvom rade si môžeme všimnúť, že
 sme pridali jedno sčítanie $16*G = 8*G + 8*G$, ušetrili sme ale dve
-sčítanie. Na druhej strane, výpočet inverzného prvku je úplne zadarmo,
+sčítania. Na druhej strane, výpočet inverzného prvku je úplne zadarmo,
 keďže je to iba zmena znamienka $y$-ovej súradnice.
 
 Vo všeobecnosti, čím viac núl má číslo, ktorým chceme
