@@ -7,7 +7,7 @@ menovite $n$.
 V krypto I sme hovorili o tom, že takéto šifrovanie je odolné voči
 útoku so znalosťou otvoreného textu (KPA).
 Ukazuje sa však, že voľba iba 2 kľúčov má nepríjemne vlastnosti pri
-CPA -- útokom s možnosťou voľby šifrového textu.
+CPA -- útokom s možnosťou voľby otvoreného textu.
 
 Jeden taký možný útok si ukážeme:
 \begin{itemize}
@@ -30,9 +30,9 @@ Jeden taký možný útok si ukážeme:
         \end{figure}
         Preberajme teraz všetkých kandidátov $k_1$ na prvý kľúč.
         Vypočítajme plaintex ako $p=D_{k_1}(0)$.
-        Následne vypočítame šifrový text ako $c=TE_{k_1,k_2}(x)$.
+        Následne vypočítame šifrový text ako $c=TE_{k_1,k_2}(p)$.
         Pretože vieme $k_1$, vráťme sa o 1 krok vo výpočte šifrového
-        textu, dostávame $z=D_{k_1}(y)$.
+        textu, dostávame $z=D_{k_1}(c)$.
         Teraz nám ale nič nebráni pozrieť sa do našej hashovacej
         tabuľky -- chceme nájsť kľúč $k_2$, taký, že
         $D_{k_2}(0) = z$, čiže pozrieme zoznam kľúčov v hashovacej
@@ -53,6 +53,6 @@ Máme teda útok, ktorého časová zložitosť je $O(2^n)$, čo je menej ako
 očakávaných $O(2^{2n})$. V praxi sa samozrejme daný útok nedá
 realizovať, pokiaľ nám naša obeť nie je ochotná zašifrovať zhruba
 $O(2^n)$ otvorených textov. Morálnym poučením teda bude, že trojité
-kódovanie môže byť síce jednoduchá a pomerne úspešná forma zosilnenia
+šifrovanie môže byť síce jednoduchá a pomerne úspešná forma zosilnenia
 šifrovania pre praktické účely, pre teoretické účely je to ale
 nevhodná konštrukcia.

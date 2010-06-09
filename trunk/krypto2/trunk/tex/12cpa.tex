@@ -67,7 +67,7 @@ kľúča, správy a výstupu funkcie $F$ sú rovnaké, teda $n = |k| = |x| = |F_
 
 Pokiaľ máme pseudonáhodný generátor $G$,
 tak vieme pomocou neho zostrojiť pseudonáhodnú funkciu nasledovne:
-Nech $|G(x)=2n|$. Rozdeľme si $G$ na 2 časti, teda $G(x) = G_0(x)||G_1(x)$.
+Nech $|G(x)|=2n$. Rozdeľme si $G$ na 2 časti, teda $G(x) = G_0(x)||G_1(x)$.
 Potom môžeme definovať
 \begin{equation*}
     F_k(x_1 x_2 \dots x_n) = G_{x_n}(\dots(G_{x_2}(G_{x_1}(k)))\dots)
@@ -196,7 +196,7 @@ Ukážeme si, že niektoré módy majú vlastnosť nerozlíšiteľnosti pri CPA 
         Ukážeme, že máme nerozlíšiteľné šifrové texty.
 \end{itemize}
 \begin{veta}
-    Ak $E_k$ pri CTR móde je pseudonáhodná permutícia,
+    Ak $E_k$ pri CTR móde je pseudonáhodná permutácia,
     tak CTR mód má nerozlíšiteľné šifrové texty pri CPA.
 \end{veta}
 \begin{dokaz}
