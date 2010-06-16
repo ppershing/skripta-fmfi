@@ -92,7 +92,7 @@ ako sme robili pri ostatných podpisových schémach.
             vstupe nedostáva $sk_B$ ale $pk_B$.
     \end{itemize}
     Navyše, pre každú štvoricu $\langle pk_A,sk_A,pk_B,sk_B \rangle$
-    vygenerovaný algoritmom $Gen(1^n)$ a pre každú správu $m\in M$
+    vygenerovanú algoritmom $Gen(1^n)$ a pre každú správu $m\in M$
     musí platiť
     \begin{equation*}
         Verify(m, Sig(m,sk_A,pk_B),sk_B,pk_A)=1
@@ -180,7 +180,7 @@ tento:
     $c \assign g^{s'} y_A^{r'}$\;
     $r \assign H(m,c)$\;
     $s \assign s' r r'^{-1} \pmod{q}$\;
-    $t \assign x_A r' r^{-1} \pmod{q}$\;
+    $t \assign x_B r' r^{-1} \pmod{q}$\;
     \Return $\langle r,s,t \rangle$\;
 \end{procedure}
 
