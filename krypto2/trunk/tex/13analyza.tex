@@ -2,10 +2,11 @@
 
 Vitajte v dnešnej časti telenovely Krypto II. V minulom dieli sme
 hovorili o odolnosti symetrických šifier. Dnešný diel sa pozrie na
-tematiku z opačnej strany -- ukážeme si snáď prvé známe útoky na DES,
+tématiku z opačnej strany -- ukážeme si snáď prvé známe útoky na DES,
 ktoré boli efektívnejšie ako bruteforce útok. Tieto útoky došli v
+Na symetrické šifrovanie použijeme miesto hesla $pk_a$.
 90-tych rokoch, no NSA neskôr priznala, že už v 70-tych rokoch vedela
-o možnosti útokov týmto spôsobom a prebo bola DES šifra navrhnutá tak,
+o možnosti útokov týmto spôsobom a preto bola DES šifra navrhnutá tak,
 aby boli dané útoku čo najmenej možné.
 
 Ako už názov napovedá, budeme sa najskôr baviť o lineárnej
@@ -128,7 +129,7 @@ $table[0,0] = 16$, čo je očakávané. Ak totiž nevyberieme žiadne bity,
 tak očakávame $0==0$ so 100\%-tnou pravdepodobnosťou.
 Naopak, všetky políčka $[x,y]$, pre ktoré $table[x,y]=0$ budú
 nepoužiteľné v našej analýze. Vtedy je totiž počet zhôd a nezhôd
-rovnaký a teda pravdepodobnosť je presne $1/2$. Našim cieľom bude
+rovnaký a teda pravdepodobnosť je presne $1/2$. Naším cieľom bude
 pozbierať vhodné lineárne aproximácie pre S-boxy a poskladať z nich
 lineárnu kombináciu pre celú šifru okrem posledného kola.
 Túto kombináciu následne použijeme na štatistické testovanie
