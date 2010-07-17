@@ -75,42 +75,62 @@ podpíšeme komunikáciu a tým zaručíme, že komunikujeme s pravým človekom
         komunikácie.
 \end{enumerate}
 
-\subsection{SRP (Secure remote password) protocol}
+\subsection{SRP (Secure remote password) protokol}
 
 Ďalším protokolom použiteľným na autentifikáciu heslom je SRP protokol.
 Pracuje v grupe $Z_n^{*}$, kde $n$ je prvočíslo. Nech $g$ je generátor
-tejto grupy. Pre každého uživateľa $A$ treba vygenerovať náhodnú soľ
-$S$. Následne vypočítame $x = H(s,P)$ a $v = g^x$. Server si následne
-pre každého uživateľa uloží záznam $<A, s, v>$.
+tejto grupy.
+Pre každého uživateľa $A$ je potrebné vygenerovať náhodnú soľ $s$.
+Privátnym kľúčom účastníka v ďalšom výpočte bude hash hesla, čiže
+hodnota $x = H(s,P)$ a jeho verejný kľúč označíme ako $v = g^x$.
+Server $S$ si následne
+pre každého uživateľa uloží záznam $\langle A, s, v \rangle$.
 Samotné prihlasovanie prebieha nasledovne:
 \begin{enumerate}
 \item $A\to S\colon A$
 \item $S\to A\colon s$
-\item $A\to S\colon \alpha = g^a$ pričom $ a\inr Z_n^{*}$
-\item $S\to A\colon \beta = g^b + v; u$ pričom $b,u \inr Z_n^{*}$
+\item $A\to S\colon \alpha = g^a$ pričom $a \inr Z_n^{*}$
+\item $S\to A\colon \beta = g^b + v,\ u$ pričom $b,u \inr Z_n^{*}$
 \item Server vypočíta kľúč $K = H((\alpha v^u)^b)$
 \item Uživateľ vypočíta kľúč $K = H((\beta - g^x)^{a+ux})$
 \item $A\to S\colon M_1 = H(A,S,K)$
 \item $S\to A\colon H(A,M_1,K)$
 \end{enumerate}
 
-Ukážme si najprv, že aj server aj uživateľ vypočítajú tú istú hodnutu $K$.
-Pri výpočte si odmyslíme to, že výsledok sa nakonci hašuje:
-$$(\beta - g^x)^{a+ux} = (g^b + v - g^x)^{a+ux} = g^{ba+bux}$$
-$$(\alpha v^u)^b = (g^{a+xu})^b = g^{ba+bux}$$
+Ukážme si najprv, že aj server aj užívateľ vypočítajú tú istú hodnutu $K$.
+Ak si odmyslíme hašovanie na konci, dostávame
+\begin{align*}
+(\beta - g^x)^{a+ux} = (g^b + v - g^x)^{a+ux} &= g^{ba+bux}\\
+(\alpha v^u)^b = (g^{a+xu})^b &= g^{ba+bux}
+\end{align*}
+Zaoberajme sa teraz rôznymi vlastnosťami tohoto protokolu.
 
-Ukážme niekoľko vlastností tohoto protokolu.
-
-Prvou bude to, že útočník, ktorý odpočuje protokol, nie je schopný vypočítať kľúč
-$K$. Teda útočník má k dispozícií hodnoty $\alpha, \beta, u, g, n$ a ešte mu navyše
-dáme aj hodnotu $x$. Ak tento útočník dokáže zistiť z týchto hodnôt hodnotu $K$
+Prvou bude to, že útočník, ktorý odpočuje protokol,
+nie je schopný vypočítať kľúč $K$.
+Útočník má k dispozícií hodnoty $\alpha, \beta, u, g, n$.
+Dajme mu navyše k dispozícii aj hodnotu $x$.
+Ak útočník dokáže zistiť z týchto hodnôt hodnotu $K$,
 vieme ho využiť na riešenie DH problému nasledovne:
-Máme na vstupe $g, g^a, g^b$. Zvolíme $u,x$ tak, aby $n-1 | ux$, napríklad
-$u = 2, x = \frac{n-1}{2}$. Útočníkovi dáme $\alpha = g^a, \beta = g^b + g^x$ a obvyklý
-zbytok. On určí $K = H(g^{ba+bux})$. 
-Vzhľadom na to, že uvažujeme hash ako náhodné orákulum tak je jasné, že niekedy musel útočník
-vedieť hodnotu $g^{ba+bux}$, teda spýtať sa hašovacieho orákula na $H(g^{ba+bux})$.
-Toto orákulum môžeme prevádzkovať útočníkovi sami a tým padom budeme vedieť hodnotu
-$g^{ba+bux} = g^{ba+b(n-1)m} = g^{ba}$, čím sme vyriešili úspešne DH problém.
+Majme na vstupe hodnoty $g, g^a, g^b$. Zvolíme si $u,x$ tak, 
+aby $n-1 | ux$, napríklad $u = 2, x = \frac{n-1}{2}$.
+Útočníkovi dáme na vstup $\alpha = g^a, \beta = g^b + g^x$ a obvyklý zbytok.
+On určí $K = H(g^{ba+bux})$. 
+Vzhľadom na to, že uvažujeme hash ako náhodné orákulum,
+tak je jasné, že niekedy musel útočník vedieť hodnotu $g^{ba+bux}$,
+teda spýtať sa hašovacieho orákula na $H(g^{ba+bux})$.
+Toto orákulum môžeme prevádzkovať útočníkovi sami a
+tým pádom budeme vedieť hodnotu
+$g^{ba+bux} = g^{ba+b(n-1)m} = g^{ba}$,
+čím sme vyriešili úspešne DH problém.
+
+\begin{poznamka}
+Na tomto mieste by sme upozornili, že daná redukcia funguje len za
+predpokladu, ak máme útočníka riešiaceho všetky inštancie problému.
+V prípade, že máme iba pravdepodobnostného útočníka, ktorý na vstupe
+dostane hodnoty z rovnomernej distribúcie, máme problém.
+Väzba $n-1 | ux$ nám totiž výrazne redukuje možné dvojice hodnôt
+$u,x$, čo je v rozpore s predpokladmi pre útočníka. Tým pádom útočník
+nemusí byť vôbec schopný riešiť takéto inštancie problému.
+\end{poznamka}
 
 \todo{SRP zbytok}
