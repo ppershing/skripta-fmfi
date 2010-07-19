@@ -1,0 +1,67 @@
+\section{Authenticated encryption}
+
+Doteraz sme sa pri správach zaberali buď autentickosťou (Rôzne podoby
+MAC-u) alebo dôvernosťou a utajením (šifrovanie). V praxi však niekedy
+potrebujeme dosiahnuť oboje naraz.
+\begin{priklad}
+    Ako naivné riešenie tohoto problému by sme mohli zobrať nasledujúcu
+    konštrukciu: $AE = E_k(m, H(m))$. Táto konštrukcia bola použitá v
+    praxi, a to dokonca viackrát. Prvým kandidátom je $E=\mbox{RC4}$ a
+    $H=\mbox{CRC-32}$, v naších končinách je táto kombinácia známa aj pod
+    názvom WEP (Wired Equivalent Privacy). Podobne, ak
+    $E=\mbox{DES}$ a $H=\mbox{CRC-32}$, ide o SSH verzia 1.
+    Obidve spomínané konštrukcie sú v súčasnosti rozbité.
+\end{priklad}
+
+Ešte predtým, ako začneme rozmýšľať nad úpravami, je dobré sa
+zamyslieť nad tým, že MAC aj šifrovanie potrebujú kľúče. Použijeme
+jeden kľúč? Dva kľúče? Aký bude medzi nimi vzťah a ako kvalitné musia
+byť?
+
+Taktiež, bezpečnosť celej konštrukcie bude závisieť od módu blokovej
+šifry. Ako príklad si ukážeme (ne)bezpečnosť CBC-MAC.
+
+\begin{priklad}
+    Konštrukcia CBC-MAC funguje nasledovne. Na vstupe máme otvorený
+    text $m_1,m_2,\dots,m_n$. Vstup najskôr zašifrujeme v CBC-móde
+    (vstupom šifrovania je inicializačný vektor $IV$ a kľúč $k$),
+    následne vypočítame autentifikačný token (tag)
+    $\sigma=E_k(D_{k'}(c_n))$ kde $c_n$ je posledný blok výstupu
+    šifry a $k'$ je autentifikačný kľúč.
+    Celá správa je teda $\langle IV, c_1, c_2,\dots,c_n,\sigma
+    \rangle$.
+
+    Uvažujme teraz útočníka, ktorý si môže voliť správy a nechať si
+    ich autentifikovane šifrovať. Cieľom útočníka je vytvoriť novú
+    (podvrhnutú) správu a k nej korektný MAC.
+
+    Uvažujme 2 podpísané správy
+    \begin{align*}
+        M &= \langle IV, c_1, c_2, \dots, c_n, \sigma \rangle \\
+        M' &= \langle IV', c_1', c_2', \dots c_n', \sigma' \rangle
+    \end{align*}
+    Ak nastane situácia, že $\exists i,j: c_i = c_j'$, vieme zobrať
+    polovicu šifrového textu z jednej správy a polovicu šifrového
+    textu z druhej. V našom prípade, korektne autentifikované a
+    šifrované správy budú
+    \begin{align*}
+        X_1 &= \langle IV, c_1, c_2, \dots, c_i, c_{j+1}', c_{j+2}' \dots
+                c_n', \sigma' \rangle \\
+        X_2 &= \langle IV', c_1', c_2', \dots c_j,
+           c_{i+1}, c_{i+2}, \dots c_n, \sigma \rangle
+    \end{align*}
+    Aká je pravdepodobnosť vzniku takejto kolízie? Spomeňme si na
+    narodeninový paradox. Ak označíme veľkosť kľúča pri šifrovaní ako 
+    $k$ (poznamenajme, že celková dĺžka kľúčov potrebných pri tejto
+    konštrukcii je $2k$),
+    stačí ak si útočník podpíše správy o celkovom počte blokov
+    $2^{k/2}$ a má vysokú šancu na úspech. Tento útok je síce skôr
+    teoretický ako praktický, ale poukazuje na možné probémy.
+\end{priklad}
+
+Budeme pokračovať ďalším ilustratívnym príkladom, ktorý je historický
+a poučný.
+
+\todo{dual counter mode}
+\todo{iapm}
+\todo{gcm}
