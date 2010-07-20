@@ -124,13 +124,8 @@ $g^{ba+bux} = g^{ba+b(n-1)m} = g^{ba}$,
 čím sme vyriešili úspešne DH problém.
 
 \begin{poznamka}
-Na tomto mieste by sme upozornili, že daná redukcia funguje len za
-predpokladu, ak máme útočníka riešiaceho všetky inštancie problému.
-V prípade, že máme iba pravdepodobnostného útočníka, ktorý na vstupe
-dostane hodnoty z rovnomernej distribúcie, máme problém.
-Väzba $n-1 | ux$ nám totiž výrazne redukuje možné dvojice hodnôt
-$u,x$, čo je v rozpore s predpokladmi pre útočníka. Tým pádom útočník
-nemusí byť vôbec schopný riešiť takéto inštancie problému.
+Uvedený postup funguje aj pre ľubovoľné $x, u$. Stačí výslednú hodnotu
+$g^{ba+bux}$ vydeliť hodnotou $(g^b)^{ux}$, potom dostaneme $g^{ba}$, čo sme chceli dostať.
 \end{poznamka}
 
 \todo{SRP zbytok}
