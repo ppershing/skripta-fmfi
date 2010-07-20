@@ -128,4 +128,17 @@ Uvedený postup funguje aj pre ľubovoľné $x, u$. Stačí výslednú hodnotu
 $g^{ba+bux}$ vydeliť hodnotou $(g^b)^{ux}$, potom dostaneme $g^{ba}$, čo sme chceli dostať.
 \end{poznamka}
 
-\todo{SRP zbytok}
+Čo by stalo ak by sme v protokole v 4. kroku neposielali $g^b + v$ ale len $g^b$?
+Na prvý pohľad to vyzerá bezpečne, keďže uživateľ stále potrebuje poznať hodnotu $x$
+(to čo by počítal by bolo $(g^b)^{a+ux}$). Problém je ale keď sa útočník bude vydávať
+za server. Komunikácia prebehne štandartne až do 7. kroku (uživateľ posiela $H(A,S,K)$).
+Následne útočník spustí slovníkový útok nasledovne:
+Tipne si heslo $P'$, vypočíta $x' = H(s,P'), v' = g^x$ a následne aj:
+$K' = H((g^a v'^u)^b)$. Teraz mu stačí porovnať $H(A,S,K')$ s tým čo dostal v 7. kroku.
+
+Ďalšou vecou je prítomnosť náhodného $u$ v protokole. Pokiaľ túto hodnotu dokáže
+útočník predvídať tak máme problém, pokiaľ sa mu už dostala do rúk hodnota $v$.
+Útočník sa v tomto prípade vie maskovať ako užívateľ tým, že v 3. kroku pošle miesto
+$g^a$ hodnotu $g^a v^{-u}$. Výsledná hodnota $K$ bude (opäť pre jednoduchosť vynecháva krok hašovania):
+$K = (\alpha v^u)^b = (g^a v^{-u} v^u)^b = g^{ab}$. A túto hodnotú vie útočník
+rátať bez znalosti hodnoty $x$ (stačí mu spočítať $((g^b + v) - v)^a$).
