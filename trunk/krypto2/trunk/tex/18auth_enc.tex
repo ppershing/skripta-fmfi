@@ -61,7 +61,46 @@ Taktiež, bezpečnosť celej konštrukcie bude závisieť od módu blokovej
 
 Budeme pokračovať ďalším ilustratívnym príkladom, ktorý je historický
 a poučný.
+\begin{priklad}[Dual Counter Mode]
+    Tento algoritmus bol navrhovaný v čase, keď už existovali aspoň 2
+    jednoprechodové algoritmy (menovite IAPM a IACBC). Problémom však
+    bolo, že tieto algoritmy boli patentované. Navyše, IAPM má problém
+    s latenciou, čo pri šifrovaní sieťovej prevádzky (krátke IP
+    pakety, požiadavky nízkej latencie) nie je vyhovujúce.
+    Zaujímavosťou je, že tento algoritmus (ktorého autormi sú Boyle a
+    Salter) navrhla v roku 2001 priamo NSA. No a ešte väčšou
+    zaujímavosťou je, že bol do dňa zlomený.
 
-\todo{dual counter mode}
+    Pozrime sa naň teda bližšie. Klasicky predpokladajme, že správa
+    pozostáva z blokov $m_1, \dots, m_n$. Ďalej, uvažujme že na
+    začiatku session  sa dohodnú účastníci na hodnote $x_0$.
+    Algoritmus potom vyzerá nasledovne:
+
+    \begin{procedure}[H]
+        \caption{DualCounterMode($m$)}
+        $checksum \assign 0$\;
+        \For{$i:=1$ \KwTo $n$}{
+            $x_i \assign f(x_{i-1})$\;
+            $c_i \assign E_k(m_i \xor x_i) \xor x_i$\;
+            $checksum \assign checksum \xor m_i$\;
+        }
+        $x_{n+1} \assign f(x_n)$\;
+        $\sigma \assign E_k(checksum \xor x_{n+1}) \xor x_0$\;
+    \end{procedure}
+    a jeho grafické znároznenie je na obrázku \ref{fig:dcm}.
+
+    Funkcia $f$ je pre nás nezaujímavá, pre referenciu ale povieme, že
+    v reálnej implementácii je to lineárnu posuvný register.
+    Zaujímavá koštrukcia $E(m \xor x) \xor x$ sa volá whitening,
+    údajne pomáha pri dôkazoch bezpečnosti.
+    \begin{figure}
+        \centering
+        \includegraphics{img/18/dual-counter-mode.1.mps}
+        \caption{Priebeh algoritmu DualCounterMode}
+        \label{fig:dcm}
+    \end{figure}
+\end{priklad}
+
+\todo{zvysok dual counter mode}
 \todo{iapm}
 \todo{gcm}
