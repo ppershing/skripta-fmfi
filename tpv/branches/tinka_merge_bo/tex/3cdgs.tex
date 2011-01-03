@@ -1,0 +1,260 @@
+\chapter{Kooperujúce distribuované systémy gramatík ($CDGS$)}
+
+V tejto kapitole ukážeme ďalšiu možnosť paralelizmu, kde viac gramatík pracuje na jednej
+spoločnej vetnej forme: gramatika dostane vetnú formu a pracuje na nej tak dlho, ako je
+jej určené...
+
+\begin{definicia}
+$CDGS$ je $(n+2)$-tica $\Gamma = (T,G_1,G_2,...,G_n,S)$, kde $ \forall i G_i = (
+N_i,T_i,P_i)$ je "bezkontextová gramatika bez počiatočného symbolu". $T\subseteq
+\underset{i}\bigcup T_i$ , $S \in \underset{i}\bigcup N_i$ je počiatočný symbol
+\end{definicia}
+
+\begin{definicia}
+Nech $\Gamma = (T,G_1,G_2,...,G_n,S)$. Krok odvodenia je relácia $\krok{\leq k}{\Gamma}$,
+kde $\krok{\leq k}{\Gamma}\med = \med\krok{\leq k}{G_i}i\in \{1,2,...,n\}$
+definovaná nasledovne: $\krok{\leq k}{G_i}\med =\med (\underset{j=1} {\overset{k}\bigcup}
+ \krok{j}{G_i})$, podobne definujeme aj: $\krok{\geq k}{\Gamma}$, $\krok{=k}{\Gamma} $.
+Definujeme $x\krok{\widetilde{t}}{\Gamma}y$\footnote{ďalej budeme písať len $x
+\krok{t}{\Gamma}y$ }: $x\krok{t}{\Gamma}y$ = $x\krok{t}{G_i} y\med i\in \{1,2,...n\}$
+platí práve vtedy, ak: $x \krok{*}{G_i}y$ a $\not\exists z \not = y:
+y\underset{G_i}\Ra z$
+\end{definicia}
+
+\begin{definicia}
+Nech $f \in \{ t,*,=1,=2,...,\leq 1,\leq 2,...,\geq 1,\geq 2,...\}$ a nech $\Gamma$ je
+$CDGS$. Potom jazyk definovaný systémom pri spôsobe prepisovania $f$ je
+\[
+L_f(\Gamma)=\{w \in T^* \mm \exists r,i_1,i_2,...,i_r\med S\krok{f}{G_{i_1}}w_1
+\krok{f}{G_{i_2}}w_2 \krok{f}{G_{i_3}}...\krok{f}{G_{i_r}}w_r\equiv w\}
+\]
+\end{definicia}
+
+\begin{priklad}
+$\Gamma = (\{a,b,c\},G_1,G_2,S)$\\ $G_1 = (\{A,B\},\{A',B',a,b,c\},\{A\ra aA'b,B\ra
+cB',A\ra ab, B\ra c\})$ a\\
+$G_2 = (\{S,S',A',B'\},\{A,B\},\{S\ra S',S'\ra AB,A'\ra A,
+B'\ra B\})$, potom
+\begin{description}
+\item{}$L_{=1}(\Gamma)=L_{*}(\Gamma)=L_{\leq k}(\Gamma)=L_{\geq 1}(\Gamma)=L_{t}(\Gamma)=
+\{a^n b^n c^m \mm n,m\geq 1\}, k\geq 1$
+\item{}$L_{=2}(\Gamma)=L_{\geq 2}(\Gamma)=\{a^n b^n c^n \mm n\geq 1 \}$
+\item{}$L_{=k}(\Gamma)=L_{\geq k}(\Gamma)=\emptyset$ pre $k\geq 3$
+\end{description}
+\end{priklad}
+
+\begin{priklad}
+$\Gamma = (\{a\},G_1,G_2,G_3,S)$\\ $G_1 = (\{S\},\{A\},\{S\ra AA\})$\\ $G_2 =
+(\{A\},\{S\},\{A\ra S\})$ a\\
+$G_3 = (\{A\},\{a\},\{A\ra a\})$. Potom $L_t(\Gamma)
+=\{a^{2^n} \mm n\geq 1\}$
+\end{priklad}
+
+\begin{priklad}
+$\Gamma = (\{a,b,c\},G_1,G_2,G_3,S)$\\ $G_1 = (\{S,A,A'\},\{a,b,c\},\{S\ra S, S\ra AcA,
+A'\ra A\})$\\ $G_2 = (\{S,A,A'\},\{a,b,c\},\{A\ra aA',a\ra a\})$ a\\
+$G_3 =
+(\{S,A,A'\},\{a,b,c\},\{A\ra bA', A\ra b\})$. Potom $ L_{=2}(\Gamma) = L_{\geq 2}(\Gamma)
+= \{wcw \mm w \in \{a,b\}^+\}$
+\end{priklad}
+
+Skúmali sa viaceré možnosti voľby $T$:
+
+\begin{definicia}
+Akceptačný štýl definujeme nasledovne:
+\begin{description}
+\item{arb} $T\subseteq \underset{i}\bigcup T_i$ (arbitrary)
+\item{ex}\med $T = \underset{i}\bigcup T_i$ (exactly)
+\item{all} $T = \underset{i}\bigcap T_i$
+\item{one} $T = T_i$ pre nejaké $i$
+\end{description}
+\end{definicia}
+
+\begin{oznacenie}
+$f \in \{*,t,=1,=2,...,\leq 1,\leq 2,...,\geq 1,\geq 2,...\}=D \med D'=\{*,=1,\geq 1,\leq
+1,\leq 2,...\}$\footnote{v $D'$ nie sú tie, ktoré nás nútia robiť viac ako 1 krok}$ \med
+A \in \{arb,ex,all,one\}$. \med$(CD_nCF,f,A)$ označuje triedu s bezkontextovými
+komponentami (najviac $n$) s akceptačným štýlom $A$. \med$(CD_*CF,f,A)$ označuje triedu s
+ľubovoľným počtom bezkontextových komponent s akceptačným štýlom $A$.
+
+\end{oznacenie}
+
+\begin{veta}
+$\mathcal{L}(CD_*CF,f,arb)$=$\mathcal{L}(CD_*CF,f,ex)$=$\mathcal{L}(CD_*CF,f,all)$=
+$\mathcal{L}(CD_*CF,f,one)$
+\end{veta}
+
+\begin{dokaz}
+\begin{description}
+\item{}$\mathcal{L}(CD_*CF,f,arb)=\mathcal{L}(CD_*CF,f,all)$
+\begin{description}
+\item{$\subseteq$:} Nech $\Gamma\in \mathcal{L}(CD_*CF,f,arb)$. Zostrojíme ekvivalentnú
+$\Gamma '\in \mathcal{L}(CD_*CF,f,all)$: $\Gamma = (T,G_1,...,G_n,S) \med \Gamma
+'=(T,G_1',...,G_n',G_{n+1},S')$
+\begin{description}
+\item{(a)}$f=t \med G_i'=(N_i',T_i',P_i')$, kde $N_i'=\{A'\mm A\in N_i\}$, $T_i'=\{a'\mm a\in T_i\}\cup
+T$ -potrebujeme dosiahnuť, aby $T$ bolo prienikom $T_i'$-čiek - môžu tam byť nejaké
+navyše. $P_i'=\{A' \rightarrow w'\mm A\rightarrow w \in P_i\}$, kde $w'=a_1',...a_n'$ ak
+$w=a_1,...a_n$. $G_{n+1}=(N_{n+1},T_{n+1},P_{n+1})$, kde $N_{n+1}=\{a'\mm a\in
+(\underset{i}\bigcup N_i \med\cup\med\underset{i}\bigcup T_i)\}\cup\{F\}\med
+T_{n+1}=T$\footnote{Týmto sme zabezpečili, že $(\underset{i}\bigcap T_i'\med\cap \med
+T_{n+1})=T$}$\med P_{n+1}=\{a'\rightarrow a\mm a\in T\}\cup\{a'\rightarrow F\mm a\notin
+T\}\cup\{F\rightarrow FF\}$
+\item{(b)}$f\neq t$ Rovnaká konštrukcia ako v prípade (a), ale $P_{n+1}=\{a'\rightarrow
+a'\mm a\in T\}\cup\{a'\rightarrow a\mm a\in T\}$
+\end{description}
+\item{$\supseteq$:} Táto inklúzia triviálne platí, lebo ak $T=\underset{i}\bigcap T_i$,
+tak potom aj $T\subseteq\underset{i}\bigcup T_i$
+\end{description}
+\item{}$\mathcal{L}(CD_*CF,f,arb)=\mathcal{L}(CD_*CF,f,ex)$
+\begin{description}
+\item{$\subseteq$:} Nech $\Gamma\in \mathcal{L}(CD_*CF,f,arb)$. Zostrojíme ekvivalentnú
+$\Gamma '\in \mathcal{L}(CD_*CF,f,ex)$: $\Gamma = (T,G_1,...,G_n,S) \med \Gamma
+'=(T,G_1',...,G_n',G_{n+1},S')$
+\begin{description}
+\item{(a)}$f=t \med G_i'=(N_i',T_i',P_i')$, kde $N_i'=\{A'\mm A\in N_i\}\cup \{a'\mm a\in
+T_i\}$, $T_i'=T$ -potrebujeme dosiahnuť, aby $T$ bolo rovné zjednoteniu $T_i'$-čiek.
+$P_i'=\{A' \rightarrow w'\mm A\rightarrow w \in P_i\}$, kde $w'=a_1',...a_n'$ ak
+$w=a_1,...a_n$.\\ $G_{n+1}=(N_{n+1},T_{n+1},P_{n+1})$, kde $N_{n+1}=\{a'\mm a\in
+(\underset{i}\bigcup N_i \med\cup\med\underset{i}\bigcup T_i)\}\cup\{F\}\med
+T_{n+1}=T\med P_{n+1}=\{a'\rightarrow a\mm a\in T\}\cup\{a'\rightarrow F\mm a\notin
+T\}\cup\{F\rightarrow FF\}$
+\item{(b)}$f\neq t$ Rovnaká konštrukcia ako v prípade (a), ale $P_{n+1}=\{a'\rightarrow
+a'\mm a\in T\}\cup\{a'\rightarrow a\mm a\in T\}$
+\end{description}
+\item{$\supseteq$:} Táto inklúzia triviálne platí, lebo ak $T=\underset{i}\bigcup T_i$,
+tak potom aj $T\subseteq\underset{i}\bigcup T_i$
+\end{description}
+\item{}$\mathcal{L}(CD_*CF,f,arb)=\mathcal{L}(CD_*CF,f,one)$
+\begin{description}
+\item{$\subseteq$:} Nech $\Gamma\in \mathcal{L}(CD_*CF,f,arb)$. Zostrojíme ekvivalentnú
+$\Gamma '\in \mathcal{L}(CD_*CF,f,one)$: $\Gamma = (T,G_1,...,G_n,S) \med \Gamma
+'=(T,G_1',...,G_n',G_{n+1},S')$ \\ $G_i'=(N_i',T_i',P_i')$, kde $N_i'=N_i$, $T_i'=T_i$,
+$P_i'=P_i$. $G_{n+1}=(N_{n+1},T_{n+1},P_{n+1})$, kde $N_{n+1}=\emptyset$, $T_{n+1}=T$ -
+gramatikou $G_{n+1}$ sme dosiahli to, že určite existuje $i$ také, že platí: $T = T_i$
+pre nejaké $i$
+\item{$\supseteq$:} Táto inklúzia triviálne platí, lebo ak $T = T_i$
+pre nejaké $i$, tak potom aj $T\subseteq\underset{i}\bigcup T_i$
+\end{description}
+\end{description}
+\end{dokaz}
+
+V ďalšej časti tejto kapitoly platí: $A$=$all$ a nebudeme ho explicitne písať.
+
+\begin{veta}\footnote{Toto je: "Kilometrová veta s plno tvrdeniami na zamyslenie sa"}
+\begin{itemize}
+\item $\mathcal{L}(CD_*CF,f) = \mathcal{L}_{CF} \med \forall f \in D'$
+\item $\mathcal{L}_{CF} = \mathcal{L}(CD_1CF,f) \varsubsetneq \mathcal{L}(CD_2CF,f)
+\subseteq \mathcal{L}(CD_nCF,f) \subseteq \mathcal{L}(CD_*CF,f) \subseteq
+\mathcal{L}_{CFMatrix}$\footnote{Maticové bezkontextové gramatiky - istým spôsobom sa
+reguluje, akým spôsobom sa používajú pravidlá. $P$: množina -tíc; vyberieme jednu z nich
+a už musíme použiť všetky pravidlá, ktoré sú v nej} $\forall f \in D-D'$,$\med n\geq 3$
+\item $\mathcal{L}(CD_nCF,=k)\subseteq \mathcal{L}(CD_nCF,=s.k)\med \forall k,n,s\geq 1$
+\footnote{toto tvrdenie sa nepodarilo doposiaľ dokázať všeobecnejšie, len pre násobky}
+\item $\mathcal{L}(CD_nCF,\geq k)\subseteq \mathcal{L}(CD_nCF,\geq k+1)\med \forall n,k\geq 1$
+\item $\mathcal{L}(CD_*CF,\geq)\subseteq \mathcal{L}(CD_*CF,=)$, kde
+$\mathcal{L}(CD_*CF,\geq) = \mathcal{L}(CD_*CF,\geq 1)\cup \mathcal{L}(CD_*CF,\geq 2)\cup
+...\med$a$\med \mathcal{L}(CD_*CF,=) = \mathcal{L}(CD_*CF,= 1)\cup \mathcal{L}(CD_*CF,=2)
+\cup ...$
+\item $\mathcal{L}_{CF}=\mathcal{L}(CD_1CF,t)=\mathcal{L}(CD_2CF,t)\varsubsetneq
+\mathcal{L}(CD_3CF,t)=\mathcal{L}(CD_*CF,t)=\mathcal{L}(ETOL)$\footnote{tabuľkové
+rozšírené $0L$ - systémy}
+\end{itemize}
+\end{veta}
+
+\begin{dokaz}
+Za všetky len jeden príklad: $\mathcal{L}(CD_*CF,t)\subseteq\mathcal{L}(CD_3CF,t)$:\\
+Nech $\Gamma \in \mathcal{L}(CD_*CF,t)$. Zostrojíme $\Gamma' \in \mathcal{L}(CD_3CF,t)$.
+V $\Gamma'$ to bude vyzerať nasledovne: V prvej gramatike budú schované všetky gramatiky
+z $\Gamma$. Ďalšie dve gramatiky budú slúžiť na prepínanie v tej jednej\footnote{Musia
+byť dve, lebo keby sme mali iba jednu a keďže sa nachádzame v mode $t$, táto jedna
+gramatika by sa nám zacyklila}.\\ $\Gamma=(T,G_1,G_2,...,G_n,S)$\footnote{Tu je nutné
+predpokladať, že $n$ je párne. Ak by tomu tak nebolo, pridáme gramatiku, v ktorej bude
+$P=\emptyset$}, kde $G_i=(N_i,T_i,P_i)$\\ $\Gamma'=(T,G_1',G_2',G_3',[S,1])$\\
+$G_1'=(N_1',T_1',P_1')$, kde $N_1'=\{[A,i]\mm A\in N_i\}$,
+$T_1'=\underset{i=1}{\overset{n}\bigcup}T_i$, $P_1'=\{[A,i]\rightarrow[w',i]\mm
+A\rightarrow w\in P_i, \med 1\leq i \leq n\}$, kde $w'$ je vlastne $w$, ibaže všetky
+staré neterminály sú nahradené novými.\\ $G_2'=(N_2',T_2',P_2')$, kde $N_2'=\{[A,i]\mm
+A\in \underset{j=1}{\overset{n}\bigcup}N_j,\med i=1,...,n\}$, $T_2'=\emptyset$ a
+$P_2'=\{[A,i]\rightarrow[A,i+1]\mm i\equiv 1(mod\med 2)\}$\\ $G_3'=(N_3',T_3',P_3')$, kde
+$N_3'=N_2'$, $T_3'=\emptyset$ a $P_3'=\{[A,i]\rightarrow[A,i+1]\mm i\equiv 0(mod\med
+2)\}\\ \cup\{[A,n]\rightarrow[A,1]\mm [A,n]\in N_3'\} $
+\end{dokaz}
+
+\begin{priklad}
+\begin{tabbing}
+\= xxxxxx \= xxxxxxxxxxxxxxxxxxxxxxxx \= xxxxxxxxxxxxxxxxxxxxxxxxxxx \= \kill\\
+\>\> $G_1$: $S\rightarrow aAB|...$ \> $[S,1]\rightarrow a[A,1][B,1]|...$ \\
+\>\> $G_2$:\\
+\>\> $G_3$: $A\rightarrow bAS|...$ \> $[A,3]\rightarrow b[A,3][S,3]|...$\\ \\
+\>\> $S\underset{G_1}\Rightarrow aAB\underset{G_3}\Rightarrow abASB\Rightarrow...$
+\> $[S,1]\underset{G_1'}\Rightarrow a[A,1][B,1]\underset{G_2'}\Rightarrow a[A,2][B,1]
+\underset{G_2'}\Rightarrow a[A,2][B,2] \underset{G_3'}\Rightarrow$ \\
+\>\>\>$\underset{G_3'}\Rightarrow a[A,3][B,2]\underset{G_3'}\Rightarrow a[A,3][B,3]
+\underset{G_1'}\Rightarrow ab[A,3][S,3][B,3]\Rightarrow ...$ \\
+\end{tabbing}
+\end{priklad}
+
+\section{Niektoré otázky popisnej zložitosti}
+
+\begin{definicia}
+Definujeme miery:
+\begin{description}
+\item{} $Var(\Gamma)=\#(\underset{i}\bigcup N_i)$ - počet neterminálov
+\item{} $Prod(\Gamma)=\underset{i}\sum \#P_i$ - suma počtu pravidiel
+\item{} $Symb(\Gamma)=\underset{i} \sum(\underset{A\rightarrow w \in P_i} \sum (\mid w
+\mid +2))$
+\end{description}
+\end{definicia}
+
+\begin{definicia}
+Pre miery $M \in \{Var, Prod, Symb\}$ a triedu gramatík $X$ a jazyk $L$ definujeme:
+$M_X(L)=min\{M(\Gamma)\mm \Gamma \in X,\med L=L(\Gamma)\}$
+\end{definicia}
+
+\begin{definicia}
+Pre mieru $M$ a triedy gramatík $X$ a $Y$ a triedu jazykov
+$\mathcal{L}=\mathcal{L}(X)\cap \mathcal{L}(Y)$ takú, že $M_Y(L)\leq M_X(L)\med\forall
+L\in\mathcal{L}$ označíme:
+\begin{description}
+\item{} $Y\overset{M}=X \med\Leftrightarrow\med M_Y(L)=M_X(L) \med\forall L\in\mathcal{L}$
+\item{} $Y\overset{M}<_1X\med\Leftrightarrow\med \exists L\in\mathcal{L}\med
+M_Y(L)<M_X(L)$
+\item{} $Y\overset{M}<_2X\med\Leftrightarrow\med \forall n\med\exists L_n\in\mathcal{L}\med
+M_X(L_n)-M_Y(L_n)>n$
+\item{} $Y\overset{M}<_3X\med\Leftrightarrow\med \exists L_n\in\mathcal{L},\med
+n\geq 1 \med$také, že $\underset{n\rightarrow \infty}\lim\frac{M_Y(L_n)}{M_X(L_n)}=0$
+\item{} $Y\overset{M}<_4X\med\Leftrightarrow\med \exists p$ a $\exists
+L_n\in\mathcal{L},\med n\geq 1\med$také, že $M_X(L_n)>n$ a $M_Y(L_n)\leq p$
+\end{description}
+\end{definicia}
+
+\begin{veta}
+Porovnanie $(CD_*CF,f,A)$ a $CFG$ :
+\begin{center}
+\begin{tabular}{c||c|c|c|c|c}
+       & $*$ &  $t$  & $\leq k$ & $=k$  & $\geq k$  \\
+  \hline\hline
+$VAR$  & $=$ & $<_4$ & $=$      & $<_4$ & $<_4$    \\
+  \hline
+$PROD$ & $=$ & $<_3$ & $=$      & $<_4$ & $<_4$    \\
+  \hline
+$SYMB$ & $=$ & $<_3$ & $=$      & $<_3$ & $<_3$    \\
+
+\end{tabular}
+\end{center}
+\end{veta}
+
+\begin{dokaz}
+  Príklad: $(CD*CF,t)\overset{Var}<_4 CFG$     (VAR)         \\
+  Uvažujme $L_n=\underset{i=1}{\overset{n}\bigcup}b(a^ib)^+$ \\
+  Potom $Var_{CFG}(L_n)=n+1$ \\
+  $P_n=\{S_0 \rightarrow bS_i \mm 1\leq i \leq n\} \cup
+  \underset{i=1}{\overset{n}\bigcup} \{S_i\rightarrow a^ibS_i,\med S_i\rightarrow a^ib\}$ \\
+  S menej neterminálmi to neide, lebo pomiešaním pravidiel by sme dostali zlé slová. \\
+  $Var_{CD_*CF,t}(L_n)\leq 3$ \\
+  $\Gamma = (\{a,b\}, G_1,G_2,...,G_{n+1},S)$, kde \\
+  $G_i=(\{A\},\{a,b\},\{A\rightarrow a^ib\});\med 1\leq i \leq n$ \\
+  $G_{n+1}=(\{S,S',A\},\{a,b\},\{S\rightarrow bS',S'\rightarrow AS',S'\rightarrow A\})$ -
+  táto gramatika pracuje ako prvá.
+\end{dokaz}
