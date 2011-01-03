@@ -6,6 +6,7 @@
 \def\verify#1{\todo{verify: #1}}
 
 \newcommand{\odvodenie}{\leadsto}
+\newcommand{\odvodeniev}[1]{\underset{#1}\odvodenie}
 %\newcommand{\odvodeniena}[1]{\overset{#1}\odvodenie}
 \newcommand{\pravidlo}{\rightarrow}
 \newcommand{\Langclass}[1]{\mathcal{L}_{#1}}
@@ -14,6 +15,7 @@
 \newcommand{\union}{\cup}
 \newcommand{\intersect}{\cap}
 \newcommand{\then}{\Longrightarrow}
+\newcommand{\set}[1]{\{#1\}} % mnozina
 
 %%% small equal sign without spacing
 \newcommand{\eq}{\mbox{=}}
@@ -28,6 +30,8 @@
 
 \newcommand{\med}{\enspace}
 \newcommand{\mm}{\enspace |\enspace}
+\newcommand{\cond}{\mm}
+\newcommand{\triple}[3]{(#1,\ #2,\ #3)}
 \newcommand{\ra}{\rightarrow}
 \newcommand{\Ra}{\Rightarrow}
 
@@ -40,7 +44,7 @@
 % S L A V O   B E G I N %
 
 \newcommand{\Lra}{\Longrightarrow}
-\newcommand{\krok}[2]{\underset{#2} {\overset{^{#1}} \Longrightarrow}}
+\newcommand{\krok}[2]{\underset{#2} {\overset{^{#1}} \odvodenie}}
 \newenvironment{oznacenie}{\bf Označenie:\normalfont}{}
 
 % S L A V O   E N D %
