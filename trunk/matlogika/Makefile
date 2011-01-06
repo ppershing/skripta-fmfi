@@ -60,6 +60,14 @@ all: ps pdf
 booklet: main.ps
 	cat main.ps | psbook | psnup -2 >main-booklet.ps
 
-distributable: dist-clean pdf
-	cp main.pdf logika_%date:~6%-%date:~3,2%-%date:~0,2%.pdf
+.PHONY: img
+img:
+	(cd img; make all)
+
+# windows version of prepare_upload, deprecated
+#distributable: dist-clean pdf
+#	cp main.pdf logika_%date:~6%-%date:~3,2%-%date:~0,2%.pdf
 	
+.PHONY: prepare_upload
+prepare_upload: dist-clean img main.pdf
+	cp main.pdf `date '+logika_%y-%m-%d.pdf'`
