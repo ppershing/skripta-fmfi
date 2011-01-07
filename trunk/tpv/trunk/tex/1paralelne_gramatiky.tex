@@ -712,154 +712,166 @@ minimálne taká, ako sila $OL$-systémov) si ukážeme na príklade
 neskôr
 
 \begin{definicia}
-  $EOL$-systém je štvorica $G=(N,T,P,w), P\subseteq (N\union
-  T)\times(N\union T)^{*}$ a $\forall a\in (N\union T)$ existuje v $P$
-  pravidlo
+  $EOL$-systém je štvorica $G = \quadruple{N}{T}{P}{w}$ kde
+  $P \subseteq (N \union T)\times(N \union T)^{*}$ a 
+  $\forall a\in (N\union T)$ existuje v $P$
+  pravidlo s ľavou stranou $a$.
 \end{definicia}
 
 \begin{definicia}
-  Krok odvodenia je relácia $\Ra$ na $(N\union T)^{*}$ definovaná
-  nasledovne: \mbox{$u\Ra v$} práve vtedy, keď $u=a_{1}\dots
-  a_{n},\forall i\med a_{i}\in(N\union T),v=b_{1}\dots b_{n},\forall
-  i\med b_{i}\in(N\union T)^{*}$ a $\forall i\med a_{i}\ra b_{i}\in P$
+  Krok odvodenia je relácia $\odvodenie$ na $(N \union T)^{*}$ definovaná
+  nasledovne: \nowrap{$ u \odvodenie v$} práve vtedy, keď
+  $u = a_1 \dots a_n$, $\forall i: a_i \in (N\union T)$,
+  $v = b_1 \dots b_n$, $\forall i: b_i \in (N\union T)^{*}$ a 
+  $\forall i: a_i \pravidlo b_i \in P$.
 \end{definicia}
 
 \begin{definicia}
-  Jazyk generovaný $EOL$-systémom $G$ je $L(G)=\{x\in T^{*}\mm
-  w\overset{*}\Ra x\}$
+  Jazyk generovaný $EOL$-systémom $G$ je
+  $L(G) = \set{x \in T^{*} \cond w \odvodenie^* x}$.
 \end{definicia}
 
 \begin{priklad}
-  $G_{1}=(\{\sigma\},\{a,b\},\{\sigma\ra a,\sigma\ra b,a\ra
-  a^{2},b\ra b^{2}\},\sigma)$, potom zjavne jazyk
-  $L(G_{1})=\{a^{2^{n}}\mm n\geq0 \}\union\{b^{2^{n}}\mm
-  n\geq0\}\not\in\Langclass{OL}$\\ Tento príklad ukazuje, že
+  Nech $G_1 = \quadruple{\set{\sigma}}{\set{a,b}}{
+    \set{\sigma \pravidlo a, \sigma \pravidlo b, a \pravidlo a^2,
+      b \pravidlo b^2}
+    }{\sigma}$, potom zjavne jazyk
+  $L(G_1) = \set{a^{2^n} \cond n \ge 0} \union
+    \set{b^{2^n} \cond n \ge 0} \not \in \Langclass{OL}$.
+  Tento príklad ukazuje, že
   $EOL$-systémy sú silnejšie ako obyčajné $OL$-systémy a tým sme
   vlastne dali odpoveď na otázku, ktorú sme si položili na začiatku
   kapitoly, v tomto prípade sa sila neterminálu prejavila v tom, že
-  nám umožnila spraviť zjednotenie dvoch jazykov
+  nám umožnila spraviť zjednotenie dvoch jazykov.
 \end{priklad}
 
 \begin{priklad}
-  $G_{2}=(\{A\},\{a,b\},\{A\ra A,A\ra a,a\ra a^{2},b\ra b\},AbA)$
-  potom jazyk ge\-ne\-ro\-va\-ný $G$ je
-  $L(G_{2})=\{a^{2^{n}}ba^{2^{m}}\mm
-  m,n\geq0\}\not\in\Langclass{OL}$
+  Nech $G_2 = \quadruple{\set{A}}{\set{a,b}}{
+      \set{A \pravidlo A, A \pravidlo a, a \pravidlo a^2, b \pravidlo b}
+      }{AbA}$.
+  Potom jazyk ge\-ne\-ro\-va\-ný $G$ je
+  $L(G_2) = \set{a^{2^n} b a^{2^m} \cond m,n \ge 0} \not\in
+  \Langclass{OL}$.
 \end{priklad}
 
 \begin{priklad}
   \label{efko}
-  $G_{3}=(\{S,A,B,C,\bar{A},\bar{B},\bar{C},F\},\{a,b,c\},P,S)$
-  \begin{tabbing}
-    \= xxx \= $P=\{\med$ \= xxxxxxxxxx \= xxxxxxxxxx \= xxxxxxxxxx
-    \= xxxxxxxxxx
-    \kill
-    \> \> $P=\{\med$ \> $S\ra ABC$ \> $a\ra F$ \> $b\ra F$ \> $c\ra
-    F$\\
-    \> \> \> $A\ra A\bar{A}$ \> $A\ra a$ \> $\bar{A}\ra\bar{A}$ \> $\bar{A}\ra
-    a$\\
-    \> \> \> $B\ra B\bar{B}$ \> $B\ra b$ \> $\bar{B}\ra\bar{B}$ \> $\bar{B}\ra
-    b$\\
-    \> \> \> $C\ra C\bar{C}$ \> $C\ra c$ \> $\bar{C}\ra\bar{C}$ \> $\bar{C}\ra
-    c$\\
-    \> \> \> $F\ra F\med\}$
-  \end{tabbing}
-  Možno niekoho prekvapí fakt, že $L(G_{3})=\{a^{n}b^{n}c^{n}\mm
-  n\geq1\}$, no ak sa nad systémom $G_{3}$ trošku zamyslíme, tak sa
+  Nech $G_3 = \quadruple{\set{S,A,B,C,\bar{A},\bar{B},\bar{C},F}}{\set{a,b,c}}{P}{S}$
+  kde
+  \begin{alignat*}{4}
+    P = \{
+      S &\pravidlo ABC,\quad & a &\pravidlo F, \quad
+          & b &\pravidlo F, \quad & c \pravidlo F,\\
+      A &\pravidlo A\bar{A}, & A &\pravidlo a,
+          & \bar{A} &\pravidlo \bar{A}, &\bar{A} \pravidlo a,\\
+      B &\pravidlo B\bar{B}, & B &\pravidlo b, 
+          & \bar{B} &\pravidlo \bar{B}, &\bar{B} \pravidlo b,\\
+      C &\pravidlo C\bar{C}, & C &\pravidlo c,
+          & \bar{C} &\pravidlo \bar{C}, &\bar{C} \pravidlo c,\\
+      F &\pravidlo F \}
+  \end{alignat*}
+  Možno niekoho prekvapí fakt, že
+  $L(G_3) = \set{a^n b^n c^n \cond n \ge 1}$,
+  no ak sa nad systémom $G_3$ trošku zamyslíme, tak sa
   nám táto skutočnosť ihneď vyjasní. Ide tu totiž o rafinované
   využitie neterminálu $F$ na to, aby terminálne slová vznikali
-  naraz (teda slová z jazyka $L(G_{3})$ vznikajú v jednom kroku
+  naraz (teda slová z jazyka $L(G_3)$ vznikajú v jednom kroku
   odvodenia prepísaním všetkých neterminálov na terminálne symboly).
   Ako si v nasledovnej vete ukážeme, tento jav nie je ani zďaleka
-  taký zriedkavý, ako by sa mohlo zdať
+  taký zriedkavý, ako by sa mohlo zdať.
 \end{priklad}
 
-\begin{veta}(Synchronizovaný tvar $EOL$-systému)
-  \\ Nech $G=(N,T,P,w)$ je $EOL$-systém pre jazyk $L$. Potom existuje
-  taký $EOL$-systém $G'$, $L(G')=L(G)$, že všetky jeho terminálne
-  slová vznikajú z neterminálnych vetných foriem v jednom kroku
-  odvodenia\footnote{teda keď sa vo vetnej forme objaví prvý
-  terminál, tak nutnou podmienkou, aby sme niekedy vygenerovali
-  terminálne slovo je, aby v kroku odvodenia, kedy sa do vetnej
-  formy dostal, ``zterminálnela'' vetná forma celá}
+\begin{veta}[Synchronizovaný tvar $EOL$-systému]
+  Nech $G = \quadruple{N}{T}{P}{w}$ je $EOL$-systém pre jazyk $L$.
+  Potom existuje taký $EOL$-systém $G'$, $L(G') = L(G)$,
+  že všetky jeho terminálne slová vznikajú z neterminálnych vetných foriem
+  v jednom kroku odvodenia.\footnote{teda keď sa vo vetnej forme objaví prvý
+    terminál, tak nutnou podmienkou, aby sme niekedy vygenerovali
+    terminálne slovo je, aby v kroku odvodenia, kedy sa do vetnej
+    formy dostal, ``zterminálnela'' vetná forma celá
+  }
 \end{veta}
 
 \begin{dokaz}
   Ukážeme konštrukciu synchronizovaného $EOL$-systému $G'$. Najskôr
   si vytvoríme nové neterminály, ktoré budeme potrebovať:
   \begin{itemize}
-    \item $\forall a\in T$ vytvoríme $\xi_a$ (ak $a,b\in T$, tak
-    $\xi_a\neq\xi_b$)
-    \item $F,\sigma'$, budú predstavovať FALSE, resp. nový počiatočný
-    symbol
+    \item $\forall a \in T$ vytvoríme $\xi_a$ (ak $a,b\in T$, tak
+        $\xi_a \not= \xi_b$)
+    \item $F$ - bude predstavovať ``FALSE''
+    \item $\sigma'$ - nový počiatočný symbol
   \end{itemize}
-  Označme $N'=\{\xi_a\mm a\in T\}$. Pre jednoduchosť zaveďme
+  Označme $N' = \set{\xi_a \cond a\in T}$. Pre jednoduchosť zaveďme
   niekoľko pojmov, ktoré neskôr využijeme:
   \begin{enumerate}
-    \item Nech $S$ je ľubovoľná množina reťazcov z $(N\union T)^*$, pre
+    \item Nech $S$ je ľubovoľná množina reťazcov z $(N \union T)^*$, pre
       ňu definujeme množinu $A(S)$ nasledovne:
-      \begin{enumerate}
-        \item reťazec $b_{1}\dots b_{n}\in A(S)\overset{def}
-          \Longleftrightarrow$ ak existuje reťazec $a_{1}\dots a_{n}\in S$
-          taký, že buď $b_i=a_i$ alebo $a_i\in T$ a $b_i=\xi_i$ (teda
-          $b_i\in N'$), potom $A(S)\subset(N\union N'\union T)^*$
-        \item ak $S\neq\emptyset$, potom $A(S)\neq\emptyset$, lebo
-          $S\subseteq A(S)$
-      \end{enumerate}
+      Reťazec $b_1 \dots b_n \in A(S) \overset{def}\iff$
+      ak existuje reťazec $a_1 \dots a_n \in S$
+      taký, že buď $b_i = a_i$ alebo $a_i \in T$ a $b_i = \xi_{a_i}$
+      (teda $b_i\in N'$), potom $A(S) \subset (N \union N' \union
+      T)^*$.
+      Platí, že ak $S \not= \emptyset$, potom $A(S)\neq\emptyset$,
+      lebo $S\subseteq A(S)$.
     \item $\delta_P(a)$ nazveme množinu všetkých pravých strán
-    pravidiel pre symbol $a$ z $P$
+      pravidiel pre symbol $a$ z $P$
   \end{enumerate}
-  Definujme synchronizovaný $EOL$-systém $G'$ nasledovne: $G'=(N\union
-  N'\union\{F,\sigma'\},T,P',\sigma')$, pričom
-  \begin{tabbing}
-    \= xxx \= $P'\med$: \= xxxxxxxxxxxxxxxx \= xxxxxxxxxxx \kill \>\>
-    $P':$ \> $\delta_{P'}(\sigma')=A(\{w\})$\\ \>\>\> $\forall
-    a\in(T\union \{F\})$ \> $(a\ra F)\in P'$\\ \>\>\> $\forall a\in N$
-    \> $\delta_{P'}(a)=A(\delta_P(a))$\\ \>\>\> $\forall\xi_a\in N'$
-    \> $\delta_{P'}(\xi_a)=A(\delta_P(a))$
-  \end{tabbing}
+  Definujme synchronizovaný $EOL$-systém $G'$ nasledovne:
+  $G' = \quadruple{N\union N'\union\set{F,\sigma'}}{T}{P'}{\sigma'}$, pričom
+  \begin{alignat*}{2}
+    P'=  &\set{\sigma \pravidlo b
+            &&\cond b \in A(\set{w})} \med  \union\\ 
+         &\set{a \pravidlo F
+            &&\cond a\in T\union \set{F}} \med \union \\
+         &\set{a \pravidlo b
+            &&\cond a\in N, b \in A(\delta_P(a))} \med \union \\
+         &\set{\xi_a \pravidlo b
+            &&\cond \xi_a\in N', b \in A(\delta_P(a))}
+  \end{alignat*}
   Malo by byť zrejmé, že teminálne slová musia v $G'$ vznikať naraz,
-  pretože ak sa náhodou nejaký terminál do venej formy dostane skôr
-  ako ostatné, tak sa v ďaľšom kroku prepíše nutne na $F$ a z $F$ sa
+  pretože ak sa náhodou nejaký terminál do vetnej formy dostane skôr
+  ako ostatné, tak sa v ďalšom kroku prepíše nutne na $F$ a z $F$ sa
   už nikdy terminál nestane. Rovnako zrejmé by malo byť
   $L(G')=L(G)$, pretože nové neterminály $\xi_i$ vo vetnej forme
   akoby nahrádzali terminálne symboly, a tak simulovali odvodenie v
-  pôvodnom systéme $G$
+  pôvodnom systéme $G$.
 \end{dokaz}
 
 \begin{veta}
-  Každý konečný jazyk je v $\Langclass{EOL}$
+  Každý konečný jazyk je v $\Langclass{EOL}$.
 \end{veta}
 
 \begin{dokaz}
   Nech $L$ je konečný, potom existuje regulárna gramatika $G$ taká,
-  že $L=L(G)$. Táto regulárna gramatika je ale zároveň (po doplnení
-  pravidiel $a\ra a\med\forall a\in(N\union T)$) aj hľa\-da\-ným
-  $EOL$-systémom
+  že $L = L(G)$. Táto regulárna gramatika je ale zároveň (po doplnení
+  pravidiel $a\pravidlo a \med \forall a \in (N \union T)$)
+  aj hľa\-da\-ným $EOL$-systémom.
 \end{dokaz}
 
 \begin{lema}
-  \label{norm_tvarEOL} Nech $G$ je $EOL$-systém, potom existuje
-  $EOL$-systém $G'$, ktorého všetky pravidlá obsahujúce $a\in T$ na
-  ľavej strane sú tvaru $a\ra a$
+  \label{norm_tvarEOL}
+  Nech $G$ je $EOL$-systém, potom existuje
+  $EOL$-systém $G'$, ktorého všetky pravidlá obsahujúce $a \in T$ na
+  ľavej strane sú tvaru $a \pravidlo a$.
 \end{lema}
 
 \begin{dokaz}
-  Zkonštruujeme $EOL$-systém $G'$ nasledovne: pre každé $a\in T$
-  zavedieme nový neterminál $\xi_{a}$ a upravíme pravidlá:
+  Zkonštruujeme $EOL$-systém $G'$ nasledovne: pre každé $a \in T$
+  zavedieme nový neterminál $\xi_a$ a upravíme pravidlá:
   \begin{enumerate}
     \item tie pravidlá, kde sa vyskytujú terminály, nahradíme novými tak,
-    že všetky terminály (na ľavej i pravej strane) zmeníme na
-    príslušné nové neterminály ($a\in T$ nahradíme $\xi_{a}\in N$)
+      že všetky terminály (na ľavej i pravej strane) zmeníme na
+      príslušné nové neterminály ($a \in T$ nahradíme $\xi_a \in N$)
     \item pre každé $a\in T$ pridáme pravidlo $a\ra a$
-    \item pre každé nové $\xi_{a}\in N$ pridáme pravidlo $\xi_{a}\ra a$
+    \item pre každé nové $\xi_a \in N$ pridáme pravidlo
+      $\xi_a \pravidlo a$.
   \end{enumerate}
 \end{dokaz}
 
 \begin{veta}
   Trieda $\Langclass{EOL}$ je uzavretá na
-  $\union,\cdot,+,\intersect\Regclass,h_{\eps}$ a nie je uzavretá
-  na $h^{-1}$
+  $\union, \cdot, +, \intersect \Regclass, h_{\eps}$ a nie je uzavretá
+  na $h^{-1}$.
 \end{veta}
 
 \begin{dokaz}
@@ -867,70 +879,81 @@ neskôr
   malé technické detaily veľmi nelíši od známych konštrukcií pre
   bezkontextové gramatiky:
   \begin{itemize}
-    \item $\union :$ Máme $EOL$-systémy $G_{1}$ pre $L_{1}$ a $G_{2}$
-      pre $L_{2}$. Ku $G_{1},G_{2}$ spravíme normálne tvary
-      $G'_{1},G'_{2}$ podľa konštrukcie z lemy \ref{norm_tvarEOL}. Bez
-      ujmy na všeobecnosti môžeme predpokladať, že $N'_{1}\intersect
-      N'_{2}=\emptyset$. Vytvoríme $G_{3}$ pre $L_{1}\union L_{2}$
-      nasledovne: zavedieme nový neterminál $\sigma_{3}$ tak, že
-      $\sigma_{3}\not\in N'_{1}$ \mbox{a $\sigma_{3}\not\in N'_{2}$}.
-      Ďalej $N_{3}=N'_{1}\union N'_{2}\union\{\sigma_{3}\}$,
-      $T_{3}=T'_{1}\union T'_{2}$, $P_{3}=P'_{1}\union
-      P'_{2}\union\{\sigma_{3}\ra\sigma'_{1}|\sigma'_{2}\}$ \mbox{a
-      nakoniec} $G_{3}=(N_{3},T_{3},P_{3},\sigma_{3})$
-    \item $h^{-1} :$ Zoberme jazyk $L\in\Langclass{EOL},
-      L=\{a^{2^n}\mm n\geq0\}$ a definujme homomorfizmus $h$ nasledovne:
-      $h(a)=a, h(b)=\eps$. Potom $h^{-1}(L)=\{w\in\{a,b\}^*\mm
-      \#_a w=2^n,n\geq0\}$. Ukážeme, že
-      $h^{-1}(L)\not\in\Langclass{EOL}$. Nech $G$ je $EOL$-systém pre
-      $h^{-1}(L)$. Zoberme $w_0\in h^{-1}(L)$, nech $\#_a w_0=n$.
+    \item[$\union :$] Máme $EOL$-systémy $G_1$ pre $L_1$ a $G_2$
+      pre $L_2$. Ku $G_1, G_2$ spravíme normálne tvary
+      $G'_1,G'_2$ podľa konštrukcie z lemy \ref{norm_tvarEOL}.
+      Bez ujmy na všeobecnosti môžeme predpokladať,
+      že $N'_1 \intersect N'_2 = \emptyset$.
+      Vytvoríme $G_3$ pre $L_1 \union L_2$ nasledovne:
+      zavedieme nový neterminál $\sigma_3$ tak, že
+      $\sigma_3 \not \in N'_1$ \nowrap{a $\sigma_3 \not \in N'_2$}.
+      Ďalej $N_3 = N'_1 \union N'_2 \union \set{\sigma_3}$,
+      $T_3 = T'_1 \union T'_2$,
+      $P_3 = P'_1 \union P'_2 \union 
+        \set{\sigma_3 \pravidlo \sigma'_1, \sigma_3 \pravidlo \sigma'_2}$
+      a~nakoniec $G_3 = \quadruple{N_3}{T_3}{P_3}{\sigma_3}$
+
+    \item[$h^{-1} :$] Zoberme jazyk
+      $L = \set{a^{2^n} \cond n \ge 0} \in \Langclass{EOL}$
+      a definujme homomorfizmus $h$ nasledovne:
+      $h(a) = a, h(b) = \eps$.
+      Potom $h^{-1}(L) = \set{w \in \set{a,b}^* \cond \#_a w = 2^n, n \ge 0}$.
+      Ukážeme, že $h^{-1}(L) \not \in \Langclass{EOL}$.
+      Nech $G$ je $EOL$-systém pre $h^{-1}(L)$.
+      Zoberme $w_0 \in h^{-1}(L)$, nech $\#_a w_0 = n$.
       Zoberme ľubovoľné dve $a$, medzi ktorými sú iba $b$. Ak je medzi
-      týmito dvoma $a$ ``príliš veľa''\footnote{tento počet vieme určiť,
-      závisí napr. od dĺžky najdlhšej pravej strany pravidla v $G$,
-      bližšie v \cite{clos}} $b$, tak takéto slovo nedokážeme vyrobiť
+      týmito dvoma $a$ ``príliš veľa''\footnote{
+        tento počet vieme určiť,
+        závisí napr. od dĺžky najdlhšej pravej strany pravidla v $G$,
+        bližšie v \cite{clos}
+      } $b$, tak takéto slovo nedokážeme vyrobiť
       (nemáme na to dostatok času), čo je spor s tým, že $G$ je
-      $EOL$-systém pre $h^{-1}(L)$
+      $EOL$-systém pre $h^{-1}(L)$.
   \end{itemize}
 \end{dokaz}
 
 \begin{veta}
-  $\Langclass{CF} \subsetneq \Langclass{EOL}$
+  $\Langclass{CF} \subsetneq \Langclass{EOL}$.
 \end{veta}
 
 \begin{dokaz}
-  Každá bezkontextová gramatika vyhovuje definícii $EOL$-systému (po
-  doplnení pravidiel $a\ra a\med\forall a\in(N\union T)$), teda platí
-  nevlastná inklúzia $\Langclass{CF} \subseteq \Langclass{EOL}$.
-  Že platí aj vlastná inklúzia, sme ukázali v príklade \ref{efko},
-  kde sme našli $EOL$-systém pre jazyk $L=\{a^{n}b^{n}c^{n}\mm
-  n\geq1\}\in \Langclass{CS} - \Langclass{CF}$
+  Každá bezkontextová gramatika vyhovuje definícii $EOL$-systému
+  (po doplnení pravidiel
+  $a\pravidlo a \med \forall a \in(N \union T)$),
+  teda platí nevlastná inklúzia $\Langclass{CF} \subseteq \Langclass{EOL}$.
+  To, že platí aj vlastná inklúzia, sme ukázali v príklade \ref{efko},
+  kde sme našli $EOL$-systém pre jazyk
+  $L = \set{a^n b^n c^n \cond n\ge1} \in \Langclass{CS} - \Langclass{CF}$.
 \end{dokaz}
 
 \begin{poznamka}
   $1L$ a $2L$-systémy sú nejakou analógiou kontextových gramatík, i
   keď o ich sile by sa dali viesť podobné diskusie ako pri
   $OL$-systémoch. Snáď len toľko, že obojstranný kontext je silnejší
-  ako jednostranný a oba systémy sú silnejšie ako $OL$-systémy
+  ako jednostranný a oba systémy sú silnejšie ako $OL$-systémy.
 \end{poznamka}
 
 \subsection{$TOL$-systémy (table)}
 
 Tieto systémy nebudeme striktne definovať, povieme si len základné
 veci, ktorými sa od kla\-sic\-kých $OL$-systémov odlišujú.
-$TOL$-systém $G=(V,P_{1},\dots,P_{k},w_{0})$ má niekoľko
+$TOL$-systém $G = (V, P_1, \dots, P_k, w_0)$ má niekoľko
 (konkrétne $k$) sád pravidiel, v danom kroku odvodenia použijeme
 na vetnú formu iba jednu sadu pravidiel
 
 \begin{priklad}
-  $G=(\{a\},\{a\ra a^{2}\},\{a\ra a^{3}\},a)$, potom
-  $L(G)=\{a^{2^{n}}a^{3^{m}}\mm n,m\geq0\}\not\in \Langclass{OL}$
+  Nech
+  $G = \quadruple{\set{a}}{\set{a\pravidlo a^2}}{\set{a\pravidlo a^3}}{a}$.
+  Potom
+  $L(G) = \set{a^{2^n} a^{3^m} \cond n,m \ge 0}
+    \not \in \Langclass{OL}$.
 \end{priklad}
 
 \begin{poznamka}
   Trieda $\Langclass{TOL}$ zdieľa ``zlé'' uzáverové vlastnosti
   triedy $\Langclass{OL}$. Podobne ako pre $\Langclass{OL}$
   platí aj pre $\Langclass{TOL}$ vzťah
-  $\Langclass{TOL} \subseteq \Langclass{ECS}$
+  $\Langclass{TOL} \subseteq \Langclass{ECS}$.
 \end{poznamka}
 
 \section{Ďaľšie paralelné gramatiky}
