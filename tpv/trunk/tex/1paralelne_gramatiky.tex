@@ -938,38 +938,42 @@ na vetnú formu iba jednu sadu pravidiel
 \subsection{Indické paralelné gramatiky}
 
 \begin{definicia}
-  Indická paralelná gramatika (IP) je štvorica $G=(N,T,P,\sigma)$,
-  pričom \mbox{$\sigma\in N$} $N\intersect T=\emptyset, P\subseteq
-  N\times(N\union T)^{*}$
+  Indická paralelná gramatika (IP) je štvorica
+  $G = \quadruple{N}{T}{P}{\sigma}$,
+  pričom \nowrap{$\sigma \in N$}, $N \intersect T = \emptyset$
+  a $P \subseteq N \times(N \union T)^{*}$
 \end{definicia}
 
 \begin{definicia}
-  Krok odvodenia IP $G$ je relácia $\Ra$ keď sa všetky výskyty
+  Krok odvodenia IP $G$ je relácia $\odvodenie$ keď sa všetky výskyty
   zvoleného neterminálu prepíšu naraz tým istým pravidlom
 \end{definicia}
 
 \begin{priklad}
-  $G_{1}=(\{\sigma\},\{a\},\{\sigma\ra\sigma\sigma,\sigma\ra
-  a\},\sigma)$ potom $L(G_{1})=\{a^{2^{n}}\mm n\geq0\}$
+  Nech $G_1= \quadruple{\set{\sigma}}{\set{a}}{
+      \set{\sigma \pravidlo \sigma \sigma, \sigma \pravidlo a}
+    }{\sigma}$.
+  Potom $L(G_1) = \set{a^{2^n} \cond n \ge 0}$
 \end{priklad}
 
 \begin{priklad}
   Dyckov jazyk nad dvoma písmenkami $D_{1}$ (jazyk správne
-  uzátvorkovaných výrazov) nie je $\Langclass{IP}$
+  uzátvorkovaných výrazov) nie je v $\Langclass{IP}$.
 \end{priklad}
 
 \begin{dokaz}
+  \verify{je to dobre?}
   Sporom predpokladajme, že $D_1 \in \Langclass{IP}$, potom
-  existuje IP gramatika $G$ taká, že \mbox{$L(G)=D_{1}$}. Ukážeme,
-  že by musela mať nekonečne veľa neterminálov, čo nie je možné. Pre
-  jednoduchosť označme $L=D_{1}$. Vytvoríme v $L$ hierarchiu tvarov
-  slov nasledovne: definujme rekurentne podmnožiny $L$ a uvedomme
-  si, koľko najmenej neterminálov treba na generovanie slov z každej
-  z nich:
+  existuje IP gramatika $G$ taká, že \nowrap{$L(G) = D_1$}.
+  Ukážeme, že by musela mať nekonečne veľa neterminálov, čo nie je možné.
+  Pre jednoduchosť označme $L = D_1$.
+  Vytvoríme v $L$ hierarchiu tvarov slov nasledovne:
+  definujme rekurentne podmnožiny $L$ a uvedomme si,
+  koľko najmenej neterminálov treba na generovanie slov z každej z nich:
   \begin{description}
-    \item{$\med$} $L_{1}=\{\med a^{n}b^{n}\mm n\geq1\med\}^{+}$ treba aspoň 2
+    \item $L_1 = \set{a^n b^n \cond n \ge 1}^{+}$ treba aspoň 2
       neterminály
-    \item{$\med$} $L_{i+1}=\{\med a^{n}wb^{n}\mm w\in L_{i},n\geq1\med\}^{+}$
+    \item $L_{i+1} = \set{a^n w b^n \cond w \in L_{i}, n\ge 1}^{+}$
       treba aspoň $i+2$ neterminálov
   \end{description}
   Ako vidno, táto hierarchia je nekonečná, teda na generovanie
@@ -978,69 +982,74 @@ na vetnú formu iba jednu sadu pravidiel
 \end{dokaz}
 
 \begin{veta}
-  $\Langclass{IP} \intersect \Langclass{CF} = \Langclass{DBL}$
+  $\Langclass{IP} \intersect \Langclass{CF} = \Langclass{DBL}$.
 \end{veta}
 
 \begin{poznamka}
   $\Langclass{DBL}$ je trieda {\it Derivation Bounded Languages},
   ku každému jazyku z tejto triedy existuje $k$ také, že počet
-  neterminálov v každej vetnej forme je menší ako $k$
+  neterminálov v každej vetnej forme je menší ako $k$.
 \end{poznamka}
 
 \begin{veta}
-  $\Langclass{IP} \subseteq \Langclass{ECS}$
+  $\Langclass{IP} \subseteq \Langclass{ECS}$.
 \end{veta}
 
 \begin{veta}
-  $\Langclass{IP}$ je uzavretá na $\union,\cdot,*,h$
+  $\Langclass{IP}$ je uzavretá na $\union,\cdot,*,h$.
 \end{veta}
 
 \begin{veta}
-  $\Langclass{IP}$ je neporovnateľná s $\Langclass{EOL}$
+  $\Langclass{IP}$ je neporovnateľná s $\Langclass{EOL}$.
 \end{veta}
 
 \begin{veta}
-  $\Langclass{IP} \subseteq \Langclass{ETOL}$ (extended $TOL$)
+  $\Langclass{IP} \subseteq \Langclass{ETOL}$ (extended $TOL$).
 \end{veta}
 
 \subsection{Ruské paralelné gramatiky}
 
 \begin{definicia}
-  Ruská paralelná gramatika je pätica $G=(N,T,P_{1},P_{2},\sigma)$,
-  pričom $\sigma\in N$, \mbox{$N\intersect T=\emptyset$}, $P_{1}, P_{2}$
-  sú konečné množiny pravidiel, $P_{1},P_{2}\subseteq N\times(N\union
-  T)^{*}$
+  Ruská paralelná gramatika je pätica $G = (N, T, P_1, P_2, \sigma)$,
+  pričom $\sigma \in N$, \nowrap{$N \intersect T = \emptyset$},
+  $P_1, P_2$ sú konečné množiny pravidiel a
+  $P_1,P_2 \subseteq N \times (N \union T)^{*}$
 \end{definicia}
 
 \begin{definicia}
   Krok odvodenia: všetky výskyty zvoleného neterminálu sa prepíšu
-  naraz istým pravidlom z $P_{1}$, alebo sa prepíše práve jeden
-  neterminál pravidlom z množiny $P_{2}$
+  naraz istým pravidlom z $P_1$, alebo sa prepíše práve jeden
+  neterminál pravidlom z množiny $P_2$.
 \end{definicia}
 
 \subsection{Absolútne paralelné gramatiky}
 
 \begin{definicia}
-  Absolútne paralelná gramatika (AP) je štvorica $G=(N,T,P,\sigma)$,
-  kde \mbox{$\sigma\in N$}, $N\intersect T=\emptyset$, $P$ je konečná
-  množina pravidiel tvaru
-  $(A_{1},\dots,A_{n})\ra(w_{1},\dots,w_{n})$, kde \mbox{$\forall
-  A_{i}\in N$}, $w_{i}\in(N\union T)^{*}$
+  Absolútne paralelná gramatika (AP) je štvorica
+  $G = \quadruple{N}{T}{P}{\sigma}$,
+  kde \nowrap{$\sigma \in N$}, $N \intersect T = \emptyset$
+  a $P$ je konečná množina pravidiel tvaru
+  $(A_1,\dots,A_n) \pravidlo (w_1, \dots, w_n)$, kde
+  \nowrap{$\forall A_i \in N$}: \nowrap{$w_i \in (N \union T)^{*}$}.
 \end{definicia}
 
 \begin{definicia}
   Krok odvodenia je relácia $w\Ra v$ práve vtedy, keď
-  $w=u_{1}A_{1}u_{2}A_{2}\dots u_{n}A_{n}u_{n+1}$ \mbox{a
-  $v=u_{1}w_{1}u_{2}w_{2}\dots u_{n}w_{n}u_{n+1}$}, pričom
-  $u_{1},\dots u_{n+1}\in T^{*}$ (t.j. naraz prepisujeme všetky
+  $w = u_1 A_1 u_2 A_2 \dots u_n A_n u_{n+1}$ a
+  $v = u_1 w_1 u_2 w_2 \dots u_n w_n u_{n+1}$, pričom
+  $u_1, \dots, u_{n+1} \in T^{*}$ (t.j. naraz prepisujeme všetky
   neterminály vo vetnej forme, na každú možnosť výskytu neterminálov
   musíme mať pravidlo)
 \end{definicia}
 
 \begin{priklad}
   Pozrime sa na AP gramatiku:\\
-  $G=(\{S\},\{a,b,c\},\{(S)\ra(SSS),(S,S,S)\ra (aS,bS,cS),(S,S,S)\ra
-  (a,b,c)\},S)$ potom $L(G)=\{a^{n}b^{n}c^{n}\mm n\geq1\}$
+  $G = (\set{S}, \set{a,b,c},
+        \set{(S) \pravidlo (SSS),
+          (S,S,S)\pravidlo (aS,bS,cS),
+          (S,S,S)\pravidlo(a,b,c)
+          }, S)$
+  potom $L(G) = \set{a^n b^n c^n \cond n \ge 1}$
 \end{priklad}
 
 \begin{veta}
@@ -1048,35 +1057,38 @@ na vetnú formu iba jednu sadu pravidiel
 \end{veta}
 
 \begin{veta}
-  $\Langclass{AP}\intersect 2^{a^{*}}\subseteq\Regclass$ (t.j.
-  jednopísmenkové $AP$ jazyky sú regulárne)
+  $\Langclass{AP} \intersect 2^{a^{*}} \subseteq \Regclass$
+  (t.j. jednopísmenkové $AP$ jazyky sú regulárne)
 \end{veta}
 
 \begin{dokaz}
-  Nech $L \in \Langclass{AP}$ a $G=(N,T,P,A_p)$ je $AP$ gramatika
-  taká, že $L(G)=L$. Bez újmy na všeobecnosti môžeme predpokladať,
-  že $T=\{a\}$. Nech \mbox{$N=\{A_1,\dots,A_n\}$}. Definujme $N'$
-  nasledovne: $N'=\{A_p\}\union\{A_{i_1,\dots,i_k}\mm\forall j\med
-  A_{i_j}\in N,\med A_{i_1},\dots,A_{i_k}$ sa nachádzajú na pravej
-  strane niektorého (rovnakého) z pravidiel $P$ v tomto poradí$\}$.
-  Bez újmy na všeobecnosti môžeme pred\-pokla\-dať, že všetky
+  Nech $L \in \Langclass{AP}$ a $G = \quadruple{N}{T}{P}{A_p}$ je $AP$ gramatika
+  taká, že $L(G) = L$. Bez ujmy na všeobecnosti môžeme predpokladať,
+  že $T = \set{a}$. Nech $N = \set{A_1,\dots,A_n}$.
+  Definujme $N'$ nasledovne: 
+  $N' = \set{A_p} \union
+  \{A_{i_1,\dots,i_k} \cond \forall j \med A_{i_j}\in N,\med A_{i_1},\dots,A_{i_k}$
+  sa nachádzajú na pravej strane niektorého (rovnakého) z pravidiel $P$ v tomto poradí $\}$.
+  Bez újmy na všeobecnosti môžeme predpokladať, že všetky
   pravidlá z $P$ sú tvaru
-  $(A_{i_1},\dots,A_{i_m})\ra(a^{k_1}\pi_1,\dots,a^{k_m}\pi_m)$, kde
-  $\forall i\med \pi_i\in N^*$. Definujme
+  $(A_{i_1}, \dots, A_{i_m}) \pravidlo (a^{k_1} \pi_1, \dots, a^{k_m} \pi_m)$,
+  kde $\forall i: \pi_i \in N^*$. Definujme
   $\varphi_i=i_1,\dots,i_l\Longleftrightarrow\pi_i=A_{i_1}\dots
   A_{i_l}$ Vytvoríme množinu pravidiel $P'$ nasledovne:
-  \[
-  A_{i_1,\dots,i_k}\ra
-  a^{w_1+\cdots+w_k}A_{\varphi_{i_1},\dots,\varphi_{i_k}}\in
-  P'\Longleftrightarrow
-  (A_{i_1},\dots,A_{i_k})\ra(a^{w_1}\pi_1,\dots,a^{w_k}\pi_k)\in P
-  \]
-  Teraz definujme $G'=(N',\{a\},P',A_p)$. $G'$ je zrejme regulárna
-  gramatika a z konštrukcie vyplýva, že $L(G')=L(G)$
+  \begin{equation*}
+    (A_{i_1, \dots, i_k} \pravidlo
+      a^{w_1+\cdots+w_k} A_{\varphi_{i_1},\dots,\varphi_{i_k}}
+    ) \in P' \iff
+    (A_{i_1}, \dots, A_{i_k}) \pravidlo 
+     (a^{w_1}\pi_1, \dots, a^{w_k}\pi_k) \in P
+  \end{equation*}
+  Teraz definujme $G' = \quadruple{N'}{\set{a}}{P'}{A_p}$.
+  $G'$ je zrejme regulárna gramatika a z konštrukcie vyplýva, že
+  $L(G') = L(G)$.
 \end{dokaz}
 
 \begin{veta}
-  $\Langclass{AP}=\Langclass{2DAP}$
+  $\Langclass{AP} = \Langclass{2DAP}$
 \end{veta}
 
 \begin{poznamka}
