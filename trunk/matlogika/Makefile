@@ -9,7 +9,7 @@ learnlist.dvi: learnlist.tex
 
 main.dvi: */*.tex *.tex Makefile img/*
 	cslatex main
-	bibtex main
+	#bibtex main
 	cslatex main
 	cslatex main
 
