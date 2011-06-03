@@ -3,7 +3,7 @@
 Na základe vety o úplnosti vieme, že ak máme nejakú množinu klauzúl $S$,
 tak viem z nej postupne vytvárať rezolventy a ak nie je splniteľná, 
 po konečnom počte krokov dostávam prázdnu klauzulu $\eps$.
-Za účelom dôkazu teda musím zaradom prehľadávať všetky rezolventy, ktoré
+Za účelom dôkazu teda musíme zaradom prehľadávať všetky rezolventy, ktoré
 môže vzniknúť zo všetkých možných dvojíc klauzúl.
 
 \begin{priklad}
@@ -39,7 +39,7 @@ Najskôr si zadefinujeme, ako si budeme predstavovať nadbytočné rezolventy.
 \end{definicia}
 
 \begin{priklad}
-    Majme klauzuly $C = P(x)$ a $D = P(A) \lor Q(a)$.
+    Majme klauzuly $C = P(x)$ a $D = P(a) \lor Q(a)$.
     Ak budeme uvažovať substitúciu $\sigma = \{a/x\}$, dostaneme
     $C\sigma = P(a)$ a teda $C\sigma \subseteq D$.
     Čiže $C$ je podklauzula $D$.
@@ -134,7 +134,7 @@ vyzerať nasledovne:
     \item V opačnom prípade kladieme 
         \begin{equation*}
             U^{k+1} = \{ \mbox{rezolventa } C_1 \mbox{ a } C_2 | 
-            C_1 \in U^{k} \land C_2 \in U\}
+            C_1 \in U^{k} \land C_2 \in W\}
         \end{equation*}
 
     \item Ak $U^{k+1}$ je $\emptyset$, tak algoritmus skončí s
@@ -174,22 +174,30 @@ vyzerať nasledovne:
 \end{dokaz}
 
 \begin{priklad}
-    $C = \neg P(x) \lor Q(f(x), a)$. $D = \neg P(h(y)) \lor
-    Q(f(h(y)),a) \lor P(z)$. Zistite, či klauzula $C$ je podklauzulou $D$.
+    Majme
+    \begin{align*}
+      C &= \neg P(x) \,\lor\, Q(f(x),a) \\
+      D &= \neg P(h(y)) \,\lor\, Q(f(h(y)),a) \,\lor\, P(z)
+    \end{align*}
+    Zistite, či klauzula $C$ je podklauzulou $D$.
 
-    \par $y$ a $z$ sú premenné v $D$. $\Theta = \{ b/y, c/z\}$. Konštanty $b$, $c$
-    nevystupujú v $C$, $I$. najprv vypočítame $D\Theta \neg P(h(b)) \lor
-    Q(f(h(b)),a) \lor \neg P(c)$
-
-    $$\neg D \Theta = P(h(b)) \land \neg Q(f(h(b)),a) \ lor P(c)$$
-    $$W = \{P(h(b)), \neg Q(f(h(b)),a), P(c) \}$$
-    $$\mathcal{U}^0 = C = \neg P(x) \lor Q(f(x),a)\}$$
-    $\mathcal{U}^0$ neobsahuje $\square$, musíme vytvoriť $\mathcal{U}^1$. Urobíme
-    príslušnú substitúciu v množine $\mathcal{U}^0$. Dostávam nasledovné rezolventy:
-    $$\mathcal{U}^1 = \{ Q(f(h(b)),a), \neg P(h(b)), Q(f(b),a)\}$$. 
+    Začneme tým, že $y$ a $z$ sú premenné v $D$. Spravíme preto substitúciu
+    $\Theta = \{ b/y, c/z\}$ kde konštanty $b$, $c$
+    nevystupujú v $C$ ani $D$. Najprv vypočítame
+    $D\Theta = \neg P(h(b)) \,\lor\, Q(f(h(b)),a) \,\lor\, \neg P(c)$
+    Čiže
+    $$\neg D \Theta = P(h(b)) \,\land\, \neg Q(f(h(b)),a) \,\land\, P(c)$$
+    A teda máme množiny
+    \begin{align*}
+      W &= \{P(h(b)),\, \neg Q(f(h(b)),a),\, P(c) \} \\
+      U^0 &= \{C\} = \{\neg P(x) \,\lor\, Q(f(x),a)\}
+    \end{align*}
+    $U^0$ neobsahuje $\eps$ a teda musíme vytvoriť $\mathcal{U}^1$. Urobíme
+    príslušnú substitúciu v množine $\mathcal{U}^0$. Dostávame nasledovné rezolventy:
+    $$U^1 = \{ Q(f(h(b)),a),\, \neg P(h(b)),\, Q(f(c),a)\}$$. 
     \par
-    $\mathcal{U}^1$
-    nie je prádzna a neobsahuje prádznu klauzulu -- musím vytvoriť $\mathcal{U}^2$.
+    $U^1$
+    nie je prádzna a neobsahuje prádznu klauzulu -- musíme vytvoriť $U^2$.
     V tomto sa už vyskytne prádzna klauzula, čo znamená, že $C$ pohlcuje klauzulu
     $D$.
 \end{priklad}
