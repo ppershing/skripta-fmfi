@@ -160,5 +160,11 @@
   tak $G$ vygeneruje toto slovo v rovnakom čase, teda $g$-systém
   zachováva časovú zložitosť $PCGS$.
   \\ Ak sa vrátime späť k všeobecnej komunikačnej štruktúre,
-  overovanie zhorší časovú zložitosť polynomiálne
+  overovanie zhorší časovú zložitosť polynomiálne.
+
+  Tuná poznamenajme, že overovanie môžeme vykonať ešte iným spôsobom.
+  Počas odvodzovania si v stave môžeme pre každú gramatiku zapamätať aké pravidlo sme použili 
+  (máme konečný počet gramatík a konečný počet pravidiel) a potom zabezpečiť, aby každá
+  gramatika odvodila rovnaké slovo. Následne môžeme fázu overovania vynechať
+  a mať dobrú časovú zložitosť nezávisle na komunikačnej štruktúre.
 \end{dokaz}
