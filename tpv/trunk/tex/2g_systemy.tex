@@ -1023,3 +1023,50 @@ vieme ``tesne'' simulovať na $g$-systémoch, dostaneme priestorové
 ohraničenie $1NSPACE(f(n))$. Naviac pre každý jazyk $L\in
 1NSPACE(f(n))$ existuje nejaký typ paralelnej gramatiky, ktorá $L$
 dokáže generovať v čase $f(n)$.
+
+\section{Miery nedeterminizmu g-systémov}
+
+Pri simulácii 1NSPACE pomocou g-systému a pri simulácii PCGS pomocou g-systému (o 2 kapitoly ďalej)
+využijeme kopu nedetermistických rozhodnutí. Je celkom prirodzené si položiť otázku, čo sa stane,
+keď nedeterminizmus obmedzíme. Najskôr ale potrebujeme zaviesť vhodné miery pre nedeterminizmus.
+
+\begin{definicia}
+$NSTATE(G)$ označuje počet nedetermistických stavov 1-a-prekladača $G$, t.j. stavov $q$, pre ktoré
+existuje písmeno $a$ a dva rôzne prechody $(q,a,w_1,p_1)$, $(q,a,w_2,p_2)$.
+\end{definicia}
+
+\begin{veta}
+Pre každý g-systém existuje ekvivalentný g-systém s maximálne jedným nedeterministickým stavom.
+\end{veta}
+
+\begin{dokaz}
+Predpokladajme, že daný g-systém je sekvenčný. 
+Budeme postupne presúvať nedeterministické stavy ku začiatočnému.
+Napríklad ak máme dva rôzne prechody $(q,a,w_1,p_1)$, $(q,a,w_2,p_2)$, tak môžeme stav
+$q$ rozdeliť na dva stavy $q_1$, $q_2$ z ktorých každú bude determistický. A všetky prechody tvaru
+$(r,b,u,q)$ nahradíme prechodmi $(r,b,u,q_1)$ a $(r,b,u,q_2)$.
+Takto presunieme rozhodnutie až k začiatočnému stavu, ktorý jediný bude nedetermistický.
+\end{dokaz}
+
+Všimnime si, že táto konštrukcia nám vlastne len posuvala rozhodnutia do začiatočného stavu (kde ich
+ako keby vykonáme dopredu). Iný spôsob definovania nedeterminizmu popisuje nasledovná definícia.
+
+\begin{definicia}
+Nech $dec(q,a)$ je počet prechodov zo stavu $q$ na písmeno $a$ mínus jedna.
+Potom $dec(q)$ definujeme ako: $dec(q) = \sum_{a \in N \union T} dec(q,a)$.
+A $dec(G) = \sum_{q \in K} dec(q)$.
+\end{definicia}
+
+\begin{veta}
+Pre každý g-systém existuje ekvivaletný g-systém, kde platí $dec(G) = |N \union T| + 1$.
+\end{veta}
+
+\begin{dokaz}
+Formálny dôkaz je mierne odporný naznačíme len ideu. Uvažujme, že máme g-systém, kde jediný
+nedetermistický stav je začiatočný. Očíslujme si prechody vychádzajúce zo začiatočného stavu.
+V ňom sa automat rozhoduje medzi tým, či okopíruje dané písmeno, alebo začne budovať unárne
+počítadlo z nejakého nového neterminálu. V ďalších krokoch sa rozhodne, či zväčší počítadlo, alebo
+vykoná krok s číslom, ktoré udáva počítadlo -- v tom prípade počítadlo zmaže.
+Všimnime si, že na každý znak z abecedy môžeme vykonať dve rôzne rozhodnutia a teda $deg(G) = |N
+\union T| + 1$.
+\end{dokaz}
