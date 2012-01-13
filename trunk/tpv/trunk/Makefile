@@ -4,7 +4,7 @@ default: fast
 fast:
 	cslatex main
 
-main.dvi: *.tex Makefile img/*
+main.dvi: *.tex tex/*.tex Makefile img/*
 	cslatex main
 	bibtex main
 	cslatex main
